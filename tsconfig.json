@@ -1,0 +1,21 @@
+{
+	"extends": "@tsconfig/node16/tsconfig.json",
+	"compilerOptions": {
+		"resolveJsonModule": true,
+		"forceConsistentCasingInFileNames": true,
+		"skipLibCheck": true,
+		"target": "es2017",
+		"module": "commonjs",
+		"outDir": "./dist",
+		"rootDir": "./src",
+		"lib": ["ES6"],
+		"strict": true,
+		"esModuleInterop": true,
+		"declaration": true,
+		"emitDeclarationOnly": true,
+		// Ensure that Babel can safely transpile files in the TypeScript project
+		"isolatedModules": true
+	},
+	"include": ["src/**/*"],
+	"exclude": ["node_modules"]
+}
