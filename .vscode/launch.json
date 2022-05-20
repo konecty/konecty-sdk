@@ -5,7 +5,13 @@
 			"name": "Debug",
 			"type": "node-terminal",
 			"request": "launch",
-			"command": "npm run start"
+			"command": "yarn start"
+		},
+		{
+			"name": "Test Watch",
+			"type": "node-terminal",
+			"request": "launch",
+			"command": "yarn test:watch"
 		}
 	]
 }

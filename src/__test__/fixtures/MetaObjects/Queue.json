@@ -1,0 +1,204 @@
+{
+	"_id": "Queue",
+	"fields": {
+		"active": {
+			"type": "boolean",
+			"name": "active",
+			"label": {
+				"en": "Active",
+				"pt_BR": "Active"
+			},
+			"isSortable": true,
+			"isInherited": true
+		},
+		"count": {
+			"isSortable": true,
+			"minValue": 0,
+			"type": "number",
+			"name": "count",
+			"label": {
+				"pt_BR": "Contador",
+				"en": "Count"
+			},
+			"isInherited": true
+		},
+		"currentCount": {
+			"label": {
+				"en": "Current Count",
+				"pt_BR": "Contador Atual"
+			},
+			"isSortable": true,
+			"decimalSize": 0,
+			"minValue": 0,
+			"type": "number",
+			"name": "currentCount",
+			"isInherited": true
+		},
+		"currentPosition": {
+			"type": "number",
+			"name": "currentPosition",
+			"label": {
+				"en": "Current Position",
+				"pt_BR": "Posição Atual"
+			},
+			"isRequired": true,
+			"isSortable": true,
+			"decimalSize": 0,
+			"minValue": 1,
+			"defaultValue": 1,
+			"isInherited": true
+		},
+		"name": {
+			"type": "text",
+			"name": "name",
+			"label": {
+				"en": "Name",
+				"pt_BR": "Nome"
+			},
+			"isSortable": true,
+			"normalization": "title",
+			"isInherited": true
+		},
+		"chatInvite": {
+			"type": "text",
+			"name": "chatInvite",
+			"label": {
+				"en": "Chat Invite",
+				"pt_BR": "Convite do Chat"
+			},
+			"isInherited": true
+		},
+		"queueUsers": {
+			"type": "filter",
+			"name": "queueUsers",
+			"label": {
+				"en": "Queue Users",
+				"pt_BR": "Usuários da Roleta"
+			},
+			"document": "User",
+			"filterableFields": ["name", "group"],
+			"relations": [
+				{
+					"document": "QueueUser",
+					"reverseLookup": "queue",
+					"lookup": "user"
+				}
+			],
+			"isInherited": true,
+			"filterOnly": true
+		},
+		"_createdAt": {
+			"type": "dateTime",
+			"name": "_createdAt",
+			"label": {
+				"en": "Created At",
+				"pt_BR": "Criado em"
+			},
+			"isSortable": true,
+			"isInherited": true
+		},
+		"_createdBy": {
+			"type": "lookup",
+			"name": "_createdBy",
+			"label": {
+				"pt_BR": "Criado por",
+				"en": "Created by"
+			},
+			"isSortable": true,
+			"document": "User",
+			"descriptionFields": ["name", "group.name"],
+			"isInherited": true
+		},
+		"_updatedAt": {
+			"type": "dateTime",
+			"name": "_updatedAt",
+			"label": {
+				"en": "Updated At",
+				"pt_BR": "Atualizado em"
+			},
+			"isSortable": true,
+			"isInherited": true
+		},
+		"_updatedBy": {
+			"document": "User",
+			"descriptionFields": ["name", "group.name"],
+			"type": "lookup",
+			"name": "_updatedBy",
+			"label": {
+				"pt_BR": "Atualizado por",
+				"en": "Updated by"
+			},
+			"isInherited": true
+		},
+		"_user": {
+			"document": "User",
+			"descriptionFields": ["name", "group.name", "active"],
+			"detailFields": ["phone", "emails"],
+			"type": "lookup",
+			"name": "_user",
+			"label": {
+				"en": "User",
+				"pt_BR": "Usuário"
+			},
+			"isSortable": true,
+			"isList": true,
+			"isInherited": true
+		},
+		"type": {
+			"type": "picklist",
+			"label": {
+				"pt_BR": "Tipo",
+				"en": "Type"
+			},
+			"name": "type",
+			"maxSelected": 4,
+			"minSelected": 0,
+			"options": {
+				"Chat": {
+					"en": "Chat",
+					"pt_BR": "Chat"
+				},
+				"Telefone": {
+					"en": "Phone",
+					"pt_BR": "Telefone"
+				},
+				"Formulario": {
+					"en": "Form",
+					"pt_BR": "Formulário"
+				},
+				"Email": {
+					"en": "Email",
+					"pt_BR": "Email"
+				}
+			},
+			"optionsSorter": "asc",
+			"renderAs": "without_scroll",
+			"isInherited": true
+		},
+		"targetCampaign": {
+			"type": "lookup",
+			"label": {
+				"en": "Target Campaign",
+				"pt_BR": "Campanha da Roleta"
+			},
+			"name": "targetCampaign",
+			"document": "Campaign",
+			"isInherited": true,
+			"descriptionFields": ["code", "name"]
+		}
+	},
+	"icon": "retweet",
+	"label": {
+		"en": "Queue",
+		"pt_BR": "Roleta"
+	},
+	"menuSorter": 11,
+	"name": "Queue",
+	"namespace": ["base", "foxter"],
+	"plurals": {
+		"pt_BR": "Roletas",
+		"en": "Queues"
+	},
+	"saveHistory": true,
+	"type": "document"
+}

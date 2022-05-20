@@ -1,11 +1,11 @@
-import createServer from '../../src/app';
+import createServer from '../../app';
 
-describe('GET /liveness', () => {
+describe('GET /hello', () => {
 	it('should return a 200 response', async () => {
 		const server = await createServer();
 		const response = await server.inject({
 			method: 'GET',
-			url: '/liveness',
+			url: '/hello',
 		});
 
 		expect(response.statusCode).toBe(200);

@@ -14,7 +14,13 @@
 		"declaration": true,
 		"emitDeclarationOnly": true,
 		// Ensure that Babel can safely transpile files in the TypeScript project
-		"isolatedModules": true
+		"isolatedModules": true,
+		"experimentalDecorators": true,
+		"emitDecoratorMetadata": true,
+		"baseUrl": "./src",
+		"paths": {
+			"@konecty/sdk/*": ["sdk/*"]
+		}
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules"]

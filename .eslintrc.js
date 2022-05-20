@@ -10,5 +10,7 @@ module.exports = {
 		node: true,
 	},
 	plugins: ['@typescript-eslint'],
+	// include: ['src/**/*.tsx?'],
+	// exclude: ['node_modules'],
 	rules: {},
 };

@@ -1,0 +1,187 @@
+{
+	"_id": "Template",
+	"icon": "laptop",
+	"ignoreUpdatedAt": true,
+	"label": {
+		"en": "Mail Template",
+		"pt_BR": "Modelo de email"
+	},
+	"menuSorter": 30,
+	"group": "Campaign",
+	"name": "Template",
+	"namespace": ["base"],
+	"plurals": {
+		"en": "Mail Templates",
+		"pt_BR": "Modelos de email"
+	},
+	"type": "document",
+	"fields": {
+		"code": {
+			"type": "autoNumber",
+			"name": "code",
+			"label": {
+				"en": "Code",
+				"pt_BR": "Código"
+			},
+			"isUnique": true,
+			"isSortable": true,
+			"isInherited": true
+		},
+		"name": {
+			"isSortable": true,
+			"type": "text",
+			"name": "name",
+			"label": {
+				"pt_BR": "Nome",
+				"en": "Name"
+			},
+			"isInherited": true
+		},
+		"type": {
+			"type": "picklist",
+			"name": "type",
+			"isSortable": true,
+			"label": {
+				"en": "Type",
+				"pt_BR": "Tipo"
+			},
+			"options": {
+				"email": {
+					"en": "email",
+					"pt_BR": "email",
+					"sort": 1
+				}
+			},
+			"renderAs": "with_scroll",
+			"maxSelected": 1,
+			"minSelected": 1,
+			"defaultValue": "email",
+			"isInherited": true,
+			"optionsSorter": "sort"
+		},
+		"webServices": {
+			"type": "json",
+			"name": "webServices",
+			"label": {
+				"en": "Web Services",
+				"pt_BR": "Serviços Web"
+			},
+			"isInherited": true
+		},
+		"style": {
+			"name": "style",
+			"label": {
+				"en": "Style",
+				"pt_BR": "Estilo"
+			},
+			"type": "text",
+			"isInherited": true
+		},
+		"document": {
+			"label": {
+				"en": "Module",
+				"pt_BR": "Módulo"
+			},
+			"isSortable": true,
+			"type": "text",
+			"name": "document",
+			"isInherited": true
+		},
+		"view": {
+			"type": "text",
+			"name": "view",
+			"label": {
+				"en": "View",
+				"pt_BR": "Vizualização"
+			},
+			"isSortable": true,
+			"isInherited": true
+		},
+		"value": {
+			"type": "text",
+			"name": "value",
+			"label": {
+				"en": "Body",
+				"pt_BR": "Corpo"
+			},
+			"isInherited": true
+		},
+		"subject": {
+			"type": "text",
+			"name": "subject",
+			"label": {
+				"en": "Subject",
+				"pt_BR": "Assunto"
+			},
+			"isInherited": true
+		},
+		"_createdAt": {
+			"type": "dateTime",
+			"name": "_createdAt",
+			"label": {
+				"pt_BR": "Criado em",
+				"en": "Created At"
+			},
+			"isSortable": true,
+			"isInherited": true
+		},
+		"_createdBy": {
+			"label": {
+				"en": "Created by",
+				"pt_BR": "Criado por"
+			},
+			"isSortable": true,
+			"document": "User",
+			"descriptionFields": ["name", "group.name"],
+			"type": "lookup",
+			"name": "_createdBy",
+			"isInherited": true
+		},
+		"_updatedAt": {
+			"name": "_updatedAt",
+			"label": {
+				"en": "Updated At",
+				"pt_BR": "Atualizado em"
+			},
+			"isSortable": true,
+			"type": "dateTime",
+			"isInherited": true
+		},
+		"_updatedBy": {
+			"label": {
+				"en": "Updated by",
+				"pt_BR": "Atualizado por"
+			},
+			"document": "User",
+			"descriptionFields": ["name", "group.name"],
+			"type": "lookup",
+			"name": "_updatedBy",
+			"isInherited": true
+		},
+		"_user": {
+			"type": "lookup",
+			"name": "_user",
+			"label": {
+				"en": "User",
+				"pt_BR": "Usuário"
+			},
+			"isSortable": true,
+			"isList": true,
+			"document": "User",
+			"descriptionFields": ["name", "group.name", "active"],
+			"detailFields": ["phone", "emails"],
+			"isInherited": true
+		},
+		"attachment": {
+			"type": "file",
+			"name": "attachment",
+			"label": {
+				"en": "Attachment",
+				"pt_BR": "Anexo"
+			},
+			"isList": true,
+			"wildcard": "(pdf|jpg|jpeg|png)",
+			"isInherited": true
+		}
+	}
+}
