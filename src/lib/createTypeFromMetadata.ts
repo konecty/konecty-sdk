@@ -273,8 +273,5 @@ export function createTypeFromMetadata(metadata: any): string {
 		arrowParens: 'avoid',
 	});
 
-	// /Users/silveira/dev/konecty-sdk/src/__test__/fixtures/types/User.ts
-	// fs.writeFileSync(`${__dirname}/../../src/__test__/fixtures/types/${name}.ts`, formatedCode);
-
 	return formatedCode;
 }

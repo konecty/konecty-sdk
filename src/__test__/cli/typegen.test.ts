@@ -1,7 +1,7 @@
 import { expect } from 'chai';
 import fs from 'fs/promises';
 import path from 'path';
-import { createTypeFromMetadata } from '../../cli/createTypeFromMetadata';
+import { createTypeFromMetadata } from '../../lib/createTypeFromMetadata';
 
 describe('Create type from metadata', () => {
 	it('should create type for User metadata', async () => {

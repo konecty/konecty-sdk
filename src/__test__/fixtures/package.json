@@ -1,0 +1,13 @@
+{
+	"name": "fake_name",
+	"version": "1.0.0",
+	"main": "src/index.js",
+	"engines": {
+		"node": ">=16.0.0",
+		"yarn": ">=1.22.0",
+		"npm": "please-use-yarn"
+	},
+	"scripts": {
+		"start": "echo 'Error: no start script specified' && exit 1"
+	}
+}
