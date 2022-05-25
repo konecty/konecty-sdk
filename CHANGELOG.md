@@ -1,3 +1,10 @@
+### [1.0.1](https://github.com/Konecty/konecty-sdk/compare/1.0.0...1.0.1) (2022-05-25)
+
+
+### 🛠 Fixes
+
+* resolved paths fix ([90558e2](https://github.com/Konecty/konecty-sdk/commit/90558e247dadcb9d9f1ceab58515fbd3783aa5e4))
+
 ## [1.0.0](https://github.com/Konecty/konecty-sdk/compare/...1.0.0) (2022-05-25)
 
 

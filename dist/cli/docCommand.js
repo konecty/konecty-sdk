@@ -21,7 +21,7 @@ function _default({
   input,
   output
 }) {
-  const __dirname = _path.default.resolve();
+  const __dirname = _path.default.resolve(process.env.INIT_CWD ?? './');
 
   const inputFile = _path.default.resolve(__dirname, input);
 

@@ -20,9 +20,11 @@ var _typeCommand = _interopRequireDefault(require("./typeCommand"));
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function createProgram() {
+  const __dirname = _path.default.dirname(__filename);
+
   const {
     version
-  } = JSON.parse(_fs.default.readFileSync(_path.default.resolve('package.json'), 'utf-8'));
+  } = JSON.parse(_fs.default.readFileSync(_path.default.resolve(__dirname, '..', '..', 'package.json'), 'utf-8'));
   const program = new _commander.Command();
   program.version(version);
   program.name('konecty');
