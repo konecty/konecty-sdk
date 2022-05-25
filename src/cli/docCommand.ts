@@ -10,7 +10,8 @@ export type CreateDocOptions = {
 };
 
 export default function ({ input, output }: CreateDocOptions): void {
-	const __dirname = path.resolve();
+	const __dirname = path.resolve(process.env.INIT_CWD ?? './');
+
 	const inputFile = path.resolve(__dirname, input);
 
 	try {

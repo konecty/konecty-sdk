@@ -6,7 +6,10 @@ import docCommand, { CreateDocOptions } from './docCommand';
 import typeCommand, { CreateInterfaceOptions } from './typeCommand';
 
 export default function createProgram(): Command {
-	const { version } = JSON.parse(fs.readFileSync(path.resolve('package.json'), 'utf-8'));
+	const __dirname = path.dirname(__filename);
+
+	const { version } = JSON.parse(fs.readFileSync(path.resolve(__dirname, '..', '..', 'package.json'), 'utf-8'));
+
 	const program = new Command();
 
 	program.version(version);
