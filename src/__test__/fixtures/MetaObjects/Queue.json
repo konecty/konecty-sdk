@@ -194,7 +194,7 @@
 	},
 	"menuSorter": 11,
 	"name": "Queue",
-	"namespace": ["base", "foxter"],
+	"namespace": ["base"],
 	"plurals": {
 		"pt_BR": "Roletas",
 		"en": "Queues"

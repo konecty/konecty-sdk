@@ -100,7 +100,7 @@
 	},
 	"menuSorter": 15,
 	"name": "Group",
-	"namespace": ["base", "foxter"],
+	"namespace": ["base"],
 	"plurals": {
 		"en": "Groups",
 		"pt_BR": "Grupos"

@@ -8,7 +8,7 @@
 | `label` | <pre lang="yaml">en: User<br>pt_BR: Usuário<br></pre> |
 | `menuSorter` | 10 |
 | `name` | User |
-| `namespace` | <pre lang="yaml">- base<br>- foxter<br></pre> |
+| `namespace` | <pre lang="yaml">- base<br></pre> |
 | `plurals` | <pre lang="yaml">en: Users<br>pt_BR: Usuários<br></pre> |
 | `saveHistory` | true |
 | `type` | document |
@@ -50,7 +50,7 @@
 | `director` | <pre lang="yaml">en: Director<br>pt_BR: Diretor<br></pre> | `lookup` | `false` | `false` |  | `document`: User<br>`descriptionFields`: <pre lang="yaml">- nickname<br></pre><br>`detailFields`: <pre lang="yaml">- emails<br>- phone<br></pre><br>`inheritedFields`: <pre lang="yaml">- fieldName: targetQueue<br>  inherit: always<br></pre><br>`isSortable`: true<br>`access`: Directors |
 | `temporaryBadge` | <pre lang="yaml">en: Temporary Badge<br>pt_BR: Crachá Provisório<br></pre> | `boolean` | `true` | `false` |  | `isSortable`: true |
 | `badge` | <pre lang="yaml">en: Badge<br>pt_BR: Crachá<br></pre> | `picklist` | `false` | `false` | <pre lang="yaml">Solicitado pelo Usuário:<br>  en: Requested by User<br>  pt_BR: Solicitado pelo Usuário<br>Em Produção:<br>  en: In Production<br>  pt_BR: Em Produção<br>Entregue:<br>  pt_BR: Entregue<br>  en: Delivered<br></pre> | `maxSelected`: 1<br>`renderAs`: with_scroll |
-| `recruitedBy` | <pre lang="yaml">en: Recruited By<br>pt_BR: Setor Captação<br></pre> | `picklist` | `false` | `false` | <pre lang="yaml">RH Foxter:<br>  pt_BR: RH Foxter<br>  en: Foxter HR<br>Consultoria Haag:<br>  en: Haag Consulting<br>  pt_BR: Consultoria Haag<br>Gerente:<br>  en: Manager<br>  pt_BR: Gerente<br></pre> | `maxSelected`: 1<br>`optionsSorter`: asc<br>`renderAs`: with_scroll |
+| `recruitedBy` | <pre lang="yaml">en: Recruited By<br>pt_BR: Setor Captação<br></pre> | `picklist` | `false` | `false` | <pre lang="yaml">Consultoria Haag:<br>  en: Haag Consulting<br>  pt_BR: Consultoria Haag<br>Gerente:<br>  en: Manager<br>  pt_BR: Gerente<br></pre> | `maxSelected`: 1<br>`optionsSorter`: asc<br>`renderAs`: with_scroll |
 | `recruitmentChannel` | <pre lang="yaml">en: Recruitment Channel<br>pt_BR: Canal<br></pre> | `text` | `false` | `false` |  |  |
 | `businessCards` | <pre lang="yaml">en: Business Cards<br>pt_BR: Cartão de Visita<br></pre> | `picklist` | `false` | `false` | <pre lang="yaml">Entregue:<br>  en: Delivered<br>  pt_BR: Entregue<br>Solicitado pelo Usuário:<br>  en: Requested by User<br>  pt_BR: Solicitado pelo Usuário<br>Em Produção:<br>  en: In Production<br>  pt_BR: Em Produção<br></pre> | `maxSelected`: 1<br>`renderAs`: with_scroll |
 | `contract` | <pre lang="yaml">en: Employment Status<br>pt_BR: Situação de Trabalho<br></pre> | `picklist` | `false` | `false` | <pre lang="yaml">Funcionário:<br>  en: Employee<br>  pt_BR: Funcionário<br>Estagiário:<br>  en: Trainee<br>  pt_BR: Estagiário<br>Pendente:<br>  en: Pending<br>  pt_BR: Pendente<br>Isento:<br>  en: Exempt<br>  pt_BR: Isento<br>CRECI:<br>  en: CRECI<br>  pt_BR: CRECI<br>Estágio CRECI:<br>  pt_BR: Estágio CRECI<br>  en: CRECI Internship<br></pre> | `maxSelected`: 1<br>`renderAs`: with_scroll |

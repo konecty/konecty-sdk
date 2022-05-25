@@ -502,10 +502,6 @@
 		"recruitedBy": {
 			"name": "recruitedBy",
 			"options": {
-				"RH Foxter": {
-					"pt_BR": "RH Foxter",
-					"en": "Foxter HR"
-				},
 				"Consultoria Haag": {
 					"en": "Haag Consulting",
 					"pt_BR": "Consultoria Haag"
@@ -829,7 +825,7 @@
 	},
 	"menuSorter": 10,
 	"name": "User",
-	"namespace": ["base", "foxter"],
+	"namespace": ["base"],
 	"plurals": {
 		"en": "Users",
 		"pt_BR": "Usuários"

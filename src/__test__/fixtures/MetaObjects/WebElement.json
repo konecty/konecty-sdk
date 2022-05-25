@@ -354,7 +354,7 @@
 	},
 	"menuSorter": 17,
 	"name": "WebElement",
-	"namespace": ["base", "foxter"],
+	"namespace": ["base"],
 	"plurals": {
 		"en": "Web Elements",
 		"pt_BR": "Elementos Web"

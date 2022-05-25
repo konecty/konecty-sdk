@@ -43,7 +43,7 @@ export type UserLocaleType = 'pt_BR' | 'en';
 export type UserStatusType = 'online' | 'away' | 'busy' | 'offline';
 export type UserInductionStatusType = 'Agendado' | 'Realizado' | 'Não compareceu';
 export type UserBadgeType = 'Solicitado pelo Usuário' | 'Em Produção' | 'Entregue';
-export type UserRecruitedByType = 'RH Foxter' | 'Consultoria Haag' | 'Gerente';
+export type UserRecruitedByType = 'Consultoria Haag' | 'Gerente';
 export type UserBusinessCardsType = 'Entregue' | 'Solicitado pelo Usuário' | 'Em Produção';
 export type UserContractType = 'Funcionário' | 'Estagiário' | 'Pendente' | 'Isento' | 'CRECI' | 'Estágio CRECI';
 export type UserAutonomousType = 'Assinada' | 'Pendente';
@@ -98,7 +98,6 @@ const badgeOptions: FieldOptions = {
 	Entregue: { pt_BR: 'Entregue', en: 'Delivered' },
 } as FieldOptions;
 const recruitedByOptions: FieldOptions = {
-	'RH Foxter': { pt_BR: 'RH Foxter', en: 'Foxter HR' },
 	'Consultoria Haag': { en: 'Haag Consulting', pt_BR: 'Consultoria Haag' },
 	Gerente: { en: 'Manager', pt_BR: 'Gerente' },
 } as FieldOptions;

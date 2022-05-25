@@ -118,7 +118,7 @@
 	},
 	"menuSorter": 16,
 	"name": "Role",
-	"namespace": ["base", "foxter"],
+	"namespace": ["base"],
 	"plurals": {
 		"en": "Roles",
 		"pt_BR": "Papéis"
