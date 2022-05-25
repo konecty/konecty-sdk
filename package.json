@@ -65,6 +65,7 @@
 		"pino": "^7.10.0",
 		"pino-pretty": "^7.6.1",
 		"prettier": "^2.6.2",
-		"reflect-metadata": "^0.1.13"
+		"reflect-metadata": "^0.1.13",
+		"yaml": "^2.1.0"
 	}
 }

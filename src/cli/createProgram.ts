@@ -1,7 +1,9 @@
+import chalk from 'chalk';
 import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
-import typeCommand from './typeCommand';
+import docCommand, { CreateDocOptions } from './docCommand';
+import typeCommand, { CreateInterfaceOptions } from './typeCommand';
 
 export default function createProgram(): Command {
 	const { version } = JSON.parse(fs.readFileSync(path.resolve('package.json'), 'utf-8'));
@@ -11,11 +13,24 @@ export default function createProgram(): Command {
 
 	program.name('konecty');
 
+	function runCommand(option: string, input: string, options: { [key: string]: string }): void {
+		switch (option) {
+			case 'doc':
+				const docOptions: CreateDocOptions = Object.assign({}, options, { input }) as CreateDocOptions;
+				return docCommand(docOptions);
+			case 'class':
+				const typeOtions: CreateInterfaceOptions = Object.assign({}, options, { input }) as CreateInterfaceOptions;
+				return typeCommand(typeOtions);
+			default:
+				return console.error(chalk.red(`Unknown command ${option}`));
+		}
+	}
+
 	program
-		.command('create class')
+		.command('create <option> <input>')
 		.description('Create a new type from a metadata file')
-		.option('-i, --input <input>', 'Input metadata file')
 		.option('-o, --output <input>', 'Output type file')
-		.action(typeCommand);
+		.action(runCommand);
+
 	return program;
 }
