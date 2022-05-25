@@ -105,7 +105,5 @@ export function createDocFromMetadata(metadata: MetadataDocument): string {
 
 	result.push('');
 
-	console.log(result.join('\n'));
-
 	return result.join('\n');
 }
