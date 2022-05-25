@@ -3,7 +3,10 @@
 	"version": "1.0.0",
 	"main": "src/index.js",
 	"author": "Derotino Silveira <silveirado@gmail.com>",
-	"license": "UNLICENSED",
+	"license": "MIT",
+	"publishConfig": {
+		"access": "public"
+	},
 	"bin": {
 		"konecty": "dist/cli/index.js"
 	},
