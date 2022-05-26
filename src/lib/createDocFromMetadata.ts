@@ -19,7 +19,7 @@ export function createDocFromMetadata(metadata: MetadataDocument): string {
 			const doc = new YAML.Document();
 			doc.contents = value;
 			const yamlResult = doc.toString();
-			return `<pre lang="yaml">${yamlResult.replace(/\n/g, '<br>')}</pre>`;
+			return `<pre lang="yaml">${yamlResult.replace(/\n/g, '<br/>')}</pre>`;
 		}
 		return JSON.stringify(value);
 	}
@@ -98,7 +98,7 @@ export function createDocFromMetadata(metadata: MetadataDocument): string {
 					}
 					return acc;
 				}, [])
-				.join('<br>'),
+				.join('<br/>'),
 		];
 		result.push(`| ${line.join(' | ')} |`);
 	});
