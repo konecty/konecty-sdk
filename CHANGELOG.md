@@ -1,3 +1,20 @@
+## [1.1.0](https://github.com/Konecty/konecty-sdk/compare/1.0.1...1.1.0) (2022-05-26)
+
+
+### 🧪 Tests
+
+* refactor test to accept br tag with closing tag ([f487be5](https://github.com/Konecty/konecty-sdk/commit/f487be53f747af68af2f8b4adb6b29cf08b12f8e))
+
+
+### 🚀 Features
+
+* add support for npm ([280f29f](https://github.com/Konecty/konecty-sdk/commit/280f29f7a2af2d73eee18723c9a877444ce0ac30))
+
+
+### 🛠 Fixes
+
+* add closing tag for the br ([14fdebf](https://github.com/Konecty/konecty-sdk/commit/14fdebf2982d388ecd6255d3bfd8605053d32095))
+
 ### [1.0.1](https://github.com/Konecty/konecty-sdk/compare/1.0.0...1.0.1) (2022-05-25)
 
 
