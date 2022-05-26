@@ -13,7 +13,7 @@
 	"engines": {
 		"node": ">=16.0.0",
 		"yarn": ">=1.22.0",
-		"npm": "please-use-yarn"
+		"npm": ">=7.10.0"
 	},
 	"scripts": {
 		"start": "cross-env NODE_OPTIONS='--inspect' nodemon --watch 'src/' --exec 'ts-node src/index.ts' -e ts | pino-pretty --colorize --translateTime",
