@@ -1,11 +1,12 @@
 import camelCase from 'lodash/camelCase';
 import startCase from 'lodash/startCase';
 import prettier from 'prettier';
+import { MetadataDocument, MetadataField } from 'types/metadata';
 import { FieldType } from '../sdk/types';
 
 const pascalCase = (str: string) => startCase(camelCase(str)).replace(/ /g, '');
 
-export function createTypeFromMetadata(metadata: any): string {
+export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	const { name, collection, label, plurals, fields } = metadata;
 
 	const imports: { [key: string]: string[] } = {
@@ -38,34 +39,34 @@ export function createTypeFromMetadata(metadata: any): string {
 
 	documentConfig.push(`};`);
 
-	Object.values<{ document: string }>(fields)
+	Object.values<MetadataField<unknown>>(fields)
 		.map(({ document }) => document)
 		.filter(d => d)
 		.forEach(document => {
-			imports.Documents.push(document);
+			imports.Documents.push(document as string);
 		});
 
-	type MetadataField = {
-		type: string;
-		isList?: boolean;
-		name: string;
-		document: string;
-		descriptionFields: string[];
-		inheritedFields: {
-			fieldName: string;
-		}[];
-		options?: {
-			[lang: string]: string;
-		};
-	};
+	// type MetadataField = {
+	// 	type: string;
+	// 	isList?: boolean;
+	// 	name: string;
+	// 	document: string;
+	// 	descriptionFields: string[];
+	// 	inheritedFields: {
+	// 		fieldName: string;
+	// 	}[];
+	// 	options?: {
+	// 		[lang: string]: string;
+	// 	};
+	// };
 
 	const lookupTypes = Object.values<MetadataField>(fields)
 		.filter(field => field.type === FieldType.lookup)
 		.map(
 			field =>
-				`export type ${name}${pascalCase(field.name)}Type = PickFromPath<${field.document}, '${field.descriptionFields.join(
-					`' | '`,
-				)}'>;`,
+				`export type ${name}${pascalCase(field.name)}Type = PickFromPath<${field.document}, '${(
+					field.descriptionFields ?? []
+				).join(`' | '`)}'>;`,
 		);
 
 	const pickListTypes: string[] = Object.values<MetadataField>(fields)

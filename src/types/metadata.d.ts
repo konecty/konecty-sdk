@@ -22,7 +22,8 @@ export type MetadataFieldType =
 	| 'richText'
 	| 'text'
 	| 'time'
-	| 'url';
+	| 'url'
+	| 'ObjectId';
 
 export type MetadataFieldInheritModel = 'hierarchy_always' | 'once_editable' | 'until_edited' | 'always' | 'once';
 
@@ -87,7 +88,7 @@ export type MetadataField<T = unknown> = {
 	inheritedFields?: {
 		fieldName: string;
 		inherit: MetadataFieldInheritModel;
-	};
+	}[];
 	wildcard?: string;
 	maxSize?: number;
 	isList?: boolean;
@@ -154,7 +155,7 @@ export type MetadataDocument = {
 	menuSorter?: number;
 	namespace?: string[];
 	parent?: string;
-	relations: object[]; // TODO: define
+	relations?: object[]; // TODO: define
 	saveHistory?: boolean;
 	sendAlerts?: boolean;
 };
