@@ -7,7 +7,7 @@ import { User } from './User';
 export type ModuleCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type ModuleUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type ModuleUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
-export interface DocumentConfig {
+export interface ModuleConfig {
 	name: string;
 	collection: string;
 	label: {
@@ -27,13 +27,13 @@ export interface KonectyDocument {
 export type DocumentUser = PickFromPath<User, '_id' | 'name' | 'group.name' | 'active'>;
 
 export abstract class Module<T> {
-	#config: DocumentConfig;
+	#config: ModuleConfig;
 
-	constructor(config: DocumentConfig) {
+	constructor(config: ModuleConfig) {
 		this.#config = config;
 	}
 
-	get config(): DocumentConfig {
+	get config(): ModuleConfig {
 		return this.#config;
 	}
 

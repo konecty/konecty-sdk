@@ -1,7 +1,7 @@
-import { AutoNumberField, BooleanField, TextField } from './decorators/FieldTypes';
-import { DocumentConfig, KonectyDocument, Module } from './Module';
+import { MetadataField } from 'types/metadata';
+import { KonectyDocument, Module, ModuleConfig } from './Module';
 
-const groupConfig: DocumentConfig = {
+const groupConfig: ModuleConfig = {
 	name: 'Group',
 	collection: 'data.Group',
 	label: {
@@ -14,22 +14,41 @@ const groupConfig: DocumentConfig = {
 	},
 };
 
-interface GroupType extends KonectyDocument {
+export interface Group extends KonectyDocument {
 	code?: number;
 	name?: string;
 	active?: boolean;
 }
 
-export class Group extends Module<GroupType> implements GroupType {
-	constructor(data?: GroupType) {
-		super(groupConfig, data);
+export class GroupModule extends Module<Group> {
+	constructor() {
+		super(groupConfig);
 	}
-	@AutoNumberField
-	readonly code!: number;
+	readonly code: MetadataField<number> = {
+		type: 'autoNumber',
+		name: 'code',
+		label: { en: 'Code', pt_BR: 'Código' },
+		isUnique: true,
+		isSortable: true,
+		isInherited: true,
+	} as MetadataField<number>;
 
-	@TextField
-	name!: string;
+	readonly name: MetadataField<string> = {
+		label: { en: 'Name', pt_BR: 'Nome' },
+		isSortable: true,
+		normalization: 'title',
+		type: 'text',
+		name: 'name',
+		isInherited: true,
+	} as MetadataField<string>;
 
-	@BooleanField
-	active!: boolean;
+	readonly active: MetadataField<boolean> = {
+		defaultValue: true,
+		type: 'boolean',
+		name: 'active',
+		label: { en: 'Active', pt_BR: 'Ativo' },
+		isRequired: true,
+		isSortable: true,
+		isInherited: true,
+	} as MetadataField<boolean>;
 }
