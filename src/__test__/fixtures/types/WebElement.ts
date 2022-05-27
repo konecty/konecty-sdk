@@ -1,10 +1,10 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { FileDescriptor } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { User } from './User';
-const webElementConfig: DocumentConfig = {
+const webElementConfig: ModuleConfig = {
 	name: 'WebElement',
 	collection: 'data.WebElement',
 	label: {
@@ -17,9 +17,9 @@ const webElementConfig: DocumentConfig = {
 	},
 };
 export type WebElementCampaignType = PickFromPath<Campaign, 'code' | 'name' | 'type'>;
-export type WebElementWebElementType = PickFromPath<WebElement, 'name'>;
-export type WebElementParentsType = PickFromPath<WebElement, 'name'>;
-export type WebElementParentType = PickFromPath<WebElement, 'code' | 'name'>;
+export type WebElementWebElementType = { name: string };
+export type WebElementParentsType = { name: string };
+export type WebElementParentType = { code: number; name: string };
 export type WebElementCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type WebElementUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type WebElementUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
@@ -27,7 +27,7 @@ export type WebElementLinkTargetType = '_parent' | '_blank' | '_self' | '_top';
 export type WebElementPriorityType = 'Média' | 'Baixa' | 'Alta';
 export type WebElementStatusType = 'Ativo' | 'Inativo';
 export type WebElementTypeType = 'HTML' | 'Konecty';
-export interface WebElement extends KonectyDocument {
+export interface WebElement extends KonectyDocument<WebElementUserType[], WebElementCreatedByType, WebElementUpdatedByType> {
 	campaign: WebElementCampaignType;
 	code: number;
 	endAt: Date;
@@ -54,7 +54,7 @@ export interface WebElement extends KonectyDocument {
 	_updatedBy: WebElementUpdatedByType;
 	_user: WebElementUserType[];
 }
-export class WebElementModule extends Document<WebElement> {
+export class WebElementModule extends Module<WebElement, WebElementUserType[], WebElementCreatedByType, WebElementUpdatedByType> {
 	constructor() {
 		super(webElementConfig);
 	}

@@ -1,12 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { Address, Email, FileDescriptor, PersonName, Phone } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { Channel } from './Channel';
 import { Queue } from './Queue';
 import { User } from './User';
-const contactConfig: DocumentConfig = {
+const contactConfig: ModuleConfig = {
 	name: 'Contact',
 	collection: 'data.Contact',
 	label: {
@@ -18,10 +18,10 @@ const contactConfig: DocumentConfig = {
 		pt_BR: 'Contatos',
 	},
 };
-export type ContactMainContactType = PickFromPath<Contact, 'code' | 'name.full'>;
+export type ContactMainContactType = { code: number; name: { full: unknown } };
 export type ContactQueueType = PickFromPath<Queue, 'name'>;
 export type ContactCampaignType = PickFromPath<Campaign, 'code' | 'name' | 'type'>;
-export type ContactStaffType = PickFromPath<Contact, 'code' | 'name.full'>;
+export type ContactStaffType = { code: number; name: { full: unknown } };
 export type ContactCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type ContactUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type ContactUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
@@ -35,7 +35,7 @@ export type ContactMailFrequenceType = 'Dia' | 'Semana' | 'Duas Semanas' | 'Mês
 export type ContactSmsFrequenceType = 'Mês' | 'Nunca' | 'Dia' | 'Semana' | 'Duas Semanas';
 export type ContactStatusType = 'Lead' | 'Ativo' | 'Faleceu' | 'Inválido' | 'Descadastrado' | 'Duplicado' | 'Inativo';
 export type ContactMediumType = 'Banner Online' | 'Panfleto' | 'Outdoor' | 'Placa' | 'Post Patrocinado' | 'Post Fanpage';
-export interface Contact extends KonectyDocument {
+export interface Contact extends KonectyDocument<ContactUserType[], ContactCreatedByType, ContactUpdatedByType> {
 	mainContact: ContactMainContactType;
 	contactAttempts: number;
 	invalidAttempts: number;
@@ -77,7 +77,7 @@ export interface Contact extends KonectyDocument {
 	lastEmailSentAt: Date;
 	activeOpportunities: number;
 }
-export class ContactModule extends Document<Contact> {
+export class ContactModule extends Module<Contact, ContactUserType[], ContactCreatedByType, ContactUpdatedByType> {
 	constructor() {
 		super(contactConfig);
 	}

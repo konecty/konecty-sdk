@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { FileDescriptor, Filter, Phone } from '@konecty/sdk/types';
 import { Contact } from './Contact';
@@ -8,7 +8,7 @@ import { Queue } from './Queue';
 import { Template } from './Template';
 import { User } from './User';
 import { WebElement } from './WebElement';
-const campaignConfig: DocumentConfig = {
+const campaignConfig: ModuleConfig = {
 	name: 'Campaign',
 	collection: 'data.Campaign',
 	label: {
@@ -20,7 +20,7 @@ const campaignConfig: DocumentConfig = {
 		pt_BR: 'Campanhas',
 	},
 };
-export type CampaignMainCampaignType = PickFromPath<Campaign, 'code' | 'name'>;
+export type CampaignMainCampaignType = { code: number; name: string };
 export type CampaignCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type CampaignUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type CampaignUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
@@ -47,7 +47,7 @@ export type CampaignTypeType =
 	| 'Portal'
 	| 'Email marketing';
 export type CampaignSendExactType = 'true' | 'false';
-export interface Campaign extends KonectyDocument {
+export interface Campaign extends KonectyDocument<CampaignUserType[], CampaignCreatedByType, CampaignUpdatedByType> {
 	mainCampaign: CampaignMainCampaignType;
 	campaignTarget: Filter<Contact>;
 	campaignUser: Filter<User>;
@@ -88,7 +88,7 @@ export interface Campaign extends KonectyDocument {
 	badge: FileDescriptor;
 	content: string[];
 }
-export class CampaignModule extends Document<Campaign> {
+export class CampaignModule extends Module<Campaign, CampaignUserType[], CampaignCreatedByType, CampaignUpdatedByType> {
 	constructor() {
 		super(campaignConfig);
 	}

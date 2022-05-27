@@ -48,26 +48,4 @@ export type PickFromPath<
 		: never
 	: never;
 
-type X = {
-	a: number;
-	b: {
-		c: string;
-		d: {
-			e: number;
-		};
-	};
-};
-
-type J = PickFromPath<X, 'a' | 'b.c'>;
-
-const j: J = {
-	a: 0,
-	b: {
-		c: '',
-	},
-};
-
-type Y = Paths<X>;
-type Z = Leaves<X>;
-
-type A = TypeFromPath<X, 'b.c'>;
+export type ArrElement<ArrType> = ArrType extends readonly (infer ElementType)[] ? ElementType : never;

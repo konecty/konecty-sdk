@@ -1,10 +1,10 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { FileDescriptor, Money } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { User } from './User';
-const productConfig: DocumentConfig = {
+const productConfig: ModuleConfig = {
 	name: 'Product',
 	collection: 'data.Product',
 	label: {
@@ -22,7 +22,7 @@ export type ProductUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type ProductUserType = PickFromPath<User, 'name' | 'group.name'>;
 export type ProductStatusType = 'Rascunho' | 'Ativo' | 'Inativo' | 'Não Realizado';
 export type ProductTypeType = 'Apartamento' | 'Casa' | 'Terreno';
-export interface Product extends KonectyDocument {
+export interface Product extends KonectyDocument<ProductUserType[], ProductCreatedByType, ProductUpdatedByType> {
 	active: boolean;
 	supplierUpdatedChanged: boolean;
 	code: number;
@@ -52,7 +52,7 @@ export interface Product extends KonectyDocument {
 	siteTags: string[];
 	campaignTags: string[];
 }
-export class ProductModule extends Document<Product> {
+export class ProductModule extends Module<Product, ProductUserType[], ProductCreatedByType, ProductUpdatedByType> {
 	constructor() {
 		super(productConfig);
 	}

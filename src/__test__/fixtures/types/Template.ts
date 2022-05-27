@@ -1,9 +1,9 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { FileDescriptor } from '@konecty/sdk/types';
 import { User } from './User';
-const templateConfig: DocumentConfig = {
+const templateConfig: ModuleConfig = {
 	name: 'Template',
 	collection: 'data.Template',
 	label: {
@@ -19,7 +19,7 @@ export type TemplateCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type TemplateUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type TemplateUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
 export type TemplateTypeType = 'email';
-export interface Template extends KonectyDocument {
+export interface Template extends KonectyDocument<TemplateUserType[], TemplateCreatedByType, TemplateUpdatedByType> {
 	code: number;
 	name: string;
 	type: TemplateTypeType;
@@ -36,7 +36,7 @@ export interface Template extends KonectyDocument {
 	_user: TemplateUserType[];
 	attachment: FileDescriptor[];
 }
-export class TemplateModule extends Document<Template> {
+export class TemplateModule extends Module<Template, TemplateUserType[], TemplateCreatedByType, TemplateUpdatedByType> {
 	constructor() {
 		super(templateConfig);
 	}

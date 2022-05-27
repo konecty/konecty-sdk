@@ -1,7 +1,7 @@
 import 'reflect-metadata';
 import { MetadataField } from 'types/metadata';
 import { FieldType } from './types';
-import { PickFromPath } from './TypeUtils';
+import { ArrElement, PickFromPath } from './TypeUtils';
 import { User } from './User';
 
 export type ModuleCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
@@ -18,15 +18,18 @@ export interface ModuleConfig {
 	};
 }
 
-export interface KonectyDocument {
+export interface KonectyDocument<UserType = unknown | never, CreatedByType = unknown | never, UpdatedByType = unknown | never> {
 	_id: string;
+	_user: UserType extends [never] ? ModuleUserType[] : UserType;
 	_createdAt: Date;
+	_createdBy: CreatedByType extends [never] ? ModuleCreatedByType : CreatedByType;
 	_updatedAt: Date;
+	_updatedBy: UpdatedByType extends [never] ? ModuleUpdatedByType : CreatedByType;
 }
 
 export type DocumentUser = PickFromPath<User, '_id' | 'name' | 'group.name' | 'active'>;
 
-export abstract class Module<T> {
+export abstract class Module<T extends KonectyDocument<U, C, D>, U = never, C = never, D = never> {
 	#config: ModuleConfig;
 
 	constructor(config: ModuleConfig) {
@@ -43,7 +46,7 @@ export abstract class Module<T> {
 		return Reflect.getMetadata('type', this, propertyKey);
 	}
 
-	readonly _user: MetadataField<ModuleUserType> = {
+	readonly _user: MetadataField<ModuleUserType> | MetadataField<ArrElement<T['_user']>> = {
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
 		type: 'lookup',
@@ -63,7 +66,7 @@ export abstract class Module<T> {
 		isInherited: true,
 	} as MetadataField<Date>;
 
-	readonly _createdBy: MetadataField<ModuleCreatedByType> = {
+	readonly _createdBy: MetadataField<ModuleCreatedByType> | MetadataField<T['_createdBy']> = {
 		type: 'lookup',
 		name: '_createdBy',
 		label: { en: 'Created by', pt_BR: 'Criado por' },
@@ -81,7 +84,7 @@ export abstract class Module<T> {
 		isInherited: true,
 	} as MetadataField<Date>;
 
-	readonly _updatedBy: MetadataField<ModuleUpdatedByType> = {
+	readonly _updatedBy: MetadataField<ModuleUpdatedByType> | MetadataField<T['_updatedBy']> = {
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],

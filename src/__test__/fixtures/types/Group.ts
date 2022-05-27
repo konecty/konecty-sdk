@@ -1,9 +1,9 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import {} from '@konecty/sdk/types';
 import { User } from './User';
-const groupConfig: DocumentConfig = {
+const groupConfig: ModuleConfig = {
 	name: 'Group',
 	collection: 'data.Group',
 	label: {
@@ -18,7 +18,7 @@ const groupConfig: DocumentConfig = {
 export type GroupCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type GroupUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type GroupUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
-export interface Group extends KonectyDocument {
+export interface Group extends KonectyDocument<GroupUserType[], GroupCreatedByType, GroupUpdatedByType> {
 	active: boolean;
 	name: string;
 	_createdAt: Date;
@@ -27,7 +27,7 @@ export interface Group extends KonectyDocument {
 	_updatedBy: GroupUpdatedByType;
 	_user: GroupUserType[];
 }
-export class GroupModule extends Document<Group> {
+export class GroupModule extends Module<Group, GroupUserType[], GroupCreatedByType, GroupUpdatedByType> {
 	constructor() {
 		super(groupConfig);
 	}

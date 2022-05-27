@@ -1,4 +1,5 @@
 import camelCase from 'lodash/camelCase';
+import set from 'lodash/set';
 import startCase from 'lodash/startCase';
 import prettier from 'prettier';
 import { MetadataDocument, MetadataField } from 'types/metadata';
@@ -15,7 +16,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		Documents: [],
 	};
 	const documentConfig = [
-		`const ${camelCase(name)}Config: DocumentConfig = {`,
+		`const ${camelCase(name)}Config: ModuleConfig = {`,
 		`name: '${name}',`,
 		`collection: '${collection ?? `data.${name}`}',`,
 	];
@@ -47,12 +48,35 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 
 	const lookupTypes = Object.values<MetadataField>(fields)
 		.filter(field => field.type === FieldType.lookup)
-		.map(
-			field =>
-				`export type ${name}${pascalCase(field.name)}Type = PickFromPath<${field.document}, '${(
-					field.descriptionFields ?? []
-				).join(`' | '`)}'>;`,
-		);
+		.map(field => {
+			const fieldName = pascalCase(field.name);
+			if (name === field.document) {
+				const result = `export type ${name}${fieldName}Type = {${(field.descriptionFields ?? [])
+					.reduce<string[]>((acc, field) => {
+						if (/\./.test(field)) {
+							const path = field.split('.');
+							const result = set({}, path, 'unknown;');
+							return acc.concat(
+								`${JSON.stringify(result)
+									.replace(/^\{(.*)\}$/, '$1')
+									.replace(/\"/g, '')};`,
+							);
+						} else {
+							if (fields[field] != null) {
+								return acc.concat(`${field}: ${getBaseType(fields[field])};`);
+							}
+						}
+						return acc;
+					}, [])
+					.join(``)}};`;
+
+				return result;
+			}
+
+			return `export type ${name}${fieldName}Type = PickFromPath<${field.document}, '${(field.descriptionFields ?? []).join(
+				`' | '`,
+			)}'>;`;
+		});
 
 	const pickListTypes: string[] = Object.values<MetadataField>(fields)
 		.filter(field => field.type === FieldType.picklist)
@@ -136,9 +160,28 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 
 	Object.values<MetadataField>(fields).map(field => `${field.name}: ${getBaseType(field)};`);
 
+	const userTypes = [];
+	if (fields._user != null) {
+		userTypes.push(`${name}UserType[]`);
+	} else {
+		userTypes.push(`never`);
+	}
+
+	if (fields._createdAt != null) {
+		userTypes.push(`${name}CreatedByType`);
+	} else {
+		userTypes.push(`never`);
+	}
+
+	if (fields._updatedAt != null) {
+		userTypes.push(`${name}UpdatedByType`);
+	} else {
+		userTypes.push(`never`);
+	}
+
 	const code = [
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
-		`import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module'`,
+		`import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module'`,
 		`import { MetadataField } from 'types/metadata';`,
 	]
 		.concat(`import { ${Array.from(new Set(imports.Konecty)).sort().join(', ')} } from '@konecty/sdk/types';`)
@@ -151,10 +194,10 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.concat(documentConfig)
 		.concat(lookupTypes)
 		.concat(pickListTypes)
-		.concat(`export interface ${name} extends KonectyDocument {`)
+		.concat(`export interface ${name} extends KonectyDocument${userTypes.length > 0 ? `<${userTypes.join(', ')}>` : ''} {`)
 		.concat(interfaceProperties)
 		.concat(`}`)
-		.concat(`export class ${name}Module extends Document<${name}> {`)
+		.concat(`export class ${name}Module extends Module<${name}${userTypes.length > 0 ? `, ${userTypes.join(', ')}` : ''}> {`)
 		.concat(`constructor() {super(${camelCase(name)}Config);}`)
 		.concat(classProperties)
 		.concat(`}`)

@@ -1,9 +1,9 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import {} from '@konecty/sdk/types';
 import { User } from './User';
-const roleConfig: DocumentConfig = {
+const roleConfig: ModuleConfig = {
 	name: 'Role',
 	collection: 'data.Role',
 	label: {
@@ -15,11 +15,11 @@ const roleConfig: DocumentConfig = {
 		pt_BR: 'Papéis',
 	},
 };
-export type RoleParentsType = PickFromPath<Role, 'name'>;
+export type RoleParentsType = { name: string };
 export type RoleCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type RoleUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type RoleUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
-export interface Role extends KonectyDocument {
+export interface Role extends KonectyDocument<RoleUserType[], RoleCreatedByType, RoleUpdatedByType> {
 	access: object;
 	admin: boolean;
 	name: string;
@@ -30,7 +30,7 @@ export interface Role extends KonectyDocument {
 	_updatedBy: RoleUpdatedByType;
 	_user: RoleUserType[];
 }
-export class RoleModule extends Document<Role> {
+export class RoleModule extends Module<Role, RoleUserType[], RoleCreatedByType, RoleUpdatedByType> {
 	constructor() {
 		super(roleConfig);
 	}

@@ -26,13 +26,13 @@ export enum FieldType {
 	JSON = 'json',
 }
 
-export type FieldValidators<T> = (target: Module<T>, propertyKey: string, value: Field<T>) => boolean;
+export type FieldValidators<T extends KonectyDocument> = (target: Module<T>, propertyKey: string, value: Field<T>) => boolean;
 
 export type Label = {
 	[lang: string]: string;
 };
 
-export type Field<T> = {
+export type Field<T extends KonectyDocument> = {
 	document?: Module<T>;
 	descriptionFields?: (string | number | symbol)[];
 	inheritedFields?: (string | number | symbol)[];

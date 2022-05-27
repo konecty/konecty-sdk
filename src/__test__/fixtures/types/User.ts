@@ -1,11 +1,11 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { Address, Email, FileDescriptor, Phone } from '@konecty/sdk/types';
 import { Group } from './Group';
 import { Queue } from './Queue';
 import { Role } from './Role';
-const userConfig: DocumentConfig = {
+const userConfig: ModuleConfig = {
 	name: 'User',
 	collection: 'users',
 	label: {
@@ -20,11 +20,11 @@ const userConfig: DocumentConfig = {
 export type UserGroupType = PickFromPath<Group, 'name'>;
 export type UserGroupsType = PickFromPath<Group, 'name'>;
 export type UserRoleType = PickFromPath<Role, 'name'>;
-export type UserCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type UserUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type UserUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
+export type UserCreatedByType = { name: string; group: { name: unknown } };
+export type UserUpdatedByType = { name: string; group: { name: unknown } };
+export type UserUserType = { name: string; group: { name: unknown }; active: boolean };
 export type UserTargetQueueType = PickFromPath<Queue, 'name'>;
-export type UserDirectorType = PickFromPath<User, 'nickname'>;
+export type UserDirectorType = { nickname: string };
 export type UserLocaleType = 'pt_BR' | 'en';
 export type UserStatusType = 'online' | 'away' | 'busy' | 'offline';
 export type UserInductionStatusType = 'Agendado' | 'Realizado' | 'Não compareceu';
@@ -66,7 +66,7 @@ export type UserExitMotiveBrokerType =
 	| 'Inadaptação ao Segmento'
 	| 'Doença'
 	| 'Problemas Familiares';
-export interface User extends KonectyDocument {
+export interface User extends KonectyDocument<UserUserType[], UserCreatedByType, UserUpdatedByType> {
 	active: boolean;
 	nickname: string;
 	pictures: FileDescriptor[];
@@ -117,7 +117,7 @@ export interface User extends KonectyDocument {
 	fullName: string;
 	type: string;
 }
-export class UserModule extends Document<User> {
+export class UserModule extends Module<User, UserUserType[], UserCreatedByType, UserUpdatedByType> {
 	constructor() {
 		super(userConfig);
 	}

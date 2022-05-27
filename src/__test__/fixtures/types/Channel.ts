@@ -1,9 +1,9 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import {} from '@konecty/sdk/types';
 import { User } from './User';
-const channelConfig: DocumentConfig = {
+const channelConfig: ModuleConfig = {
 	name: 'Channel',
 	collection: 'data.Channel',
 	label: {
@@ -17,7 +17,7 @@ const channelConfig: DocumentConfig = {
 };
 export type ChannelCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type ChannelUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export interface Channel extends KonectyDocument {
+export interface Channel extends KonectyDocument<never, ChannelCreatedByType, ChannelUpdatedByType> {
 	name: string;
 	identifier: string;
 	_createdAt: Date;
@@ -25,7 +25,7 @@ export interface Channel extends KonectyDocument {
 	_updatedAt: Date;
 	_updatedBy: ChannelUpdatedByType;
 }
-export class ChannelModule extends Document<Channel> {
+export class ChannelModule extends Module<Channel, never, ChannelCreatedByType, ChannelUpdatedByType> {
 	constructor() {
 		super(channelConfig);
 	}

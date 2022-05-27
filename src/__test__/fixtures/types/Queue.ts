@@ -1,10 +1,10 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { Filter } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { User } from './User';
-const queueConfig: DocumentConfig = {
+const queueConfig: ModuleConfig = {
 	name: 'Queue',
 	collection: 'data.Queue',
 	label: {
@@ -21,7 +21,7 @@ export type QueueUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
 export type QueueUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
 export type QueueTargetCampaignType = PickFromPath<Campaign, 'code' | 'name'>;
 export type QueueTypeType = 'Chat' | 'Telefone' | 'Formulario' | 'Email';
-export interface Queue extends KonectyDocument {
+export interface Queue extends KonectyDocument<QueueUserType[], QueueCreatedByType, QueueUpdatedByType> {
 	active: boolean;
 	count: number;
 	currentCount: number;
@@ -37,7 +37,7 @@ export interface Queue extends KonectyDocument {
 	type: QueueTypeType;
 	targetCampaign: QueueTargetCampaignType;
 }
-export class QueueModule extends Document<Queue> {
+export class QueueModule extends Module<Queue, QueueUserType[], QueueCreatedByType, QueueUpdatedByType> {
 	constructor() {
 		super(queueConfig);
 	}

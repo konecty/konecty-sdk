@@ -81,7 +81,7 @@ export type MetadataField<T = unknown> = {
 	minSelected?: number;
 	maxSelected?: number;
 	optionsSorter?: string;
-	defaultValue?: T;
+	defaultValue?: T | T[];
 	document?: string;
 	descriptionFields?: string[];
 	detailFields?: string[];
@@ -103,7 +103,7 @@ export type MetadataField<T = unknown> = {
 	compositeType?: 'reference';
 	conditionFields?: MetadataConditionField[];
 	decimalSize?: number;
-	defaultValues?: T[];
+	defaultValues?: T[] | MetadataLabel[];
 	description?: string;
 	filterOnly?: boolean;
 	filterableFields?: string[];
