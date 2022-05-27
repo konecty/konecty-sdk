@@ -1,11 +1,12 @@
 import 'reflect-metadata';
-import { DateTimeField, LookupField, ObjectIdField } from './decorators/FieldTypes';
+import { MetadataField } from 'types/metadata';
 import { FieldType } from './types';
 import { PickFromPath } from './TypeUtils';
 import { User } from './User';
 
-// export type DocumentUser = Pick<User, '_id' | 'name' | 'group' | 'active'>;
-
+export type ModuleCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
+export type ModuleUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
+export type ModuleUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
 export interface DocumentConfig {
 	name: string;
 	collection: string;
@@ -17,54 +18,6 @@ export interface DocumentConfig {
 	};
 }
 
-// descriptor.isList = false;
-// 	descriptor.type = FieldType.ObjectId;
-// 	descriptor.configurable = false;
-// 	descriptor.writable = false;
-// 	descriptor.enumerable = false;
-// 	descriptor.set = function (value: string) {
-// 		throw new Error('Cannot set value on id field');
-// 	};
-// 	descriptor.get = function (): string {
-// 		return descriptor.value;
-// 	};
-// 	descriptor.toString = function () {
-// 		return descriptor.value;
-// 	};
-
-export interface F2 {
-	type: FieldType;
-}
-
-type List = { isList: true };
-
-// interface ObjectId {
-// 	// type: 'text';
-// 	readonly value: string;
-// 	get(): string;
-// }
-
-// type ObjectId = { type: FieldType.ObjectId};
-// type ObjectId = { type: FieldType.ObjectId };
-
-// type PrimitiveType<T extends { type: FieldType }> = T['type'] extends FieldType.ObjectId ? string : never;
-
-// type z = PrimitiveType<ObjectId>;
-
-// const y: z = 'teste';
-
-// console.log(y);
-
-type Text = string & { type: FieldType.text };
-
-type Label<T extends { [lang: string]: string }> = { label: T };
-
-function dec(target: any, key: string) {
-	Object.defineProperty(target, key, {
-		enumerable: true,
-	});
-}
-
 export interface KonectyDocument {
 	_id: string;
 	_createdAt: Date;
@@ -73,79 +26,69 @@ export interface KonectyDocument {
 
 export type DocumentUser = PickFromPath<User, '_id' | 'name' | 'group.name' | 'active'>;
 
-export abstract class Document<T> implements KonectyDocument {
+export abstract class Document<T> {
 	#config: DocumentConfig;
-	private _data?: T;
 
-	constructor(config: DocumentConfig, data?: T) {
+	constructor(config: DocumentConfig) {
 		this.#config = config;
-		this._data = data;
 	}
 
 	get config(): DocumentConfig {
 		return this.#config;
 	}
 
-	get data(): T | undefined | null {
-		return this._data;
-	}
-
-	@ObjectIdField
 	_id!: string;
 
 	getType(propertyKey: string): FieldType {
 		return Reflect.getMetadata('type', this, propertyKey);
 	}
 
-	@LookupField<User>({ document: new User(), descriptionFields: ['name', 'group.name', 'active'] })
-	_user!: DocumentUser[];
+	readonly _user: MetadataField<ModuleUserType> = {
+		descriptionFields: ['name', 'group.name', 'active'],
+		detailFields: ['phone', 'emails'],
+		type: 'lookup',
+		name: '_user',
+		label: { en: 'User', pt_BR: 'Usuário' },
+		isSortable: true,
+		isList: true,
+		document: 'User',
+		isInherited: true,
+	} as MetadataField<ModuleUserType>;
 
-	@DateTimeField
-	_createdAt!: Date;
+	readonly _createdAt: MetadataField<Date> = {
+		label: { en: 'Created At', pt_BR: 'Criado em' },
+		isSortable: true,
+		type: 'dateTime',
+		name: '_createdAt',
+		isInherited: true,
+	} as MetadataField<Date>;
 
-	@LookupField<User>({ document: new User(), descriptionFields: ['name', 'group.name', 'active'] })
-	createdBy!: DocumentUser;
+	readonly _createdBy: MetadataField<ModuleCreatedByType> = {
+		type: 'lookup',
+		name: '_createdBy',
+		label: { en: 'Created by', pt_BR: 'Criado por' },
+		isSortable: true,
+		document: 'User',
+		descriptionFields: ['name', 'group.name'],
+		isInherited: true,
+	} as MetadataField<ModuleCreatedByType>;
 
-	@DateTimeField
-	_updatedAt!: Date;
+	readonly _updatedAt: MetadataField<Date> = {
+		type: 'dateTime',
+		name: '_updatedAt',
+		label: { pt_BR: 'Atualizado em', en: 'Updated At' },
+		isSortable: true,
+		isInherited: true,
+	} as MetadataField<Date>;
 
-	@LookupField<User>({ document: new User(), descriptionFields: ['name', 'group.name', 'active'] })
-	_updatedBy!: DocumentUser;
+	readonly _updatedBy: MetadataField<ModuleUpdatedByType> = {
+		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
+		document: 'User',
+		descriptionFields: ['name', 'group.name'],
+		type: 'lookup',
+		name: '_updatedBy',
+		isInherited: true,
+	} as MetadataField<ModuleUpdatedByType>;
 }
 
 export type DocumentType = typeof Document.prototype;
-
-// const x = new Document(
-// 	{
-// 		name: 'User',
-// 		collection: 'users',
-// 		label: {
-// 			en: 'User',
-// 			pt_BR: 'Usuário',
-// 		},
-// 		plurals: {
-// 			en: 'Users',
-// 			pt_BR: 'Usuários',
-// 		},
-// 	},
-// 	{ _id: '123' },
-// );
-
-// x._id = '123';
-// console.log(x._id);
-// console.log(x._id.type);
-
-// const x: Document = {
-// 	_id: 'my-id',
-// 	// test: ['text 1', 'text 2'],
-// 	// test2: 'text 3',
-// };
-
-// console.log(x._id); // 'my-id'
-// console.log(x._id.type); // FieldType.ObjectId
-
-// const x1 = KonectyDocument.create('Document', {
-// 	_id: 'my-id',
-// 	test: ['text 1', 'text 2'],
-// 	test2: 'text 3',
-// });

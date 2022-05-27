@@ -117,7 +117,7 @@ describe('Konecty command line tool create command', () => {
         `;
 		const packageJsonContent = `{ "version": "1.0.0" }`;
 		const inputFile = './metadata/User.json';
-		const outputFile = './types/User.ts';
+		const outputPath = './types';
 
 		mocketPath.resolve.mockReturnValue('/dev/null');
 
@@ -127,7 +127,7 @@ describe('Konecty command line tool create command', () => {
 
 		// Act
 		const program = createProgram();
-		program.parse(['node', 'konecty', 'create', 'class', inputFile, '-o', outputFile]);
+		program.parse(['node', 'konecty', 'create', 'class', inputFile, '-o', outputPath]);
 
 		// Assert
 		expect(mockedFs.writeFileSync.mock.calls.length).to.equal(1);

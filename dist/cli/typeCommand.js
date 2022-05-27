@@ -35,7 +35,7 @@ function _default({
   try {
     const metadata = JSON.parse(_fs.default.readFileSync(inputFile, 'utf-8'));
 
-    const outputFile = _path.default.resolve(__dirname, output ?? `./${metadata.name}.ts`);
+    const outputFile = _path.default.resolve(__dirname, output, `./${metadata.name}.ts`);
 
     const outputDir = _path.default.dirname(outputFile);
 

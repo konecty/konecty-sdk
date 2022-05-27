@@ -12,7 +12,6 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	const imports: { [key: string]: string[] } = {
 		TypeUtils: ['PickFromPath'],
 		Konecty: [],
-		FieldTypes: [],
 		Documents: [],
 	};
 	const documentConfig = [
@@ -46,20 +45,6 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 			imports.Documents.push(document as string);
 		});
 
-	// type MetadataField = {
-	// 	type: string;
-	// 	isList?: boolean;
-	// 	name: string;
-	// 	document: string;
-	// 	descriptionFields: string[];
-	// 	inheritedFields: {
-	// 		fieldName: string;
-	// 	}[];
-	// 	options?: {
-	// 		[lang: string]: string;
-	// 	};
-	// };
-
 	const lookupTypes = Object.values<MetadataField>(fields)
 		.filter(field => field.type === FieldType.lookup)
 		.map(
@@ -73,90 +58,6 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.filter(field => field.type === FieldType.picklist)
 		.filter(({ options }) => options != null)
 		.map(field => `export type ${name}${pascalCase(field.name)}Type = '${Object.keys(field.options ?? {}).join(`' | '`)}';`);
-
-	const pickListOptions: string[] = Object.values<MetadataField>(fields)
-		.filter(field => field.type === FieldType.picklist)
-		.filter(({ options }) => options != null)
-		.map(
-			field =>
-				`const ${camelCase(field.name)}Options: FieldOptions = ${JSON.stringify(field.options ?? {})} as FieldOptions;`,
-		);
-
-	// return `@PicklistField({ options: ${camelCase(field.name)}Type )`;
-
-	function getTypeDecorator(field: MetadataField): string {
-		switch (field.type) {
-			case FieldType.url:
-				imports.FieldTypes.push('UrlField');
-				return '@UrlField';
-			case FieldType.email:
-				imports.FieldTypes.push('EmailField');
-				return '@EmailField';
-			case FieldType.number:
-				imports.FieldTypes.push('NumberField');
-				return '@NumberField';
-			case FieldType.autoNumber:
-				imports.FieldTypes.push('AutoNumberField');
-				return '@AutoNumberField';
-			case FieldType.date:
-				imports.FieldTypes.push('DateField');
-				return '@DateField';
-			case FieldType.dateTime:
-				imports.FieldTypes.push('DateTimeField');
-				return '@DateTimeField';
-			case FieldType.money:
-				imports.FieldTypes.push('MoneyField');
-				return '@MoneyField';
-			case FieldType.boolean:
-				imports.FieldTypes.push('BooleanField');
-				return '@BooleanField';
-			case FieldType.address:
-				imports.FieldTypes.push('AddressField');
-				return '@AddressField';
-			case FieldType.personName:
-				imports.FieldTypes.push('PersonNameField');
-				return '@PersonNameField';
-			case FieldType.phone:
-				imports.FieldTypes.push('PhoneField');
-				return '@PhoneField';
-			case FieldType.picklist:
-				imports.FieldTypes.push('PicklistField');
-				return `@PicklistField({ options: ${camelCase(field.name)}Options })`;
-			case FieldType.lookup:
-				imports.FieldTypes.push('LookupField');
-				return `@LookupField<${field.document}>({ document: new ${field.document}()${
-					field.descriptionFields != null ? `, descriptionFields: ['${field.descriptionFields.join(`', '`)}']` : ''
-				}${
-					field.inheritedFields != null
-						? `, inheritedFields: ['${field.inheritedFields.map(({ fieldName }) => fieldName).join(`', '`)}']`
-						: ''
-				} })`;
-			case FieldType.ObjectId:
-				imports.FieldTypes.push('ObjectIdField');
-				return '@ObjectIdField';
-			case FieldType.encrypted:
-				imports.FieldTypes.push('EncryptedField');
-				return '@EncryptedField';
-			case FieldType.filter:
-				imports.FieldTypes.push('FilterField');
-				return '@FilterField';
-			case FieldType.richText:
-				imports.FieldTypes.push('RichTextField');
-				return '@RichTextField';
-			case FieldType.file:
-				imports.FieldTypes.push('FileField');
-				return '@FileField';
-			case FieldType.percentage:
-				imports.FieldTypes.push('PercentageField');
-				return '@PercentageField';
-			case FieldType.JSON:
-				imports.FieldTypes.push('JSONField');
-				return '@JSONField';
-			default:
-				imports.FieldTypes.push('TextField');
-				return '@TextField';
-		}
-	}
 
 	function getBaseType(field: MetadataField): string {
 		switch (field.type) {
@@ -176,7 +77,6 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 			case FieldType.dateTime:
 				return 'Date';
 			case FieldType.picklist:
-				imports.Konecty.push('FieldOptions');
 				return `${name}${pascalCase(field.name)}Type`;
 			case FieldType.email:
 				imports.Konecty.push('Email');
@@ -228,8 +128,9 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 
 	const classProperties: string[] = Object.values<MetadataField>(fields).reduce<string[]>((acc, field) => {
 		return acc.concat([
-			`${getTypeDecorator(field)}`,
-			`${field.name}!: ${getBaseType(field)}${getListIndicatorForType(field)};`,
+			`readonly ${field.name}:MetadataField<${getBaseType(field)}> = ${JSON.stringify(field)} as MetadataField<${getBaseType(
+				field,
+			)}>;`,
 		]);
 	}, []);
 
@@ -238,11 +139,9 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	const code = [
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
 		`import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Document'`,
+		`import { MetadataField } from 'types/metadata';`,
 	]
 		.concat(`import { ${Array.from(new Set(imports.Konecty)).sort().join(', ')} } from '@konecty/sdk/types';`)
-		.concat(
-			`import { ${Array.from(new Set(imports.FieldTypes)).sort().join(', ')} } from '@konecty/sdk/decorators/FieldTypes';`,
-		)
 		.concat(
 			Array.from(new Set(imports.Documents))
 				.filter(d => d !== name)
@@ -252,12 +151,11 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.concat(documentConfig)
 		.concat(lookupTypes)
 		.concat(pickListTypes)
-		.concat(pickListOptions)
-		.concat(`export interface ${name}Type extends KonectyDocument {`)
+		.concat(`export interface ${name} extends KonectyDocument {`)
 		.concat(interfaceProperties)
 		.concat(`}`)
-		.concat(`export class ${name} extends Document<${name}Type> implements ${name}Type {`)
-		.concat(`constructor(data?: ${name}Type) {super(${camelCase(name)}Config, data);}`)
+		.concat(`export class ${name}Module extends Document<${name}> {`)
+		.concat(`constructor() {super(${camelCase(name)}Config);}`)
 		.concat(classProperties)
 		.concat(`}`)
 		.join('\n');

@@ -1,4 +1,4 @@
-import { Document } from './Document';
+import { Document, KonectyDocument } from './Document';
 import { FieldOperators } from './FieldOperators';
 import { Paths, TypeFromPath } from './TypeUtils';
 
@@ -32,20 +32,6 @@ export type Label = {
 	[lang: string]: string;
 };
 
-// type FieldAllowedTypes = number
-// | string
-// | Email
-// | Date
-// | Money
-// | boolean
-// | Address
-// | PersonName
-// | Phone
-// | OptionsType
-// | LookupDescriptionType
-// | Filter
-// | FileDescriptor;
-
 export type Field<T> = {
 	document?: Document<T>;
 	descriptionFields?: (string | number | symbol)[];
@@ -60,27 +46,7 @@ export type Field<T> = {
 	validators?: FieldValidators<T>[];
 	get(): T;
 	set(value: T): void;
-	// readonly valid: boolean;
-	//  = {
-	// 	get() {
-	// 		if (this.validators != null) {
-	// 			return (
-	// 				re.test(target[propertyKey]) && descriptor.validators.every(v => v(target, propertyKey, target[propertyKey]))
-	// 			);
-	// 		}
-	// 		return true;
-	// 	},
-	// };
 	toString: (format?: string) => string | (() => string);
-	// = (format) => {
-
-	// 	if (this.type === FieldType.Date) {
-
-	// 	}
-	// 	return ''
-	// };
-
-	// value: T;
 };
 
 export type Email = {
@@ -130,7 +96,7 @@ type FilterRange<T> = {
 	less_or_equals: T;
 };
 
-export type FilterCondition<D extends Document<unknown>, K extends Paths<D>> = {
+export type FilterCondition<D extends KonectyDocument, K extends Paths<D>> = {
 	term: K;
 	operator: FieldOperators<K> extends never ? FieldOperators<TypeFromPath<D, K>> : FieldOperators<K>;
 	value:
@@ -141,7 +107,7 @@ export type FilterCondition<D extends Document<unknown>, K extends Paths<D>> = {
 	disabled: boolean;
 };
 
-export type Filter<T extends Document<unknown>> = {
+export type Filter<T extends KonectyDocument> = {
 	match: 'and' | 'or';
 	conditions: (Filter<T> | FilterCondition<T, Paths<T>>)[];
 };

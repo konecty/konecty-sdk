@@ -23,7 +23,7 @@ export default function ({ input, output }: CreateInterfaceOptions): void {
 
 	try {
 		const metadata: MetadataDocument = JSON.parse(fs.readFileSync(inputFile, 'utf-8')) as MetadataDocument;
-		const outputFile = path.resolve(__dirname, output ?? `./${metadata.name}.ts`);
+		const outputFile = path.resolve(__dirname, output, `./${metadata.name}.ts`);
 		const outputDir = path.dirname(outputFile);
 		mkdirp.sync(outputDir);
 

@@ -75,7 +75,7 @@ export type MetadataField<T = unknown> = {
 	size?: number;
 	label?: MetadataLabel;
 	options?: {
-		[key: string]: MetadataLabel;
+		[key: T]: MetadataLabel;
 	};
 	decimalSize?: number;
 	minSelected?: number;
