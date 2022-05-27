@@ -7,7 +7,7 @@ exports.Group = void 0;
 
 var _FieldTypes = require("./decorators/FieldTypes");
 
-var _Document = require("./Document");
+var _Module = require("./Module");
 
 var _class, _descriptor, _descriptor2, _descriptor3;
 
@@ -29,7 +29,7 @@ const groupConfig = {
     pt_BR: 'Grupos'
   }
 };
-let Group = (_class = class Group extends _Document.Document {
+let Group = (_class = class Group extends _Module.Module {
   constructor(data) {
     super(groupConfig, data);
 

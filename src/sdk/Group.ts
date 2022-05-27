@@ -1,5 +1,5 @@
 import { AutoNumberField, BooleanField, TextField } from './decorators/FieldTypes';
-import { Document, DocumentConfig, KonectyDocument } from './Document';
+import { DocumentConfig, KonectyDocument, Module } from './Module';
 
 const groupConfig: DocumentConfig = {
 	name: 'Group',
@@ -20,7 +20,7 @@ interface GroupType extends KonectyDocument {
 	active?: boolean;
 }
 
-export class Group extends Document<GroupType> implements GroupType {
+export class Group extends Module<GroupType> implements GroupType {
 	constructor(data?: GroupType) {
 		super(groupConfig, data);
 	}

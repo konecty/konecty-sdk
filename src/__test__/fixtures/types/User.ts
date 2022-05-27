@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Document';
+import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { Address, Email, FileDescriptor, Phone } from '@konecty/sdk/types';
 import { Group } from './Group';

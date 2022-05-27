@@ -7,9 +7,9 @@ exports.User = void 0;
 
 var _FieldTypes = require("./decorators/FieldTypes");
 
-var _Document = require("./Document");
-
 var _Group = require("./Group");
+
+var _Module = require("./Module");
 
 var _dec, _class, _descriptor, _descriptor2, _descriptor3, _descriptor4, _descriptor5, _descriptor6;
 
@@ -34,7 +34,7 @@ const userConfig = {
 let User = (_dec = (0, _FieldTypes.LookupField)({
   document: new _Group.Group(),
   descriptionFields: ['name']
-}), (_class = class User extends _Document.Document {
+}), (_class = class User extends _Module.Module {
   constructor(data) {
     super(userConfig, data);
 

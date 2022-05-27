@@ -138,7 +138,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 
 	const code = [
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
-		`import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Document'`,
+		`import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Module'`,
 		`import { MetadataField } from 'types/metadata';`,
 	]
 		.concat(`import { ${Array.from(new Set(imports.Konecty)).sort().join(', ')} } from '@konecty/sdk/types';`)

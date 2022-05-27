@@ -1,6 +1,6 @@
 import { AutoNumberField, BooleanField, EmailField, LookupField, TextField } from './decorators/FieldTypes';
-import { Document, DocumentConfig, KonectyDocument } from './Document';
 import { Group } from './Group';
+import { DocumentConfig, KonectyDocument, Module } from './Module';
 import { Email as KonectyEmail } from './types';
 
 const userConfig: DocumentConfig = {
@@ -27,7 +27,7 @@ export interface UserType extends KonectyDocument {
 	active?: boolean;
 }
 
-export class User extends Document<UserType> implements UserType {
+export class User extends Module<UserType> implements UserType {
 	constructor(data?: UserType) {
 		super(userConfig, data);
 	}

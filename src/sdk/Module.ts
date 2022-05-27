@@ -26,7 +26,7 @@ export interface KonectyDocument {
 
 export type DocumentUser = PickFromPath<User, '_id' | 'name' | 'group.name' | 'active'>;
 
-export abstract class Document<T> {
+export abstract class Module<T> {
 	#config: DocumentConfig;
 
 	constructor(config: DocumentConfig) {
@@ -91,4 +91,4 @@ export abstract class Document<T> {
 	} as MetadataField<ModuleUpdatedByType>;
 }
 
-export type DocumentType = typeof Document.prototype;
+export type DocumentType = typeof Module.prototype;
