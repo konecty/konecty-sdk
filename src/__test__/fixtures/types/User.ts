@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import { Address, Email, FileDescriptor, Phone } from '@konecty/sdk/types';
 import { Group } from './Group';
 import { Queue } from './Queue';
@@ -17,8 +18,8 @@ const userConfig: ModuleConfig = {
 		pt_BR: 'Usuários',
 	},
 };
-export type UserGroupType = PickFromPath<Group, 'name'>;
-export type UserGroupsType = PickFromPath<Group, 'name'>;
+export type UserGroupType = { name: string };
+export type UserGroupsType = { name: string };
 export type UserRoleType = PickFromPath<Role, 'name'>;
 export type UserCreatedByType = { name: string; group: { name: unknown } };
 export type UserUpdatedByType = { name: string; group: { name: unknown } };
@@ -118,8 +119,8 @@ export interface User extends KonectyDocument<UserUserType[], UserCreatedByType,
 	type: string;
 }
 export class UserModule extends Module<User, UserUserType[], UserCreatedByType, UserUpdatedByType> {
-	constructor() {
-		super(userConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(userConfig, clientOptions);
 	}
 	readonly active: MetadataField<boolean> = {
 		defaultValue: true,

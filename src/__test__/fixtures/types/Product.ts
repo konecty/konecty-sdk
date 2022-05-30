@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FileDescriptor, Money } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { User } from './User';
@@ -17,9 +18,9 @@ const productConfig: ModuleConfig = {
 	},
 };
 export type ProductCampaignType = PickFromPath<Campaign, 'code' | 'name'>;
-export type ProductCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type ProductUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type ProductUserType = PickFromPath<User, 'name' | 'group.name'>;
+export type ProductCreatedByType = { name: string; group: { name: unknown } };
+export type ProductUpdatedByType = { name: string; group: { name: unknown } };
+export type ProductUserType = { name: string; group: { name: unknown } };
 export type ProductStatusType = 'Rascunho' | 'Ativo' | 'Inativo' | 'Não Realizado';
 export type ProductTypeType = 'Apartamento' | 'Casa' | 'Terreno';
 export interface Product extends KonectyDocument<ProductUserType[], ProductCreatedByType, ProductUpdatedByType> {
@@ -53,8 +54,8 @@ export interface Product extends KonectyDocument<ProductUserType[], ProductCreat
 	campaignTags: string[];
 }
 export class ProductModule extends Module<Product, ProductUserType[], ProductCreatedByType, ProductUpdatedByType> {
-	constructor() {
-		super(productConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(productConfig, clientOptions);
 	}
 	readonly active: MetadataField<boolean> = {
 		type: 'boolean',

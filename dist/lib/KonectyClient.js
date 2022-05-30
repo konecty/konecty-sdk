@@ -8,9 +8,16 @@ exports.KonectyClient = void 0;
 class KonectyClient {
   constructor(options) {
     this._options = void 0;
-    this._options = options;
+
+    if (options != null) {
+      this._options = options;
+      return;
+    }
+
+    this._options = KonectyClient.defaults;
   }
 
 }
 
 exports.KonectyClient = KonectyClient;
+KonectyClient.defaults = void 0;

@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import { Address, Email, FileDescriptor, PersonName, Phone } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { Channel } from './Channel';
@@ -22,9 +23,9 @@ export type ContactMainContactType = { code: number; name: { full: unknown } };
 export type ContactQueueType = PickFromPath<Queue, 'name'>;
 export type ContactCampaignType = PickFromPath<Campaign, 'code' | 'name' | 'type'>;
 export type ContactStaffType = { code: number; name: { full: unknown } };
-export type ContactCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type ContactUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type ContactUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
+export type ContactCreatedByType = { name: PersonName; group: { name: unknown } };
+export type ContactUpdatedByType = { name: PersonName; group: { name: unknown } };
+export type ContactUserType = { name: PersonName; group: { name: unknown } };
 export type ContactChannelType = PickFromPath<Channel, 'name'>;
 export type ContactSourceType = PickFromPath<Channel, 'name'>;
 export type ContactPriorityType = 'Alta' | 'Média' | 'Baixa';
@@ -78,8 +79,8 @@ export interface Contact extends KonectyDocument<ContactUserType[], ContactCreat
 	activeOpportunities: number;
 }
 export class ContactModule extends Module<Contact, ContactUserType[], ContactCreatedByType, ContactUpdatedByType> {
-	constructor() {
-		super(contactConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(contactConfig, clientOptions);
 	}
 	readonly mainContact: MetadataField<ContactMainContactType> = {
 		label: { en: 'Main Contact', pt_BR: 'Contato Principal' },

@@ -21,8 +21,8 @@ const userConfig = {
 };
 
 class UserModule extends _Module.Module {
-  constructor() {
-    super(userConfig);
+  constructor(clientOptions) {
+    super(userConfig, clientOptions);
     this.code = {
       type: 'autoNumber',
       name: 'code',
@@ -126,7 +126,9 @@ class UserModule extends _Module.Module {
       isSortable: true,
       isInherited: true
     };
-  }
+  } // #region base properties
+  //#endregion
+
 
 }
 

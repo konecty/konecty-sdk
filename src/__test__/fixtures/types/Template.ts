@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FileDescriptor } from '@konecty/sdk/types';
 import { User } from './User';
 const templateConfig: ModuleConfig = {
@@ -15,9 +16,9 @@ const templateConfig: ModuleConfig = {
 		pt_BR: 'Modelos de email',
 	},
 };
-export type TemplateCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type TemplateUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type TemplateUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
+export type TemplateCreatedByType = { name: string; group: { name: unknown } };
+export type TemplateUpdatedByType = { name: string; group: { name: unknown } };
+export type TemplateUserType = { name: string; group: { name: unknown } };
 export type TemplateTypeType = 'email';
 export interface Template extends KonectyDocument<TemplateUserType[], TemplateCreatedByType, TemplateUpdatedByType> {
 	code: number;
@@ -37,8 +38,8 @@ export interface Template extends KonectyDocument<TemplateUserType[], TemplateCr
 	attachment: FileDescriptor[];
 }
 export class TemplateModule extends Module<Template, TemplateUserType[], TemplateCreatedByType, TemplateUpdatedByType> {
-	constructor() {
-		super(templateConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(templateConfig, clientOptions);
 	}
 	readonly code: MetadataField<number> = {
 		type: 'autoNumber',

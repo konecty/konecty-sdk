@@ -50,7 +50,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.filter(field => field.type === FieldType.lookup)
 		.map(field => {
 			const fieldName = pascalCase(field.name);
-			if (name === field.document) {
+			if (['User', 'Group'].includes(field.document ?? '') || name === field.document) {
 				const result = `export type ${name}${fieldName}Type = {${(field.descriptionFields ?? [])
 					.reduce<string[]>((acc, field) => {
 						if (/\./.test(field)) {
@@ -183,6 +183,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
 		`import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module'`,
 		`import { MetadataField } from 'types/metadata';`,
+		`import { KonectyClientOptions } from 'lib/KonectyClient';`,
 	]
 		.concat(`import { ${Array.from(new Set(imports.Konecty)).sort().join(', ')} } from '@konecty/sdk/types';`)
 		.concat(
@@ -198,7 +199,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.concat(interfaceProperties)
 		.concat(`}`)
 		.concat(`export class ${name}Module extends Module<${name}${userTypes.length > 0 ? `, ${userTypes.join(', ')}` : ''}> {`)
-		.concat(`constructor() {super(${camelCase(name)}Config);}`)
+		.concat(`constructor(clientOptions?: KonectyClientOptions) {super(${camelCase(name)}Config, clientOptions);}`)
 		.concat(classProperties)
 		.concat(`}`)
 		.join('\n');

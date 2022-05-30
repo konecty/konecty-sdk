@@ -1,6 +1,6 @@
+import { KonectyClient, KonectyClientOptions } from 'lib/KonectyClient';
 import 'reflect-metadata';
 import { MetadataField } from 'types/metadata';
-import { FieldType } from './types';
 import { ArrElement, PickFromPath } from './TypeUtils';
 import { User } from './User';
 
@@ -31,9 +31,11 @@ export type DocumentUser = PickFromPath<User, '_id' | 'name' | 'group.name' | 'a
 
 export abstract class Module<T extends KonectyDocument<U, C, D>, U = never, C = never, D = never> {
 	#config: ModuleConfig;
+	#client: KonectyClient;
 
-	constructor(config: ModuleConfig) {
+	constructor(config: ModuleConfig, clientOptons?: KonectyClientOptions) {
 		this.#config = config;
+		this.#client = new KonectyClient(clientOptons);
 	}
 
 	get config(): ModuleConfig {
@@ -41,10 +43,6 @@ export abstract class Module<T extends KonectyDocument<U, C, D>, U = never, C = 
 	}
 
 	_id!: string;
-
-	getType(propertyKey: string): FieldType {
-		return Reflect.getMetadata('type', this, propertyKey);
-	}
 
 	readonly _user: MetadataField<ModuleUserType> | MetadataField<ArrElement<T['_user']>> = {
 		descriptionFields: ['name', 'group.name', 'active'],

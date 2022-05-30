@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import {} from '@konecty/sdk/types';
 import { User } from './User';
 const channelConfig: ModuleConfig = {
@@ -15,8 +16,8 @@ const channelConfig: ModuleConfig = {
 		pt_BR: 'Canais',
 	},
 };
-export type ChannelCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type ChannelUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
+export type ChannelCreatedByType = { name: string; group: { name: unknown } };
+export type ChannelUpdatedByType = { name: string; group: { name: unknown } };
 export interface Channel extends KonectyDocument<never, ChannelCreatedByType, ChannelUpdatedByType> {
 	name: string;
 	identifier: string;
@@ -26,8 +27,8 @@ export interface Channel extends KonectyDocument<never, ChannelCreatedByType, Ch
 	_updatedBy: ChannelUpdatedByType;
 }
 export class ChannelModule extends Module<Channel, never, ChannelCreatedByType, ChannelUpdatedByType> {
-	constructor() {
-		super(channelConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(channelConfig, clientOptions);
 	}
 	readonly name: MetadataField<string> = {
 		type: 'text',

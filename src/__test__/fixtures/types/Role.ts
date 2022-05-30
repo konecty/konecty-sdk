@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import {} from '@konecty/sdk/types';
 import { User } from './User';
 const roleConfig: ModuleConfig = {
@@ -16,9 +17,9 @@ const roleConfig: ModuleConfig = {
 	},
 };
 export type RoleParentsType = { name: string };
-export type RoleCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type RoleUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type RoleUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
+export type RoleCreatedByType = { name: string; group: { name: unknown } };
+export type RoleUpdatedByType = { name: string; group: { name: unknown } };
+export type RoleUserType = { name: string; group: { name: unknown } };
 export interface Role extends KonectyDocument<RoleUserType[], RoleCreatedByType, RoleUpdatedByType> {
 	access: object;
 	admin: boolean;
@@ -31,8 +32,8 @@ export interface Role extends KonectyDocument<RoleUserType[], RoleCreatedByType,
 	_user: RoleUserType[];
 }
 export class RoleModule extends Module<Role, RoleUserType[], RoleCreatedByType, RoleUpdatedByType> {
-	constructor() {
-		super(roleConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(roleConfig, clientOptions);
 	}
 	readonly access: MetadataField<object> = {
 		name: 'access',

@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import { Filter } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { User } from './User';
@@ -16,9 +17,9 @@ const queueConfig: ModuleConfig = {
 		en: 'Queues',
 	},
 };
-export type QueueCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type QueueUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type QueueUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
+export type QueueCreatedByType = { name: string; group: { name: unknown } };
+export type QueueUpdatedByType = { name: string; group: { name: unknown } };
+export type QueueUserType = { name: string; group: { name: unknown }; active: boolean };
 export type QueueTargetCampaignType = PickFromPath<Campaign, 'code' | 'name'>;
 export type QueueTypeType = 'Chat' | 'Telefone' | 'Formulario' | 'Email';
 export interface Queue extends KonectyDocument<QueueUserType[], QueueCreatedByType, QueueUpdatedByType> {
@@ -38,8 +39,8 @@ export interface Queue extends KonectyDocument<QueueUserType[], QueueCreatedByTy
 	targetCampaign: QueueTargetCampaignType;
 }
 export class QueueModule extends Module<Queue, QueueUserType[], QueueCreatedByType, QueueUpdatedByType> {
-	constructor() {
-		super(queueConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(queueConfig, clientOptions);
 	}
 	readonly active: MetadataField<boolean> = {
 		type: 'boolean',

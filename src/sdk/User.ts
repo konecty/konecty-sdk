@@ -1,3 +1,4 @@
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import { MetadataField } from 'types/metadata';
 import { Group } from './Group';
 import { KonectyDocument, Module, ModuleConfig } from './Module';
@@ -5,6 +6,10 @@ import { Email, Email as KonectyEmail } from './types';
 import { PickFromPath } from './TypeUtils';
 export type UserGroupType = PickFromPath<Group, 'name'>;
 export type UserGroupsType = PickFromPath<Group, 'name'>;
+
+export type UserCreatedByType = { name: string; group: { name: unknown } };
+export type UserUpdatedByType = { name: string; group: { name: unknown } };
+export type UserUserType = { name: string; group: { name: unknown }; active: boolean };
 
 const userConfig: ModuleConfig = {
 	name: 'User',
@@ -21,7 +26,7 @@ const userConfig: ModuleConfig = {
 
 export type UserGroup = Pick<Group, '_id' | 'name'>;
 
-export interface User extends KonectyDocument {
+export interface User extends KonectyDocument<UserUserType[], UserCreatedByType, UserUpdatedByType> {
 	code?: number;
 	username?: string;
 	emails?: KonectyEmail[];
@@ -30,11 +35,12 @@ export interface User extends KonectyDocument {
 	active?: boolean;
 }
 
-export class UserModule extends Module<User> {
-	constructor() {
-		super(userConfig);
+export class UserModule extends Module<User, UserUserType[], UserCreatedByType, UserUpdatedByType> {
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(userConfig, clientOptions);
 	}
 
+	// #region base properties
 	readonly code: MetadataField<number> = {
 		type: 'autoNumber',
 		name: 'code',
@@ -115,4 +121,5 @@ export class UserModule extends Module<User> {
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<boolean>;
+	//#endregion
 }

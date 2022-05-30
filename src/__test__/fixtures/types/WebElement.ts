@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FileDescriptor } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { User } from './User';
@@ -20,9 +21,9 @@ export type WebElementCampaignType = PickFromPath<Campaign, 'code' | 'name' | 't
 export type WebElementWebElementType = { name: string };
 export type WebElementParentsType = { name: string };
 export type WebElementParentType = { code: number; name: string };
-export type WebElementCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type WebElementUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type WebElementUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
+export type WebElementCreatedByType = { name: string; group: { name: unknown } };
+export type WebElementUpdatedByType = { name: string; group: { name: unknown } };
+export type WebElementUserType = { name: string; group: { name: unknown } };
 export type WebElementLinkTargetType = '_parent' | '_blank' | '_self' | '_top';
 export type WebElementPriorityType = 'Média' | 'Baixa' | 'Alta';
 export type WebElementStatusType = 'Ativo' | 'Inativo';
@@ -55,8 +56,8 @@ export interface WebElement extends KonectyDocument<WebElementUserType[], WebEle
 	_user: WebElementUserType[];
 }
 export class WebElementModule extends Module<WebElement, WebElementUserType[], WebElementCreatedByType, WebElementUpdatedByType> {
-	constructor() {
-		super(webElementConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(webElementConfig, clientOptions);
 	}
 	readonly campaign: MetadataField<WebElementCampaignType> = {
 		type: 'lookup',

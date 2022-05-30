@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FileDescriptor, Filter, Phone } from '@konecty/sdk/types';
 import { Contact } from './Contact';
 import { Product } from './Product';
@@ -21,16 +22,16 @@ const campaignConfig: ModuleConfig = {
 	},
 };
 export type CampaignMainCampaignType = { code: number; name: string };
-export type CampaignCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type CampaignUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type CampaignUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
+export type CampaignCreatedByType = { name: string; group: { name: unknown } };
+export type CampaignUpdatedByType = { name: string; group: { name: unknown } };
+export type CampaignUserType = { name: string; group: { name: unknown } };
 export type CampaignProductsType = PickFromPath<Product, 'code' | 'name'>;
 export type CampaignWebElementType = PickFromPath<WebElement, 'code' | 'name' | 'type'>;
 export type CampaignProductType = PickFromPath<Product, 'code' | 'name'>;
 export type CampaignTargetQueueType = PickFromPath<Queue, 'name'>;
 export type CampaignChatQueueType = PickFromPath<Queue, 'name'>;
 export type CampaignFirstTouchTemplateType = PickFromPath<Template, 'code' | 'name'>;
-export type CampaignFirstTouchSenderType = PickFromPath<User, 'name' | 'group.name'>;
+export type CampaignFirstTouchSenderType = { name: string; group: { name: unknown } };
 export type CampaignStatusType = 'Nova' | 'Em Andamento' | 'Concluída' | 'Cancelada';
 export type CampaignTypeType =
 	| 'Anúncio'
@@ -89,8 +90,8 @@ export interface Campaign extends KonectyDocument<CampaignUserType[], CampaignCr
 	content: string[];
 }
 export class CampaignModule extends Module<Campaign, CampaignUserType[], CampaignCreatedByType, CampaignUpdatedByType> {
-	constructor() {
-		super(campaignConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(campaignConfig, clientOptions);
 	}
 	readonly mainCampaign: MetadataField<CampaignMainCampaignType> = {
 		label: { en: 'Main Campaign', pt_BR: 'Campanha Principal' },

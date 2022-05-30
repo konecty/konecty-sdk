@@ -3,8 +3,13 @@ export interface KonectyClientOptions {
 	accessKey: string;
 }
 export class KonectyClient {
+	static defaults: KonectyClientOptions;
 	_options: KonectyClientOptions;
-	constructor(options: KonectyClientOptions) {
-		this._options = options;
+	constructor(options?: KonectyClientOptions) {
+		if (options != null) {
+			this._options = options;
+			return;
+		}
+		this._options = KonectyClient.defaults;
 	}
 }

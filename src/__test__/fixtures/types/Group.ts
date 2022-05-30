@@ -1,6 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
+import { KonectyClientOptions } from 'lib/KonectyClient';
 import {} from '@konecty/sdk/types';
 import { User } from './User';
 const groupConfig: ModuleConfig = {
@@ -15,9 +16,9 @@ const groupConfig: ModuleConfig = {
 		pt_BR: 'Grupos',
 	},
 };
-export type GroupCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type GroupUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type GroupUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
+export type GroupCreatedByType = { name: string; group: { name: unknown } };
+export type GroupUpdatedByType = { name: string; group: { name: unknown } };
+export type GroupUserType = { name: string; group: { name: unknown }; active: boolean };
 export interface Group extends KonectyDocument<GroupUserType[], GroupCreatedByType, GroupUpdatedByType> {
 	active: boolean;
 	name: string;
@@ -28,8 +29,8 @@ export interface Group extends KonectyDocument<GroupUserType[], GroupCreatedByTy
 	_user: GroupUserType[];
 }
 export class GroupModule extends Module<Group, GroupUserType[], GroupCreatedByType, GroupUpdatedByType> {
-	constructor() {
-		super(groupConfig);
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(groupConfig, clientOptions);
 	}
 	readonly active: MetadataField<boolean> = {
 		label: { en: 'Active', pt_BR: 'Ativo' },
