@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -90,6 +90,7 @@ export interface Campaign extends KonectyDocument<CampaignUserType[], CampaignCr
 	content: string[];
 }
 export type CampaignFilterConditions =
+	| FilterConditions
 	| FilterConditionValue<'mainCampaign', FieldOperators<'lookup'>, CampaignMainCampaignType>
 	| FilterConditionValue<'mainCampaign._id', FieldOperators<'lookup._id'>, CampaignMainCampaignType>
 	| FilterConditionValue<'campaignTarget', FieldOperators<'filter'>, KonectyFilter<Contact>>

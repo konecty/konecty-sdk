@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -79,6 +79,7 @@ export interface Contact extends KonectyDocument<ContactUserType[], ContactCreat
 	activeOpportunities: number;
 }
 export type ContactFilterConditions =
+	| FilterConditions
 	| FilterConditionValue<'mainContact', FieldOperators<'lookup'>, ContactMainContactType>
 	| FilterConditionValue<'mainContact._id', FieldOperators<'lookup._id'>, ContactMainContactType>
 	| FilterConditionValue<'contactAttempts', FieldOperators<'number'>, number>

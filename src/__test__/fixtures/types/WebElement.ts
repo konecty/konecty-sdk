@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -56,6 +56,7 @@ export interface WebElement extends KonectyDocument<WebElementUserType[], WebEle
 	_user: WebElementUserType[];
 }
 export type WebElementFilterConditions =
+	| FilterConditions
 	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, WebElementCampaignType>
 	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, WebElementCampaignType>
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>

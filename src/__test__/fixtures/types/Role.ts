@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -32,6 +32,7 @@ export interface Role extends KonectyDocument<RoleUserType[], RoleCreatedByType,
 	_user: RoleUserType[];
 }
 export type RoleFilterConditions =
+	| FilterConditions
 	| FilterConditionValue<'admin', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'name', FieldOperators<'text'>, string>
 	| FilterConditionValue<'parents', FieldOperators<'lookup'>, RoleParentsType>

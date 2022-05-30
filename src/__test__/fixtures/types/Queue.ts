@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -39,6 +39,7 @@ export interface Queue extends KonectyDocument<QueueUserType[], QueueCreatedByTy
 	targetCampaign: QueueTargetCampaignType;
 }
 export type QueueFilterConditions =
+	| FilterConditions
 	| FilterConditionValue<'active', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'count', FieldOperators<'number'>, number>
 	| FilterConditionValue<'currentCount', FieldOperators<'number'>, number>

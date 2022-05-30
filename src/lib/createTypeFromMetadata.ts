@@ -228,7 +228,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 
 	const code = [
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
-		`import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module'`,
+		`import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module'`,
 		`import { MetadataField } from 'types/metadata';`,
 		`import { KonectyClientOptions } from 'lib/KonectyClient';`,
 		`import { FieldOperators } from '@konecty/sdk/FieldOperators';`,
@@ -247,6 +247,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.concat(interfaceProperties)
 		.concat(`}`)
 		.concat(`export type ${name}FilterConditions =`)
+		.concat(`| FilterConditions`)
 		.concat(filterConditions)
 		.concat(
 			`export class ${name}Module extends KonectyModule<${name}, ${name}FilterConditions${

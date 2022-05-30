@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -38,6 +38,7 @@ export interface Template extends KonectyDocument<TemplateUserType[], TemplateCr
 	attachment: FileDescriptor[];
 }
 export type TemplateFilterConditions =
+	| FilterConditions
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
 	| FilterConditionValue<'name', FieldOperators<'text'>, string>
 	| FilterConditionValue<'type', FieldOperators<'picklist'>, TemplateTypeType>

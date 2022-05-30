@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -119,6 +119,7 @@ export interface User extends KonectyDocument<UserUserType[], UserCreatedByType,
 	type: string;
 }
 export type UserFilterConditions =
+	| FilterConditions
 	| FilterConditionValue<'active', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'nickname', FieldOperators<'text'>, string>
 	| FilterConditionValue<'pictures', FieldOperators<'file'>, FileDescriptor>

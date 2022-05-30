@@ -1,5 +1,5 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -54,6 +54,7 @@ export interface Product extends KonectyDocument<ProductUserType[], ProductCreat
 	campaignTags: string[];
 }
 export type ProductFilterConditions =
+	| FilterConditions
 	| FilterConditionValue<'active', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'supplierUpdatedChanged', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
