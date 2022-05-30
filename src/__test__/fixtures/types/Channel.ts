@@ -1,9 +1,9 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import {} from '@konecty/sdk/types';
-import { User } from './User';
 const channelConfig: ModuleConfig = {
 	name: 'Channel',
 	collection: 'data.Channel',
@@ -26,7 +26,22 @@ export interface Channel extends KonectyDocument<never, ChannelCreatedByType, Ch
 	_updatedAt: Date;
 	_updatedBy: ChannelUpdatedByType;
 }
-export class ChannelModule extends Module<Channel, never, ChannelCreatedByType, ChannelUpdatedByType> {
+export type ChannelFilterConditions =
+	| FilterConditionValue<'name', FieldOperators<'text'>, string>
+	| FilterConditionValue<'identifier', FieldOperators<'text'>, string>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, ChannelCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, ChannelCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, ChannelUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, ChannelUpdatedByType>;
+export class ChannelModule extends KonectyModule<
+	Channel,
+	ChannelFilterConditions,
+	never,
+	ChannelCreatedByType,
+	ChannelUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(channelConfig, clientOptions);
 	}

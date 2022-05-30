@@ -1,9 +1,9 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import {} from '@konecty/sdk/types';
-import { User } from './User';
 const groupConfig: ModuleConfig = {
 	name: 'Group',
 	collection: 'data.Group',
@@ -28,7 +28,24 @@ export interface Group extends KonectyDocument<GroupUserType[], GroupCreatedByTy
 	_updatedBy: GroupUpdatedByType;
 	_user: GroupUserType[];
 }
-export class GroupModule extends Module<Group, GroupUserType[], GroupCreatedByType, GroupUpdatedByType> {
+export type GroupFilterConditions =
+	| FilterConditionValue<'active', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'name', FieldOperators<'text'>, string>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, GroupCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, GroupCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, GroupUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, GroupUpdatedByType>
+	| FilterConditionValue<'_user', FieldOperators<'lookup'>, GroupUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, GroupUserType>;
+export class GroupModule extends KonectyModule<
+	Group,
+	GroupFilterConditions,
+	GroupUserType[],
+	GroupCreatedByType,
+	GroupUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(groupConfig, clientOptions);
 	}

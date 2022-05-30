@@ -1,10 +1,10 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
-import { User } from './User';
 const webElementConfig: ModuleConfig = {
 	name: 'WebElement',
 	collection: 'data.WebElement',
@@ -55,7 +55,46 @@ export interface WebElement extends KonectyDocument<WebElementUserType[], WebEle
 	_updatedBy: WebElementUpdatedByType;
 	_user: WebElementUserType[];
 }
-export class WebElementModule extends Module<WebElement, WebElementUserType[], WebElementCreatedByType, WebElementUpdatedByType> {
+export type WebElementFilterConditions =
+	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, WebElementCampaignType>
+	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, WebElementCampaignType>
+	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
+	| FilterConditionValue<'endAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'file', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'html', FieldOperators<'richText'>, string>
+	| FilterConditionValue<'markdown', FieldOperators<'text'>, string>
+	| FilterConditionValue<'linkLabel', FieldOperators<'text'>, string>
+	| FilterConditionValue<'link', FieldOperators<'text'>, string>
+	| FilterConditionValue<'slug', FieldOperators<'text'>, string>
+	| FilterConditionValue<'author', FieldOperators<'text'>, string>
+	| FilterConditionValue<'linkTarget', FieldOperators<'picklist'>, WebElementLinkTargetType>
+	| FilterConditionValue<'name', FieldOperators<'text'>, string>
+	| FilterConditionValue<'order', FieldOperators<'number'>, number>
+	| FilterConditionValue<'priority', FieldOperators<'picklist'>, WebElementPriorityType>
+	| FilterConditionValue<'startAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'status', FieldOperators<'picklist'>, WebElementStatusType>
+	| FilterConditionValue<'type', FieldOperators<'picklist'>, WebElementTypeType>
+	| FilterConditionValue<'webElement', FieldOperators<'lookup'>, WebElementWebElementType>
+	| FilterConditionValue<'webElement._id', FieldOperators<'lookup._id'>, WebElementWebElementType>
+	| FilterConditionValue<'parents', FieldOperators<'lookup'>, WebElementParentsType>
+	| FilterConditionValue<'parents._id', FieldOperators<'lookup._id'>, WebElementParentsType>
+	| FilterConditionValue<'parent', FieldOperators<'lookup'>, WebElementParentType>
+	| FilterConditionValue<'parent._id', FieldOperators<'lookup._id'>, WebElementParentType>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, WebElementCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, WebElementCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, WebElementUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, WebElementUpdatedByType>
+	| FilterConditionValue<'_user', FieldOperators<'lookup'>, WebElementUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, WebElementUserType>;
+export class WebElementModule extends KonectyModule<
+	WebElement,
+	WebElementFilterConditions,
+	WebElementUserType[],
+	WebElementCreatedByType,
+	WebElementUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(webElementConfig, clientOptions);
 	}

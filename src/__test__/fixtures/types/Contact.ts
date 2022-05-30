@@ -1,12 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { Address, Email, FileDescriptor, PersonName, Phone } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { Channel } from './Channel';
 import { Queue } from './Queue';
-import { User } from './User';
 const contactConfig: ModuleConfig = {
 	name: 'Contact',
 	collection: 'data.Contact',
@@ -78,7 +78,73 @@ export interface Contact extends KonectyDocument<ContactUserType[], ContactCreat
 	lastEmailSentAt: Date;
 	activeOpportunities: number;
 }
-export class ContactModule extends Module<Contact, ContactUserType[], ContactCreatedByType, ContactUpdatedByType> {
+export type ContactFilterConditions =
+	| FilterConditionValue<'mainContact', FieldOperators<'lookup'>, ContactMainContactType>
+	| FilterConditionValue<'mainContact._id', FieldOperators<'lookup._id'>, ContactMainContactType>
+	| FilterConditionValue<'contactAttempts', FieldOperators<'number'>, number>
+	| FilterConditionValue<'invalidAttempts', FieldOperators<'number'>, number>
+	| FilterConditionValue<'description', FieldOperators<'text'>, string>
+	| FilterConditionValue<'priority', FieldOperators<'picklist'>, ContactPriorityType>
+	| FilterConditionValue<'queue', FieldOperators<'lookup'>, ContactQueueType>
+	| FilterConditionValue<'queue._id', FieldOperators<'lookup._id'>, ContactQueueType>
+	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, ContactCampaignType>
+	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, ContactCampaignType>
+	| FilterConditionValue<'referrerURL', FieldOperators<'url'>, string>
+	| FilterConditionValue<'doNotCall', FieldOperators<'picklist'>, ContactDoNotCallType>
+	| FilterConditionValue<'staff', FieldOperators<'lookup'>, ContactStaffType>
+	| FilterConditionValue<'staff._id', FieldOperators<'lookup._id'>, ContactStaffType>
+	| FilterConditionValue<'type', FieldOperators<'picklist'>, ContactTypeType>
+	| FilterConditionValue<'address.country', FieldOperators<'address.country'>, string>
+	| FilterConditionValue<'address.state', FieldOperators<'address.state'>, string>
+	| FilterConditionValue<'address.city', FieldOperators<'address.city'>, string>
+	| FilterConditionValue<'address.district', FieldOperators<'address.district'>, string>
+	| FilterConditionValue<'address.place', FieldOperators<'address.place'>, string>
+	| FilterConditionValue<'address.number', FieldOperators<'address.number'>, string>
+	| FilterConditionValue<'address.postalCode', FieldOperators<'address.postalCode'>, string>
+	| FilterConditionValue<'address.complement', FieldOperators<'address.complement'>, string>
+	| FilterConditionValue<'address.geolocation.0', FieldOperators<'address.geolocation.0'>, number>
+	| FilterConditionValue<'address.geolocation.1', FieldOperators<'address.geolocation.1'>, number>
+	| FilterConditionValue<'password', FieldOperators<'encrypted'>, string>
+	| FilterConditionValue<'birthdate', FieldOperators<'date'>, Date>
+	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
+	| FilterConditionValue<'email.address', FieldOperators<'email.address'>, string>
+	| FilterConditionValue<'emailFrequence', FieldOperators<'picklist'>, ContactEmailFrequenceType>
+	| FilterConditionValue<'legalPerson', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'mailFrequence', FieldOperators<'picklist'>, ContactMailFrequenceType>
+	| FilterConditionValue<'name.first', FieldOperators<'personName.first'>, string>
+	| FilterConditionValue<'name.last', FieldOperators<'personName.last'>, string>
+	| FilterConditionValue<'name.full', FieldOperators<'personName.full'>, string>
+	| FilterConditionValue<'verificationToken', FieldOperators<'text'>, string>
+	| FilterConditionValue<'notes', FieldOperators<'text'>, string>
+	| FilterConditionValue<'phone.phoneNumber', FieldOperators<'phone.phoneNumber'>, string>
+	| FilterConditionValue<'phone.countryCode', FieldOperators<'phone.countryCode'>, string>
+	| FilterConditionValue<'picture', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'smsFrequence', FieldOperators<'picklist'>, ContactSmsFrequenceType>
+	| FilterConditionValue<'status', FieldOperators<'picklist'>, ContactStatusType>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, ContactCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, ContactCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, ContactUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, ContactUpdatedByType>
+	| FilterConditionValue<'_user', FieldOperators<'lookup'>, ContactUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, ContactUserType>
+	| FilterConditionValue<'medium', FieldOperators<'picklist'>, ContactMediumType>
+	| FilterConditionValue<'channel', FieldOperators<'lookup'>, ContactChannelType>
+	| FilterConditionValue<'channel._id', FieldOperators<'lookup._id'>, ContactChannelType>
+	| FilterConditionValue<'source', FieldOperators<'lookup'>, ContactSourceType>
+	| FilterConditionValue<'source._id', FieldOperators<'lookup._id'>, ContactSourceType>
+	| FilterConditionValue<'campaignsAsTarget', FieldOperators<'number'>, number>
+	| FilterConditionValue<'lastCampaignTargetAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'lastEmailSentAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'activeOpportunities', FieldOperators<'number'>, number>;
+export class ContactModule extends KonectyModule<
+	Contact,
+	ContactFilterConditions,
+	ContactUserType[],
+	ContactCreatedByType,
+	ContactUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(contactConfig, clientOptions);
 	}

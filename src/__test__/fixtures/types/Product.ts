@@ -1,10 +1,10 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor, Money } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
-import { User } from './User';
 const productConfig: ModuleConfig = {
 	name: 'Product',
 	collection: 'data.Product',
@@ -53,7 +53,48 @@ export interface Product extends KonectyDocument<ProductUserType[], ProductCreat
 	siteTags: string[];
 	campaignTags: string[];
 }
-export class ProductModule extends Module<Product, ProductUserType[], ProductCreatedByType, ProductUpdatedByType> {
+export type ProductFilterConditions =
+	| FilterConditionValue<'active', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'supplierUpdatedChanged', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
+	| FilterConditionValue<'sale.currency', FieldOperators<'filter.currency'>, string>
+	| FilterConditionValue<'sale.value', FieldOperators<'filter.value'>, number>
+	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, ProductCampaignType>
+	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, ProductCampaignType>
+	| FilterConditionValue<'joinedCampaignOn', FieldOperators<'date'>, Date>
+	| FilterConditionValue<'shippingAmount.currency', FieldOperators<'filter.currency'>, string>
+	| FilterConditionValue<'shippingAmount.value', FieldOperators<'filter.value'>, number>
+	| FilterConditionValue<'description', FieldOperators<'text'>, string>
+	| FilterConditionValue<'file', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'name', FieldOperators<'text'>, string>
+	| FilterConditionValue<'pictures', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'sku', FieldOperators<'text'>, string>
+	| FilterConditionValue<'status', FieldOperators<'picklist'>, ProductStatusType>
+	| FilterConditionValue<'type', FieldOperators<'picklist'>, ProductTypeType>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, ProductCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, ProductCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, ProductUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, ProductUpdatedByType>
+	| FilterConditionValue<'_user', FieldOperators<'lookup'>, ProductUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, ProductUserType>
+	| FilterConditionValue<'sendSupplierUpdatedMail', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'offerCount', FieldOperators<'number'>, number>
+	| FilterConditionValue<'availableAt', FieldOperators<'date'>, Date>
+	| FilterConditionValue<'banner', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'link', FieldOperators<'url'>, string>
+	| FilterConditionValue<'notes', FieldOperators<'richText'>, string>
+	| FilterConditionValue<'parentProduct', FieldOperators<'text'>, string>
+	| FilterConditionValue<'siteTags', FieldOperators<'text'>, string>
+	| FilterConditionValue<'campaignTags', FieldOperators<'text'>, string>;
+export class ProductModule extends KonectyModule<
+	Product,
+	ProductFilterConditions,
+	ProductUserType[],
+	ProductCreatedByType,
+	ProductUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(productConfig, clientOptions);
 	}

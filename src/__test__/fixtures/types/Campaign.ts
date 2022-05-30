@@ -1,13 +1,13 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor, KonectyFilter, Phone } from '@konecty/sdk/types';
 import { Contact } from './Contact';
 import { Product } from './Product';
 import { Queue } from './Queue';
 import { Template } from './Template';
-import { User } from './User';
 import { WebElement } from './WebElement';
 const campaignConfig: ModuleConfig = {
 	name: 'Campaign',
@@ -89,7 +89,68 @@ export interface Campaign extends KonectyDocument<CampaignUserType[], CampaignCr
 	badge: FileDescriptor;
 	content: string[];
 }
-export class CampaignModule extends Module<Campaign, CampaignUserType[], CampaignCreatedByType, CampaignUpdatedByType> {
+export type CampaignFilterConditions =
+	| FilterConditionValue<'mainCampaign', FieldOperators<'lookup'>, CampaignMainCampaignType>
+	| FilterConditionValue<'mainCampaign._id', FieldOperators<'lookup._id'>, CampaignMainCampaignType>
+	| FilterConditionValue<'campaignTarget', FieldOperators<'filter'>, KonectyFilter<Contact>>
+	| FilterConditionValue<'campaignTarget.conditions', FieldOperators<'filter.conditions'>, KonectyFilter<Contact>>
+	| FilterConditionValue<'campaignUser', FieldOperators<'filter'>, KonectyFilter<User>>
+	| FilterConditionValue<'campaignUser.conditions', FieldOperators<'filter.conditions'>, KonectyFilter<User>>
+	| FilterConditionValue<'attachment', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
+	| FilterConditionValue<'description', FieldOperators<'richText'>, string>
+	| FilterConditionValue<'email', FieldOperators<'richText'>, string>
+	| FilterConditionValue<'endAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'name', FieldOperators<'text'>, string>
+	| FilterConditionValue<'script', FieldOperators<'richText'>, string>
+	| FilterConditionValue<'startAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'status', FieldOperators<'picklist'>, CampaignStatusType>
+	| FilterConditionValue<'type', FieldOperators<'picklist'>, CampaignTypeType>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, CampaignCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, CampaignCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, CampaignUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, CampaignUpdatedByType>
+	| FilterConditionValue<'_user', FieldOperators<'lookup'>, CampaignUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, CampaignUserType>
+	| FilterConditionValue<'identifier', FieldOperators<'text'>, string>
+	| FilterConditionValue<'externalIdentifier', FieldOperators<'text'>, string>
+	| FilterConditionValue<'phone.phoneNumber', FieldOperators<'phone.phoneNumber'>, string>
+	| FilterConditionValue<'phone.countryCode', FieldOperators<'phone.countryCode'>, string>
+	| FilterConditionValue<'notes', FieldOperators<'text'>, string>
+	| FilterConditionValue<'products', FieldOperators<'lookup'>, CampaignProductsType>
+	| FilterConditionValue<'products._id', FieldOperators<'lookup._id'>, CampaignProductsType>
+	| FilterConditionValue<'webElement', FieldOperators<'lookup'>, CampaignWebElementType>
+	| FilterConditionValue<'webElement._id', FieldOperators<'lookup._id'>, CampaignWebElementType>
+	| FilterConditionValue<'product', FieldOperators<'lookup'>, CampaignProductType>
+	| FilterConditionValue<'product._id', FieldOperators<'lookup._id'>, CampaignProductType>
+	| FilterConditionValue<'targetQueue', FieldOperators<'lookup'>, CampaignTargetQueueType>
+	| FilterConditionValue<'targetQueue._id', FieldOperators<'lookup._id'>, CampaignTargetQueueType>
+	| FilterConditionValue<'chatQueue', FieldOperators<'lookup'>, CampaignChatQueueType>
+	| FilterConditionValue<'chatQueue._id', FieldOperators<'lookup._id'>, CampaignChatQueueType>
+	| FilterConditionValue<'chatTipTitle', FieldOperators<'text'>, string>
+	| FilterConditionValue<'chatTipDescription', FieldOperators<'text'>, string>
+	| FilterConditionValue<'chatTitle', FieldOperators<'text'>, string>
+	| FilterConditionValue<'chatTitleBarColor', FieldOperators<'text'>, string>
+	| FilterConditionValue<'chatTitleBarTextColor', FieldOperators<'text'>, string>
+	| FilterConditionValue<'sendExact', FieldOperators<'picklist'>, CampaignSendExactType>
+	| FilterConditionValue<'firstTouchTemplate', FieldOperators<'lookup'>, CampaignFirstTouchTemplateType>
+	| FilterConditionValue<'firstTouchTemplate._id', FieldOperators<'lookup._id'>, CampaignFirstTouchTemplateType>
+	| FilterConditionValue<'firstTouchFile', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'firstTouchSender', FieldOperators<'lookup'>, CampaignFirstTouchSenderType>
+	| FilterConditionValue<'firstTouchSender._id', FieldOperators<'lookup._id'>, CampaignFirstTouchSenderType>
+	| FilterConditionValue<'productFilter', FieldOperators<'filter'>, KonectyFilter<Product>>
+	| FilterConditionValue<'productFilter.conditions', FieldOperators<'filter.conditions'>, KonectyFilter<Product>>
+	| FilterConditionValue<'badge', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'content', FieldOperators<'text'>, string>;
+export class CampaignModule extends KonectyModule<
+	Campaign,
+	CampaignFilterConditions,
+	CampaignUserType[],
+	CampaignCreatedByType,
+	CampaignUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(campaignConfig, clientOptions);
 	}

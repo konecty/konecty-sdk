@@ -1,9 +1,9 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor } from '@konecty/sdk/types';
-import { User } from './User';
 const templateConfig: ModuleConfig = {
 	name: 'Template',
 	collection: 'data.Template',
@@ -37,7 +37,31 @@ export interface Template extends KonectyDocument<TemplateUserType[], TemplateCr
 	_user: TemplateUserType[];
 	attachment: FileDescriptor[];
 }
-export class TemplateModule extends Module<Template, TemplateUserType[], TemplateCreatedByType, TemplateUpdatedByType> {
+export type TemplateFilterConditions =
+	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
+	| FilterConditionValue<'name', FieldOperators<'text'>, string>
+	| FilterConditionValue<'type', FieldOperators<'picklist'>, TemplateTypeType>
+	| FilterConditionValue<'style', FieldOperators<'text'>, string>
+	| FilterConditionValue<'document', FieldOperators<'text'>, string>
+	| FilterConditionValue<'view', FieldOperators<'text'>, string>
+	| FilterConditionValue<'value', FieldOperators<'text'>, string>
+	| FilterConditionValue<'subject', FieldOperators<'text'>, string>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, TemplateCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, TemplateCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, TemplateUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, TemplateUpdatedByType>
+	| FilterConditionValue<'_user', FieldOperators<'lookup'>, TemplateUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, TemplateUserType>
+	| FilterConditionValue<'attachment', FieldOperators<'file'>, FileDescriptor>;
+export class TemplateModule extends KonectyModule<
+	Template,
+	TemplateFilterConditions,
+	TemplateUserType[],
+	TemplateCreatedByType,
+	TemplateUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(templateConfig, clientOptions);
 	}

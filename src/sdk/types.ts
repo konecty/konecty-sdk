@@ -1,7 +1,3 @@
-import { FieldOperators } from './FieldOperators';
-import { KonectyDocument } from './Module';
-import { Paths, TypeFromPath } from './TypeUtils';
-
 export enum FieldType {
 	text = 'text',
 	url = 'url',
@@ -70,27 +66,6 @@ export type FieldOptions = {
 				[lang: string]: string;
 		  }
 		| { sort?: number };
-};
-
-type FilterRange<T> = {
-	greater_or_equals: T;
-	less_or_equals: T;
-};
-
-export type FilterCondition<D extends KonectyDocument, K extends Paths<D>> = {
-	term: K;
-	operator: FieldOperators<K> extends never ? FieldOperators<TypeFromPath<D, K>> : FieldOperators<K>;
-	value:
-		| FilterRange<FieldOperators<TypeFromPath<D, K>>>
-		| FieldOperators<TypeFromPath<D, K>>
-		| FieldOperators<TypeFromPath<D, K>>[];
-	editable: boolean;
-	disabled: boolean;
-};
-
-export type KonectyFilter<T extends KonectyDocument> = {
-	match: 'and' | 'or';
-	conditions: (KonectyFilter<T> | FilterCondition<T, Paths<T>>)[];
 };
 
 export type FileDescriptor = {

@@ -42,6 +42,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	Object.values<MetadataField<unknown>>(fields)
 		.map(({ document }) => document)
 		.filter(d => d)
+		.filter(d => !['User', 'Group'].includes(d ?? ''))
 		.forEach(document => {
 			imports.Documents.push(document as string);
 		});
@@ -179,11 +180,58 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		userTypes.push(`never`);
 	}
 
+	const filterConditions = Object.values<MetadataField>(fields).reduce<string[]>((acc, field) => {
+		const { name, type } = field;
+		if (!['email', 'address', 'personName', 'money', 'phone', 'password', 'json'].includes(type)) {
+			acc.push(`| FilterConditionValue<'${name}', FieldOperators<'${type}'>, ${getBaseType(field)}>`);
+		}
+		if (type === 'lookup') {
+			acc.push(`| FilterConditionValue<'${name}._id', FieldOperators<'lookup._id'>, ${getBaseType(field)}>`);
+		}
+		if (type === 'filter') {
+			acc.push(`| FilterConditionValue<'${name}.conditions', FieldOperators<'filter.conditions'>, ${getBaseType(field)}>`);
+		}
+
+		if (type === 'email') {
+			acc.push(`| FilterConditionValue<'${name}.address', FieldOperators<'email.address'>, string>`);
+		}
+
+		if (type === 'money') {
+			acc.push(`| FilterConditionValue<'${name}.currency', FieldOperators<'filter.currency'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.value', FieldOperators<'filter.value'>, number>`);
+		}
+
+		if (type === 'address') {
+			acc.push(`| FilterConditionValue<'${name}.country', FieldOperators<'address.country'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.state', FieldOperators<'address.state'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.city', FieldOperators<'address.city'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.district', FieldOperators<'address.district'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.place', FieldOperators<'address.place'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.number', FieldOperators<'address.number'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.postalCode', FieldOperators<'address.postalCode'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.complement', FieldOperators<'address.complement'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.geolocation.0', FieldOperators<'address.geolocation.0'>, number>`);
+			acc.push(`| FilterConditionValue<'${name}.geolocation.1', FieldOperators<'address.geolocation.1'>, number>`);
+		}
+		if (type === 'personName') {
+			acc.push(`| FilterConditionValue<'${name}.first', FieldOperators<'personName.first'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.last', FieldOperators<'personName.last'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.full', FieldOperators<'personName.full'>, string>`);
+		}
+		if (type === 'phone') {
+			acc.push(`| FilterConditionValue<'${name}.phoneNumber', FieldOperators<'phone.phoneNumber'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.countryCode', FieldOperators<'phone.countryCode'>, string>`);
+		}
+
+		return acc;
+	}, []);
+
 	const code = [
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
-		`import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module'`,
+		`import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module'`,
 		`import { MetadataField } from 'types/metadata';`,
 		`import { KonectyClientOptions } from 'lib/KonectyClient';`,
+		`import { FieldOperators } from '@konecty/sdk/FieldOperators';`,
 	]
 		.concat(`import { ${Array.from(new Set(imports.Konecty)).sort().join(', ')} } from '@konecty/sdk/types';`)
 		.concat(
@@ -198,7 +246,13 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.concat(`export interface ${name} extends KonectyDocument${userTypes.length > 0 ? `<${userTypes.join(', ')}>` : ''} {`)
 		.concat(interfaceProperties)
 		.concat(`}`)
-		.concat(`export class ${name}Module extends Module<${name}${userTypes.length > 0 ? `, ${userTypes.join(', ')}` : ''}> {`)
+		.concat(`export type ${name}FilterConditions =`)
+		.concat(filterConditions)
+		.concat(
+			`export class ${name}Module extends KonectyModule<${name}, ${name}FilterConditions${
+				userTypes.length > 0 ? `, ${userTypes.join(', ')}` : ''
+			}> {`,
+		)
 		.concat(`constructor(clientOptions?: KonectyClientOptions) {super(${camelCase(name)}Config, clientOptions);}`)
 		.concat(classProperties)
 		.concat(`}`)

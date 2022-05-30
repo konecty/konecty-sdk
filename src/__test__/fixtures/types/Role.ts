@@ -1,9 +1,9 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import {} from '@konecty/sdk/types';
-import { User } from './User';
 const roleConfig: ModuleConfig = {
 	name: 'Role',
 	collection: 'data.Role',
@@ -31,7 +31,20 @@ export interface Role extends KonectyDocument<RoleUserType[], RoleCreatedByType,
 	_updatedBy: RoleUpdatedByType;
 	_user: RoleUserType[];
 }
-export class RoleModule extends Module<Role, RoleUserType[], RoleCreatedByType, RoleUpdatedByType> {
+export type RoleFilterConditions =
+	| FilterConditionValue<'admin', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'name', FieldOperators<'text'>, string>
+	| FilterConditionValue<'parents', FieldOperators<'lookup'>, RoleParentsType>
+	| FilterConditionValue<'parents._id', FieldOperators<'lookup._id'>, RoleParentsType>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, RoleCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, RoleCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, RoleUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, RoleUpdatedByType>
+	| FilterConditionValue<'_user', FieldOperators<'lookup'>, RoleUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, RoleUserType>;
+export class RoleModule extends KonectyModule<Role, RoleFilterConditions, RoleUserType[], RoleCreatedByType, RoleUpdatedByType> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(roleConfig, clientOptions);
 	}

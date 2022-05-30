@@ -1,9 +1,9 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { Address, Email, FileDescriptor, Phone } from '@konecty/sdk/types';
-import { Group } from './Group';
 import { Queue } from './Queue';
 import { Role } from './Role';
 const userConfig: ModuleConfig = {
@@ -118,7 +118,73 @@ export interface User extends KonectyDocument<UserUserType[], UserCreatedByType,
 	fullName: string;
 	type: string;
 }
-export class UserModule extends Module<User, UserUserType[], UserCreatedByType, UserUpdatedByType> {
+export type UserFilterConditions =
+	| FilterConditionValue<'active', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'nickname', FieldOperators<'text'>, string>
+	| FilterConditionValue<'pictures', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'address.country', FieldOperators<'address.country'>, string>
+	| FilterConditionValue<'address.state', FieldOperators<'address.state'>, string>
+	| FilterConditionValue<'address.city', FieldOperators<'address.city'>, string>
+	| FilterConditionValue<'address.district', FieldOperators<'address.district'>, string>
+	| FilterConditionValue<'address.place', FieldOperators<'address.place'>, string>
+	| FilterConditionValue<'address.number', FieldOperators<'address.number'>, string>
+	| FilterConditionValue<'address.postalCode', FieldOperators<'address.postalCode'>, string>
+	| FilterConditionValue<'address.complement', FieldOperators<'address.complement'>, string>
+	| FilterConditionValue<'address.geolocation.0', FieldOperators<'address.geolocation.0'>, number>
+	| FilterConditionValue<'address.geolocation.1', FieldOperators<'address.geolocation.1'>, number>
+	| FilterConditionValue<'birthdate', FieldOperators<'date'>, Date>
+	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
+	| FilterConditionValue<'emails.address', FieldOperators<'email.address'>, string>
+	| FilterConditionValue<'group', FieldOperators<'lookup'>, UserGroupType>
+	| FilterConditionValue<'group._id', FieldOperators<'lookup._id'>, UserGroupType>
+	| FilterConditionValue<'groups', FieldOperators<'lookup'>, UserGroupsType>
+	| FilterConditionValue<'groups._id', FieldOperators<'lookup._id'>, UserGroupsType>
+	| FilterConditionValue<'admin', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'jobTitle', FieldOperators<'text'>, string>
+	| FilterConditionValue<'lastLogin', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'locale', FieldOperators<'picklist'>, UserLocaleType>
+	| FilterConditionValue<'username', FieldOperators<'text'>, string>
+	| FilterConditionValue<'name', FieldOperators<'text'>, string>
+	| FilterConditionValue<'phone.phoneNumber', FieldOperators<'phone.phoneNumber'>, string>
+	| FilterConditionValue<'phone.countryCode', FieldOperators<'phone.countryCode'>, string>
+	| FilterConditionValue<'role', FieldOperators<'lookup'>, UserRoleType>
+	| FilterConditionValue<'role._id', FieldOperators<'lookup._id'>, UserRoleType>
+	| FilterConditionValue<'sessionExpireAfterMinutes', FieldOperators<'number'>, number>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, UserCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, UserCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, UserUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, UserUpdatedByType>
+	| FilterConditionValue<'status', FieldOperators<'picklist'>, UserStatusType>
+	| FilterConditionValue<'_user', FieldOperators<'lookup'>, UserUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, UserUserType>
+	| FilterConditionValue<'targetQueue', FieldOperators<'lookup'>, UserTargetQueueType>
+	| FilterConditionValue<'targetQueue._id', FieldOperators<'lookup._id'>, UserTargetQueueType>
+	| FilterConditionValue<'induction', FieldOperators<'date'>, Date>
+	| FilterConditionValue<'inductionStatus', FieldOperators<'picklist'>, UserInductionStatusType>
+	| FilterConditionValue<'documents', FieldOperators<'file'>, FileDescriptor>
+	| FilterConditionValue<'director', FieldOperators<'lookup'>, UserDirectorType>
+	| FilterConditionValue<'director._id', FieldOperators<'lookup._id'>, UserDirectorType>
+	| FilterConditionValue<'temporaryBadge', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'badge', FieldOperators<'picklist'>, UserBadgeType>
+	| FilterConditionValue<'recruitedBy', FieldOperators<'picklist'>, UserRecruitedByType>
+	| FilterConditionValue<'recruitmentChannel', FieldOperators<'text'>, string>
+	| FilterConditionValue<'businessCards', FieldOperators<'picklist'>, UserBusinessCardsType>
+	| FilterConditionValue<'contract', FieldOperators<'picklist'>, UserContractType>
+	| FilterConditionValue<'autonomous', FieldOperators<'picklist'>, UserAutonomousType>
+	| FilterConditionValue<'contractStatus', FieldOperators<'picklist'>, UserContractStatusType>
+	| FilterConditionValue<'cpf', FieldOperators<'text'>, string>
+	| FilterConditionValue<'canViewPhone', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'document', FieldOperators<'text'>, string>
+	| FilterConditionValue<'documentType', FieldOperators<'picklist'>, UserDocumentTypeType>
+	| FilterConditionValue<'documentNotes', FieldOperators<'text'>, string>
+	| FilterConditionValue<'exitMotiveManager', FieldOperators<'picklist'>, UserExitMotiveManagerType>
+	| FilterConditionValue<'exitMotiveBroker', FieldOperators<'picklist'>, UserExitMotiveBrokerType>
+	| FilterConditionValue<'expire', FieldOperators<'date'>, Date>
+	| FilterConditionValue<'fullName', FieldOperators<'text'>, string>
+	| FilterConditionValue<'type', FieldOperators<'text'>, string>;
+export class UserModule extends KonectyModule<User, UserFilterConditions, UserUserType[], UserCreatedByType, UserUpdatedByType> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(userConfig, clientOptions);
 	}

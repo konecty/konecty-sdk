@@ -1,10 +1,10 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
+import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
+import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { KonectyFilter } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
-import { User } from './User';
 const queueConfig: ModuleConfig = {
 	name: 'Queue',
 	collection: 'data.Queue',
@@ -38,7 +38,33 @@ export interface Queue extends KonectyDocument<QueueUserType[], QueueCreatedByTy
 	type: QueueTypeType;
 	targetCampaign: QueueTargetCampaignType;
 }
-export class QueueModule extends Module<Queue, QueueUserType[], QueueCreatedByType, QueueUpdatedByType> {
+export type QueueFilterConditions =
+	| FilterConditionValue<'active', FieldOperators<'boolean'>, boolean>
+	| FilterConditionValue<'count', FieldOperators<'number'>, number>
+	| FilterConditionValue<'currentCount', FieldOperators<'number'>, number>
+	| FilterConditionValue<'currentPosition', FieldOperators<'number'>, number>
+	| FilterConditionValue<'name', FieldOperators<'text'>, string>
+	| FilterConditionValue<'chatInvite', FieldOperators<'text'>, string>
+	| FilterConditionValue<'queueUsers', FieldOperators<'filter'>, KonectyFilter<User>>
+	| FilterConditionValue<'queueUsers.conditions', FieldOperators<'filter.conditions'>, KonectyFilter<User>>
+	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, QueueCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, QueueCreatedByType>
+	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
+	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, QueueUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, QueueUpdatedByType>
+	| FilterConditionValue<'_user', FieldOperators<'lookup'>, QueueUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, QueueUserType>
+	| FilterConditionValue<'type', FieldOperators<'picklist'>, QueueTypeType>
+	| FilterConditionValue<'targetCampaign', FieldOperators<'lookup'>, QueueTargetCampaignType>
+	| FilterConditionValue<'targetCampaign._id', FieldOperators<'lookup._id'>, QueueTargetCampaignType>;
+export class QueueModule extends KonectyModule<
+	Queue,
+	QueueFilterConditions,
+	QueueUserType[],
+	QueueCreatedByType,
+	QueueUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(queueConfig, clientOptions);
 	}
