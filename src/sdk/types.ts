@@ -1,5 +1,5 @@
 import { FieldOperators } from './FieldOperators';
-import { KonectyDocument, Module } from './Module';
+import { KonectyDocument } from './Module';
 import { Paths, TypeFromPath } from './TypeUtils';
 
 export enum FieldType {
@@ -26,27 +26,8 @@ export enum FieldType {
 	JSON = 'json',
 }
 
-export type FieldValidators<T extends KonectyDocument> = (target: Module<T>, propertyKey: string, value: Field<T>) => boolean;
-
 export type Label = {
 	[lang: string]: string;
-};
-
-export type Field<T extends KonectyDocument> = {
-	document?: Module<T>;
-	descriptionFields?: (string | number | symbol)[];
-	inheritedFields?: (string | number | symbol)[];
-	type: FieldType;
-	label?: Label;
-	isList?: boolean;
-	sortable?: boolean;
-	minSelect?: number;
-	maxSelect?: number;
-	options?: FieldOptions;
-	validators?: FieldValidators<T>[];
-	get(): T;
-	set(value: T): void;
-	toString: (format?: string) => string | (() => string);
 };
 
 export type Email = {
