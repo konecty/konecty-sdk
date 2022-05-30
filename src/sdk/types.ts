@@ -88,9 +88,9 @@ export type FilterCondition<D extends KonectyDocument, K extends Paths<D>> = {
 	disabled: boolean;
 };
 
-export type Filter<T extends KonectyDocument> = {
+export type KonectyFilter<T extends KonectyDocument> = {
 	match: 'and' | 'or';
-	conditions: (Filter<T> | FilterCondition<T, Paths<T>>)[];
+	conditions: (KonectyFilter<T> | FilterCondition<T, Paths<T>>)[];
 };
 
 export type FileDescriptor = {

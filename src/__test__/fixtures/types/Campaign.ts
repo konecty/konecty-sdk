@@ -2,7 +2,7 @@ import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
-import { FileDescriptor, Filter, Phone } from '@konecty/sdk/types';
+import { FileDescriptor, KonectyFilter, Phone } from '@konecty/sdk/types';
 import { Contact } from './Contact';
 import { Product } from './Product';
 import { Queue } from './Queue';
@@ -50,8 +50,8 @@ export type CampaignTypeType =
 export type CampaignSendExactType = 'true' | 'false';
 export interface Campaign extends KonectyDocument<CampaignUserType[], CampaignCreatedByType, CampaignUpdatedByType> {
 	mainCampaign: CampaignMainCampaignType;
-	campaignTarget: Filter<Contact>;
-	campaignUser: Filter<User>;
+	campaignTarget: KonectyFilter<Contact>;
+	campaignUser: KonectyFilter<User>;
 	attachment: FileDescriptor[];
 	code: number;
 	description: string;
@@ -85,7 +85,7 @@ export interface Campaign extends KonectyDocument<CampaignUserType[], CampaignCr
 	firstTouchTemplate: CampaignFirstTouchTemplateType;
 	firstTouchFile: FileDescriptor;
 	firstTouchSender: CampaignFirstTouchSenderType;
-	productFilter: Filter<Product>;
+	productFilter: KonectyFilter<Product>;
 	badge: FileDescriptor;
 	content: string[];
 }
@@ -102,7 +102,7 @@ export class CampaignModule extends Module<Campaign, CampaignUserType[], Campaig
 		name: 'mainCampaign',
 		isInherited: true,
 	} as MetadataField<CampaignMainCampaignType>;
-	readonly campaignTarget: MetadataField<Filter<Contact>> = {
+	readonly campaignTarget: MetadataField<KonectyFilter<Contact>> = {
 		label: { en: 'Campaign Target', pt_BR: 'Alvo da Campanha' },
 		document: 'Contact',
 		filterableFields: ['name'],
@@ -110,8 +110,8 @@ export class CampaignModule extends Module<Campaign, CampaignUserType[], Campaig
 		type: 'filter',
 		name: 'campaignTarget',
 		isInherited: true,
-	} as MetadataField<Filter<Contact>>;
-	readonly campaignUser: MetadataField<Filter<User>> = {
+	} as MetadataField<KonectyFilter<Contact>>;
+	readonly campaignUser: MetadataField<KonectyFilter<User>> = {
 		label: { en: 'Campaign User', pt_BR: 'Usuário da Campanha' },
 		document: 'User',
 		filterableFields: ['name', 'email', 'role', 'nickname', 'active'],
@@ -119,7 +119,7 @@ export class CampaignModule extends Module<Campaign, CampaignUserType[], Campaig
 		type: 'filter',
 		name: 'campaignUser',
 		isInherited: true,
-	} as MetadataField<Filter<User>>;
+	} as MetadataField<KonectyFilter<User>>;
 	readonly attachment: MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'attachment',
@@ -378,7 +378,7 @@ export class CampaignModule extends Module<Campaign, CampaignUserType[], Campaig
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
 	} as MetadataField<CampaignFirstTouchSenderType>;
-	readonly productFilter: MetadataField<Filter<Product>> = {
+	readonly productFilter: MetadataField<KonectyFilter<Product>> = {
 		type: 'filter',
 		name: 'productFilter',
 		label: { en: 'Product filter', pt_BR: 'Filtro de produtos' },
@@ -386,7 +386,7 @@ export class CampaignModule extends Module<Campaign, CampaignUserType[], Campaig
 		filterableFields: ['active', '_createdAt', '_createdBy', 'description', 'code', 'type', 'name', 'sale', '_user'],
 		isInherited: true,
 		relations: [],
-	} as MetadataField<Filter<Product>>;
+	} as MetadataField<KonectyFilter<Product>>;
 	readonly badge: MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'badge',

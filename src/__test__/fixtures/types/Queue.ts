@@ -2,7 +2,7 @@ import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Module, ModuleConfig, KonectyDocument } from '@konecty/sdk/Module';
 import { MetadataField } from 'types/metadata';
 import { KonectyClientOptions } from 'lib/KonectyClient';
-import { Filter } from '@konecty/sdk/types';
+import { KonectyFilter } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 import { User } from './User';
 const queueConfig: ModuleConfig = {
@@ -29,7 +29,7 @@ export interface Queue extends KonectyDocument<QueueUserType[], QueueCreatedByTy
 	currentPosition: number;
 	name: string;
 	chatInvite: string;
-	queueUsers: Filter<User>;
+	queueUsers: KonectyFilter<User>;
 	_createdAt: Date;
 	_createdBy: QueueCreatedByType;
 	_updatedAt: Date;
@@ -91,7 +91,7 @@ export class QueueModule extends Module<Queue, QueueUserType[], QueueCreatedByTy
 		label: { en: 'Chat Invite', pt_BR: 'Convite do Chat' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly queueUsers: MetadataField<Filter<User>> = {
+	readonly queueUsers: MetadataField<KonectyFilter<User>> = {
 		type: 'filter',
 		name: 'queueUsers',
 		label: { en: 'Queue Users', pt_BR: 'Usuários da Roleta' },
@@ -100,7 +100,7 @@ export class QueueModule extends Module<Queue, QueueUserType[], QueueCreatedByTy
 		relations: [{ document: 'QueueUser', reverseLookup: 'queue', lookup: 'user' }],
 		isInherited: true,
 		filterOnly: true,
-	} as MetadataField<Filter<User>>;
+	} as MetadataField<KonectyFilter<User>>;
 	readonly _createdAt: MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_createdAt',

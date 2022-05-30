@@ -124,9 +124,9 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 				return `${name}${pascalCase(field.name)}Type`;
 
 			case FieldType.filter:
-				imports.Konecty.push('Filter');
+				imports.Konecty.push('KonectyFilter');
 
-				return `Filter<${field.document}>`;
+				return `KonectyFilter<${field.document}>`;
 
 			case FieldType.file:
 				imports.Konecty.push('FileDescriptor');
