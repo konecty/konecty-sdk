@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import {} from '@konecty/sdk/types';
 const roleConfig: ModuleConfig = {
@@ -45,7 +45,15 @@ export type RoleFilterConditions =
 	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, RoleUpdatedByType>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, RoleUserType>
 	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, RoleUserType>;
-export class RoleModule extends KonectyModule<Role, RoleFilterConditions, RoleUserType[], RoleCreatedByType, RoleUpdatedByType> {
+export type RoleSortFields = 'name' | 'parents' | '_createdAt' | '_createdBy' | '_updatedAt' | '_user';
+export class RoleModule extends KonectyModule<
+	Role,
+	RoleFilterConditions,
+	RoleSortFields,
+	RoleUserType[],
+	RoleCreatedByType,
+	RoleUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(roleConfig, clientOptions);
 	}

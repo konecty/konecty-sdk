@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import {} from '@konecty/sdk/types';
 const groupConfig: ModuleConfig = {
@@ -40,9 +40,11 @@ export type GroupFilterConditions =
 	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, GroupUpdatedByType>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, GroupUserType>
 	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, GroupUserType>;
+export type GroupSortFields = 'active' | 'name' | '_createdAt' | '_createdBy' | '_updatedAt' | '_user';
 export class GroupModule extends KonectyModule<
 	Group,
 	GroupFilterConditions,
+	GroupSortFields,
 	GroupUserType[],
 	GroupCreatedByType,
 	GroupUpdatedByType

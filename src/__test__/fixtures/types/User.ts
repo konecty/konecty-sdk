@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { Address, Email, FileDescriptor, Phone } from '@konecty/sdk/types';
 import { Queue } from './Queue';
@@ -185,7 +185,41 @@ export type UserFilterConditions =
 	| FilterConditionValue<'expire', FieldOperators<'date'>, Date>
 	| FilterConditionValue<'fullName', FieldOperators<'text'>, string>
 	| FilterConditionValue<'type', FieldOperators<'text'>, string>;
-export class UserModule extends KonectyModule<User, UserFilterConditions, UserUserType[], UserCreatedByType, UserUpdatedByType> {
+export type UserSortFields =
+	| 'active'
+	| 'address'
+	| 'birthdate'
+	| 'code'
+	| 'emails'
+	| 'group'
+	| 'groups'
+	| 'jobTitle'
+	| 'lastLogin'
+	| 'locale'
+	| 'username'
+	| 'name'
+	| 'password'
+	| 'phone'
+	| 'role'
+	| 'sessionExpireAfterMinutes'
+	| '_createdAt'
+	| '_createdBy'
+	| '_updatedAt'
+	| 'status'
+	| '_user'
+	| 'targetQueue'
+	| 'inductionStatus'
+	| 'director'
+	| 'temporaryBadge'
+	| 'fullName';
+export class UserModule extends KonectyModule<
+	User,
+	UserFilterConditions,
+	UserSortFields,
+	UserUserType[],
+	UserCreatedByType,
+	UserUpdatedByType
+> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(userConfig, clientOptions);
 	}

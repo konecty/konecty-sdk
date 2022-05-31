@@ -1,5 +1,5 @@
+import { MetadataDocument, MetadataField } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
-import { MetadataDocument, MetadataField } from 'types/metadata';
 import YAML from 'yaml';
 
 export function createDocFromMetadata(metadata: MetadataDocument): string {

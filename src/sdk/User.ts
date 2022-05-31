@@ -1,7 +1,7 @@
 import { KonectyClientOptions } from 'lib/KonectyClient';
 import { MetadataField } from 'types/metadata';
 import { Group } from './Group';
-import { KonectyDocument, Module, ModuleConfig } from './Module';
+import { KonectyDocument, KonectyModule, ModuleConfig } from './Module';
 import { Email, Email as KonectyEmail } from './types';
 import { PickFromPath } from './TypeUtils';
 export type UserGroupType = PickFromPath<Group, 'name'>;
@@ -35,7 +35,7 @@ export interface User extends KonectyDocument<UserUserType[], UserCreatedByType,
 	active?: boolean;
 }
 
-export class UserModule extends Module<User, UserUserType[], UserCreatedByType, UserUpdatedByType> {
+export class UserModule extends KonectyModule<User, UserUserType[], UserCreatedByType, UserUpdatedByType> {
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(userConfig, clientOptions);
 	}

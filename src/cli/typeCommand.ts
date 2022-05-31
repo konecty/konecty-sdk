@@ -1,8 +1,8 @@
+import { MetadataDocument } from '@konecty/sdk/types/metadata';
 import chalk from 'chalk';
 import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
-import { MetadataDocument } from 'types/metadata';
 import { createTypeFromMetadata } from '../lib/createTypeFromMetadata';
 
 export type CreateInterfaceOptions = {

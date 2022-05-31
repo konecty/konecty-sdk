@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { KonectyFilter } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
@@ -59,9 +59,20 @@ export type QueueFilterConditions =
 	| FilterConditionValue<'type', FieldOperators<'picklist'>, QueueTypeType>
 	| FilterConditionValue<'targetCampaign', FieldOperators<'lookup'>, QueueTargetCampaignType>
 	| FilterConditionValue<'targetCampaign._id', FieldOperators<'lookup._id'>, QueueTargetCampaignType>;
+export type QueueSortFields =
+	| 'active'
+	| 'count'
+	| 'currentCount'
+	| 'currentPosition'
+	| 'name'
+	| '_createdAt'
+	| '_createdBy'
+	| '_updatedAt'
+	| '_user';
 export class QueueModule extends KonectyModule<
 	Queue,
 	QueueFilterConditions,
+	QueueSortFields,
 	QueueUserType[],
 	QueueCreatedByType,
 	QueueUpdatedByType

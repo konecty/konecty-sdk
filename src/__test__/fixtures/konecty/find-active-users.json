@@ -1,0 +1,132 @@
+{
+	"success": true,
+	"data": [
+		{
+			"_id": "4ffcf81084aecfbaff50fd05",
+			"_createdAt": "2013-04-12T04:39:09.000Z",
+			"_createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"name": "Administrador"
+			},
+			"_updatedAt": "2022-05-31T11:00:00.049Z",
+			"_updatedBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"name": "Administrador",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": "2021-09-03T18:03:38.163Z"
+			},
+			"_user": [
+				{
+					"_id": "4ffcf81084aecfbaff50fd05",
+					"group": {
+						"_id": "521c2fe4e4b057cdcba8e454",
+						"name": "SISTEMA"
+					},
+					"name": "Administrador",
+					"active": true
+				}
+			],
+			"access": {
+				"defaults": ["System", "Full"]
+			},
+			"active": true,
+			"admin": true,
+			"chatAllowed": true,
+			"code": 1,
+			"fullName": "Administrador",
+			"group": {
+				"_id": "521c2fe4e4b057cdcba8e454",
+				"name": "SISTEMA"
+			},
+			"lastLogin": "2022-05-31T20:27:25.486Z",
+			"locale": "pt_BR",
+			"name": "Administrador",
+			"nickname": "ADMIN",
+			"role": {
+				"_id": "50a28a36e4b00438f136ae47",
+				"name": "System"
+			},
+			"status": "offline",
+			"username": "admin",
+			"utcOffset": -3,
+			"type": "user",
+			"emails": [
+				{
+					"address": "email@test.com"
+				}
+			],
+			"livechatStatusSystemModified": false,
+			"openBusinessHours": ["5f92e2f884406cc2c944b88d"]
+		},
+		{
+			"_id": "4ffcf81084aecfbaff50fd05-2",
+			"_createdAt": "2013-04-12T04:39:09.000Z",
+			"_createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"name": "Administrador"
+			},
+			"_updatedAt": "2022-05-31T11:00:00.049Z",
+			"_updatedBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"name": "Administrador",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": "2021-09-03T18:03:38.163Z"
+			},
+			"_user": [
+				{
+					"_id": "4ffcf81084aecfbaff50fd05",
+					"group": {
+						"_id": "521c2fe4e4b057cdcba8e454",
+						"name": "SISTEMA"
+					},
+					"name": "Administrador",
+					"active": true
+				}
+			],
+			"access": {
+				"defaults": ["System", "Full"]
+			},
+			"active": true,
+			"admin": true,
+			"chatAllowed": true,
+			"code": 1,
+			"fullName": "Second test",
+			"group": {
+				"_id": "521c2fe4e4b057cdcba8e454",
+				"name": "SISTEMA"
+			},
+			"lastLogin": "2022-05-31T20:27:25.486Z",
+			"locale": "pt_BR",
+			"name": "Second Test",
+			"nickname": "ADMIN",
+			"role": {
+				"_id": "50a28a36e4b00438f136ae47",
+				"name": "System"
+			},
+			"status": "offline",
+			"username": "second",
+			"utcOffset": -3,
+			"type": "user",
+			"emails": [
+				{
+					"address": "second@test.com"
+				}
+			]
+		}
+	],
+	"total": 2
+}

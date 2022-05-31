@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
@@ -89,9 +89,31 @@ export type WebElementFilterConditions =
 	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, WebElementUpdatedByType>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, WebElementUserType>
 	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, WebElementUserType>;
+export type WebElementSortFields =
+	| 'campaign'
+	| 'code'
+	| 'endAt'
+	| 'file'
+	| 'linkLabel'
+	| 'link'
+	| 'slug'
+	| 'author'
+	| 'linkTarget'
+	| 'name'
+	| 'order'
+	| 'priority'
+	| 'startAt'
+	| 'status'
+	| 'type'
+	| 'webElement'
+	| '_createdAt'
+	| '_createdBy'
+	| '_updatedAt'
+	| '_user';
 export class WebElementModule extends KonectyModule<
 	WebElement,
 	WebElementFilterConditions,
+	WebElementSortFields,
 	WebElementUserType[],
 	WebElementCreatedByType,
 	WebElementUpdatedByType

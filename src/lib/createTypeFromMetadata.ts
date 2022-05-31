@@ -1,8 +1,8 @@
+import { MetadataDocument, MetadataField } from '@konecty/sdk/types/metadata';
 import camelCase from 'lodash/camelCase';
 import set from 'lodash/set';
 import startCase from 'lodash/startCase';
 import prettier from 'prettier';
-import { MetadataDocument, MetadataField } from 'types/metadata';
 import { FieldType } from '../sdk/types';
 
 const pascalCase = (str: string) => startCase(camelCase(str)).replace(/ /g, '');
@@ -226,11 +226,15 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		return acc;
 	}, []);
 
+	const sortableFields = Object.values<MetadataField>(fields)
+		.filter(({ isSortable }) => isSortable === true)
+		.map<string>(({ name }) => `| '${name}'`);
+
 	const code = [
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
 		`import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module'`,
-		`import { MetadataField } from 'types/metadata';`,
-		`import { KonectyClientOptions } from 'lib/KonectyClient';`,
+		`import { MetadataField } from '@konecty/sdk/types/metadata';`,
+		`import { KonectyClientOptions } from '@konecty/sdk/Client';`,
 		`import { FieldOperators } from '@konecty/sdk/FieldOperators';`,
 	]
 		.concat(`import { ${Array.from(new Set(imports.Konecty)).sort().join(', ')} } from '@konecty/sdk/types';`)
@@ -249,8 +253,10 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.concat(`export type ${name}FilterConditions =`)
 		.concat(`| FilterConditions`)
 		.concat(filterConditions)
+		.concat(`export type ${name}SortFields =`)
+		.concat(sortableFields)
 		.concat(
-			`export class ${name}Module extends KonectyModule<${name}, ${name}FilterConditions${
+			`export class ${name}Module extends KonectyModule<${name}, ${name}FilterConditions, ${name}SortFields${
 				userTypes.length > 0 ? `, ${userTypes.join(', ')}` : ''
 			}> {`,
 		)

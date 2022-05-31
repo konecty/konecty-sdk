@@ -1,6 +1,6 @@
-import { KonectyClient, KonectyClientOptions } from 'lib/KonectyClient';
+import { KonectyClient, KonectyClientOptions } from '@konecty/sdk/Client';
+import { MetadataField } from '@konecty/sdk/types/metadata';
 import 'reflect-metadata';
-import { MetadataField } from 'types/metadata';
 import { FieldOperators } from './FieldOperators';
 import { ArrElement, PickFromPath } from './TypeUtils';
 import { User } from './User';
@@ -87,9 +87,28 @@ export type ModuleFilter<T> = {
 	conditions: (ModuleFilter<T> | T)[];
 };
 
+export type SortableFields = '_createdAt' | '_updatedAt';
+
+export type ModuleSort<T> = {
+	property: T;
+	direction: 'ASC' | 'DESC';
+};
+
+export type ModuleFindAllOptions<T> = {
+	start?: number;
+	limit?: number;
+	sort?: ModuleSort<T>[];
+};
+
+export type FindResult<T> = {
+	data: T[];
+	count: number;
+};
+
 export class KonectyModule<
 	Document extends KonectyDocument<OwnerType, CreatedByType, UpdatedByType>,
 	ModuleFilterConditions = FilterConditions,
+	ModuleSortFields = SortableFields,
 	OwnerType = never,
 	CreatedByType = never,
 	UpdatedByType = never,
@@ -103,10 +122,44 @@ export class KonectyModule<
 	}
 
 	async findOne(filter: ModuleFilter<ModuleFilterConditions>): Promise<Document | null> {
-		console.log(filter);
-		return null;
+		const result = await this.#client.find(this.#config.name, {
+			filter,
+			limit: 1,
+		});
+
+		if (result?.success === true && result.data?.length === 1) {
+			return result.data[0] as Document;
+		}
+		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
 	}
 
+	async find(
+		filter: ModuleFilter<ModuleFilterConditions>,
+		options?: ModuleFindAllOptions<ModuleSortFields>,
+	): Promise<FindResult<Document>> {
+		const result = await this.#client.find(
+			this.#config.name,
+			Object.assign(
+				{},
+				{
+					filter,
+					start: 0,
+					limit: 50,
+				},
+				options ?? {},
+			),
+		);
+
+		if (result?.success === true) {
+			return {
+				data: result.data as Document[],
+				count: result.total as number,
+			};
+		}
+		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
+	}
+
+	// #region commom properties
 	readonly _id: MetadataField<string> = {
 		label: { en: 'Unique Identifier', pt_BR: 'Identificador' },
 		isSortable: true,
@@ -161,6 +214,7 @@ export class KonectyModule<
 		name: '_updatedBy',
 		isInherited: true,
 	} as MetadataField<ModuleUpdatedByType>;
+	// #endregion
 }
 
 export type DocumentType = typeof KonectyModule.prototype;

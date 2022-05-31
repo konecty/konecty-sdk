@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor, Money } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
@@ -89,9 +89,28 @@ export type ProductFilterConditions =
 	| FilterConditionValue<'parentProduct', FieldOperators<'text'>, string>
 	| FilterConditionValue<'siteTags', FieldOperators<'text'>, string>
 	| FilterConditionValue<'campaignTags', FieldOperators<'text'>, string>;
+export type ProductSortFields =
+	| 'active'
+	| 'supplierUpdatedChanged'
+	| 'code'
+	| 'sale'
+	| 'campaign'
+	| 'joinedCampaignOn'
+	| 'shippingAmount'
+	| 'name'
+	| 'sku'
+	| 'status'
+	| 'type'
+	| '_createdAt'
+	| '_createdBy'
+	| '_updatedAt'
+	| '_user'
+	| 'offerCount'
+	| 'parentProduct';
 export class ProductModule extends KonectyModule<
 	Product,
 	ProductFilterConditions,
+	ProductSortFields,
 	ProductUserType[],
 	ProductCreatedByType,
 	ProductUpdatedByType

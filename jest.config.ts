@@ -12,5 +12,16 @@ export default {
 		'^.+\\.tsx?$': 'ts-jest',
 	},
 
+	globals: {
+		'ts-jest': {
+			tsconfig: 'tsconfig.json',
+			diagnostics: true,
+		},
+	},
+
+	moduleNameMapper: {
+		'@konecty/sdk/(.*)': '<rootDir>/src/sdk/$1',
+	},
+
 	verbose: true,
 };

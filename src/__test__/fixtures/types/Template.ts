@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor } from '@konecty/sdk/types';
 const templateConfig: ModuleConfig = {
@@ -56,9 +56,20 @@ export type TemplateFilterConditions =
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, TemplateUserType>
 	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, TemplateUserType>
 	| FilterConditionValue<'attachment', FieldOperators<'file'>, FileDescriptor>;
+export type TemplateSortFields =
+	| 'code'
+	| 'name'
+	| 'type'
+	| 'document'
+	| 'view'
+	| '_createdAt'
+	| '_createdBy'
+	| '_updatedAt'
+	| '_user';
 export class TemplateModule extends KonectyModule<
 	Template,
 	TemplateFilterConditions,
+	TemplateSortFields,
 	TemplateUserType[],
 	TemplateCreatedByType,
 	TemplateUpdatedByType

@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor, KonectyFilter, Phone } from '@konecty/sdk/types';
 import { Contact } from './Contact';
@@ -145,9 +145,24 @@ export type CampaignFilterConditions =
 	| FilterConditionValue<'productFilter.conditions', FieldOperators<'filter.conditions'>, KonectyFilter<Product>>
 	| FilterConditionValue<'badge', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'content', FieldOperators<'text'>, string>;
+export type CampaignSortFields =
+	| 'mainCampaign'
+	| 'code'
+	| 'status'
+	| '_createdAt'
+	| '_createdBy'
+	| '_updatedAt'
+	| '_user'
+	| 'identifier'
+	| 'externalIdentifier'
+	| 'targetQueue'
+	| 'chatQueue'
+	| 'sendExact'
+	| 'firstTouchTemplate';
 export class CampaignModule extends KonectyModule<
 	Campaign,
 	CampaignFilterConditions,
+	CampaignSortFields,
 	CampaignUserType[],
 	CampaignCreatedByType,
 	CampaignUpdatedByType

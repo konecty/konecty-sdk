@@ -1,7 +1,7 @@
+import { MetadataDocument } from '@konecty/sdk/types/metadata';
 import { expect } from 'chai';
 import fs from 'fs/promises';
 import path from 'path';
-import { MetadataDocument } from 'types/metadata';
 import { createTypeFromMetadata } from '../../lib/createTypeFromMetadata';
 
 describe('Create type from metadata', () => {

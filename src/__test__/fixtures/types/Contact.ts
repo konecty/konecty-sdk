@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { Address, Email, FileDescriptor, PersonName, Phone } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
@@ -139,9 +139,41 @@ export type ContactFilterConditions =
 	| FilterConditionValue<'lastCampaignTargetAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'lastEmailSentAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'activeOpportunities', FieldOperators<'number'>, number>;
+export type ContactSortFields =
+	| 'contactAttempts'
+	| 'invalidAttempts'
+	| 'priority'
+	| 'campaign'
+	| 'type'
+	| 'address'
+	| 'password'
+	| 'birthdate'
+	| 'code'
+	| 'email'
+	| 'emailFrequence'
+	| 'legalPerson'
+	| 'mailFrequence'
+	| 'name'
+	| 'verificationToken'
+	| 'phone'
+	| 'picture'
+	| 'smsFrequence'
+	| 'status'
+	| '_createdAt'
+	| '_createdBy'
+	| '_updatedAt'
+	| '_user'
+	| 'medium'
+	| 'channel'
+	| 'source'
+	| 'campaignsAsTarget'
+	| 'lastCampaignTargetAt'
+	| 'lastEmailSentAt'
+	| 'activeOpportunities';
 export class ContactModule extends KonectyModule<
 	Contact,
 	ContactFilterConditions,
+	ContactSortFields,
 	ContactUserType[],
 	ContactCreatedByType,
 	ContactUpdatedByType

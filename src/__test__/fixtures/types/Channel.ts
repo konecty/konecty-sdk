@@ -1,7 +1,7 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
-import { MetadataField } from 'types/metadata';
-import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from '@konecty/sdk/types/metadata';
+import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import {} from '@konecty/sdk/types';
 const channelConfig: ModuleConfig = {
@@ -36,9 +36,11 @@ export type ChannelFilterConditions =
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, ChannelUpdatedByType>
 	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, ChannelUpdatedByType>;
+export type ChannelSortFields = 'identifier' | '_createdAt' | '_createdBy' | '_updatedAt';
 export class ChannelModule extends KonectyModule<
 	Channel,
 	ChannelFilterConditions,
+	ChannelSortFields,
 	never,
 	ChannelCreatedByType,
 	ChannelUpdatedByType

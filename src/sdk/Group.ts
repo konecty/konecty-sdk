@@ -1,5 +1,5 @@
 import { MetadataField } from 'types/metadata';
-import { KonectyDocument, Module, ModuleConfig } from './Module';
+import { KonectyDocument, KonectyModule, ModuleConfig } from './Module';
 
 const groupConfig: ModuleConfig = {
 	name: 'Group',
@@ -20,7 +20,7 @@ export interface Group extends KonectyDocument {
 	active?: boolean;
 }
 
-export class GroupModule extends Module<Group> {
+export class GroupModule extends KonectyModule<Group> {
 	constructor() {
 		super(groupConfig);
 	}
