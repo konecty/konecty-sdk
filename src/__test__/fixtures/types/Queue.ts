@@ -1,10 +1,18 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
-import { KonectyFilter } from '@konecty/sdk/types';
+import {} from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
+import { UserFilterConditions } from './User';
 const queueConfig: ModuleConfig = {
 	name: 'Queue',
 	collection: 'data.Queue',
@@ -23,20 +31,20 @@ export type QueueUserType = { name: string; group: { name: unknown }; active: bo
 export type QueueTargetCampaignType = PickFromPath<Campaign, 'code' | 'name'>;
 export type QueueTypeType = 'Chat' | 'Telefone' | 'Formulario' | 'Email';
 export interface Queue extends KonectyDocument<QueueUserType[], QueueCreatedByType, QueueUpdatedByType> {
-	active: boolean;
-	count: number;
-	currentCount: number;
-	currentPosition: number;
-	name: string;
-	chatInvite: string;
-	queueUsers: KonectyFilter<User>;
-	_createdAt: Date;
-	_createdBy: QueueCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: QueueUpdatedByType;
-	_user: QueueUserType[];
-	type: QueueTypeType;
-	targetCampaign: QueueTargetCampaignType;
+	active?: boolean;
+	count?: number;
+	currentCount?: number;
+	currentPosition?: number;
+	name?: string;
+	chatInvite?: string;
+	queueUsers?: ModuleFilter<UserFilterConditions>;
+	_createdAt?: Date;
+	_createdBy?: QueueCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: QueueUpdatedByType;
+	_user?: QueueUserType[];
+	type?: QueueTypeType;
+	targetCampaign?: QueueTargetCampaignType;
 }
 export type QueueFilterConditions =
 	| FilterConditions
@@ -46,8 +54,8 @@ export type QueueFilterConditions =
 	| FilterConditionValue<'currentPosition', FieldOperators<'number'>, number>
 	| FilterConditionValue<'name', FieldOperators<'text'>, string>
 	| FilterConditionValue<'chatInvite', FieldOperators<'text'>, string>
-	| FilterConditionValue<'queueUsers', FieldOperators<'filter'>, KonectyFilter<User>>
-	| FilterConditionValue<'queueUsers.conditions', FieldOperators<'filter.conditions'>, KonectyFilter<User>>
+	| FilterConditionValue<'queueUsers', FieldOperators<'filter'>, ModuleFilter<UserFilterConditions>>
+	| FilterConditionValue<'queueUsers.conditions', FieldOperators<'filter.conditions'>, ModuleFilter<UserFilterConditions>>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, QueueCreatedByType>
 	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, QueueCreatedByType>
@@ -129,7 +137,7 @@ export class QueueModule extends KonectyModule<
 		label: { en: 'Chat Invite', pt_BR: 'Convite do Chat' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly queueUsers: MetadataField<KonectyFilter<User>> = {
+	readonly queueUsers: MetadataField<ModuleFilter<UserFilterConditions>> = {
 		type: 'filter',
 		name: 'queueUsers',
 		label: { en: 'Queue Users', pt_BR: 'Usuários da Roleta' },
@@ -138,7 +146,7 @@ export class QueueModule extends KonectyModule<
 		relations: [{ document: 'QueueUser', reverseLookup: 'queue', lookup: 'user' }],
 		isInherited: true,
 		filterOnly: true,
-	} as MetadataField<KonectyFilter<User>>;
+	} as MetadataField<ModuleFilter<UserFilterConditions>>;
 	readonly _createdAt: MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_createdAt',

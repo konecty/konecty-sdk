@@ -1,5 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -21,21 +28,21 @@ export type TemplateUpdatedByType = { name: string; group: { name: unknown } };
 export type TemplateUserType = { name: string; group: { name: unknown } };
 export type TemplateTypeType = 'email';
 export interface Template extends KonectyDocument<TemplateUserType[], TemplateCreatedByType, TemplateUpdatedByType> {
-	code: number;
-	name: string;
-	type: TemplateTypeType;
-	webServices: object;
-	style: string;
-	document: string;
-	view: string;
-	value: string;
-	subject: string;
-	_createdAt: Date;
-	_createdBy: TemplateCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: TemplateUpdatedByType;
-	_user: TemplateUserType[];
-	attachment: FileDescriptor[];
+	code?: number;
+	name?: string;
+	type?: TemplateTypeType;
+	webServices?: object;
+	style?: string;
+	document?: string;
+	view?: string;
+	value?: string;
+	subject?: string;
+	_createdAt?: Date;
+	_createdBy?: TemplateCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: TemplateUpdatedByType;
+	_user?: TemplateUserType[];
+	attachment?: FileDescriptor[];
 }
 export type TemplateFilterConditions =
 	| FilterConditions

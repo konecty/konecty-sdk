@@ -1,5 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -29,31 +36,31 @@ export type WebElementPriorityType = 'Média' | 'Baixa' | 'Alta';
 export type WebElementStatusType = 'Ativo' | 'Inativo';
 export type WebElementTypeType = 'HTML' | 'Konecty';
 export interface WebElement extends KonectyDocument<WebElementUserType[], WebElementCreatedByType, WebElementUpdatedByType> {
-	campaign: WebElementCampaignType;
-	code: number;
-	endAt: Date;
-	file: FileDescriptor[];
-	html: string[];
-	markdown: string[];
-	linkLabel: string;
-	link: string;
-	slug: string;
-	author: string;
-	linkTarget: WebElementLinkTargetType;
-	name: string;
-	order: number;
-	priority: WebElementPriorityType;
-	startAt: Date;
-	status: WebElementStatusType;
-	type: WebElementTypeType;
-	webElement: WebElementWebElementType[];
-	parents: WebElementParentsType[];
-	parent: WebElementParentType;
-	_createdAt: Date;
-	_createdBy: WebElementCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: WebElementUpdatedByType;
-	_user: WebElementUserType[];
+	campaign?: WebElementCampaignType;
+	code?: number;
+	endAt?: Date;
+	file?: FileDescriptor[];
+	html?: string[];
+	markdown?: string[];
+	linkLabel?: string;
+	link?: string;
+	slug?: string;
+	author?: string;
+	linkTarget?: WebElementLinkTargetType;
+	name?: string;
+	order?: number;
+	priority?: WebElementPriorityType;
+	startAt?: Date;
+	status?: WebElementStatusType;
+	type?: WebElementTypeType;
+	webElement?: WebElementWebElementType[];
+	parents?: WebElementParentsType[];
+	parent?: WebElementParentType;
+	_createdAt?: Date;
+	_createdBy?: WebElementCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: WebElementUpdatedByType;
+	_user?: WebElementUserType[];
 }
 export type WebElementFilterConditions =
 	| FilterConditions

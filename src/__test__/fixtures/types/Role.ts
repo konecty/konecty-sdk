@@ -1,5 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -21,15 +28,15 @@ export type RoleCreatedByType = { name: string; group: { name: unknown } };
 export type RoleUpdatedByType = { name: string; group: { name: unknown } };
 export type RoleUserType = { name: string; group: { name: unknown } };
 export interface Role extends KonectyDocument<RoleUserType[], RoleCreatedByType, RoleUpdatedByType> {
-	access: object;
-	admin: boolean;
-	name: string;
-	parents: RoleParentsType[];
-	_createdAt: Date;
-	_createdBy: RoleCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: RoleUpdatedByType;
-	_user: RoleUserType[];
+	access?: object;
+	admin?: boolean;
+	name?: string;
+	parents?: RoleParentsType[];
+	_createdAt?: Date;
+	_createdBy?: RoleCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: RoleUpdatedByType;
+	_user?: RoleUserType[];
 }
 export type RoleFilterConditions =
 	| FilterConditions

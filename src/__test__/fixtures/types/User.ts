@@ -1,5 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -68,55 +75,55 @@ export type UserExitMotiveBrokerType =
 	| 'Doença'
 	| 'Problemas Familiares';
 export interface User extends KonectyDocument<UserUserType[], UserCreatedByType, UserUpdatedByType> {
-	active: boolean;
-	nickname: string;
-	pictures: FileDescriptor[];
-	address: Address[];
-	birthdate: Date;
-	code: number;
-	emails: Email[];
-	group: UserGroupType;
-	groups: UserGroupsType[];
-	admin: boolean;
-	jobTitle: string;
-	lastLogin: Date;
-	locale: UserLocaleType;
-	username: string;
-	name: string;
-	password: string;
-	access: object;
-	phone: Phone[];
-	role: UserRoleType;
-	sessionExpireAfterMinutes: number;
-	_createdAt: Date;
-	_createdBy: UserCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: UserUpdatedByType;
-	status: UserStatusType;
-	_user: UserUserType[];
-	targetQueue: UserTargetQueueType;
-	induction: Date;
-	inductionStatus: UserInductionStatusType;
-	documents: FileDescriptor[];
-	director: UserDirectorType;
-	temporaryBadge: boolean;
-	badge: UserBadgeType;
-	recruitedBy: UserRecruitedByType;
-	recruitmentChannel: string;
-	businessCards: UserBusinessCardsType;
-	contract: UserContractType;
-	autonomous: UserAutonomousType;
-	contractStatus: UserContractStatusType;
-	cpf: string;
-	canViewPhone: boolean;
-	document: string;
-	documentType: UserDocumentTypeType;
-	documentNotes: string;
-	exitMotiveManager: UserExitMotiveManagerType;
-	exitMotiveBroker: UserExitMotiveBrokerType;
-	expire: Date;
-	fullName: string;
-	type: string;
+	active?: boolean;
+	nickname?: string;
+	pictures?: FileDescriptor[];
+	address?: Address[];
+	birthdate?: Date;
+	code?: number;
+	emails?: Email[];
+	group?: UserGroupType;
+	groups?: UserGroupsType[];
+	admin?: boolean;
+	jobTitle?: string;
+	lastLogin?: Date;
+	locale?: UserLocaleType;
+	username?: string;
+	name?: string;
+	password?: string;
+	access?: object;
+	phone?: Phone[];
+	role?: UserRoleType;
+	sessionExpireAfterMinutes?: number;
+	_createdAt?: Date;
+	_createdBy?: UserCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: UserUpdatedByType;
+	status?: UserStatusType;
+	_user?: UserUserType[];
+	targetQueue?: UserTargetQueueType;
+	induction?: Date;
+	inductionStatus?: UserInductionStatusType;
+	documents?: FileDescriptor[];
+	director?: UserDirectorType;
+	temporaryBadge?: boolean;
+	badge?: UserBadgeType;
+	recruitedBy?: UserRecruitedByType;
+	recruitmentChannel?: string;
+	businessCards?: UserBusinessCardsType;
+	contract?: UserContractType;
+	autonomous?: UserAutonomousType;
+	contractStatus?: UserContractStatusType;
+	cpf?: string;
+	canViewPhone?: boolean;
+	document?: string;
+	documentType?: UserDocumentTypeType;
+	documentNotes?: string;
+	exitMotiveManager?: UserExitMotiveManagerType;
+	exitMotiveBroker?: UserExitMotiveBrokerType;
+	expire?: Date;
+	fullName?: string;
+	type?: string;
 }
 export type UserFilterConditions =
 	| FilterConditions

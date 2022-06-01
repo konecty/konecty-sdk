@@ -1,5 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -20,13 +27,13 @@ export type GroupCreatedByType = { name: string; group: { name: unknown } };
 export type GroupUpdatedByType = { name: string; group: { name: unknown } };
 export type GroupUserType = { name: string; group: { name: unknown }; active: boolean };
 export interface Group extends KonectyDocument<GroupUserType[], GroupCreatedByType, GroupUpdatedByType> {
-	active: boolean;
-	name: string;
-	_createdAt: Date;
-	_createdBy: GroupCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: GroupUpdatedByType;
-	_user: GroupUserType[];
+	active?: boolean;
+	name?: string;
+	_createdAt?: Date;
+	_createdBy?: GroupCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: GroupUpdatedByType;
+	_user?: GroupUserType[];
 }
 export type GroupFilterConditions =
 	| FilterConditions

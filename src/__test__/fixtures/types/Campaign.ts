@@ -1,14 +1,22 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
-import { FileDescriptor, KonectyFilter, Phone } from '@konecty/sdk/types';
-import { Contact } from './Contact';
-import { Product } from './Product';
+import { FileDescriptor, Phone } from '@konecty/sdk/types';
+import { Contact, ContactFilterConditions } from './Contact';
+import { Product, ProductFilterConditions } from './Product';
 import { Queue } from './Queue';
 import { Template } from './Template';
 import { WebElement } from './WebElement';
+import { UserFilterConditions } from './User';
 const campaignConfig: ModuleConfig = {
 	name: 'Campaign',
 	collection: 'data.Campaign',
@@ -49,54 +57,54 @@ export type CampaignTypeType =
 	| 'Email marketing';
 export type CampaignSendExactType = 'true' | 'false';
 export interface Campaign extends KonectyDocument<CampaignUserType[], CampaignCreatedByType, CampaignUpdatedByType> {
-	mainCampaign: CampaignMainCampaignType;
-	campaignTarget: KonectyFilter<Contact>;
-	campaignUser: KonectyFilter<User>;
-	attachment: FileDescriptor[];
-	code: number;
-	description: string;
-	email: string;
-	endAt: Date;
-	name: string;
-	script: string;
-	startAt: Date;
-	status: CampaignStatusType;
-	type: CampaignTypeType;
-	_createdAt: Date;
-	_createdBy: CampaignCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: CampaignUpdatedByType;
-	_user: CampaignUserType[];
-	identifier: string;
-	externalIdentifier: string[];
-	phone: Phone[];
-	notes: string;
-	products: CampaignProductsType[];
-	webElement: CampaignWebElementType;
-	product: CampaignProductType;
-	targetQueue: CampaignTargetQueueType;
-	chatQueue: CampaignChatQueueType;
-	chatTipTitle: string;
-	chatTipDescription: string;
-	chatTitle: string;
-	chatTitleBarColor: string;
-	chatTitleBarTextColor: string;
-	sendExact: CampaignSendExactType;
-	firstTouchTemplate: CampaignFirstTouchTemplateType;
-	firstTouchFile: FileDescriptor;
-	firstTouchSender: CampaignFirstTouchSenderType;
-	productFilter: KonectyFilter<Product>;
-	badge: FileDescriptor;
-	content: string[];
+	mainCampaign?: CampaignMainCampaignType;
+	campaignTarget?: ModuleFilter<ContactFilterConditions>;
+	campaignUser?: ModuleFilter<UserFilterConditions>;
+	attachment?: FileDescriptor[];
+	code?: number;
+	description?: string;
+	email?: string;
+	endAt?: Date;
+	name?: string;
+	script?: string;
+	startAt?: Date;
+	status?: CampaignStatusType;
+	type?: CampaignTypeType;
+	_createdAt?: Date;
+	_createdBy?: CampaignCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: CampaignUpdatedByType;
+	_user?: CampaignUserType[];
+	identifier?: string;
+	externalIdentifier?: string[];
+	phone?: Phone[];
+	notes?: string;
+	products?: CampaignProductsType[];
+	webElement?: CampaignWebElementType;
+	product?: CampaignProductType;
+	targetQueue?: CampaignTargetQueueType;
+	chatQueue?: CampaignChatQueueType;
+	chatTipTitle?: string;
+	chatTipDescription?: string;
+	chatTitle?: string;
+	chatTitleBarColor?: string;
+	chatTitleBarTextColor?: string;
+	sendExact?: CampaignSendExactType;
+	firstTouchTemplate?: CampaignFirstTouchTemplateType;
+	firstTouchFile?: FileDescriptor;
+	firstTouchSender?: CampaignFirstTouchSenderType;
+	productFilter?: ModuleFilter<ProductFilterConditions>;
+	badge?: FileDescriptor;
+	content?: string[];
 }
 export type CampaignFilterConditions =
 	| FilterConditions
 	| FilterConditionValue<'mainCampaign', FieldOperators<'lookup'>, CampaignMainCampaignType>
 	| FilterConditionValue<'mainCampaign._id', FieldOperators<'lookup._id'>, CampaignMainCampaignType>
-	| FilterConditionValue<'campaignTarget', FieldOperators<'filter'>, KonectyFilter<Contact>>
-	| FilterConditionValue<'campaignTarget.conditions', FieldOperators<'filter.conditions'>, KonectyFilter<Contact>>
-	| FilterConditionValue<'campaignUser', FieldOperators<'filter'>, KonectyFilter<User>>
-	| FilterConditionValue<'campaignUser.conditions', FieldOperators<'filter.conditions'>, KonectyFilter<User>>
+	| FilterConditionValue<'campaignTarget', FieldOperators<'filter'>, ModuleFilter<ContactFilterConditions>>
+	| FilterConditionValue<'campaignTarget.conditions', FieldOperators<'filter.conditions'>, ModuleFilter<ContactFilterConditions>>
+	| FilterConditionValue<'campaignUser', FieldOperators<'filter'>, ModuleFilter<UserFilterConditions>>
+	| FilterConditionValue<'campaignUser.conditions', FieldOperators<'filter.conditions'>, ModuleFilter<UserFilterConditions>>
 	| FilterConditionValue<'attachment', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
 	| FilterConditionValue<'description', FieldOperators<'richText'>, string>
@@ -141,8 +149,8 @@ export type CampaignFilterConditions =
 	| FilterConditionValue<'firstTouchFile', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'firstTouchSender', FieldOperators<'lookup'>, CampaignFirstTouchSenderType>
 	| FilterConditionValue<'firstTouchSender._id', FieldOperators<'lookup._id'>, CampaignFirstTouchSenderType>
-	| FilterConditionValue<'productFilter', FieldOperators<'filter'>, KonectyFilter<Product>>
-	| FilterConditionValue<'productFilter.conditions', FieldOperators<'filter.conditions'>, KonectyFilter<Product>>
+	| FilterConditionValue<'productFilter', FieldOperators<'filter'>, ModuleFilter<ProductFilterConditions>>
+	| FilterConditionValue<'productFilter.conditions', FieldOperators<'filter.conditions'>, ModuleFilter<ProductFilterConditions>>
 	| FilterConditionValue<'badge', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'content', FieldOperators<'text'>, string>;
 export type CampaignSortFields =
@@ -179,7 +187,7 @@ export class CampaignModule extends KonectyModule<
 		name: 'mainCampaign',
 		isInherited: true,
 	} as MetadataField<CampaignMainCampaignType>;
-	readonly campaignTarget: MetadataField<KonectyFilter<Contact>> = {
+	readonly campaignTarget: MetadataField<ModuleFilter<ContactFilterConditions>> = {
 		label: { en: 'Campaign Target', pt_BR: 'Alvo da Campanha' },
 		document: 'Contact',
 		filterableFields: ['name'],
@@ -187,8 +195,8 @@ export class CampaignModule extends KonectyModule<
 		type: 'filter',
 		name: 'campaignTarget',
 		isInherited: true,
-	} as MetadataField<KonectyFilter<Contact>>;
-	readonly campaignUser: MetadataField<KonectyFilter<User>> = {
+	} as MetadataField<ModuleFilter<ContactFilterConditions>>;
+	readonly campaignUser: MetadataField<ModuleFilter<UserFilterConditions>> = {
 		label: { en: 'Campaign User', pt_BR: 'Usuário da Campanha' },
 		document: 'User',
 		filterableFields: ['name', 'email', 'role', 'nickname', 'active'],
@@ -196,7 +204,7 @@ export class CampaignModule extends KonectyModule<
 		type: 'filter',
 		name: 'campaignUser',
 		isInherited: true,
-	} as MetadataField<KonectyFilter<User>>;
+	} as MetadataField<ModuleFilter<UserFilterConditions>>;
 	readonly attachment: MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'attachment',
@@ -455,7 +463,7 @@ export class CampaignModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
 	} as MetadataField<CampaignFirstTouchSenderType>;
-	readonly productFilter: MetadataField<KonectyFilter<Product>> = {
+	readonly productFilter: MetadataField<ModuleFilter<ProductFilterConditions>> = {
 		type: 'filter',
 		name: 'productFilter',
 		label: { en: 'Product filter', pt_BR: 'Filtro de produtos' },
@@ -463,7 +471,7 @@ export class CampaignModule extends KonectyModule<
 		filterableFields: ['active', '_createdAt', '_createdBy', 'description', 'code', 'type', 'name', 'sale', '_user'],
 		isInherited: true,
 		relations: [],
-	} as MetadataField<KonectyFilter<Product>>;
+	} as MetadataField<ModuleFilter<ProductFilterConditions>>;
 	readonly badge: MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'badge',

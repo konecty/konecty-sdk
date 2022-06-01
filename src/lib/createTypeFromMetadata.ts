@@ -14,7 +14,9 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		TypeUtils: ['PickFromPath'],
 		Konecty: [],
 		Documents: [],
+		DocumentFilters: [],
 	};
+
 	const documentConfig = [
 		`const ${camelCase(name)}Config: ModuleConfig = {`,
 		`name: '${name}',`,
@@ -125,9 +127,10 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 				return `${name}${pascalCase(field.name)}Type`;
 
 			case FieldType.filter:
-				imports.Konecty.push('KonectyFilter');
+				// imports.Konecty.push('KonectyFilter');
+				imports.DocumentFilters.push(field.document ?? '');
 
-				return `KonectyFilter<${field.document}>`;
+				return `ModuleFilter<${field.document}FilterConditions>`;
 
 			case FieldType.file:
 				imports.Konecty.push('FileDescriptor');
@@ -148,7 +151,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	}
 
 	const interfaceProperties: string[] = Object.values<MetadataField>(fields).map(
-		field => `${field.name}: ${getBaseType(field)}${getListIndicatorForType(field)};`,
+		field => `${field.name}?: ${getBaseType(field)}${getListIndicatorForType(field)};`,
 	);
 
 	const classProperties: string[] = Object.values<MetadataField>(fields).reduce<string[]>((acc, field) => {
@@ -159,7 +162,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		]);
 	}, []);
 
-	Object.values<MetadataField>(fields).map(field => `${field.name}: ${getBaseType(field)};`);
+	//  Object.values<MetadataField>(fields).map(field => `${field.name}: ${getBaseType(field)};`);
 
 	const userTypes = [];
 	if (fields._user != null) {
@@ -230,9 +233,11 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.filter(({ isSortable }) => isSortable === true)
 		.map<string>(({ name }) => `| '${name}'`);
 
+	const filterImports = Array.from(new Set(imports.DocumentFilters));
+
 	const code = [
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
-		`import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module'`,
+		`import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions, ModuleFilter } from '@konecty/sdk/Module'`,
 		`import { MetadataField } from '@konecty/sdk/types/metadata';`,
 		`import { KonectyClientOptions } from '@konecty/sdk/Client';`,
 		`import { FieldOperators } from '@konecty/sdk/FieldOperators';`,
@@ -242,7 +247,17 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 			Array.from(new Set(imports.Documents))
 				.filter(d => d !== name)
 				.sort()
-				.map(document => `import { ${document} } from './${document}';`),
+				.map(
+					document =>
+						`import { ${document} ${
+							filterImports.includes(document) ? `, ${document}FilterConditions` : ''
+						}} from './${document}';`,
+				),
+		)
+		.concat(
+			filterImports
+				.filter(d => !imports.Documents.includes(d))
+				.map(document => `import { ${document}FilterConditions } from './${document}';`),
 		)
 		.concat(documentConfig)
 		.concat(lookupTypes)

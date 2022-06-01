@@ -1,5 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -24,34 +31,34 @@ export type ProductUserType = { name: string; group: { name: unknown } };
 export type ProductStatusType = 'Rascunho' | 'Ativo' | 'Inativo' | 'Não Realizado';
 export type ProductTypeType = 'Apartamento' | 'Casa' | 'Terreno';
 export interface Product extends KonectyDocument<ProductUserType[], ProductCreatedByType, ProductUpdatedByType> {
-	active: boolean;
-	supplierUpdatedChanged: boolean;
-	code: number;
-	sale: Money;
-	campaign: ProductCampaignType;
-	joinedCampaignOn: Date;
-	shippingAmount: Money;
-	description: string;
-	file: FileDescriptor[];
-	name: string;
-	pictures: FileDescriptor[];
-	sku: string;
-	status: ProductStatusType;
-	type: ProductTypeType;
-	_createdAt: Date;
-	_createdBy: ProductCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: ProductUpdatedByType;
-	_user: ProductUserType[];
-	sendSupplierUpdatedMail: boolean;
-	offerCount: number;
-	availableAt: Date;
-	banner: FileDescriptor[];
-	link: string[];
-	notes: string;
-	parentProduct: string;
-	siteTags: string[];
-	campaignTags: string[];
+	active?: boolean;
+	supplierUpdatedChanged?: boolean;
+	code?: number;
+	sale?: Money;
+	campaign?: ProductCampaignType;
+	joinedCampaignOn?: Date;
+	shippingAmount?: Money;
+	description?: string;
+	file?: FileDescriptor[];
+	name?: string;
+	pictures?: FileDescriptor[];
+	sku?: string;
+	status?: ProductStatusType;
+	type?: ProductTypeType;
+	_createdAt?: Date;
+	_createdBy?: ProductCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: ProductUpdatedByType;
+	_user?: ProductUserType[];
+	sendSupplierUpdatedMail?: boolean;
+	offerCount?: number;
+	availableAt?: Date;
+	banner?: FileDescriptor[];
+	link?: string[];
+	notes?: string;
+	parentProduct?: string;
+	siteTags?: string[];
+	campaignTags?: string[];
 }
 export type ProductFilterConditions =
 	| FilterConditions

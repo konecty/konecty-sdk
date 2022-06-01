@@ -1,5 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -37,46 +44,46 @@ export type ContactSmsFrequenceType = 'Mês' | 'Nunca' | 'Dia' | 'Semana' | 'Dua
 export type ContactStatusType = 'Lead' | 'Ativo' | 'Faleceu' | 'Inválido' | 'Descadastrado' | 'Duplicado' | 'Inativo';
 export type ContactMediumType = 'Banner Online' | 'Panfleto' | 'Outdoor' | 'Placa' | 'Post Patrocinado' | 'Post Fanpage';
 export interface Contact extends KonectyDocument<ContactUserType[], ContactCreatedByType, ContactUpdatedByType> {
-	mainContact: ContactMainContactType;
-	contactAttempts: number;
-	invalidAttempts: number;
-	description: string;
-	priority: ContactPriorityType;
-	queue: ContactQueueType;
-	campaign: ContactCampaignType;
-	referrerURL: string;
-	facebookData: object;
-	googleData: object;
-	doNotCall: ContactDoNotCallType;
-	staff: ContactStaffType[];
-	type: ContactTypeType;
-	address: Address[];
-	password: string;
-	birthdate: Date;
-	code: number;
-	email: Email[];
-	emailFrequence: ContactEmailFrequenceType;
-	legalPerson: boolean;
-	mailFrequence: ContactMailFrequenceType;
-	name: PersonName;
-	verificationToken: string;
-	notes: string;
-	phone: Phone[];
-	picture: FileDescriptor[];
-	smsFrequence: ContactSmsFrequenceType;
-	status: ContactStatusType;
-	_createdAt: Date;
-	_createdBy: ContactCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: ContactUpdatedByType;
-	_user: ContactUserType[];
-	medium: ContactMediumType;
-	channel: ContactChannelType;
-	source: ContactSourceType;
-	campaignsAsTarget: number;
-	lastCampaignTargetAt: Date;
-	lastEmailSentAt: Date;
-	activeOpportunities: number;
+	mainContact?: ContactMainContactType;
+	contactAttempts?: number;
+	invalidAttempts?: number;
+	description?: string;
+	priority?: ContactPriorityType;
+	queue?: ContactQueueType;
+	campaign?: ContactCampaignType;
+	referrerURL?: string;
+	facebookData?: object;
+	googleData?: object;
+	doNotCall?: ContactDoNotCallType;
+	staff?: ContactStaffType[];
+	type?: ContactTypeType;
+	address?: Address[];
+	password?: string;
+	birthdate?: Date;
+	code?: number;
+	email?: Email[];
+	emailFrequence?: ContactEmailFrequenceType;
+	legalPerson?: boolean;
+	mailFrequence?: ContactMailFrequenceType;
+	name?: PersonName;
+	verificationToken?: string;
+	notes?: string;
+	phone?: Phone[];
+	picture?: FileDescriptor[];
+	smsFrequence?: ContactSmsFrequenceType;
+	status?: ContactStatusType;
+	_createdAt?: Date;
+	_createdBy?: ContactCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: ContactUpdatedByType;
+	_user?: ContactUserType[];
+	medium?: ContactMediumType;
+	channel?: ContactChannelType;
+	source?: ContactSourceType;
+	campaignsAsTarget?: number;
+	lastCampaignTargetAt?: Date;
+	lastEmailSentAt?: Date;
+	activeOpportunities?: number;
 }
 export type ContactFilterConditions =
 	| FilterConditions

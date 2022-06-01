@@ -20,12 +20,12 @@ export interface ModuleConfig {
 }
 
 export interface KonectyDocument<UserType = unknown | never, CreatedByType = unknown | never, UpdatedByType = unknown | never> {
-	_id: string;
-	_user: UserType extends [never] ? ModuleUserType[] : UserType;
-	_createdAt: Date;
-	_createdBy: CreatedByType extends [never] ? ModuleCreatedByType : CreatedByType;
-	_updatedAt: Date;
-	_updatedBy: UpdatedByType extends [never] ? ModuleUpdatedByType : CreatedByType;
+	_id?: string;
+	_user?: UserType extends [never] ? ModuleUserType[] : UserType;
+	_createdAt?: Date;
+	_createdBy?: CreatedByType extends [never] ? ModuleCreatedByType : CreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: UpdatedByType extends [never] ? ModuleUpdatedByType : CreatedByType;
 }
 
 export type DocumentUser = PickFromPath<User, '_id' | 'name' | 'group.name' | 'active'>;

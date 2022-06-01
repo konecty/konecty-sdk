@@ -1,5 +1,12 @@
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions } from '@konecty/sdk/Module';
+import {
+	KonectyModule,
+	ModuleConfig,
+	KonectyDocument,
+	FilterConditionValue,
+	FilterConditions,
+	ModuleFilter,
+} from '@konecty/sdk/Module';
 import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
@@ -19,12 +26,12 @@ const channelConfig: ModuleConfig = {
 export type ChannelCreatedByType = { name: string; group: { name: unknown } };
 export type ChannelUpdatedByType = { name: string; group: { name: unknown } };
 export interface Channel extends KonectyDocument<never, ChannelCreatedByType, ChannelUpdatedByType> {
-	name: string;
-	identifier: string;
-	_createdAt: Date;
-	_createdBy: ChannelCreatedByType;
-	_updatedAt: Date;
-	_updatedBy: ChannelUpdatedByType;
+	name?: string;
+	identifier?: string;
+	_createdAt?: Date;
+	_createdBy?: ChannelCreatedByType;
+	_updatedAt?: Date;
+	_updatedBy?: ChannelUpdatedByType;
 }
 export type ChannelFilterConditions =
 	| FilterConditions
