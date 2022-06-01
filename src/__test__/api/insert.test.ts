@@ -6,7 +6,7 @@ import { WebElement, WebElementModule } from '../fixtures/types/WebElement';
 
 const agent = new MockAgent();
 
-describe('Konecty Retrive Documents', () => {
+describe('Konecty Insert Documents', () => {
 	beforeAll(async () => {
 		KonectyClient.defaults.endpoint = 'http://localhost:3000';
 		KonectyClient.defaults.accessKey = 'fake-key';

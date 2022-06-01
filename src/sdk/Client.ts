@@ -1,4 +1,7 @@
 import get from 'lodash/get';
+import isArray from 'lodash/isArray';
+import isObject from 'lodash/isObject';
+import { DateTime } from 'luxon';
 import { fetch } from 'undici';
 import logger from '../lib/logger';
 export interface KonectyClientOptions {
@@ -45,7 +48,7 @@ export class KonectyClient {
 
 			const body = await result.json();
 
-			return body as KonectyFindResult;
+			return deserializeDates(body) as KonectyFindResult;
 		} catch (err) {
 			logger.error(err);
 			return {
@@ -63,12 +66,12 @@ export class KonectyClient {
 					Authorization: `${this._options.accessKey}`,
 					'Content-Type': 'application/json',
 				},
-				body: JSON.stringify(data),
+				body: JSON.stringify(serializeDates(data)),
 			});
 
 			const body = await result.json();
 
-			return body as KonectyFindResult;
+			return deserializeDates(body) as KonectyFindResult;
 		} catch (err) {
 			logger.error(err);
 			return {
@@ -77,4 +80,62 @@ export class KonectyClient {
 			};
 		}
 	}
+
+	async update(module: string, data: object, ids: object[]): Promise<KonectyFindResult> {
+		try {
+			const result = await fetch(`${this._options.endpoint}/rest/data/${module}`, {
+				method: 'PUT',
+				headers: {
+					Authorization: `${this._options.accessKey}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(serializeDates({ ids, data })),
+			});
+
+			const body = await result.json();
+
+			return deserializeDates(body) as KonectyFindResult;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+}
+
+function serializeDates(obj: unknown): unknown {
+	if (obj instanceof Date) {
+		return { $date: obj.toISOString() };
+	}
+
+	if (isArray(obj)) {
+		return obj.map(serializeDates);
+	}
+
+	if (isObject(obj)) {
+		return Object.keys(obj).reduce((acc, key) => Object.assign(acc, { [key]: serializeDates(get(obj, key)) }), {});
+	}
+
+	return obj;
+}
+
+function deserializeDates(obj: unknown): unknown {
+	if (get(obj, '$date') != null) {
+		return DateTime.fromISO(get(obj, '$date')).toJSDate();
+	}
+	if (typeof obj === 'string' && DateTime.fromISO(obj).isValid) {
+		return DateTime.fromISO(obj).toJSDate();
+	}
+
+	if (isArray(obj)) {
+		return obj.map(serializeDates);
+	}
+
+	if (isObject(obj)) {
+		return Object.keys(obj).reduce((acc, key) => Object.assign(acc, { [key]: serializeDates(get(obj, key)) }), {});
+	}
+
+	return obj;
 }

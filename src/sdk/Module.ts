@@ -3,7 +3,7 @@ import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
 import 'reflect-metadata';
 import { FieldOperators } from './FieldOperators';
-import { ArrElement, PickFromPath } from './TypeUtils';
+import { ArrElement, Nullable, PickFromPath } from './TypeUtils';
 import { User } from './User';
 
 export type ModuleCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
@@ -195,12 +195,23 @@ export class KonectyModule<
 		return { success: true };
 	}
 
-	// #region Create
+	// #region Create/Update
 	async create(document: Document): Promise<ModuleActionResult<Document>> {
 		const result = await this.#client.create(this.#config.name, document);
 
 		return result as ModuleActionResult<Document>;
 	}
+
+	async update(
+		document: Nullable<Document>,
+		ids: Array<PickFromPath<Document, '_id' | '__updatedAt'>>,
+	): Promise<ModuleActionResult<Document>> {
+		const result = await this.#client.update(this.#config.name, document, ids);
+
+		return result as ModuleActionResult<Document>;
+	}
+
+	// #endregion
 
 	// #region commom properties
 	readonly _id: MetadataField<string> = {
