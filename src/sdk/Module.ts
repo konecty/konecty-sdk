@@ -113,6 +113,12 @@ export type ValidateResult = {
 	};
 };
 
+export type ModuleActionResult<T> = {
+	success: boolean;
+	data?: T[];
+	errors?: string[];
+};
+
 export class KonectyModule<
 	Document extends KonectyDocument<OwnerType, CreatedByType, UpdatedByType>,
 	ModuleFilterConditions = FilterConditions,
@@ -187,6 +193,13 @@ export class KonectyModule<
 		}
 
 		return { success: true };
+	}
+
+	// #region Create
+	async create(document: Document): Promise<ModuleActionResult<Document>> {
+		const result = await this.#client.create(this.#config.name, document);
+
+		return result as ModuleActionResult<Document>;
 	}
 
 	// #region commom properties

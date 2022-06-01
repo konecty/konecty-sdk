@@ -54,4 +54,27 @@ export class KonectyClient {
 			};
 		}
 	}
+
+	async create(module: string, data: object): Promise<KonectyFindResult> {
+		try {
+			const result = await fetch(`${this._options.endpoint}/rest/data/${module}`, {
+				method: 'POST',
+				headers: {
+					Authorization: `${this._options.accessKey}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(data),
+			});
+
+			const body = await result.json();
+
+			return body as KonectyFindResult;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
 }
