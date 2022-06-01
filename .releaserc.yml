@@ -104,7 +104,7 @@ prepare:
           chore(release): ${nextRelease.version} [skip ci]
 
           ${nextRelease.notes}'
-      assets: ['package.json', 'CHANGELOG.md', 'dist']
+      assets: ['package.json', 'CHANGELOG.md']
 
 success: false
 
