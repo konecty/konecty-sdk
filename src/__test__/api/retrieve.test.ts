@@ -1,20 +1,64 @@
+import { KonectyClient } from '@konecty/sdk/Client';
 import { expect } from 'chai';
-// import { UserModule, User } from '../../sdk/User';
+import { setGlobalDispatcher } from 'undici';
+import { User, UserModule } from '../fixtures/types/User';
+import KonectyFindMockAgent from './konecty-find-mock';
 
 describe('Konecty Retrive Documents', () => {
+	beforeAll(async () => {
+		setGlobalDispatcher(KonectyFindMockAgent);
+		KonectyClient.defaults.endpoint = 'http://localhost:3000';
+		KonectyClient.defaults.accessKey = 'fake-key';
+	});
 	it('Should retrieve admin user from username from a collection', async () => {
 		// Arrange
-		// const userModule = new UserModule();
-		// userModule.group
-		// const user: User = userModule.findOne({ username: 'admin' });
-		// const users: User[] =  userModule.findAll({ admin: true });
-		// user.getLabel('en');
-		// user.name.label('en');
-		// user.getFieldLabel('name', 'en');
-		// user.emails.push({
-		//     address: 'test'
-		// })
-		// const x: string[] = user.validate();
-		expect(true).to.equal(true);
+		const userModule = new UserModule();
+
+		// Act
+		const user: User | null = await userModule.findOne({
+			match: 'and',
+			conditions: [
+				{
+					term: 'username',
+					operator: 'equals',
+					value: 'admin',
+				},
+			],
+		});
+
+		// Assert
+		expect(user).to.not.be.null;
+	});
+
+	it('Should retrive active users', async () => {
+		// Arrange
+		const userModule = new UserModule();
+
+		// Act
+		const { count, data } = await userModule.find(
+			{
+				match: 'and',
+				conditions: [
+					{
+						term: 'active',
+						operator: 'equals',
+						value: true,
+					},
+				],
+			},
+			{
+				sort: [
+					{
+						property: 'name',
+						direction: 'ASC',
+					},
+				],
+			},
+		);
+
+		// Assert
+		expect(count).to.be.equal(2);
+		expect(data).to.not.be.null;
+		expect(data).to.be.an('array').lengthOf(2);
 	});
 });

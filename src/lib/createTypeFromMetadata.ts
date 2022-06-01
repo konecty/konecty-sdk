@@ -1,21 +1,24 @@
+import { MetadataDocument, MetadataField } from '@konecty/sdk/types/metadata';
 import camelCase from 'lodash/camelCase';
+import set from 'lodash/set';
 import startCase from 'lodash/startCase';
 import prettier from 'prettier';
 import { FieldType } from '../sdk/types';
 
 const pascalCase = (str: string) => startCase(camelCase(str)).replace(/ /g, '');
 
-export function createTypeFromMetadata(metadata: any): string {
+export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	const { name, collection, label, plurals, fields } = metadata;
 
 	const imports: { [key: string]: string[] } = {
 		TypeUtils: ['PickFromPath'],
 		Konecty: [],
-		FieldTypes: [],
 		Documents: [],
+		DocumentFilters: [],
 	};
+
 	const documentConfig = [
-		`const ${camelCase(name)}Config: DocumentConfig = {`,
+		`const ${camelCase(name)}Config: ModuleConfig = {`,
 		`name: '${name}',`,
 		`collection: '${collection ?? `data.${name}`}',`,
 	];
@@ -38,124 +41,50 @@ export function createTypeFromMetadata(metadata: any): string {
 
 	documentConfig.push(`};`);
 
-	Object.values<{ document: string }>(fields)
+	Object.values<MetadataField<unknown>>(fields)
 		.map(({ document }) => document)
 		.filter(d => d)
+		.filter(d => !['User', 'Group'].includes(d ?? ''))
 		.forEach(document => {
-			imports.Documents.push(document);
+			imports.Documents.push(document as string);
 		});
-
-	type MetadataField = {
-		type: string;
-		isList?: boolean;
-		name: string;
-		document: string;
-		descriptionFields: string[];
-		inheritedFields: {
-			fieldName: string;
-		}[];
-		options?: {
-			[lang: string]: string;
-		};
-	};
 
 	const lookupTypes = Object.values<MetadataField>(fields)
 		.filter(field => field.type === FieldType.lookup)
-		.map(
-			field =>
-				`export type ${name}${pascalCase(field.name)}Type = PickFromPath<${field.document}, '${field.descriptionFields.join(
-					`' | '`,
-				)}'>;`,
-		);
+		.map(field => {
+			const fieldName = pascalCase(field.name);
+			if (['User', 'Group'].includes(field.document ?? '') || name === field.document) {
+				const result = `export type ${name}${fieldName}Type = {${(field.descriptionFields ?? [])
+					.reduce<string[]>((acc, field) => {
+						if (/\./.test(field)) {
+							const path = field.split('.');
+							const result = set({}, path, 'unknown;');
+							return acc.concat(
+								`${JSON.stringify(result)
+									.replace(/^\{(.*)\}$/, '$1')
+									.replace(/\"/g, '')};`,
+							);
+						} else {
+							if (fields[field] != null) {
+								return acc.concat(`${field}: ${getBaseType(fields[field])};`);
+							}
+						}
+						return acc;
+					}, [])
+					.join(``)}};`;
+
+				return result;
+			}
+
+			return `export type ${name}${fieldName}Type = PickFromPath<${field.document}, '${(field.descriptionFields ?? []).join(
+				`' | '`,
+			)}'>;`;
+		});
 
 	const pickListTypes: string[] = Object.values<MetadataField>(fields)
 		.filter(field => field.type === FieldType.picklist)
 		.filter(({ options }) => options != null)
 		.map(field => `export type ${name}${pascalCase(field.name)}Type = '${Object.keys(field.options ?? {}).join(`' | '`)}';`);
-
-	const pickListOptions: string[] = Object.values<MetadataField>(fields)
-		.filter(field => field.type === FieldType.picklist)
-		.filter(({ options }) => options != null)
-		.map(
-			field =>
-				`const ${camelCase(field.name)}Options: FieldOptions = ${JSON.stringify(field.options ?? {})} as FieldOptions;`,
-		);
-
-	// return `@PicklistField({ options: ${camelCase(field.name)}Type )`;
-
-	function getTypeDecorator(field: MetadataField): string {
-		switch (field.type) {
-			case FieldType.url:
-				imports.FieldTypes.push('UrlField');
-				return '@UrlField';
-			case FieldType.email:
-				imports.FieldTypes.push('EmailField');
-				return '@EmailField';
-			case FieldType.number:
-				imports.FieldTypes.push('NumberField');
-				return '@NumberField';
-			case FieldType.autoNumber:
-				imports.FieldTypes.push('AutoNumberField');
-				return '@AutoNumberField';
-			case FieldType.date:
-				imports.FieldTypes.push('DateField');
-				return '@DateField';
-			case FieldType.dateTime:
-				imports.FieldTypes.push('DateTimeField');
-				return '@DateTimeField';
-			case FieldType.money:
-				imports.FieldTypes.push('MoneyField');
-				return '@MoneyField';
-			case FieldType.boolean:
-				imports.FieldTypes.push('BooleanField');
-				return '@BooleanField';
-			case FieldType.address:
-				imports.FieldTypes.push('AddressField');
-				return '@AddressField';
-			case FieldType.personName:
-				imports.FieldTypes.push('PersonNameField');
-				return '@PersonNameField';
-			case FieldType.phone:
-				imports.FieldTypes.push('PhoneField');
-				return '@PhoneField';
-			case FieldType.picklist:
-				imports.FieldTypes.push('PicklistField');
-				return `@PicklistField({ options: ${camelCase(field.name)}Options })`;
-			case FieldType.lookup:
-				imports.FieldTypes.push('LookupField');
-				return `@LookupField<${field.document}>({ document: new ${field.document}()${
-					field.descriptionFields != null ? `, descriptionFields: ['${field.descriptionFields.join(`', '`)}']` : ''
-				}${
-					field.inheritedFields != null
-						? `, inheritedFields: ['${field.inheritedFields.map(({ fieldName }) => fieldName).join(`', '`)}']`
-						: ''
-				} })`;
-			case FieldType.ObjectId:
-				imports.FieldTypes.push('ObjectIdField');
-				return '@ObjectIdField';
-			case FieldType.encrypted:
-				imports.FieldTypes.push('EncryptedField');
-				return '@EncryptedField';
-			case FieldType.filter:
-				imports.FieldTypes.push('FilterField');
-				return '@FilterField';
-			case FieldType.richText:
-				imports.FieldTypes.push('RichTextField');
-				return '@RichTextField';
-			case FieldType.file:
-				imports.FieldTypes.push('FileField');
-				return '@FileField';
-			case FieldType.percentage:
-				imports.FieldTypes.push('PercentageField');
-				return '@PercentageField';
-			case FieldType.JSON:
-				imports.FieldTypes.push('JSONField');
-				return '@JSONField';
-			default:
-				imports.FieldTypes.push('TextField');
-				return '@TextField';
-		}
-	}
 
 	function getBaseType(field: MetadataField): string {
 		switch (field.type) {
@@ -175,7 +104,6 @@ export function createTypeFromMetadata(metadata: any): string {
 			case FieldType.dateTime:
 				return 'Date';
 			case FieldType.picklist:
-				imports.Konecty.push('FieldOptions');
 				return `${name}${pascalCase(field.name)}Type`;
 			case FieldType.email:
 				imports.Konecty.push('Email');
@@ -199,9 +127,10 @@ export function createTypeFromMetadata(metadata: any): string {
 				return `${name}${pascalCase(field.name)}Type`;
 
 			case FieldType.filter:
-				imports.Konecty.push('Filter');
+				// imports.Konecty.push('KonectyFilter');
+				imports.DocumentFilters.push(field.document ?? '');
 
-				return `Filter<${field.document}>`;
+				return `ModuleFilter<${field.document}FilterConditions>`;
 
 			case FieldType.file:
 				imports.Konecty.push('FileDescriptor');
@@ -222,41 +151,131 @@ export function createTypeFromMetadata(metadata: any): string {
 	}
 
 	const interfaceProperties: string[] = Object.values<MetadataField>(fields).map(
-		field => `${field.name}: ${getBaseType(field)}${getListIndicatorForType(field)};`,
+		field => `${field.name}?: ${getBaseType(field)}${getListIndicatorForType(field)};`,
 	);
 
 	const classProperties: string[] = Object.values<MetadataField>(fields).reduce<string[]>((acc, field) => {
 		return acc.concat([
-			`${getTypeDecorator(field)}`,
-			`${field.name}!: ${getBaseType(field)}${getListIndicatorForType(field)};`,
+			`readonly ${field.name}:MetadataField<${getBaseType(field)}> = ${JSON.stringify(field)} as MetadataField<${getBaseType(
+				field,
+			)}>;`,
 		]);
 	}, []);
 
-	Object.values<MetadataField>(fields).map(field => `${field.name}: ${getBaseType(field)};`);
+	//  Object.values<MetadataField>(fields).map(field => `${field.name}: ${getBaseType(field)};`);
+
+	const userTypes = [];
+	if (fields._user != null) {
+		userTypes.push(`${name}UserType[]`);
+	} else {
+		userTypes.push(`never`);
+	}
+
+	if (fields._createdAt != null) {
+		userTypes.push(`${name}CreatedByType`);
+	} else {
+		userTypes.push(`never`);
+	}
+
+	if (fields._updatedAt != null) {
+		userTypes.push(`${name}UpdatedByType`);
+	} else {
+		userTypes.push(`never`);
+	}
+
+	const filterConditions = Object.values<MetadataField>(fields).reduce<string[]>((acc, field) => {
+		const { name, type } = field;
+		if (!['email', 'address', 'personName', 'money', 'phone', 'password', 'json'].includes(type)) {
+			acc.push(`| FilterConditionValue<'${name}', FieldOperators<'${type}'>, ${getBaseType(field)}>`);
+		}
+		if (type === 'lookup') {
+			acc.push(`| FilterConditionValue<'${name}._id', FieldOperators<'lookup._id'>, ${getBaseType(field)}>`);
+		}
+		if (type === 'filter') {
+			acc.push(`| FilterConditionValue<'${name}.conditions', FieldOperators<'filter.conditions'>, ${getBaseType(field)}>`);
+		}
+
+		if (type === 'email') {
+			acc.push(`| FilterConditionValue<'${name}.address', FieldOperators<'email.address'>, string>`);
+		}
+
+		if (type === 'money') {
+			acc.push(`| FilterConditionValue<'${name}.currency', FieldOperators<'filter.currency'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.value', FieldOperators<'filter.value'>, number>`);
+		}
+
+		if (type === 'address') {
+			acc.push(`| FilterConditionValue<'${name}.country', FieldOperators<'address.country'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.state', FieldOperators<'address.state'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.city', FieldOperators<'address.city'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.district', FieldOperators<'address.district'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.place', FieldOperators<'address.place'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.number', FieldOperators<'address.number'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.postalCode', FieldOperators<'address.postalCode'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.complement', FieldOperators<'address.complement'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.geolocation.0', FieldOperators<'address.geolocation.0'>, number>`);
+			acc.push(`| FilterConditionValue<'${name}.geolocation.1', FieldOperators<'address.geolocation.1'>, number>`);
+		}
+		if (type === 'personName') {
+			acc.push(`| FilterConditionValue<'${name}.first', FieldOperators<'personName.first'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.last', FieldOperators<'personName.last'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.full', FieldOperators<'personName.full'>, string>`);
+		}
+		if (type === 'phone') {
+			acc.push(`| FilterConditionValue<'${name}.phoneNumber', FieldOperators<'phone.phoneNumber'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.countryCode', FieldOperators<'phone.countryCode'>, string>`);
+		}
+
+		return acc;
+	}, []);
+
+	const sortableFields = Object.values<MetadataField>(fields)
+		.filter(({ isSortable }) => isSortable === true)
+		.map<string>(({ name }) => `| '${name}'`);
+
+	const filterImports = Array.from(new Set(imports.DocumentFilters));
 
 	const code = [
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
-		`import { Document, DocumentConfig, KonectyDocument } from '@konecty/sdk/Document'`,
+		`import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions, ModuleFilter } from '@konecty/sdk/Module'`,
+		`import { MetadataField } from '@konecty/sdk/types/metadata';`,
+		`import { KonectyClientOptions } from '@konecty/sdk/Client';`,
+		`import { FieldOperators } from '@konecty/sdk/FieldOperators';`,
 	]
 		.concat(`import { ${Array.from(new Set(imports.Konecty)).sort().join(', ')} } from '@konecty/sdk/types';`)
-		.concat(
-			`import { ${Array.from(new Set(imports.FieldTypes)).sort().join(', ')} } from '@konecty/sdk/decorators/FieldTypes';`,
-		)
 		.concat(
 			Array.from(new Set(imports.Documents))
 				.filter(d => d !== name)
 				.sort()
-				.map(document => `import { ${document} } from './${document}';`),
+				.map(
+					document =>
+						`import { ${document} ${
+							filterImports.includes(document) ? `, ${document}FilterConditions` : ''
+						}} from './${document}';`,
+				),
+		)
+		.concat(
+			filterImports
+				.filter(d => !imports.Documents.includes(d))
+				.map(document => `import { ${document}FilterConditions } from './${document}';`),
 		)
 		.concat(documentConfig)
 		.concat(lookupTypes)
 		.concat(pickListTypes)
-		.concat(pickListOptions)
-		.concat(`export interface ${name}Type extends KonectyDocument {`)
+		.concat(`export interface ${name} extends KonectyDocument${userTypes.length > 0 ? `<${userTypes.join(', ')}>` : ''} {`)
 		.concat(interfaceProperties)
 		.concat(`}`)
-		.concat(`export class ${name} extends Document<${name}Type> implements ${name}Type {`)
-		.concat(`constructor(data?: ${name}Type) {super(${camelCase(name)}Config, data);}`)
+		.concat(`export type ${name}FilterConditions =`)
+		.concat(`| FilterConditions`)
+		.concat(filterConditions)
+		.concat(`export type ${name}SortFields =`)
+		.concat(sortableFields)
+		.concat(
+			`export class ${name}Module extends KonectyModule<${name}, ${name}FilterConditions, ${name}SortFields${
+				userTypes.length > 0 ? `, ${userTypes.join(', ')}` : ''
+			}> {`,
+		)
+		.concat(`constructor(clientOptions?: KonectyClientOptions) {super(${camelCase(name)}Config, clientOptions);}`)
 		.concat(classProperties)
 		.concat(`}`)
 		.join('\n');

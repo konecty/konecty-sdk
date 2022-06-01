@@ -22,7 +22,8 @@ export type MetadataFieldType =
 	| 'richText'
 	| 'text'
 	| 'time'
-	| 'url';
+	| 'url'
+	| 'ObjectId';
 
 export type MetadataFieldInheritModel = 'hierarchy_always' | 'once_editable' | 'until_edited' | 'always' | 'once';
 
@@ -74,20 +75,20 @@ export type MetadataField<T = unknown> = {
 	size?: number;
 	label?: MetadataLabel;
 	options?: {
-		[key: string]: MetadataLabel;
+		[key: T]: MetadataLabel;
 	};
 	decimalSize?: number;
 	minSelected?: number;
 	maxSelected?: number;
 	optionsSorter?: string;
-	defaultValue?: T;
+	defaultValue?: T | T[];
 	document?: string;
 	descriptionFields?: string[];
 	detailFields?: string[];
 	inheritedFields?: {
 		fieldName: string;
 		inherit: MetadataFieldInheritModel;
-	};
+	}[];
 	wildcard?: string;
 	maxSize?: number;
 	isList?: boolean;
@@ -102,7 +103,7 @@ export type MetadataField<T = unknown> = {
 	compositeType?: 'reference';
 	conditionFields?: MetadataConditionField[];
 	decimalSize?: number;
-	defaultValues?: T[];
+	defaultValues?: T[] | MetadataLabel[];
 	description?: string;
 	filterOnly?: boolean;
 	filterableFields?: string[];
@@ -154,7 +155,7 @@ export type MetadataDocument = {
 	menuSorter?: number;
 	namespace?: string[];
 	parent?: string;
-	relations: object[]; // TODO: define
+	relations?: object[]; // TODO: define
 	saveHistory?: boolean;
 	sendAlerts?: boolean;
 };

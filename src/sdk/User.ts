@@ -1,9 +1,17 @@
-import { AutoNumberField, BooleanField, EmailField, LookupField, TextField } from './decorators/FieldTypes';
-import { Document, DocumentConfig, KonectyDocument } from './Document';
+import { KonectyClientOptions } from 'lib/KonectyClient';
+import { MetadataField } from 'types/metadata';
 import { Group } from './Group';
-import { Email as KonectyEmail } from './types';
+import { KonectyDocument, KonectyModule, ModuleConfig } from './Module';
+import { Email, Email as KonectyEmail } from './types';
+import { PickFromPath } from './TypeUtils';
+export type UserGroupType = PickFromPath<Group, 'name'>;
+export type UserGroupsType = PickFromPath<Group, 'name'>;
 
-const userConfig: DocumentConfig = {
+export type UserCreatedByType = { name: string; group: { name: unknown } };
+export type UserUpdatedByType = { name: string; group: { name: unknown } };
+export type UserUserType = { name: string; group: { name: unknown }; active: boolean };
+
+const userConfig: ModuleConfig = {
 	name: 'User',
 	collection: 'users',
 	label: {
@@ -18,7 +26,7 @@ const userConfig: DocumentConfig = {
 
 export type UserGroup = Pick<Group, '_id' | 'name'>;
 
-export interface UserType extends KonectyDocument {
+export interface User extends KonectyDocument<UserUserType[], UserCreatedByType, UserUpdatedByType> {
 	code?: number;
 	username?: string;
 	emails?: KonectyEmail[];
@@ -27,28 +35,91 @@ export interface UserType extends KonectyDocument {
 	active?: boolean;
 }
 
-export class User extends Document<UserType> implements UserType {
-	constructor(data?: UserType) {
-		super(userConfig, data);
+export class UserModule extends KonectyModule<User, UserUserType[], UserCreatedByType, UserUpdatedByType> {
+	constructor(clientOptions?: KonectyClientOptions) {
+		super(userConfig, clientOptions);
 	}
 
-	@AutoNumberField
-	readonly code!: number;
+	// #region base properties
+	readonly code: MetadataField<number> = {
+		type: 'autoNumber',
+		name: 'code',
+		label: { en: 'Code', pt_BR: 'Código' },
+		isUnique: true,
+		isSortable: true,
+		isInherited: true,
+	} as MetadataField<number>;
 
-	@TextField
-	username!: string;
+	readonly username: MetadataField<string> = {
+		isRequired: true,
+		isSortable: true,
+		isUnique: true,
+		label: { pt_BR: 'Login', en: 'Login' },
+		name: 'username',
+		normalization: 'lower',
+		type: 'text',
+		isInherited: true,
+	} as MetadataField<string>;
 
-	@EmailField
-	emails!: KonectyEmail[];
+	readonly emails: MetadataField<Email> = {
+		isList: true,
+		isSortable: true,
+		label: { en: 'Email', pt_BR: 'Email' },
+		name: 'emails',
+		type: 'email',
+		isInherited: true,
+	} as MetadataField<Email>;
 
-	@TextField
-	name!: string;
+	readonly name: MetadataField<string> = {
+		label: { en: 'Name', pt_BR: 'Nome' },
+		isSortable: true,
+		normalization: 'title',
+		type: 'text',
+		name: 'name',
+		isInherited: true,
+	} as MetadataField<string>;
 
-	@LookupField<Group>({ document: new Group(), descriptionFields: ['name'] })
-	group!: UserGroup;
+	readonly group: MetadataField<UserGroupType> = {
+		label: { en: 'Group', pt_BR: 'Grupo' },
+		isRequired: true,
+		isSortable: true,
+		document: 'Group',
+		descriptionFields: ['name'],
+		type: 'lookup',
+		name: 'group',
+		isInherited: true,
+		inheritedFields: [
+			{ fieldName: 'office', inherit: 'always' },
+			{ fieldName: 'director', inherit: 'always' },
+			{ fieldName: 'extension', inherit: 'until_edited' },
+		],
+	} as MetadataField<UserGroupType>;
+	readonly groups: MetadataField<UserGroupsType> = {
+		type: 'lookup',
+		name: 'groups',
+		label: { en: 'Extra Access Groups', pt_BR: 'Grupos de Acesso Extra' },
+		isSortable: true,
+		isList: true,
+		document: 'Group',
+		descriptionFields: ['name'],
+		isInherited: true,
+	} as MetadataField<UserGroupsType>;
 
-	@BooleanField
-	active?: boolean;
+	readonly admin: MetadataField<boolean> = {
+		type: 'boolean',
+		name: 'admin',
+		label: { en: 'Administrator', pt_BR: 'Administrador' },
+		isInherited: true,
+	} as MetadataField<boolean>;
+
+	readonly active: MetadataField<boolean> = {
+		defaultValue: true,
+		type: 'boolean',
+		name: 'active',
+		label: { en: 'Active', pt_BR: 'Ativo' },
+		isRequired: true,
+		isSortable: true,
+		isInherited: true,
+	} as MetadataField<boolean>;
+	//#endregion
 }
-
-const u = new User();

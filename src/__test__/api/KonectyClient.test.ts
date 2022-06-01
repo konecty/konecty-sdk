@@ -1,4 +1,4 @@
-import { KonectyClient, KonectyClientOptions } from './KonectyClient';
+import { KonectyClient, KonectyClientOptions } from '@konecty/sdk/Client';
 
 describe('Konecty Client Tests', () => {
 	it('should create a client', () => {
