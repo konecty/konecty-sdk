@@ -20,7 +20,7 @@ const userConfig = {
   }
 };
 
-class UserModule extends _Module.Module {
+class UserModule extends _Module.KonectyModule {
   constructor(clientOptions) {
     super(userConfig, clientOptions);
     this.code = {

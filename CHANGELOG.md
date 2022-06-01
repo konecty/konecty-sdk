@@ -1,3 +1,35 @@
+## [1.2.0](https://github.com/Konecty/konecty-sdk/compare/1.1.0...1.2.0) (2022-06-01)
+
+
+### :scissors: Refactor
+
+* change base objects type ([9f09be9](https://github.com/Konecty/konecty-sdk/commit/9f09be96a7256072c07c5d992448b7ac116fd31a))
+* change module signature ([83ff9d5](https://github.com/Konecty/konecty-sdk/commit/83ff9d5f783d596e6c0c17aa8ba5baba0a0a64fb))
+* remove any type from param ([046dd01](https://github.com/Konecty/konecty-sdk/commit/046dd0182b84a1ba0339bbdadd4e8263067fb17a))
+* remove dead code ([a4abe16](https://github.com/Konecty/konecty-sdk/commit/a4abe167c1288ad6d2afd1b2342035352f827fec))
+* rename Document class ([b1588d3](https://github.com/Konecty/konecty-sdk/commit/b1588d3a711d840adb3bf0014862e58ead455acd))
+* rename Filter to KonectyFilter ([fe6a969](https://github.com/Konecty/konecty-sdk/commit/fe6a969ec331aa1b54e06f1d721fc59d82ba5ada))
+
+
+### 🦊 CI/CD
+
+* fix delete wrong file ([55b3696](https://github.com/Konecty/konecty-sdk/commit/55b36962e34641a9afb387ac3732b593d0245bcf))
+
+
+### 🚀 Features
+
+* add filter type ([a4e1431](https://github.com/Konecty/konecty-sdk/commit/a4e14315987a81eefac182b19ca7743ec7243f1c))
+* create module and type from metadata ([c0192b3](https://github.com/Konecty/konecty-sdk/commit/c0192b3a892604d976f285cbf2a688f5dd075a9c))
+* konecty module find methods ([ab79e94](https://github.com/Konecty/konecty-sdk/commit/ab79e94d0456d67e1bc8ba2f67aaa1845ed7b53b))
+
+
+### 🛠 Fixes
+
+* filter data type ([abb64e9](https://github.com/Konecty/konecty-sdk/commit/abb64e94779f961d45f60a95cba01add9c5bf6c9))
+* filter type ([01ae88e](https://github.com/Konecty/konecty-sdk/commit/01ae88e5c3f6fce32e6fc0cb9d5dcfb2e5768f9a))
+* lodash dependecy ([656d20b](https://github.com/Konecty/konecty-sdk/commit/656d20b695da351f5a884df805d16c75e559bca1))
+* metadata modules generation ([512028d](https://github.com/Konecty/konecty-sdk/commit/512028d7d4ef9165620565193a8a324adc890e30))
+
 ## [1.1.0](https://github.com/Konecty/konecty-sdk/compare/1.0.1...1.1.0) (2022-05-26)
 
 

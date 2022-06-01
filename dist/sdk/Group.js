@@ -20,7 +20,7 @@ const groupConfig = {
   }
 };
 
-class GroupModule extends _Module.Module {
+class GroupModule extends _Module.KonectyModule {
   constructor() {
     super(groupConfig);
     this.code = {
