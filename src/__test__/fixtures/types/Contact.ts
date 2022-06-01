@@ -26,15 +26,15 @@ const contactConfig: ModuleConfig = {
 		pt_BR: 'Contatos',
 	},
 };
-export type ContactMainContactType = { code: number; name: { full: unknown } };
-export type ContactQueueType = PickFromPath<Queue, 'name'>;
-export type ContactCampaignType = PickFromPath<Campaign, 'code' | 'name' | 'type'>;
-export type ContactStaffType = { code: number; name: { full: unknown } };
-export type ContactCreatedByType = { name: PersonName; group: { name: unknown } };
-export type ContactUpdatedByType = { name: PersonName; group: { name: unknown } };
-export type ContactUserType = { name: PersonName; group: { name: unknown } };
-export type ContactChannelType = PickFromPath<Channel, 'name'>;
-export type ContactSourceType = PickFromPath<Channel, 'name'>;
+export type ContactMainContactType = { _id: string; code: number; name: { full: unknown } };
+export type ContactQueueType = PickFromPath<Queue, '_id' | 'name'>;
+export type ContactCampaignType = PickFromPath<Campaign, '_id' | 'code' | 'name' | 'type'>;
+export type ContactStaffType = { _id: string; code: number; name: { full: unknown } };
+export type ContactCreatedByType = { _id: string; name: PersonName; group: { name: unknown } };
+export type ContactUpdatedByType = { _id: string; name: PersonName; group: { name: unknown } };
+export type ContactUserType = { _id: string; name: PersonName; group: { name: unknown } };
+export type ContactChannelType = PickFromPath<Channel, '_id' | 'name'>;
+export type ContactSourceType = PickFromPath<Channel, '_id' | 'name'>;
 export type ContactPriorityType = 'Alta' | 'Média' | 'Baixa';
 export type ContactDoNotCallType = 'Noite' | 'Manhã' | 'Tarde';
 export type ContactTypeType = 'Cliente' | 'Concorrente' | 'Fornecedor' | 'Funcionário' | 'Outro' | 'Procurador';

@@ -23,10 +23,10 @@ const roleConfig: ModuleConfig = {
 		pt_BR: 'Papéis',
 	},
 };
-export type RoleParentsType = { name: string };
-export type RoleCreatedByType = { name: string; group: { name: unknown } };
-export type RoleUpdatedByType = { name: string; group: { name: unknown } };
-export type RoleUserType = { name: string; group: { name: unknown } };
+export type RoleParentsType = { _id: string; name: string };
+export type RoleCreatedByType = { _id: string; name: string; group: { name: unknown } };
+export type RoleUpdatedByType = { _id: string; name: string; group: { name: unknown } };
+export type RoleUserType = { _id: string; name: string; group: { name: unknown } };
 export interface Role extends KonectyDocument<RoleUserType[], RoleCreatedByType, RoleUpdatedByType> {
 	access?: object;
 	admin?: boolean;

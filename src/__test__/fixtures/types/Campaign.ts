@@ -29,17 +29,17 @@ const campaignConfig: ModuleConfig = {
 		pt_BR: 'Campanhas',
 	},
 };
-export type CampaignMainCampaignType = { code: number; name: string };
-export type CampaignCreatedByType = { name: string; group: { name: unknown } };
-export type CampaignUpdatedByType = { name: string; group: { name: unknown } };
-export type CampaignUserType = { name: string; group: { name: unknown } };
-export type CampaignProductsType = PickFromPath<Product, 'code' | 'name'>;
-export type CampaignWebElementType = PickFromPath<WebElement, 'code' | 'name' | 'type'>;
-export type CampaignProductType = PickFromPath<Product, 'code' | 'name'>;
-export type CampaignTargetQueueType = PickFromPath<Queue, 'name'>;
-export type CampaignChatQueueType = PickFromPath<Queue, 'name'>;
-export type CampaignFirstTouchTemplateType = PickFromPath<Template, 'code' | 'name'>;
-export type CampaignFirstTouchSenderType = { name: string; group: { name: unknown } };
+export type CampaignMainCampaignType = { _id: string; code: number; name: string };
+export type CampaignCreatedByType = { _id: string; name: string; group: { name: unknown } };
+export type CampaignUpdatedByType = { _id: string; name: string; group: { name: unknown } };
+export type CampaignUserType = { _id: string; name: string; group: { name: unknown } };
+export type CampaignProductsType = PickFromPath<Product, '_id' | 'code' | 'name'>;
+export type CampaignWebElementType = PickFromPath<WebElement, '_id' | 'code' | 'name' | 'type'>;
+export type CampaignProductType = PickFromPath<Product, '_id' | 'code' | 'name'>;
+export type CampaignTargetQueueType = PickFromPath<Queue, '_id' | 'name'>;
+export type CampaignChatQueueType = PickFromPath<Queue, '_id' | 'name'>;
+export type CampaignFirstTouchTemplateType = PickFromPath<Template, '_id' | 'code' | 'name'>;
+export type CampaignFirstTouchSenderType = { _id: string; name: string; group: { name: unknown } };
 export type CampaignStatusType = 'Nova' | 'Em Andamento' | 'Concluída' | 'Cancelada';
 export type CampaignTypeType =
 	| 'Anúncio'

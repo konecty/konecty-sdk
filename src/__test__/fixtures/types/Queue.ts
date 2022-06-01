@@ -25,10 +25,10 @@ const queueConfig: ModuleConfig = {
 		en: 'Queues',
 	},
 };
-export type QueueCreatedByType = { name: string; group: { name: unknown } };
-export type QueueUpdatedByType = { name: string; group: { name: unknown } };
-export type QueueUserType = { name: string; group: { name: unknown }; active: boolean };
-export type QueueTargetCampaignType = PickFromPath<Campaign, 'code' | 'name'>;
+export type QueueCreatedByType = { _id: string; name: string; group: { name: unknown } };
+export type QueueUpdatedByType = { _id: string; name: string; group: { name: unknown } };
+export type QueueUserType = { _id: string; name: string; group: { name: unknown }; active: boolean };
+export type QueueTargetCampaignType = PickFromPath<Campaign, '_id' | 'code' | 'name'>;
 export type QueueTypeType = 'Chat' | 'Telefone' | 'Formulario' | 'Email';
 export interface Queue extends KonectyDocument<QueueUserType[], QueueCreatedByType, QueueUpdatedByType> {
 	active?: boolean;
