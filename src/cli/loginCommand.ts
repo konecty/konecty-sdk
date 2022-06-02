@@ -3,8 +3,8 @@ import fs from 'fs';
 import ini from 'ini';
 import inquirer from 'inquirer';
 import mkdirp from 'mkdirp';
-import os from 'os';
 import path from 'path';
+import getHomeDir from '../lib/getHomeDir';
 import { KonectyClient } from '../sdk/Client';
 
 export interface LoginCommandOptions {
@@ -98,21 +98,4 @@ export default async function loginCommand(options?: LoginCommandOptions): Promi
 	fs.writeFileSync(outputFile, ini.stringify(outputIni), 'utf-8');
 
 	console.log(chalk.green(`Authentication data successful stored in ${outputFile}!`));
-}
-
-function getHomeDir(): string | null {
-	const home =
-		process.env.HOME ||
-		process.env.USERPROFILE ||
-		(process.env.HOMEPATH ? (process.env.HOMEDRIVE || 'C:/') + process.env.HOMEPATH : null);
-
-	if (home != null) {
-		return path.resolve(home, '.konecty');
-	}
-
-	if (typeof os.homedir === 'function') {
-		return path.resolve(os.homedir(), '.konecty');
-	}
-
-	return null;
 }
