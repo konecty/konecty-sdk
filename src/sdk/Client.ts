@@ -1,10 +1,15 @@
 import crypto from 'crypto';
+import fs from 'fs';
+import ini from 'ini';
 import get from 'lodash/get';
+import path from 'path';
 import qs from 'qs';
 import { fetch } from 'undici';
+import getHomeDir from '../lib/getHomeDir';
 import logger from '../lib/logger';
 
 export interface KonectyClientOptions {
+	credentialsFile?: string;
 	endpoint?: string;
 	accessKey?: string;
 }
@@ -36,10 +41,34 @@ export class KonectyClient {
 	static defaults: KonectyClientOptions = {};
 	_options: KonectyClientOptions;
 	constructor(options?: KonectyClientOptions) {
+		let credentialsFile;
 		if (options != null) {
+			credentialsFile = options?.credentialsFile;
 			this._options = options;
 			return;
 		}
+
+		credentialsFile = credentialsFile ?? path.resolve(getHomeDir() ?? '', '.konecty', 'credentials');
+
+		try {
+			const credentialsContent = fs.readFileSync(credentialsFile, 'utf8');
+
+			const credentials = ini.parse(credentialsContent);
+
+			if (get(options, 'endpoint') != null && get(credentials, get(options, 'endpoint', '')) != null) {
+				this._options = {
+					...KonectyClient.defaults,
+					...credentials[get(options, 'endpoint', '')],
+				};
+				return;
+			} else if (get(credentials, 'default') != null) {
+				this._options = {
+					...KonectyClient.defaults,
+					...credentials['default'],
+				};
+				return;
+			}
+		} catch (_) {}
 		this._options = KonectyClient.defaults;
 	}
 
