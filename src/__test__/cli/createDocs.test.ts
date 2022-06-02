@@ -14,6 +14,9 @@ describe('Konecty cli create doc command', () => {
 	beforeEach(() => {
 		mockedFs.writeFileSync.mockReset();
 	});
+	afterAll(async () => {
+		mockedFs.writeFileSync.mockReset();
+	});
 	it('should create a documentation for User meta', async () => {
 		// Arrange
 		jest.spyOn(mockedFs, 'writeFileSync');
@@ -153,7 +156,7 @@ describe('Konecty cli create doc command', () => {
 
 		// Act
 		const program = createProgram();
-		program.parse(['node', 'konecty', 'create', 'doc', inputFile, '-o', outputFile]);
+		await program.parse(['node', 'konecty', 'create', 'doc', inputFile, '-o', outputFile]);
 
 		// Assert
 		expect(mockedFs.writeFileSync.mock.calls.length).to.equal(1);

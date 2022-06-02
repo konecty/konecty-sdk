@@ -20,7 +20,8 @@
 		"baseUrl": "./src",
 		"paths": {
 			"@konecty/sdk/*": ["sdk/*"]
-		}
+		},
+		"sourceMap": false
 	},
 	"include": ["src/**/*"],
 	"exclude": ["node_modules"]
