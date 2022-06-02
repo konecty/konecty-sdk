@@ -62,7 +62,7 @@ export default async function loginCommand(options?: LoginCommandOptions): Promi
 		return;
 	}
 
-	const __dirname = localOptions?.output != null ? pathResolve(process.env.INIT_CWD ?? './') : getHomeDir();
+	const __dirname = localOptions?.output != null ? path.resolve(process.env.INIT_CWD ?? './') : getHomeDir();
 
 	if (__dirname == null) {
 		console.error(chalk.red('Unable to get current or home directory'));
@@ -71,12 +71,12 @@ export default async function loginCommand(options?: LoginCommandOptions): Promi
 
 	await mkdirp(__dirname);
 
-	const outputFile = pathResolve(__dirname, localOptions?.output ?? 'credentials');
+	const outputFile = path.resolve(__dirname, localOptions?.output ?? 'credentials');
 
 	let originalFile = '';
 	try {
-		statSync(outputFile);
-		originalFile = readFileSync(outputFile);
+		fs.statSync(outputFile);
+		originalFile = fs.readFileSync(outputFile, 'utf-8');
 	} catch (_) {}
 
 	const outputIni = ini.parse(originalFile);
@@ -95,56 +95,24 @@ export default async function loginCommand(options?: LoginCommandOptions): Promi
 		authId,
 	};
 
-	writeFileSync(outputFile, ini.stringify(outputIni));
+	fs.writeFileSync(outputFile, ini.stringify(outputIni), 'utf-8');
 
 	console.log(chalk.green(`Authentication data successful stored in ${outputFile}!`));
 }
 
-// Test mocks
-
 function getHomeDir(): string | null {
-	if (process.env.NODE_ENV === 'test') {
-		return '/dev/null';
-	}
 	const home =
 		process.env.HOME ||
 		process.env.USERPROFILE ||
 		(process.env.HOMEPATH ? (process.env.HOMEDRIVE || 'C:/') + process.env.HOMEPATH : null);
 
 	if (home != null) {
-		return pathResolve(home, '.konecty');
+		return path.resolve(home, '.konecty');
 	}
 
 	if (typeof os.homedir === 'function') {
-		return pathResolve(os.homedir(), '.konecty');
+		return path.resolve(os.homedir(), '.konecty');
 	}
 
 	return null;
-}
-
-function writeFileSync(path: string, data: string) {
-	if (process.env.NODE_ENV === 'test') {
-		return;
-	}
-	return fs.writeFileSync(path, data, 'utf-8');
-}
-function statSync(path: string) {
-	if (process.env.NODE_ENV === 'test') {
-		return { isFile: () => true };
-	}
-	return fs.statSync(path);
-}
-function pathResolve(...paths: string[]): string {
-	if (process.env.NODE_ENV === 'test') {
-		return paths.join('/');
-	}
-
-	return path.resolve(...paths);
-}
-
-function readFileSync(path: string) {
-	if (process.env.NODE_ENV === 'test') {
-		return '';
-	}
-	return fs.readFileSync(path, 'utf-8');
 }
