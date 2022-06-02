@@ -103,6 +103,28 @@ export class KonectyClient {
 			};
 		}
 	}
+	async delete(module: string, ids: object[]): Promise<KonectyFindResult> {
+		try {
+			const result = await fetch(`${this._options.endpoint}/rest/data/${module}`, {
+				method: 'DELETE',
+				headers: {
+					Authorization: `${this._options.accessKey}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(serializeDates({ ids })),
+			});
+
+			const body = await result.json();
+
+			return deserializeDates(body) as KonectyFindResult;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
 }
 
 function serializeDates(obj: unknown): unknown {

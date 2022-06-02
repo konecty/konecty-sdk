@@ -195,7 +195,7 @@ export class KonectyModule<
 		return { success: true };
 	}
 
-	// #region Create/Update
+	// #region Create/Update/Delete
 	async create(document: Document): Promise<ModuleActionResult<Document>> {
 		const result = await this.#client.create(this.#config.name, document);
 
@@ -207,6 +207,12 @@ export class KonectyModule<
 		ids: Array<PickFromPath<Document, '_id' | '__updatedAt'>>,
 	): Promise<ModuleActionResult<Document>> {
 		const result = await this.#client.update(this.#config.name, document, ids);
+
+		return result as ModuleActionResult<Document>;
+	}
+
+	async delete(ids: Array<PickFromPath<Document, '_id' | '__updatedAt'>>): Promise<ModuleActionResult<Document>> {
+		const result = await this.#client.delete(this.#config.name, ids);
 
 		return result as ModuleActionResult<Document>;
 	}
