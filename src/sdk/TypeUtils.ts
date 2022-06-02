@@ -49,3 +49,7 @@ export type PickFromPath<
 	: never;
 
 export type ArrElement<ArrType> = ArrType extends readonly (infer ElementType)[] ? ElementType : never;
+
+export type Nullable<T> = {
+	[P in keyof T]?: T[P] | null;
+};

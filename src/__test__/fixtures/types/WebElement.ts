@@ -24,13 +24,13 @@ const webElementConfig: ModuleConfig = {
 		pt_BR: 'Elementos Web',
 	},
 };
-export type WebElementCampaignType = PickFromPath<Campaign, 'code' | 'name' | 'type'>;
-export type WebElementWebElementType = { name: string };
-export type WebElementParentsType = { name: string };
-export type WebElementParentType = { code: number; name: string };
-export type WebElementCreatedByType = { name: string; group: { name: unknown } };
-export type WebElementUpdatedByType = { name: string; group: { name: unknown } };
-export type WebElementUserType = { name: string; group: { name: unknown } };
+export type WebElementCampaignType = PickFromPath<Campaign, '_id' | 'code' | 'name' | 'type'>;
+export type WebElementWebElementType = { _id: string; name: string };
+export type WebElementParentsType = { _id: string; name: string };
+export type WebElementParentType = { _id: string; code: number; name: string };
+export type WebElementCreatedByType = { _id: string; name: string; group: { name: unknown } };
+export type WebElementUpdatedByType = { _id: string; name: string; group: { name: unknown } };
+export type WebElementUserType = { _id: string; name: string; group: { name: unknown } };
 export type WebElementLinkTargetType = '_parent' | '_blank' | '_self' | '_top';
 export type WebElementPriorityType = 'Média' | 'Baixa' | 'Alta';
 export type WebElementStatusType = 'Ativo' | 'Inativo';

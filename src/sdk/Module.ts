@@ -1,8 +1,9 @@
 import { KonectyClient, KonectyClientOptions } from '@konecty/sdk/Client';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
+import get from 'lodash/get';
 import 'reflect-metadata';
 import { FieldOperators } from './FieldOperators';
-import { ArrElement, PickFromPath } from './TypeUtils';
+import { ArrElement, Nullable, PickFromPath } from './TypeUtils';
 import { User } from './User';
 
 export type ModuleCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
@@ -105,6 +106,19 @@ export type FindResult<T> = {
 	count: number;
 };
 
+export type ValidateResult = {
+	success: boolean;
+	errors?: {
+		required?: { [key: string]: MetadataLabel };
+	};
+};
+
+export type ModuleActionResult<T> = {
+	success: boolean;
+	data?: T[];
+	errors?: string[];
+};
+
 export class KonectyModule<
 	Document extends KonectyDocument<OwnerType, CreatedByType, UpdatedByType>,
 	ModuleFilterConditions = FilterConditions,
@@ -121,6 +135,7 @@ export class KonectyModule<
 		this.#client = new KonectyClient(clientOptons);
 	}
 
+	// #region Retrieve
 	async findOne(filter: ModuleFilter<ModuleFilterConditions>): Promise<Document | null> {
 		const result = await this.#client.find(this.#config.name, {
 			filter,
@@ -158,6 +173,51 @@ export class KonectyModule<
 		}
 		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
 	}
+
+	// #endregion
+
+	validate(document: Document): ValidateResult {
+		const required: {
+			[key: string]: MetadataLabel;
+		} = Object.values(this)
+			.filter((field: MetadataField) => field?.isRequired === true && get(document, field.name) == null)
+			.reduce((acc, field: MetadataField) => Object.assign(acc, { [field.name]: field.label ?? { en: field.name } }), {});
+
+		if (Object.keys(required).length > 0) {
+			return {
+				success: false,
+				errors: {
+					required,
+				},
+			};
+		}
+
+		return { success: true };
+	}
+
+	// #region Create/Update/Delete
+	async create(document: Document): Promise<ModuleActionResult<Document>> {
+		const result = await this.#client.create(this.#config.name, document);
+
+		return result as ModuleActionResult<Document>;
+	}
+
+	async update(
+		document: Nullable<Document>,
+		ids: Array<PickFromPath<Document, '_id' | '__updatedAt'>>,
+	): Promise<ModuleActionResult<Document>> {
+		const result = await this.#client.update(this.#config.name, document, ids);
+
+		return result as ModuleActionResult<Document>;
+	}
+
+	async delete(ids: Array<PickFromPath<Document, '_id' | '__updatedAt'>>): Promise<ModuleActionResult<Document>> {
+		const result = await this.#client.delete(this.#config.name, ids);
+
+		return result as ModuleActionResult<Document>;
+	}
+
+	// #endregion
 
 	// #region commom properties
 	readonly _id: MetadataField<string> = {

@@ -54,7 +54,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		.map(field => {
 			const fieldName = pascalCase(field.name);
 			if (['User', 'Group'].includes(field.document ?? '') || name === field.document) {
-				const result = `export type ${name}${fieldName}Type = {${(field.descriptionFields ?? [])
+				const result = `export type ${name}${fieldName}Type = {_id: string, ${(field.descriptionFields ?? [])
 					.reduce<string[]>((acc, field) => {
 						if (/\./.test(field)) {
 							const path = field.split('.');
@@ -76,9 +76,9 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 				return result;
 			}
 
-			return `export type ${name}${fieldName}Type = PickFromPath<${field.document}, '${(field.descriptionFields ?? []).join(
-				`' | '`,
-			)}'>;`;
+			return `export type ${name}${fieldName}Type = PickFromPath<${field.document}, '_id' | '${(
+				field.descriptionFields ?? []
+			).join(`' | '`)}'>;`;
 		});
 
 	const pickListTypes: string[] = Object.values<MetadataField>(fields)

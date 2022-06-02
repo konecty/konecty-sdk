@@ -24,10 +24,10 @@ const productConfig: ModuleConfig = {
 		pt_BR: 'Imóveis',
 	},
 };
-export type ProductCampaignType = PickFromPath<Campaign, 'code' | 'name'>;
-export type ProductCreatedByType = { name: string; group: { name: unknown } };
-export type ProductUpdatedByType = { name: string; group: { name: unknown } };
-export type ProductUserType = { name: string; group: { name: unknown } };
+export type ProductCampaignType = PickFromPath<Campaign, '_id' | 'code' | 'name'>;
+export type ProductCreatedByType = { _id: string; name: string; group: { name: unknown } };
+export type ProductUpdatedByType = { _id: string; name: string; group: { name: unknown } };
+export type ProductUserType = { _id: string; name: string; group: { name: unknown } };
 export type ProductStatusType = 'Rascunho' | 'Ativo' | 'Inativo' | 'Não Realizado';
 export type ProductTypeType = 'Apartamento' | 'Casa' | 'Terreno';
 export interface Product extends KonectyDocument<ProductUserType[], ProductCreatedByType, ProductUpdatedByType> {

@@ -23,9 +23,9 @@ const templateConfig: ModuleConfig = {
 		pt_BR: 'Modelos de email',
 	},
 };
-export type TemplateCreatedByType = { name: string; group: { name: unknown } };
-export type TemplateUpdatedByType = { name: string; group: { name: unknown } };
-export type TemplateUserType = { name: string; group: { name: unknown } };
+export type TemplateCreatedByType = { _id: string; name: string; group: { name: unknown } };
+export type TemplateUpdatedByType = { _id: string; name: string; group: { name: unknown } };
+export type TemplateUserType = { _id: string; name: string; group: { name: unknown } };
 export type TemplateTypeType = 'email';
 export interface Template extends KonectyDocument<TemplateUserType[], TemplateCreatedByType, TemplateUpdatedByType> {
 	code?: number;
