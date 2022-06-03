@@ -25,14 +25,14 @@ const userConfig: ModuleConfig = {
 		pt_BR: 'Usuários',
 	},
 };
-export type UserGroupType = { name: string };
-export type UserGroupsType = { name: string };
-export type UserRoleType = PickFromPath<Role, 'name'>;
-export type UserCreatedByType = { name: string; group: { name: unknown } };
-export type UserUpdatedByType = { name: string; group: { name: unknown } };
-export type UserUserType = { name: string; group: { name: unknown }; active: boolean };
-export type UserTargetQueueType = PickFromPath<Queue, 'name'>;
-export type UserDirectorType = { nickname: string };
+export type UserGroupType = { _id: string; name: string };
+export type UserGroupsType = { _id: string; name: string };
+export type UserRoleType = PickFromPath<Role, '_id' | 'name'>;
+export type UserCreatedByType = { _id: string; name: string; group: { name: unknown } };
+export type UserUpdatedByType = { _id: string; name: string; group: { name: unknown } };
+export type UserUserType = { _id: string; name: string; group: { name: unknown }; active: boolean };
+export type UserTargetQueueType = PickFromPath<Queue, '_id' | 'name'>;
+export type UserDirectorType = { _id: string; nickname: string };
 export type UserLocaleType = 'pt_BR' | 'en';
 export type UserStatusType = 'online' | 'away' | 'busy' | 'offline';
 export type UserInductionStatusType = 'Agendado' | 'Realizado' | 'Não compareceu';

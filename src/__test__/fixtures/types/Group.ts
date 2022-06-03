@@ -23,9 +23,9 @@ const groupConfig: ModuleConfig = {
 		pt_BR: 'Grupos',
 	},
 };
-export type GroupCreatedByType = { name: string; group: { name: unknown } };
-export type GroupUpdatedByType = { name: string; group: { name: unknown } };
-export type GroupUserType = { name: string; group: { name: unknown }; active: boolean };
+export type GroupCreatedByType = { _id: string; name: string; group: { name: unknown } };
+export type GroupUpdatedByType = { _id: string; name: string; group: { name: unknown } };
+export type GroupUserType = { _id: string; name: string; group: { name: unknown }; active: boolean };
 export interface Group extends KonectyDocument<GroupUserType[], GroupCreatedByType, GroupUpdatedByType> {
 	active?: boolean;
 	name?: string;

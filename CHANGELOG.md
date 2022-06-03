@@ -1,3 +1,23 @@
+## [1.3.0](https://github.com/Konecty/konecty-sdk/compare/1.2.0...1.3.0) (2022-06-02)
+
+
+### 🦊 CI/CD
+
+* remove dist from codebase ([a6c55f9](https://github.com/Konecty/konecty-sdk/commit/a6c55f9b318bdf863e66ed1fc070962c61577716))
+
+
+### 🚀 Features
+
+* delete document ([f504253](https://github.com/Konecty/konecty-sdk/commit/f504253f2da2c858aa2d02b2db0301f0796251a3))
+* document create ([04aa667](https://github.com/Konecty/konecty-sdk/commit/04aa667fa4e902b20583b1d3303d58aee84fad95))
+* document required fields validation ([4ad9b18](https://github.com/Konecty/konecty-sdk/commit/4ad9b187494f036dacd0e9230e5991543d3f6d85))
+* update document ([db3f351](https://github.com/Konecty/konecty-sdk/commit/db3f351e66eb9f6b850d8d6d9be6f263688d1627))
+
+
+### 🛠 Fixes
+
+* fix base modules definitions ([a8aadf0](https://github.com/Konecty/konecty-sdk/commit/a8aadf00bc32b1f44b99e34e68e7f7847483d51b))
+
 ## [1.2.0](https://github.com/Konecty/konecty-sdk/compare/1.1.0...1.2.0) (2022-06-01)
 
 

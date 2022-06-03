@@ -1,16 +1,7 @@
-import { PickFromPath } from '@konecty/sdk/TypeUtils';
-import {
-	KonectyModule,
-	ModuleConfig,
-	KonectyDocument,
-	FilterConditionValue,
-	FilterConditions,
-	ModuleFilter,
-} from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
-import {} from '@konecty/sdk/types';
+import { FilterConditions, FilterConditionValue, KonectyDocument, KonectyModule, ModuleConfig } from '@konecty/sdk/Module';
+import { MetadataField } from '@konecty/sdk/types/metadata';
 const roleConfig: ModuleConfig = {
 	name: 'Role',
 	collection: 'data.Role',

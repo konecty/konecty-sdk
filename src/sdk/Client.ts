@@ -2,6 +2,9 @@ import crypto from 'crypto';
 import fs from 'fs';
 import ini from 'ini';
 import get from 'lodash/get';
+import isArray from 'lodash/isArray';
+import isObject from 'lodash/isObject';
+import { DateTime } from 'luxon';
 import path from 'path';
 import qs from 'qs';
 import { fetch } from 'undici';
@@ -87,7 +90,75 @@ export class KonectyClient {
 
 			const body = await result.json();
 
-			return body as KonectyFindResult;
+			return deserializeDates(body) as KonectyFindResult;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
+	async create(module: string, data: object): Promise<KonectyFindResult> {
+		try {
+			const result = await fetch(`${this._options.endpoint}/rest/data/${module}`, {
+				method: 'POST',
+				headers: {
+					Authorization: `${this._options.accessKey}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(serializeDates(data)),
+			});
+
+			const body = await result.json();
+
+			return deserializeDates(body) as KonectyFindResult;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
+	async update(module: string, data: object, ids: object[]): Promise<KonectyFindResult> {
+		try {
+			const result = await fetch(`${this._options.endpoint}/rest/data/${module}`, {
+				method: 'PUT',
+				headers: {
+					Authorization: `${this._options.accessKey}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(serializeDates({ ids, data })),
+			});
+
+			const body = await result.json();
+
+			return deserializeDates(body) as KonectyFindResult;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+	async delete(module: string, ids: object[]): Promise<KonectyFindResult> {
+		try {
+			const result = await fetch(`${this._options.endpoint}/rest/data/${module}`, {
+				method: 'DELETE',
+				headers: {
+					Authorization: `${this._options.accessKey}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(serializeDates({ ids })),
+			});
+
+			const body = await result.json();
+
+			return deserializeDates(body) as KonectyFindResult;
 		} catch (err) {
 			logger.error(err);
 			return {
@@ -124,4 +195,39 @@ export class KonectyClient {
 			};
 		}
 	}
+}
+
+function serializeDates(obj: unknown): unknown {
+	if (obj instanceof Date) {
+		return { $date: obj.toISOString() };
+	}
+
+	if (isArray(obj)) {
+		return obj.map(serializeDates);
+	}
+
+	if (isObject(obj)) {
+		return Object.keys(obj).reduce((acc, key) => Object.assign(acc, { [key]: serializeDates(get(obj, key)) }), {});
+	}
+
+	return obj;
+}
+
+function deserializeDates(obj: unknown): unknown {
+	if (get(obj, '$date') != null) {
+		return DateTime.fromISO(get(obj, '$date')).toJSDate();
+	}
+	if (typeof obj === 'string' && DateTime.fromISO(obj).isValid) {
+		return DateTime.fromISO(obj).toJSDate();
+	}
+
+	if (isArray(obj)) {
+		return obj.map(serializeDates);
+	}
+
+	if (isObject(obj)) {
+		return Object.keys(obj).reduce((acc, key) => Object.assign(acc, { [key]: serializeDates(get(obj, key)) }), {});
+	}
+
+	return obj;
 }

@@ -23,8 +23,8 @@ const channelConfig: ModuleConfig = {
 		pt_BR: 'Canais',
 	},
 };
-export type ChannelCreatedByType = { name: string; group: { name: unknown } };
-export type ChannelUpdatedByType = { name: string; group: { name: unknown } };
+export type ChannelCreatedByType = { _id: string; name: string; group: { name: unknown } };
+export type ChannelUpdatedByType = { _id: string; name: string; group: { name: unknown } };
 export interface Channel extends KonectyDocument<never, ChannelCreatedByType, ChannelUpdatedByType> {
 	name?: string;
 	identifier?: string;
