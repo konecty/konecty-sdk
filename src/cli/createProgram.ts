@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import docCommand, { CreateDocOptions } from './docCommand';
+import loginCommand from './loginCommand';
 import typeCommand, { CreateInterfaceOptions } from './typeCommand';
 
 export default function createProgram(): Command {
@@ -34,6 +35,13 @@ export default function createProgram(): Command {
 		.description('Create a new type from a metadata file')
 		.option('-o, --output <input>', 'Output type file')
 		.action(runCommand);
-
+	program
+		.command('login')
+		.description('Authorize to the API')
+		.option('-h, --host <host>', 'Konecty host')
+		.option('-u, --user <user>', 'Username')
+		.option('-p, --password <password>', 'Password')
+		.option('-o, --output <output>', 'Output file')
+		.action(loginCommand);
 	return program;
 }

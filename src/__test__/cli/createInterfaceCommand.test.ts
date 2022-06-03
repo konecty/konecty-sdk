@@ -15,6 +15,10 @@ describe('Konecty command line tool create command', () => {
 		mockedFs.writeFileSync.mockReset();
 	});
 
+	afterAll(async () => {
+		mockedFs.writeFileSync.mockReset();
+	});
+
 	it('Should create typescript classes from metadata', async () => {
 		// Arrange
 		jest.spyOn(mockedFs, 'writeFileSync');
@@ -127,7 +131,7 @@ describe('Konecty command line tool create command', () => {
 
 		// Act
 		const program = createProgram();
-		program.parse(['node', 'konecty', 'create', 'class', inputFile, '-o', outputPath]);
+		await program.parse(['node', 'konecty', 'create', 'class', inputFile, '-o', outputPath]);
 
 		// Assert
 		expect(mockedFs.writeFileSync.mock.calls.length).to.equal(1);
