@@ -1,3 +1,26 @@
+## [1.4.0](https://github.com/Konecty/konecty-sdk/compare/1.3.0...1.4.0) (2022-06-03)
+
+
+### :scissors: Refactor
+
+* extract getHomeDir ([952280f](https://github.com/Konecty/konecty-sdk/commit/952280fbed7e602cee7ba3ce47bd0c6fffcb810e))
+
+
+### 🧪 Tests
+
+* fix path and fs mocks ([ca71e37](https://github.com/Konecty/konecty-sdk/commit/ca71e37b7dd2aab1330cac1abcb0f1f0697ef359))
+
+
+### 🚀 Features
+
+* add config file load to konecty client ([a6ef8a5](https://github.com/Konecty/konecty-sdk/commit/a6ef8a543db60793aebeedacfb8ea6cbb0b000d2))
+* konecty cli login ([98479bb](https://github.com/Konecty/konecty-sdk/commit/98479bbb83a3d3ca1b5b75b2a3f0176e52510b02))
+
+
+### Other
+
+* merge branch 'main' into feat/konecty-login ([8e19680](https://github.com/Konecty/konecty-sdk/commit/8e19680883468be4e6f5e6f1e1a4daa8f7869d50))
+
 ## [1.3.0](https://github.com/Konecty/konecty-sdk/compare/1.2.0...1.3.0) (2022-06-02)
 
 
