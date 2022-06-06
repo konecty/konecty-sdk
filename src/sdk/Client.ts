@@ -42,49 +42,67 @@ export type KonectyLoginResult = {
 };
 export class KonectyClient {
 	static defaults: KonectyClientOptions = {};
-	_options: KonectyClientOptions;
+	#options: KonectyClientOptions;
 	constructor(options?: KonectyClientOptions) {
-		let credentialsFile;
-		if (options != null) {
-			credentialsFile = options?.credentialsFile;
-			this._options = options;
+		if (options?.accessKey != null) {
+			this.#options = options;
 			return;
 		}
 
-		credentialsFile = credentialsFile ?? path.resolve(getHomeDir() ?? '', '.konecty', 'credentials');
+		if (options?.credentialsFile != null || KonectyClient.defaults.accessKey == null) {
+			try {
+				const __dirname = path.resolve(process.env.INIT_CWD ?? './');
+				const credentialsFile = options?.credentialsFile ?? path.resolve(getHomeDir() ?? '', '.konecty', 'credentials');
 
-		try {
-			const credentialsContent = fs.readFileSync(credentialsFile, 'utf8');
+				const resolvedFilePath = /^\~/.test(credentialsFile)
+					? path.resolve(credentialsFile.replace(/^\~/, getHomeDir() || ''))
+					: path.resolve(__dirname, credentialsFile);
 
-			const credentials = ini.parse(credentialsContent);
+				const credentialsContent = fs.readFileSync(path.resolve(resolvedFilePath), 'utf8');
 
-			if (get(options, 'endpoint') != null && get(credentials, get(options, 'endpoint', '')) != null) {
-				this._options = {
-					...KonectyClient.defaults,
-					...credentials[get(options, 'endpoint', '')],
-				};
-				return;
-			} else if (get(credentials, 'default') != null) {
-				this._options = {
-					...KonectyClient.defaults,
-					...credentials['default'],
-				};
-				return;
+				const credentials = ini.parse(credentialsContent);
+
+				if (credentials != null) {
+					if (get(options, 'endpoint') != null && get(credentials, get(options, 'endpoint', '')) != null) {
+						const hostCredentials = get(credentials, get(options, 'endpoint', ''));
+						this.#options = {
+							...KonectyClient.defaults,
+							endpoint: get(hostCredentials, 'host'),
+							accessKey: get(hostCredentials, 'authId'),
+						};
+						return;
+					} else if (get(credentials, 'default') != null) {
+						const defaultCredentials = get(credentials, get(options, 'endpoint', ''));
+						this.#options = {
+							...KonectyClient.defaults,
+							endpoint: get(defaultCredentials, 'host'),
+							accessKey: get(defaultCredentials, 'authId'),
+						};
+						return;
+					}
+				}
+			} catch (error) {
+				console.error(error);
 			}
-		} catch (_) {}
-		this._options = KonectyClient.defaults;
+		}
+		this.#options = Object.assign({}, KonectyClient.defaults, options ?? {});
 	}
 
+	get options() {
+		return this.#options;
+	}
+
+	// #region CRUD
 	async find(module: string, options: KonectyFindParams): Promise<KonectyFindResult> {
 		try {
 			const params = new URLSearchParams();
 			Object.keys(options).forEach(key => {
 				params.set(key, JSON.stringify(get(options, key)));
 			});
-			const result = await fetch(`${this._options.endpoint}/rest/data/${module}/find?${params.toString()}`, {
+			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/find?${params.toString()}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this._options.accessKey}`,
+					Authorization: `${this.#options.accessKey}`,
 				},
 			});
 
@@ -102,10 +120,10 @@ export class KonectyClient {
 
 	async create(module: string, data: object): Promise<KonectyFindResult> {
 		try {
-			const result = await fetch(`${this._options.endpoint}/rest/data/${module}`, {
+			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}`, {
 				method: 'POST',
 				headers: {
-					Authorization: `${this._options.accessKey}`,
+					Authorization: `${this.#options.accessKey}`,
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(serializeDates(data)),
@@ -125,10 +143,10 @@ export class KonectyClient {
 
 	async update(module: string, data: object, ids: object[]): Promise<KonectyFindResult> {
 		try {
-			const result = await fetch(`${this._options.endpoint}/rest/data/${module}`, {
+			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}`, {
 				method: 'PUT',
 				headers: {
-					Authorization: `${this._options.accessKey}`,
+					Authorization: `${this.#options.accessKey}`,
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(serializeDates({ ids, data })),
@@ -147,10 +165,10 @@ export class KonectyClient {
 	}
 	async delete(module: string, ids: object[]): Promise<KonectyFindResult> {
 		try {
-			const result = await fetch(`${this._options.endpoint}/rest/data/${module}`, {
+			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}`, {
 				method: 'DELETE',
 				headers: {
-					Authorization: `${this._options.accessKey}`,
+					Authorization: `${this.#options.accessKey}`,
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(serializeDates({ ids })),
@@ -168,6 +186,8 @@ export class KonectyClient {
 		}
 	}
 
+	// #endregion
+
 	async login(user: string, password: string): Promise<KonectyLoginResult> {
 		try {
 			const loginPayload = {
@@ -176,7 +196,7 @@ export class KonectyClient {
 				password: crypto.createHash('md5').update(password).digest('hex'),
 				password_SHA256: crypto.createHash('sha256').update(password).digest('hex'),
 			};
-			const result = await fetch(`${this._options.endpoint}/rest/auth/login`, {
+			const result = await fetch(`${this.#options.endpoint}/rest/auth/login`, {
 				method: 'POST',
 				headers: {
 					'Content-Type': 'application/x-www-form-urlencoded; charset=UTF-8',
@@ -184,9 +204,61 @@ export class KonectyClient {
 				body: qs.stringify(loginPayload),
 			});
 
+			const body = (await result.json()) as KonectyLoginResult;
+
+			if (body.success) {
+				this.#options.accessKey = body.authId;
+			}
+
+			return body;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
+	async getDocuments(): Promise<KonectyFindResult> {
+		try {
+			const result = await fetch(`${this.#options.endpoint}/rest/menu/documents`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+
 			const body = await result.json();
 
-			return body as KonectyLoginResult;
+			return {
+				success: true,
+				data: deserializeDates(body),
+			} as KonectyFindResult;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
+	async getDocument(name: string): Promise<KonectyFindResult> {
+		try {
+			const result = await fetch(`${this.#options.endpoint}/rest/menu/documents/${name}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+
+			const body = await result.json();
+
+			return {
+				success: true,
+				data: deserializeDates(body),
+			} as KonectyFindResult;
 		} catch (err) {
 			logger.error(err);
 			return {

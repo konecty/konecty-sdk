@@ -1,8 +1,10 @@
 import { expect } from 'chai';
-import fs, { Stats } from 'fs';
+import fs from 'fs';
 import path from 'path';
 import { MockAgent, setGlobalDispatcher } from 'undici';
 import createProgram from '../../cli/createProgram';
+import AccessFailedLogResponse from '../fixtures/konecty/get-document-AccessFailedLog.json';
+import AccessFailedLogOutput from '../fixtures/MetaObjects/AccessFailedLog.json';
 
 jest.mock('fs');
 jest.mock('mkdirp');
@@ -35,20 +37,15 @@ describe('Konecty command line tool login command', () => {
 
 		const packageJsonContent = `{ "version": "1.0.0" }`;
 
-		process.env.HOME = '/dev/null';
-
-		mockedFs.readFileSync.mockReturnValueOnce(packageJsonContent).mockReturnValueOnce(``).mockReturnValueOnce(``);
-
-		mockedFs.statSync.mockReturnValueOnce({ isFile: () => true } as Stats);
+		mockedFs.readFileSync
+			.mockReturnValueOnce(packageJsonContent)
+			.mockReturnValueOnce('[default]\nhost=http://localhost:3000\nuserId=new-user\nauthId=new-id');
 
 		mocketPath.resolve
-			.mockReturnValueOnce('/dev/null')
-			.mockReturnValueOnce('/dev/null')
 			.mockReturnValueOnce('/dev/null/.konecty')
 			.mockReturnValueOnce('/dev/null/.konecty/credentials')
-			.mockReturnValueOnce('/dev/null')
-			.mockReturnValueOnce('/dev/null/.konecty')
-			.mockReturnValueOnce('/dev/null/.konecty/credentials');
+			.mockReturnValueOnce('/dev/null/')
+			.mockReturnValueOnce('/dev/null/AccessFailedLog.log');
 
 		client
 			.intercept({
@@ -68,12 +65,19 @@ describe('Konecty command line tool login command', () => {
 					locale: 'pt_BR',
 				},
 			});
+		client
+			.intercept({
+				path: '/rest/menu/documents/AccessFailedLog',
+				method: 'GET',
+			})
+			.reply(200, AccessFailedLogResponse);
 
 		// Act
 		const program = createProgram();
-		await program.parseAsync(['node', 'konecty', 'login', '-h', 'http://localhost:3000', '-u', 'admin', '-p', 'admin']);
+		await program.parseAsync(['node', 'konecty', 'export', 'AccessFailedLog']);
 
 		// Assert
 		expect(mockedFs.writeFileSync.mock.calls.length).to.equal(1);
+		expect(mockedFs.writeFileSync.mock.calls[0][1]).to.equal(JSON.stringify(AccessFailedLogOutput, null, 2));
 	});
 });

@@ -62,7 +62,8 @@ export default async function loginCommand(options?: LoginCommandOptions): Promi
 		return;
 	}
 
-	const __dirname = localOptions?.output != null ? path.resolve(process.env.INIT_CWD ?? './') : getHomeDir();
+	const __dirname =
+		localOptions?.output != null ? path.resolve(process.env.INIT_CWD ?? './') : path.resolve(getHomeDir() ?? '', '.konecty');
 
 	if (__dirname == null) {
 		console.error(chalk.red('Unable to get current or home directory'));

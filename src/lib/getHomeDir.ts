@@ -1,5 +1,4 @@
 import os from 'os';
-import path from 'path';
 
 export default function getHomeDir(): string | null {
 	const home =
@@ -8,11 +7,11 @@ export default function getHomeDir(): string | null {
 		(process.env.HOMEPATH ? (process.env.HOMEDRIVE || 'C:/') + process.env.HOMEPATH : null);
 
 	if (home != null) {
-		return path.resolve(home, '.konecty');
+		return home;
 	}
 
 	if (typeof os.homedir === 'function') {
-		return path.resolve(os.homedir(), '.konecty');
+		return os.homedir();
 	}
 
 	return null;

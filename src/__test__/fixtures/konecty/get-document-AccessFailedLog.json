@@ -1,0 +1,104 @@
+{
+	"_id": "AccessFailedLog",
+	"name": "AccessFailedLog",
+	"label": { "en": "Access Failed Log", "pt_BR": "Log de Erro de Acesso" },
+	"plurals": { "en": "Access Failed Logs", "pt_BR": "Logs de Erros de Acesso" },
+	"fields": [
+		{ "type": "text", "name": "browser", "label": { "en": "Browser", "pt_BR": "Browser" }, "isInherited": true },
+		{
+			"type": "text",
+			"name": "browserEngine",
+			"label": { "en": "Browser engine", "pt_BR": "Motor do browser" },
+			"isInherited": true
+		},
+		{
+			"name": "browserEngineVersion",
+			"label": { "en": "Browser engine version", "pt_BR": "Versão da engine do browser" },
+			"type": "text",
+			"isInherited": true
+		},
+		{
+			"type": "text",
+			"name": "browserVersion",
+			"label": { "pt_BR": "Versão do browser", "en": "Browser version" },
+			"isInherited": true
+		},
+		{
+			"label": { "en": "Geolocation", "pt_BR": "Geolocalização" },
+			"bits": 26,
+			"type": "geoloc",
+			"name": "geolocation",
+			"isInherited": true
+		},
+		{ "name": "height", "label": { "en": "Screen height", "pt_BR": "Altura da tela" }, "type": "number", "isInherited": true },
+		{ "type": "text", "name": "ip", "label": { "en": "IP Address", "pt_BR": "Endereço IP" }, "isInherited": true },
+		{
+			"type": "boolean",
+			"name": "isMobile",
+			"label": { "en": "Mobile device", "pt_BR": "Dispositivo móvel" },
+			"isInherited": true
+		},
+		{ "type": "text", "name": "login", "label": { "en": "Login", "pt_BR": "Login" }, "isInherited": true },
+		{
+			"type": "text",
+			"name": "os",
+			"label": { "pt_BR": "Sistema Operacional", "en": "Operational System" },
+			"isInherited": true
+		},
+		{ "label": { "en": "Platform", "pt_BR": "Plataforma" }, "type": "text", "name": "platform", "isInherited": true },
+		{ "type": "text", "name": "reason", "label": { "en": "Reason", "pt_BR": "Motivo" }, "isInherited": true },
+		{ "type": "number", "name": "width", "label": { "en": "Screen width", "pt_BR": "Largura da tela" }, "isInherited": true },
+		{
+			"name": "_createdAt",
+			"label": { "en": "Created At", "pt_BR": "Criado em" },
+			"isSortable": true,
+			"type": "dateTime",
+			"isInherited": true
+		},
+		{
+			"label": { "en": "Created by", "pt_BR": "Criado por" },
+			"isSortable": true,
+			"document": "User",
+			"descriptionFields": ["name", "group.name"],
+			"type": "lookup",
+			"name": "_createdBy",
+			"isInherited": true
+		},
+		{
+			"type": "dateTime",
+			"name": "_updatedAt",
+			"label": { "pt_BR": "Atualizado em", "en": "Updated At" },
+			"isSortable": true,
+			"isInherited": true
+		},
+		{
+			"label": { "en": "Updated by", "pt_BR": "Atualizado por" },
+			"document": "User",
+			"descriptionFields": ["name", "group.name"],
+			"type": "lookup",
+			"name": "_updatedBy",
+			"isInherited": true
+		},
+		{
+			"optionsSorter": "asc",
+			"type": "picklist",
+			"name": "status",
+			"label": { "en": "Status", "pt_BR": "Situação" },
+			"renderAs": "without_scroll",
+			"minSelected": 0,
+			"maxSelected": 1,
+			"isInherited": true
+		},
+		{
+			"name": "_user",
+			"label": { "en": "User", "pt_BR": "Usuário" },
+			"isSortable": true,
+			"isList": true,
+			"document": "User",
+			"descriptionFields": ["name", "group.name"],
+			"detailFields": ["phone", "emails"],
+			"type": "lookup",
+			"isInherited": true
+		}
+	]
+}
