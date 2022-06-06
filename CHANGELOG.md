@@ -1,3 +1,10 @@
+## [1.5.0](https://github.com/Konecty/konecty-sdk/compare/1.4.0...1.5.0) (2022-06-06)
+
+
+### 🚀 Features
+
+* export metadata command ([8bc81e9](https://github.com/Konecty/konecty-sdk/commit/8bc81e97e79515683b719b44cc799d18912efda5))
+
 ## [1.4.0](https://github.com/Konecty/konecty-sdk/compare/1.3.0...1.4.0) (2022-06-03)
 
 
