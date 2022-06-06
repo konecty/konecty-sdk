@@ -3,6 +3,7 @@ import { Command } from 'commander';
 import fs from 'fs';
 import path from 'path';
 import docCommand, { CreateDocOptions } from './docCommand';
+import exportCommand from './exportCommand';
 import loginCommand from './loginCommand';
 import typeCommand, { CreateInterfaceOptions } from './typeCommand';
 
@@ -43,5 +44,13 @@ export default function createProgram(): Command {
 		.option('-p, --password <password>', 'Password')
 		.option('-o, --output <output>', 'Output file')
 		.action(loginCommand);
+
+	program
+		.command('export [document]')
+		.description('Export metadatas to a file')
+		.option('-c, --credentialsFile <credentialsFile>', 'Konecty credentials file', '~/.konecty/credentials')
+		.option('-p, --profile <profile>', 'Crendentials profile', 'default')
+		.option('-o, --output <output>', 'Output directory')
+		.action(exportCommand);
 	return program;
 }
