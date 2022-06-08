@@ -65,18 +65,18 @@ export type MetadataConditionField = {
 	valueField: string;
 };
 
-export type MetadataLabel = {
-	[lang: string]: string;
-};
+export type MetadataLabel =
+	| {
+			[lang: string]: string;
+	  }
+	| { sort: number };
 
 export type MetadataField<T = unknown> = {
 	name: string;
 	type: MetadataFieldType;
 	size?: number;
 	label?: MetadataLabel;
-	options?: {
-		[key: T]: MetadataLabel;
-	};
+	options?: T extends string ? Record<T, MetadataLabel> : never;
 	decimalSize?: number;
 	minSelected?: number;
 	maxSelected?: number;
@@ -102,7 +102,6 @@ export type MetadataField<T = unknown> = {
 	objectRefId?: string;
 	compositeType?: 'reference';
 	conditionFields?: MetadataConditionField[];
-	decimalSize?: number;
 	defaultValues?: T[] | MetadataLabel[];
 	description?: string;
 	filterOnly?: boolean;

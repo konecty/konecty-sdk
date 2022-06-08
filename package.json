@@ -1,9 +1,52 @@
 {
 	"name": "@konecty/sdk",
 	"version": "1.0.0",
-	"main": "src/index.js",
+	"main": "dist/index.js",
+	"types": "dist/index.d.ts",
 	"author": "Derotino Silveira <silveirado@gmail.com>",
 	"license": "MIT",
+	"files": [
+		"/dist"
+	],
+	"exports": {
+		"./Client": "./dist/sdk/Client.js",
+		"./FieldOperators": "./dist/sdk/FieldOperators.js",
+		"./Group": "./dist/sdk/Group.js",
+		"./Module": "./dist/sdk/Module.js",
+		"./Role": "./dist/sdk/Role.js",
+		"./types": "./dist/sdk/types.js",
+		"./types/metadata": "./dist/sdk/types/metadata.js",
+		"./User": "./dist/sdk/User.js",
+		"./package.json": "./package.json"
+	},
+	"typesVersions": {
+		"*": {
+			"Client": [
+				"./dist/sdk/Client.d.ts"
+			],
+			"FieldOperators": [
+				"./dist/sdk/FieldOperators.d.ts"
+			],
+			"Group": [
+				"./dist/sdk/Group.d.ts"
+			],
+			"Module": [
+				"./dist/sdk/Module.d.ts"
+			],
+			"Role": [
+				"./dist/sdk/Role.d.ts"
+			],
+			"types": [
+				"./dist/sdk/types.d.ts"
+			],
+			"types/metadata": [
+				"./dist/sdk/types/metadata.d.ts"
+			],
+			"User": [
+				"./dist/sdk/User.d.ts"
+			]
+		}
+	},
 	"publishConfig": {
 		"access": "public"
 	},
@@ -16,10 +59,13 @@
 		"npm": ">=7.10.0"
 	},
 	"scripts": {
+		"clean": "rimraf dist *.tsbuildinfo",
 		"start": "cross-env NODE_OPTIONS='--inspect' nodemon --watch 'src/' --exec 'ts-node src/index.ts' -e ts | pino-pretty --colorize --translateTime",
 		"test": "jest --detectOpenHandles --runInBand",
 		"test:watch": "jest --detectOpenHandles --runInBand --watchAll",
-		"build": "babel src --out-dir dist --ignore '**/*.test.js' --ignore '**/__test__' --no-copy-ignored --extensions .ts",
+		"build": "yarn clean && yarn build:babel && yarn build:types",
+		"build:babel": "babel src --out-dir dist --ignore '**/*.test.js' --ignore '**/__test__' --no-copy-ignored --extensions .ts",
+		"build:types": "tsc -b tsconfig.build.json",
 		"lint": "eslint src/**/*.ts --fix",
 		"prettier": "prettier --write src",
 		"prepare": "husky install"
@@ -57,6 +103,7 @@
 		"husky": "^7.0.4",
 		"jest": "27",
 		"nodemon": "^2.0.15",
+		"rimraf": "^3.0.2",
 		"semantic-release": "^19.0.2",
 		"supertest": "^6.2.2",
 		"ts-jest": "^27.1.4",
