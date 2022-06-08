@@ -17,6 +17,7 @@
 		"./types": "./dist/sdk/types.js",
 		"./types/metadata": "./dist/sdk/types/metadata.js",
 		"./User": "./dist/sdk/User.js",
+		"./TypeUtils": "./dist/sdk/TypeUtils.js",
 		"./package.json": "./package.json"
 	},
 	"typesVersions": {
@@ -44,6 +45,9 @@
 			],
 			"User": [
 				"./dist/sdk/User.d.ts"
+			],
+			"TypeUtils": [
+				"./dist/sdk/TypeUtils.d.ts"
 			]
 		}
 	},
