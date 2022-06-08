@@ -188,7 +188,7 @@ export class ContactModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(contactConfig, clientOptions);
 	}
-	readonly mainContact: MetadataField<ContactMainContactType> = {
+	readonly 'mainContact': MetadataField<ContactMainContactType> = {
 		label: { en: 'Main Contact', pt_BR: 'Contato Principal' },
 		document: 'Contact',
 		descriptionFields: ['code', 'name.full'],
@@ -196,7 +196,7 @@ export class ContactModule extends KonectyModule<
 		name: 'mainContact',
 		isInherited: true,
 	} as MetadataField<ContactMainContactType>;
-	readonly contactAttempts: MetadataField<number> = {
+	readonly 'contactAttempts': MetadataField<number> = {
 		label: { en: 'Contact Attempts', pt_BR: 'Tentativas de Contato' },
 		isSortable: true,
 		decimalSize: 0,
@@ -206,7 +206,7 @@ export class ContactModule extends KonectyModule<
 		name: 'contactAttempts',
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly invalidAttempts: MetadataField<number> = {
+	readonly 'invalidAttempts': MetadataField<number> = {
 		name: 'invalidAttempts',
 		label: { en: 'Invalid Attempts', pt_BR: 'Tentativas Invalidas' },
 		isSortable: true,
@@ -216,13 +216,13 @@ export class ContactModule extends KonectyModule<
 		type: 'number',
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly description: MetadataField<string> = {
+	readonly 'description': MetadataField<string> = {
 		name: 'description',
 		label: { en: 'Description', pt_BR: 'Descrição' },
 		type: 'text',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly priority: MetadataField<ContactPriorityType> = {
+	readonly 'priority': MetadataField<ContactPriorityType> = {
 		name: 'priority',
 		maxSelected: 1,
 		minSelected: 0,
@@ -237,7 +237,7 @@ export class ContactModule extends KonectyModule<
 		label: { pt_BR: 'Prioridade', en: 'Priority' },
 		isInherited: true,
 	} as MetadataField<ContactPriorityType>;
-	readonly queue: MetadataField<ContactQueueType> = {
+	readonly 'queue': MetadataField<ContactQueueType> = {
 		type: 'lookup',
 		name: 'queue',
 		label: { en: 'Queue', pt_BR: 'Roleta' },
@@ -245,7 +245,7 @@ export class ContactModule extends KonectyModule<
 		descriptionFields: ['name'],
 		isInherited: true,
 	} as MetadataField<ContactQueueType>;
-	readonly campaign: MetadataField<ContactCampaignType> = {
+	readonly 'campaign': MetadataField<ContactCampaignType> = {
 		document: 'Campaign',
 		descriptionFields: ['code', 'name', 'type'],
 		type: 'lookup',
@@ -254,25 +254,25 @@ export class ContactModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<ContactCampaignType>;
-	readonly referrerURL: MetadataField<string> = {
+	readonly 'referrerURL': MetadataField<string> = {
 		name: 'referrerURL',
 		label: { en: 'Referrer URL', pt_BR: 'Referrer URL' },
 		type: 'url',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly facebookData: MetadataField<object> = {
+	readonly 'facebookData': MetadataField<object> = {
 		label: { en: 'Facebook Data', pt_BR: 'Dados do Facebook' },
 		type: 'json',
 		name: 'facebookData',
 		isInherited: true,
 	} as MetadataField<object>;
-	readonly googleData: MetadataField<object> = {
+	readonly 'googleData': MetadataField<object> = {
 		type: 'json',
 		name: 'googleData',
 		label: { en: 'Google Data', pt_BR: 'Dados do Google' },
 		isInherited: true,
 	} as MetadataField<object>;
-	readonly doNotCall: MetadataField<ContactDoNotCallType> = {
+	readonly 'doNotCall': MetadataField<ContactDoNotCallType> = {
 		type: 'picklist',
 		label: { pt_BR: 'Não Telefonar', en: 'Do Not Call' },
 		maxSelected: 3,
@@ -287,7 +287,7 @@ export class ContactModule extends KonectyModule<
 		renderAs: 'without_scroll',
 		isInherited: true,
 	} as MetadataField<ContactDoNotCallType>;
-	readonly staff: MetadataField<ContactStaffType> = {
+	readonly 'staff': MetadataField<ContactStaffType> = {
 		isList: true,
 		document: 'Contact',
 		descriptionFields: ['code', 'name.full'],
@@ -297,7 +297,7 @@ export class ContactModule extends KonectyModule<
 		label: { en: 'Staff', pt_BR: 'Funcionários' },
 		isInherited: true,
 	} as MetadataField<ContactStaffType>;
-	readonly type: MetadataField<ContactTypeType> = {
+	readonly 'type': MetadataField<ContactTypeType> = {
 		name: 'type',
 		options: {
 			Cliente: { en: 'Client', pt_BR: 'Cliente' },
@@ -317,7 +317,7 @@ export class ContactModule extends KonectyModule<
 		isSortable: true,
 		defaultValue: ['Cliente'],
 	} as MetadataField<ContactTypeType>;
-	readonly address: MetadataField<Address> = {
+	readonly 'address': MetadataField<Address> = {
 		isList: true,
 		isSortable: true,
 		isTypeOptionsEditable: true,
@@ -327,21 +327,21 @@ export class ContactModule extends KonectyModule<
 		typeOptions: { Casa: { en: 'Home', pt_BR: 'Casa' }, Trabalho: { en: 'Work', pt_BR: 'Trabalho' } },
 		isInherited: true,
 	} as MetadataField<Address>;
-	readonly password: MetadataField<string> = {
+	readonly 'password': MetadataField<string> = {
 		type: 'encrypted',
 		name: 'password',
 		label: { en: 'Password', pt_BR: 'Senha' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly birthdate: MetadataField<Date> = {
+	readonly 'birthdate': MetadataField<Date> = {
 		isSortable: true,
 		type: 'date',
 		name: 'birthdate',
 		label: { en: 'Birthdate', pt_BR: 'Data de Nascimento' },
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly code: MetadataField<number> = {
+	readonly 'code': MetadataField<number> = {
 		isUnique: true,
 		isSortable: true,
 		type: 'autoNumber',
@@ -349,7 +349,7 @@ export class ContactModule extends KonectyModule<
 		label: { pt_BR: 'Código', en: 'Code' },
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly email: MetadataField<Email> = {
+	readonly 'email': MetadataField<Email> = {
 		type: 'email',
 		typeOptions: { Pessoal: { en: 'Personal', pt_BR: 'Pessoal' }, Trabalho: { en: 'Work', pt_BR: 'Trabalho' } },
 		isList: true,
@@ -359,7 +359,7 @@ export class ContactModule extends KonectyModule<
 		name: 'email',
 		isInherited: true,
 	} as MetadataField<Email>;
-	readonly emailFrequence: MetadataField<ContactEmailFrequenceType> = {
+	readonly 'emailFrequence': MetadataField<ContactEmailFrequenceType> = {
 		name: 'emailFrequence',
 		optionsSorter: 'asc',
 		defaultValues: [{ pt_BR: 'Dia' }],
@@ -378,14 +378,14 @@ export class ContactModule extends KonectyModule<
 		},
 		isInherited: true,
 	} as MetadataField<ContactEmailFrequenceType>;
-	readonly legalPerson: MetadataField<boolean> = {
+	readonly 'legalPerson': MetadataField<boolean> = {
 		label: { en: 'Legal Person', pt_BR: 'Pessoa Jurídica' },
 		isSortable: true,
 		type: 'boolean',
 		name: 'legalPerson',
 		isInherited: true,
 	} as MetadataField<boolean>;
-	readonly mailFrequence: MetadataField<ContactMailFrequenceType> = {
+	readonly 'mailFrequence': MetadataField<ContactMailFrequenceType> = {
 		isSortable: true,
 		label: { pt_BR: 'Frequencia de Correspondência', en: 'Mail Frequence' },
 		options: {
@@ -404,7 +404,7 @@ export class ContactModule extends KonectyModule<
 		optionsSorter: 'asc',
 		isInherited: true,
 	} as MetadataField<ContactMailFrequenceType>;
-	readonly name: MetadataField<PersonName> = {
+	readonly 'name': MetadataField<PersonName> = {
 		type: 'personName',
 		name: 'name',
 		label: { en: 'Name', pt_BR: 'Nome' },
@@ -412,20 +412,20 @@ export class ContactModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<PersonName>;
-	readonly verificationToken: MetadataField<string> = {
+	readonly 'verificationToken': MetadataField<string> = {
 		type: 'text',
 		name: 'verificationToken',
 		label: { pt_BR: 'Token de Verificação', en: 'Verification Token' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly notes: MetadataField<string> = {
+	readonly 'notes': MetadataField<string> = {
 		type: 'text',
 		name: 'notes',
 		label: { en: 'Notes', pt_BR: 'Observação' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly phone: MetadataField<Phone> = {
+	readonly 'phone': MetadataField<Phone> = {
 		label: { en: 'Phone', pt_BR: 'Telefone' },
 		name: 'phone',
 		type: 'phone',
@@ -440,7 +440,7 @@ export class ContactModule extends KonectyModule<
 		isTypeOptionsEditable: true,
 		isInherited: true,
 	} as MetadataField<Phone>;
-	readonly picture: MetadataField<FileDescriptor> = {
+	readonly 'picture': MetadataField<FileDescriptor> = {
 		label: { en: 'Picture', pt_BR: 'Imagem' },
 		isSortable: true,
 		isList: true,
@@ -450,7 +450,7 @@ export class ContactModule extends KonectyModule<
 		name: 'picture',
 		isInherited: true,
 	} as MetadataField<FileDescriptor>;
-	readonly smsFrequence: MetadataField<ContactSmsFrequenceType> = {
+	readonly 'smsFrequence': MetadataField<ContactSmsFrequenceType> = {
 		label: { en: 'SMS Frequence', pt_BR: 'Frequencia de SMS' },
 		options: {
 			Mês: { pt_BR: 'Mês' },
@@ -469,7 +469,7 @@ export class ContactModule extends KonectyModule<
 		defaultValues: [{ pt_BR: 'Dia' }],
 		isInherited: true,
 	} as MetadataField<ContactSmsFrequenceType>;
-	readonly status: MetadataField<ContactStatusType> = {
+	readonly 'status': MetadataField<ContactStatusType> = {
 		optionsSorter: 'sort',
 		maxSelected: 1,
 		minSelected: 1,
@@ -490,14 +490,14 @@ export class ContactModule extends KonectyModule<
 		isInherited: true,
 		defaultValue: 'Lead',
 	} as MetadataField<ContactStatusType>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_createdAt',
 		label: { pt_BR: 'Criado em', en: 'Created At' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<ContactCreatedByType> = {
+	readonly '_createdBy': MetadataField<ContactCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -506,14 +506,14 @@ export class ContactModule extends KonectyModule<
 		name: '_createdBy',
 		isInherited: true,
 	} as MetadataField<ContactCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<ContactUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<ContactUpdatedByType> = {
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
@@ -521,7 +521,7 @@ export class ContactModule extends KonectyModule<
 		type: 'lookup',
 		isInherited: true,
 	} as MetadataField<ContactUpdatedByType>;
-	readonly _user: MetadataField<ContactUserType> = {
+	readonly '_user': MetadataField<ContactUserType> = {
 		isSortable: true,
 		isList: true,
 		document: 'User',
@@ -532,7 +532,7 @@ export class ContactModule extends KonectyModule<
 		label: { en: 'User', pt_BR: 'Usuário' },
 		isInherited: true,
 	} as MetadataField<ContactUserType>;
-	readonly medium: MetadataField<ContactMediumType> = {
+	readonly 'medium': MetadataField<ContactMediumType> = {
 		label: { en: 'Medium', pt_BR: 'Mídia' },
 		options: {
 			'Banner Online': { en: 'Online Banner', pt_BR: 'Banner Online' },
@@ -550,7 +550,7 @@ export class ContactModule extends KonectyModule<
 		maxSelected: 1,
 		isInherited: true,
 	} as MetadataField<ContactMediumType>;
-	readonly channel: MetadataField<ContactChannelType> = {
+	readonly 'channel': MetadataField<ContactChannelType> = {
 		document: 'Channel',
 		descriptionFields: ['name'],
 		type: 'lookup',
@@ -559,7 +559,7 @@ export class ContactModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<ContactChannelType>;
-	readonly source: MetadataField<ContactSourceType> = {
+	readonly 'source': MetadataField<ContactSourceType> = {
 		document: 'Channel',
 		descriptionFields: ['name'],
 		type: 'lookup',
@@ -568,25 +568,25 @@ export class ContactModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<ContactSourceType>;
-	readonly campaignsAsTarget: MetadataField<number> = {
+	readonly 'campaignsAsTarget': MetadataField<number> = {
 		type: 'number',
 		name: 'campaignsAsTarget',
 		isSortable: true,
 		label: { en: 'Campaigns as Target', pt_BR: 'Alvo de Campanhas' },
 	} as MetadataField<number>;
-	readonly lastCampaignTargetAt: MetadataField<Date> = {
+	readonly 'lastCampaignTargetAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: 'lastCampaignTargetAt',
 		isSortable: true,
 		label: { en: 'Last Campaign Target at', pt_BR: 'Último Alvo de Campanha em' },
 	} as MetadataField<Date>;
-	readonly lastEmailSentAt: MetadataField<Date> = {
+	readonly 'lastEmailSentAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: 'lastEmailSentAt',
 		isSortable: true,
 		label: { en: 'Last Email Sent at', pt_BR: 'Último Email Enviado em' },
 	} as MetadataField<Date>;
-	readonly activeOpportunities: MetadataField<number> = {
+	readonly 'activeOpportunities': MetadataField<number> = {
 		type: 'number',
 		name: 'activeOpportunities',
 		isSortable: true,

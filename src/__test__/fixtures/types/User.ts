@@ -230,7 +230,7 @@ export class UserModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(userConfig, clientOptions);
 	}
-	readonly active: MetadataField<boolean> = {
+	readonly 'active': MetadataField<boolean> = {
 		defaultValue: true,
 		type: 'boolean',
 		name: 'active',
@@ -239,13 +239,13 @@ export class UserModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<boolean>;
-	readonly nickname: MetadataField<string> = {
+	readonly 'nickname': MetadataField<string> = {
 		label: { en: 'Nickname', pt_BR: 'Apelido' },
 		type: 'text',
 		name: 'nickname',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly pictures: MetadataField<FileDescriptor> = {
+	readonly 'pictures': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'pictures',
 		label: { en: 'Pictures', pt_BR: 'Imagens' },
@@ -253,7 +253,7 @@ export class UserModule extends KonectyModule<
 		wildcard: '(jpg|jpeg)',
 		isInherited: true,
 	} as MetadataField<FileDescriptor>;
-	readonly address: MetadataField<Address> = {
+	readonly 'address': MetadataField<Address> = {
 		typeOptions: { Casa: { en: 'Home', pt_BR: 'Casa' }, Trabalho: { en: 'Work', pt_BR: 'Trabalho' } },
 		isList: true,
 		isSortable: true,
@@ -263,14 +263,14 @@ export class UserModule extends KonectyModule<
 		type: 'address',
 		isInherited: true,
 	} as MetadataField<Address>;
-	readonly birthdate: MetadataField<Date> = {
+	readonly 'birthdate': MetadataField<Date> = {
 		label: { en: 'Birthdate', pt_BR: 'Data de Nascimento' },
 		isSortable: true,
 		type: 'date',
 		name: 'birthdate',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly code: MetadataField<number> = {
+	readonly 'code': MetadataField<number> = {
 		type: 'autoNumber',
 		name: 'code',
 		label: { en: 'Code', pt_BR: 'Código' },
@@ -278,7 +278,7 @@ export class UserModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly emails: MetadataField<Email> = {
+	readonly 'emails': MetadataField<Email> = {
 		isList: true,
 		isSortable: true,
 		label: { en: 'Email', pt_BR: 'Email' },
@@ -286,7 +286,7 @@ export class UserModule extends KonectyModule<
 		type: 'email',
 		isInherited: true,
 	} as MetadataField<Email>;
-	readonly group: MetadataField<UserGroupType> = {
+	readonly 'group': MetadataField<UserGroupType> = {
 		label: { en: 'Group', pt_BR: 'Grupo' },
 		isRequired: true,
 		isSortable: true,
@@ -301,7 +301,7 @@ export class UserModule extends KonectyModule<
 			{ fieldName: 'extension', inherit: 'until_edited' },
 		],
 	} as MetadataField<UserGroupType>;
-	readonly groups: MetadataField<UserGroupsType> = {
+	readonly 'groups': MetadataField<UserGroupsType> = {
 		type: 'lookup',
 		name: 'groups',
 		label: { en: 'Extra Access Groups', pt_BR: 'Grupos de Acesso Extra' },
@@ -311,13 +311,13 @@ export class UserModule extends KonectyModule<
 		descriptionFields: ['name'],
 		isInherited: true,
 	} as MetadataField<UserGroupsType>;
-	readonly admin: MetadataField<boolean> = {
+	readonly 'admin': MetadataField<boolean> = {
 		type: 'boolean',
 		name: 'admin',
 		label: { en: 'Administrator', pt_BR: 'Administrador' },
 		isInherited: true,
 	} as MetadataField<boolean>;
-	readonly jobTitle: MetadataField<string> = {
+	readonly 'jobTitle': MetadataField<string> = {
 		type: 'text',
 		name: 'jobTitle',
 		label: { en: 'Job Title', pt_BR: 'Cargo' },
@@ -325,14 +325,14 @@ export class UserModule extends KonectyModule<
 		normalization: 'title',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly lastLogin: MetadataField<Date> = {
+	readonly 'lastLogin': MetadataField<Date> = {
 		type: 'dateTime',
 		name: 'lastLogin',
 		label: { en: 'Last Login', pt_BR: 'Último Login' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly locale: MetadataField<UserLocaleType> = {
+	readonly 'locale': MetadataField<UserLocaleType> = {
 		isSortable: true,
 		label: { en: 'Locale', pt_BR: 'Opções Regionais' },
 		options: { pt_BR: { en: 'pt_BR', pt_BR: 'pt_BR' }, en: { en: 'en', pt_BR: 'en' } },
@@ -345,7 +345,7 @@ export class UserModule extends KonectyModule<
 		optionsSorter: 'asc',
 		isInherited: true,
 	} as MetadataField<UserLocaleType>;
-	readonly username: MetadataField<string> = {
+	readonly 'username': MetadataField<string> = {
 		isRequired: true,
 		isSortable: true,
 		isUnique: true,
@@ -355,7 +355,7 @@ export class UserModule extends KonectyModule<
 		type: 'text',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly name: MetadataField<string> = {
+	readonly 'name': MetadataField<string> = {
 		label: { en: 'Name', pt_BR: 'Nome' },
 		isSortable: true,
 		normalization: 'title',
@@ -363,7 +363,7 @@ export class UserModule extends KonectyModule<
 		name: 'name',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly password: MetadataField<string> = {
+	readonly 'password': MetadataField<string> = {
 		type: 'password',
 		name: 'password',
 		label: { en: 'Password', pt_BR: 'Senha' },
@@ -371,13 +371,13 @@ export class UserModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly access: MetadataField<object> = {
+	readonly 'access': MetadataField<object> = {
 		type: 'json',
 		name: 'access',
 		label: { en: 'Access', pt_BR: 'Acesso' },
 		isInherited: true,
 	} as MetadataField<object>;
-	readonly phone: MetadataField<Phone> = {
+	readonly 'phone': MetadataField<Phone> = {
 		name: 'phone',
 		isList: true,
 		isSortable: true,
@@ -394,7 +394,7 @@ export class UserModule extends KonectyModule<
 		maxItems: 10,
 		isInherited: true,
 	} as MetadataField<Phone>;
-	readonly role: MetadataField<UserRoleType> = {
+	readonly 'role': MetadataField<UserRoleType> = {
 		descriptionFields: ['name'],
 		inheritedFields: [
 			{ fieldName: 'admin', inherit: 'always' },
@@ -408,21 +408,21 @@ export class UserModule extends KonectyModule<
 		document: 'Role',
 		isInherited: true,
 	} as MetadataField<UserRoleType>;
-	readonly sessionExpireAfterMinutes: MetadataField<number> = {
+	readonly 'sessionExpireAfterMinutes': MetadataField<number> = {
 		isSortable: true,
 		type: 'number',
 		name: 'sessionExpireAfterMinutes',
 		label: { pt_BR: 'Sessão Expirará em ', en: 'Session Expire After Minutes' },
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		label: { en: 'Created At', pt_BR: 'Criado em' },
 		isSortable: true,
 		type: 'dateTime',
 		name: '_createdAt',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<UserCreatedByType> = {
+	readonly '_createdBy': MetadataField<UserCreatedByType> = {
 		type: 'lookup',
 		name: '_createdBy',
 		label: { en: 'Created by', pt_BR: 'Criado por' },
@@ -431,14 +431,14 @@ export class UserModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
 	} as MetadataField<UserCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
 		label: { pt_BR: 'Atualizado em', en: 'Updated At' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<UserUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<UserUpdatedByType> = {
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
@@ -446,7 +446,7 @@ export class UserModule extends KonectyModule<
 		name: '_updatedBy',
 		isInherited: true,
 	} as MetadataField<UserUpdatedByType>;
-	readonly status: MetadataField<UserStatusType> = {
+	readonly 'status': MetadataField<UserStatusType> = {
 		type: 'picklist',
 		name: 'status',
 		label: { en: 'Status', pt_BR: 'Situação' },
@@ -463,7 +463,7 @@ export class UserModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<UserStatusType>;
-	readonly _user: MetadataField<UserUserType> = {
+	readonly '_user': MetadataField<UserUserType> = {
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
 		type: 'lookup',
@@ -474,7 +474,7 @@ export class UserModule extends KonectyModule<
 		document: 'User',
 		isInherited: true,
 	} as MetadataField<UserUserType>;
-	readonly targetQueue: MetadataField<UserTargetQueueType> = {
+	readonly 'targetQueue': MetadataField<UserTargetQueueType> = {
 		type: 'lookup',
 		name: 'targetQueue',
 		label: { en: 'Target Queue', pt_BR: 'Roleta' },
@@ -482,12 +482,12 @@ export class UserModule extends KonectyModule<
 		document: 'Queue',
 		descriptionFields: ['name'],
 	} as MetadataField<UserTargetQueueType>;
-	readonly induction: MetadataField<Date> = {
+	readonly 'induction': MetadataField<Date> = {
 		type: 'date',
 		name: 'induction',
 		label: { pt_BR: 'Integração', en: 'Induction' },
 	} as MetadataField<Date>;
-	readonly inductionStatus: MetadataField<UserInductionStatusType> = {
+	readonly 'inductionStatus': MetadataField<UserInductionStatusType> = {
 		name: 'inductionStatus',
 		optionsSorter: 'asc',
 		maxSelected: 1,
@@ -502,13 +502,13 @@ export class UserModule extends KonectyModule<
 		isSortable: true,
 		label: { en: 'Induction Status', pt_BR: 'Situação da Integração' },
 	} as MetadataField<UserInductionStatusType>;
-	readonly documents: MetadataField<FileDescriptor> = {
+	readonly 'documents': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'documents',
 		label: { en: 'Documents', pt_BR: 'Documentação' },
 		isList: true,
 	} as MetadataField<FileDescriptor>;
-	readonly director: MetadataField<UserDirectorType> = {
+	readonly 'director': MetadataField<UserDirectorType> = {
 		label: { en: 'Director', pt_BR: 'Diretor' },
 		isSortable: true,
 		document: 'User',
@@ -519,14 +519,14 @@ export class UserModule extends KonectyModule<
 		type: 'lookup',
 		name: 'director',
 	} as MetadataField<UserDirectorType>;
-	readonly temporaryBadge: MetadataField<boolean> = {
+	readonly 'temporaryBadge': MetadataField<boolean> = {
 		name: 'temporaryBadge',
 		label: { en: 'Temporary Badge', pt_BR: 'Crachá Provisório' },
 		isRequired: true,
 		isSortable: true,
 		type: 'boolean',
 	} as MetadataField<boolean>;
-	readonly badge: MetadataField<UserBadgeType> = {
+	readonly 'badge': MetadataField<UserBadgeType> = {
 		renderAs: 'with_scroll',
 		type: 'picklist',
 		label: { en: 'Badge', pt_BR: 'Crachá' },
@@ -538,7 +538,7 @@ export class UserModule extends KonectyModule<
 			Entregue: { pt_BR: 'Entregue', en: 'Delivered' },
 		},
 	} as MetadataField<UserBadgeType>;
-	readonly recruitedBy: MetadataField<UserRecruitedByType> = {
+	readonly 'recruitedBy': MetadataField<UserRecruitedByType> = {
 		name: 'recruitedBy',
 		options: {
 			'Consultoria Haag': { en: 'Haag Consulting', pt_BR: 'Consultoria Haag' },
@@ -550,12 +550,12 @@ export class UserModule extends KonectyModule<
 		label: { en: 'Recruited By', pt_BR: 'Setor Captação' },
 		maxSelected: 1,
 	} as MetadataField<UserRecruitedByType>;
-	readonly recruitmentChannel: MetadataField<string> = {
+	readonly 'recruitmentChannel': MetadataField<string> = {
 		type: 'text',
 		name: 'recruitmentChannel',
 		label: { en: 'Recruitment Channel', pt_BR: 'Canal' },
 	} as MetadataField<string>;
-	readonly businessCards: MetadataField<UserBusinessCardsType> = {
+	readonly 'businessCards': MetadataField<UserBusinessCardsType> = {
 		maxSelected: 1,
 		name: 'businessCards',
 		options: {
@@ -567,7 +567,7 @@ export class UserModule extends KonectyModule<
 		type: 'picklist',
 		label: { en: 'Business Cards', pt_BR: 'Cartão de Visita' },
 	} as MetadataField<UserBusinessCardsType>;
-	readonly contract: MetadataField<UserContractType> = {
+	readonly 'contract': MetadataField<UserContractType> = {
 		maxSelected: 1,
 		name: 'contract',
 		options: {
@@ -582,7 +582,7 @@ export class UserModule extends KonectyModule<
 		type: 'picklist',
 		label: { en: 'Employment Status', pt_BR: 'Situação de Trabalho' },
 	} as MetadataField<UserContractType>;
-	readonly autonomous: MetadataField<UserAutonomousType> = {
+	readonly 'autonomous': MetadataField<UserAutonomousType> = {
 		maxSelected: 1,
 		name: 'autonomous',
 		options: { Assinada: { en: 'Signed', pt_BR: 'Assinada' }, Pendente: { pt_BR: 'Pendente', en: 'Pending' } },
@@ -590,7 +590,7 @@ export class UserModule extends KonectyModule<
 		type: 'picklist',
 		label: { en: 'Autonomous Declaration', pt_BR: 'Declaração de Autônomo' },
 	} as MetadataField<UserAutonomousType>;
-	readonly contractStatus: MetadataField<UserContractStatusType> = {
+	readonly 'contractStatus': MetadataField<UserContractStatusType> = {
 		optionsSorter: 'asc',
 		renderAs: 'with_scroll',
 		type: 'picklist',
@@ -600,22 +600,22 @@ export class UserModule extends KonectyModule<
 		name: 'contractStatus',
 		options: { Assinado: { en: 'Signed', pt_BR: 'Assinado' }, Pronto: { en: 'Ready', pt_BR: 'Pronto' } },
 	} as MetadataField<UserContractStatusType>;
-	readonly cpf: MetadataField<string> = {
+	readonly 'cpf': MetadataField<string> = {
 		type: 'text',
 		name: 'cpf',
 		label: { en: 'CPF', pt_BR: 'CPF' },
 	} as MetadataField<string>;
-	readonly canViewPhone: MetadataField<boolean> = {
+	readonly 'canViewPhone': MetadataField<boolean> = {
 		name: 'canViewPhone',
 		label: { en: 'Can View Phone', pt_BR: 'Pode Visualizar Telefone' },
 		type: 'boolean',
 	} as MetadataField<boolean>;
-	readonly document: MetadataField<string> = {
+	readonly 'document': MetadataField<string> = {
 		type: 'text',
 		name: 'document',
 		label: { en: 'Document', pt_BR: 'Documento' },
 	} as MetadataField<string>;
-	readonly documentType: MetadataField<UserDocumentTypeType> = {
+	readonly 'documentType': MetadataField<UserDocumentTypeType> = {
 		label: { en: 'Document Type', pt_BR: 'Tipo do Documento' },
 		maxSelected: 1,
 		name: 'documentType',
@@ -629,12 +629,12 @@ export class UserModule extends KonectyModule<
 		renderAs: 'with_scroll',
 		type: 'picklist',
 	} as MetadataField<UserDocumentTypeType>;
-	readonly documentNotes: MetadataField<string> = {
+	readonly 'documentNotes': MetadataField<string> = {
 		type: 'text',
 		name: 'documentNotes',
 		label: { en: 'Document Notes', pt_BR: 'Observação do Documento' },
 	} as MetadataField<string>;
-	readonly exitMotiveManager: MetadataField<UserExitMotiveManagerType> = {
+	readonly 'exitMotiveManager': MetadataField<UserExitMotiveManagerType> = {
 		type: 'picklist',
 		name: 'exitMotiveManager',
 		label: { en: 'Exit Motive Managaer', pt_BR: 'Motivo da Saída (Solicitação do Gerente)' },
@@ -654,7 +654,7 @@ export class UserModule extends KonectyModule<
 			'Problemas Familiares': { pt_BR: 'Problemas Familiares' },
 		},
 	} as MetadataField<UserExitMotiveManagerType>;
-	readonly exitMotiveBroker: MetadataField<UserExitMotiveBrokerType> = {
+	readonly 'exitMotiveBroker': MetadataField<UserExitMotiveBrokerType> = {
 		type: 'picklist',
 		name: 'exitMotiveBroker',
 		label: { en: 'Exit Motive Managaer', pt_BR: 'Motivo da Saída (Solicitação do Corretor)' },
@@ -674,19 +674,19 @@ export class UserModule extends KonectyModule<
 			'Problemas Familiares': { pt_BR: 'Problemas Familiares' },
 		},
 	} as MetadataField<UserExitMotiveBrokerType>;
-	readonly expire: MetadataField<Date> = {
+	readonly 'expire': MetadataField<Date> = {
 		type: 'date',
 		name: 'expire',
 		label: { en: 'Expire', pt_BR: 'Validade' },
 	} as MetadataField<Date>;
-	readonly fullName: MetadataField<string> = {
+	readonly 'fullName': MetadataField<string> = {
 		type: 'text',
 		name: 'fullName',
 		label: { en: 'Full Name', pt_BR: 'Nome Completo' },
 		isSortable: true,
 		normalization: 'title',
 	} as MetadataField<string>;
-	readonly type: MetadataField<string> = {
+	readonly 'type': MetadataField<string> = {
 		label: { en: 'Type', pt_BR: 'Tipo' },
 		type: 'text',
 		name: 'type',

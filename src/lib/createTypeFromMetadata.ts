@@ -151,18 +151,16 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	}
 
 	const interfaceProperties: string[] = Object.values<MetadataField>(fields).map(
-		field => `${field.name}?: ${getBaseType(field)}${getListIndicatorForType(field)};`,
+		field => `"${field.name}"?: ${getBaseType(field)}${getListIndicatorForType(field)};`,
 	);
 
 	const classProperties: string[] = Object.values<MetadataField>(fields).reduce<string[]>((acc, field) => {
 		return acc.concat([
-			`readonly ${field.name}:MetadataField<${getBaseType(field)}> = ${JSON.stringify(field)} as MetadataField<${getBaseType(
+			`readonly "${field.name}":MetadataField<${getBaseType(field)}> = ${JSON.stringify(
 				field,
-			)}>;`,
+			)} as MetadataField<${getBaseType(field)}>;`,
 		]);
 	}, []);
-
-	//  Object.values<MetadataField>(fields).map(field => `${field.name}: ${getBaseType(field)};`);
 
 	const userTypes = [];
 	if (fields._user != null) {

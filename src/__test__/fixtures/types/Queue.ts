@@ -88,14 +88,14 @@ export class QueueModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(queueConfig, clientOptions);
 	}
-	readonly active: MetadataField<boolean> = {
+	readonly 'active': MetadataField<boolean> = {
 		type: 'boolean',
 		name: 'active',
 		label: { en: 'Active', pt_BR: 'Active' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<boolean>;
-	readonly count: MetadataField<number> = {
+	readonly 'count': MetadataField<number> = {
 		isSortable: true,
 		minValue: 0,
 		type: 'number',
@@ -103,7 +103,7 @@ export class QueueModule extends KonectyModule<
 		label: { pt_BR: 'Contador', en: 'Count' },
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly currentCount: MetadataField<number> = {
+	readonly 'currentCount': MetadataField<number> = {
 		label: { en: 'Current Count', pt_BR: 'Contador Atual' },
 		isSortable: true,
 		decimalSize: 0,
@@ -112,7 +112,7 @@ export class QueueModule extends KonectyModule<
 		name: 'currentCount',
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly currentPosition: MetadataField<number> = {
+	readonly 'currentPosition': MetadataField<number> = {
 		type: 'number',
 		name: 'currentPosition',
 		label: { en: 'Current Position', pt_BR: 'Posição Atual' },
@@ -123,7 +123,7 @@ export class QueueModule extends KonectyModule<
 		defaultValue: 1,
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly name: MetadataField<string> = {
+	readonly 'name': MetadataField<string> = {
 		type: 'text',
 		name: 'name',
 		label: { en: 'Name', pt_BR: 'Nome' },
@@ -131,13 +131,13 @@ export class QueueModule extends KonectyModule<
 		normalization: 'title',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly chatInvite: MetadataField<string> = {
+	readonly 'chatInvite': MetadataField<string> = {
 		type: 'text',
 		name: 'chatInvite',
 		label: { en: 'Chat Invite', pt_BR: 'Convite do Chat' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly queueUsers: MetadataField<ModuleFilter<UserFilterConditions>> = {
+	readonly 'queueUsers': MetadataField<ModuleFilter<UserFilterConditions>> = {
 		type: 'filter',
 		name: 'queueUsers',
 		label: { en: 'Queue Users', pt_BR: 'Usuários da Roleta' },
@@ -147,14 +147,14 @@ export class QueueModule extends KonectyModule<
 		isInherited: true,
 		filterOnly: true,
 	} as MetadataField<ModuleFilter<UserFilterConditions>>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_createdAt',
 		label: { en: 'Created At', pt_BR: 'Criado em' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<QueueCreatedByType> = {
+	readonly '_createdBy': MetadataField<QueueCreatedByType> = {
 		type: 'lookup',
 		name: '_createdBy',
 		label: { pt_BR: 'Criado por', en: 'Created by' },
@@ -163,14 +163,14 @@ export class QueueModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
 	} as MetadataField<QueueCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<QueueUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<QueueUpdatedByType> = {
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
@@ -178,7 +178,7 @@ export class QueueModule extends KonectyModule<
 		label: { pt_BR: 'Atualizado por', en: 'Updated by' },
 		isInherited: true,
 	} as MetadataField<QueueUpdatedByType>;
-	readonly _user: MetadataField<QueueUserType> = {
+	readonly '_user': MetadataField<QueueUserType> = {
 		document: 'User',
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
@@ -189,7 +189,7 @@ export class QueueModule extends KonectyModule<
 		isList: true,
 		isInherited: true,
 	} as MetadataField<QueueUserType>;
-	readonly type: MetadataField<QueueTypeType> = {
+	readonly 'type': MetadataField<QueueTypeType> = {
 		type: 'picklist',
 		label: { pt_BR: 'Tipo', en: 'Type' },
 		name: 'type',
@@ -205,7 +205,7 @@ export class QueueModule extends KonectyModule<
 		renderAs: 'without_scroll',
 		isInherited: true,
 	} as MetadataField<QueueTypeType>;
-	readonly targetCampaign: MetadataField<QueueTargetCampaignType> = {
+	readonly 'targetCampaign': MetadataField<QueueTargetCampaignType> = {
 		type: 'lookup',
 		label: { en: 'Target Campaign', pt_BR: 'Campanha da Roleta' },
 		name: 'targetCampaign',

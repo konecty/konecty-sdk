@@ -11,7 +11,7 @@ export type CreateInterfaceOptions = {
 };
 
 export default function ({ input, output }: CreateInterfaceOptions): void {
-	const __dirname = path.resolve();
+	const __dirname = path.resolve(process.env.INIT_CWD ?? './');
 	const inputFile = path.resolve(__dirname, input);
 
 	try {
@@ -23,7 +23,7 @@ export default function ({ input, output }: CreateInterfaceOptions): void {
 
 	try {
 		const metadata: MetadataDocument = JSON.parse(fs.readFileSync(inputFile, 'utf-8')) as MetadataDocument;
-		const outputFile = path.resolve(__dirname, output, `./${metadata.name}.ts`);
+		const outputFile = path.resolve(__dirname, output ?? './', `./${metadata.name}.ts`);
 		const outputDir = path.dirname(outputFile);
 		mkdirp.sync(outputDir);
 
@@ -31,9 +31,9 @@ export default function ({ input, output }: CreateInterfaceOptions): void {
 
 		fs.writeFileSync(outputFile, type);
 	} catch (error) {
+		console.error(chalk.red(error));
 		if (error instanceof SyntaxError) {
 			return console.error(chalk.red(`File ${inputFile} is not a valid JSON file`));
 		}
-		console.error(chalk.red(error));
 	}
 }

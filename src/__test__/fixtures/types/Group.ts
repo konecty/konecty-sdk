@@ -59,7 +59,7 @@ export class GroupModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(groupConfig, clientOptions);
 	}
-	readonly active: MetadataField<boolean> = {
+	readonly 'active': MetadataField<boolean> = {
 		label: { en: 'Active', pt_BR: 'Ativo' },
 		isRequired: true,
 		isSortable: true,
@@ -68,7 +68,7 @@ export class GroupModule extends KonectyModule<
 		name: 'active',
 		isInherited: true,
 	} as MetadataField<boolean>;
-	readonly name: MetadataField<string> = {
+	readonly 'name': MetadataField<string> = {
 		normalization: 'upper',
 		type: 'text',
 		name: 'name',
@@ -78,14 +78,14 @@ export class GroupModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		name: '_createdAt',
 		label: { en: 'Created At', pt_BR: 'Criado em' },
 		isSortable: true,
 		type: 'dateTime',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<GroupCreatedByType> = {
+	readonly '_createdBy': MetadataField<GroupCreatedByType> = {
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
@@ -94,14 +94,14 @@ export class GroupModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<GroupCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<GroupUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<GroupUpdatedByType> = {
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
@@ -109,7 +109,7 @@ export class GroupModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
 	} as MetadataField<GroupUpdatedByType>;
-	readonly _user: MetadataField<GroupUserType> = {
+	readonly '_user': MetadataField<GroupUserType> = {
 		type: 'lookup',
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },

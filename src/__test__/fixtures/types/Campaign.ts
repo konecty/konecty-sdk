@@ -178,7 +178,7 @@ export class CampaignModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(campaignConfig, clientOptions);
 	}
-	readonly mainCampaign: MetadataField<CampaignMainCampaignType> = {
+	readonly 'mainCampaign': MetadataField<CampaignMainCampaignType> = {
 		label: { en: 'Main Campaign', pt_BR: 'Campanha Principal' },
 		isSortable: true,
 		document: 'Campaign',
@@ -187,7 +187,7 @@ export class CampaignModule extends KonectyModule<
 		name: 'mainCampaign',
 		isInherited: true,
 	} as MetadataField<CampaignMainCampaignType>;
-	readonly campaignTarget: MetadataField<ModuleFilter<ContactFilterConditions>> = {
+	readonly 'campaignTarget': MetadataField<ModuleFilter<ContactFilterConditions>> = {
 		label: { en: 'Campaign Target', pt_BR: 'Alvo da Campanha' },
 		document: 'Contact',
 		filterableFields: ['name'],
@@ -196,7 +196,7 @@ export class CampaignModule extends KonectyModule<
 		name: 'campaignTarget',
 		isInherited: true,
 	} as MetadataField<ModuleFilter<ContactFilterConditions>>;
-	readonly campaignUser: MetadataField<ModuleFilter<UserFilterConditions>> = {
+	readonly 'campaignUser': MetadataField<ModuleFilter<UserFilterConditions>> = {
 		label: { en: 'Campaign User', pt_BR: 'Usuário da Campanha' },
 		document: 'User',
 		filterableFields: ['name', 'email', 'role', 'nickname', 'active'],
@@ -205,7 +205,7 @@ export class CampaignModule extends KonectyModule<
 		name: 'campaignUser',
 		isInherited: true,
 	} as MetadataField<ModuleFilter<UserFilterConditions>>;
-	readonly attachment: MetadataField<FileDescriptor> = {
+	readonly 'attachment': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'attachment',
 		label: { en: 'Attachment', pt_BR: 'Anexo' },
@@ -213,7 +213,7 @@ export class CampaignModule extends KonectyModule<
 		wildcard: '(jpg|jpeg|png)',
 		isInherited: true,
 	} as MetadataField<FileDescriptor>;
-	readonly code: MetadataField<number> = {
+	readonly 'code': MetadataField<number> = {
 		type: 'autoNumber',
 		name: 'code',
 		label: { en: 'Code', pt_BR: 'Código' },
@@ -221,44 +221,44 @@ export class CampaignModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly description: MetadataField<string> = {
+	readonly 'description': MetadataField<string> = {
 		type: 'richText',
 		name: 'description',
 		label: { en: 'Description', pt_BR: 'Descrição' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly email: MetadataField<string> = {
+	readonly 'email': MetadataField<string> = {
 		type: 'richText',
 		name: 'email',
 		label: { en: 'E-mail', pt_BR: 'E-mail' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly endAt: MetadataField<Date> = {
+	readonly 'endAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: 'endAt',
 		label: { pt_BR: 'Fim', en: 'End' },
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly name: MetadataField<string> = {
+	readonly 'name': MetadataField<string> = {
 		type: 'text',
 		name: 'name',
 		label: { en: 'Name', pt_BR: 'Nome' },
 		isRequired: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly script: MetadataField<string> = {
+	readonly 'script': MetadataField<string> = {
 		label: { en: 'Script', pt_BR: 'Script' },
 		type: 'richText',
 		name: 'script',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly startAt: MetadataField<Date> = {
+	readonly 'startAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: 'startAt',
 		label: { en: 'Start', pt_BR: 'Início' },
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly status: MetadataField<CampaignStatusType> = {
+	readonly 'status': MetadataField<CampaignStatusType> = {
 		label: { en: 'Status', pt_BR: 'Situação' },
 		options: {
 			Nova: { en: 'New', pt_BR: 'Nova' },
@@ -274,7 +274,7 @@ export class CampaignModule extends KonectyModule<
 		maxSelected: 1,
 		isInherited: true,
 	} as MetadataField<CampaignStatusType>;
-	readonly type: MetadataField<CampaignTypeType> = {
+	readonly 'type': MetadataField<CampaignTypeType> = {
 		optionsSorter: 'asc',
 		renderAs: 'without_scroll',
 		type: 'picklist',
@@ -299,14 +299,14 @@ export class CampaignModule extends KonectyModule<
 		},
 		isInherited: true,
 	} as MetadataField<CampaignTypeType>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_createdAt',
 		label: { pt_BR: 'Criado em', en: 'Created At' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<CampaignCreatedByType> = {
+	readonly '_createdBy': MetadataField<CampaignCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -315,14 +315,14 @@ export class CampaignModule extends KonectyModule<
 		name: '_createdBy',
 		isInherited: true,
 	} as MetadataField<CampaignCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<CampaignUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<CampaignUpdatedByType> = {
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
@@ -330,7 +330,7 @@ export class CampaignModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
 	} as MetadataField<CampaignUpdatedByType>;
-	readonly _user: MetadataField<CampaignUserType> = {
+	readonly '_user': MetadataField<CampaignUserType> = {
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
 		type: 'lookup',
@@ -341,14 +341,14 @@ export class CampaignModule extends KonectyModule<
 		document: 'User',
 		isInherited: true,
 	} as MetadataField<CampaignUserType>;
-	readonly identifier: MetadataField<string> = {
+	readonly 'identifier': MetadataField<string> = {
 		name: 'identifier',
 		label: { en: 'Identifier', pt_BR: 'Identificador' },
 		isSortable: true,
 		type: 'text',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly externalIdentifier: MetadataField<string> = {
+	readonly 'externalIdentifier': MetadataField<string> = {
 		name: 'externalIdentifier',
 		label: { en: 'External Identifier', pt_BR: 'Identificador Externo' },
 		isSortable: true,
@@ -356,18 +356,18 @@ export class CampaignModule extends KonectyModule<
 		isList: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly phone: MetadataField<Phone> = {
+	readonly 'phone': MetadataField<Phone> = {
 		type: 'phone',
 		name: 'phone',
 		label: { pt_BR: 'Telefone', en: 'Phone' },
 		isList: true,
 	} as MetadataField<Phone>;
-	readonly notes: MetadataField<string> = {
+	readonly 'notes': MetadataField<string> = {
 		label: { en: 'Notes', pt_BR: 'Observação' },
 		type: 'text',
 		name: 'notes',
 	} as MetadataField<string>;
-	readonly products: MetadataField<CampaignProductsType> = {
+	readonly 'products': MetadataField<CampaignProductsType> = {
 		descriptionFields: ['code', 'name'],
 		type: 'lookup',
 		name: 'products',
@@ -375,21 +375,21 @@ export class CampaignModule extends KonectyModule<
 		document: 'Product',
 		isList: true,
 	} as MetadataField<CampaignProductsType>;
-	readonly webElement: MetadataField<CampaignWebElementType> = {
+	readonly 'webElement': MetadataField<CampaignWebElementType> = {
 		descriptionFields: ['code', 'name', 'type'],
 		type: 'lookup',
 		name: 'webElement',
 		label: { en: 'Web Element', pt_BR: 'Elemento Web' },
 		document: 'WebElement',
 	} as MetadataField<CampaignWebElementType>;
-	readonly product: MetadataField<CampaignProductType> = {
+	readonly 'product': MetadataField<CampaignProductType> = {
 		descriptionFields: ['code', 'name'],
 		type: 'lookup',
 		name: 'product',
 		label: { en: 'Product', pt_BR: 'Imóvel' },
 		document: 'Product',
 	} as MetadataField<CampaignProductType>;
-	readonly targetQueue: MetadataField<CampaignTargetQueueType> = {
+	readonly 'targetQueue': MetadataField<CampaignTargetQueueType> = {
 		type: 'lookup',
 		name: 'targetQueue',
 		label: { en: 'Target Queue', pt_BR: 'Roleta' },
@@ -397,7 +397,7 @@ export class CampaignModule extends KonectyModule<
 		document: 'Queue',
 		descriptionFields: ['name'],
 	} as MetadataField<CampaignTargetQueueType>;
-	readonly chatQueue: MetadataField<CampaignChatQueueType> = {
+	readonly 'chatQueue': MetadataField<CampaignChatQueueType> = {
 		type: 'lookup',
 		name: 'chatQueue',
 		label: { en: 'Chat Queue', pt_BR: 'Roleta do Chat' },
@@ -405,32 +405,32 @@ export class CampaignModule extends KonectyModule<
 		document: 'Queue',
 		descriptionFields: ['name'],
 	} as MetadataField<CampaignChatQueueType>;
-	readonly chatTipTitle: MetadataField<string> = {
+	readonly 'chatTipTitle': MetadataField<string> = {
 		label: { en: 'Tip Title', pt_BR: 'Título do Balão' },
 		type: 'text',
 		name: 'chatTipTitle',
 	} as MetadataField<string>;
-	readonly chatTipDescription: MetadataField<string> = {
+	readonly 'chatTipDescription': MetadataField<string> = {
 		label: { en: 'Tip Description', pt_BR: 'Descrição do Balão' },
 		type: 'text',
 		name: 'chatTipDescription',
 	} as MetadataField<string>;
-	readonly chatTitle: MetadataField<string> = {
+	readonly 'chatTitle': MetadataField<string> = {
 		label: { en: 'Chat Title', pt_BR: 'Título do Chat' },
 		type: 'text',
 		name: 'chatTitle',
 	} as MetadataField<string>;
-	readonly chatTitleBarColor: MetadataField<string> = {
+	readonly 'chatTitleBarColor': MetadataField<string> = {
 		label: { en: 'Title Bar Color', pt_BR: 'Cor da Barra de Título' },
 		type: 'text',
 		name: 'chatTitleBarColor',
 	} as MetadataField<string>;
-	readonly chatTitleBarTextColor: MetadataField<string> = {
+	readonly 'chatTitleBarTextColor': MetadataField<string> = {
 		label: { en: 'Title Bar Text Color', pt_BR: 'Cor do Text da Barra de Título' },
 		type: 'text',
 		name: 'chatTitleBarTextColor',
 	} as MetadataField<string>;
-	readonly sendExact: MetadataField<CampaignSendExactType> = {
+	readonly 'sendExact': MetadataField<CampaignSendExactType> = {
 		name: 'sendExact',
 		maxSelected: 1,
 		minSelected: 0,
@@ -440,7 +440,7 @@ export class CampaignModule extends KonectyModule<
 		isSortable: true,
 		label: { en: 'Send Leads to Exact Sales', pt_BR: 'Envio de Leads para Exact Sales' },
 	} as MetadataField<CampaignSendExactType>;
-	readonly firstTouchTemplate: MetadataField<CampaignFirstTouchTemplateType> = {
+	readonly 'firstTouchTemplate': MetadataField<CampaignFirstTouchTemplateType> = {
 		type: 'lookup',
 		name: 'firstTouchTemplate',
 		label: { en: 'First touch template', pt_BR: 'Modelo de email' },
@@ -448,14 +448,14 @@ export class CampaignModule extends KonectyModule<
 		document: 'Template',
 		descriptionFields: ['code', 'name'],
 	} as MetadataField<CampaignFirstTouchTemplateType>;
-	readonly firstTouchFile: MetadataField<FileDescriptor> = {
+	readonly 'firstTouchFile': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'firstTouchFile',
 		label: { en: 'First Touch Attachment', pt_BR: 'Anexo Boas Vindas' },
 		wildcard: '(pdf|jpg|jpeg|png)',
 		isInherited: true,
 	} as MetadataField<FileDescriptor>;
-	readonly firstTouchSender: MetadataField<CampaignFirstTouchSenderType> = {
+	readonly 'firstTouchSender': MetadataField<CampaignFirstTouchSenderType> = {
 		type: 'lookup',
 		name: 'firstTouchSender',
 		label: { en: 'Sender', pt_BR: 'Remetente' },
@@ -463,7 +463,7 @@ export class CampaignModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
 	} as MetadataField<CampaignFirstTouchSenderType>;
-	readonly productFilter: MetadataField<ModuleFilter<ProductFilterConditions>> = {
+	readonly 'productFilter': MetadataField<ModuleFilter<ProductFilterConditions>> = {
 		type: 'filter',
 		name: 'productFilter',
 		label: { en: 'Product filter', pt_BR: 'Filtro de produtos' },
@@ -472,14 +472,14 @@ export class CampaignModule extends KonectyModule<
 		isInherited: true,
 		relations: [],
 	} as MetadataField<ModuleFilter<ProductFilterConditions>>;
-	readonly badge: MetadataField<FileDescriptor> = {
+	readonly 'badge': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'badge',
 		label: { en: 'Badge', pt_BR: 'Selo' },
 		wildcard: '(jpg|jpeg|png)',
 		isInherited: true,
 	} as MetadataField<FileDescriptor>;
-	readonly content: MetadataField<string> = {
+	readonly 'content': MetadataField<string> = {
 		type: 'text',
 		name: 'content',
 		label: { en: 'Markdown Content', pt_BR: 'Conteúdo Markdown' },

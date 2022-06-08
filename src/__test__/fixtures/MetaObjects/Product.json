@@ -65,6 +65,15 @@
 			},
 			"isInherited": true
 		},
+		"ga:pageviews": {
+			"type": "number",
+			"name": "ga:pageviews",
+			"label": {
+				"en": "Page Views",
+				"pt_BR": "Visualizações"
+			},
+			"isInherited": true
+		},
 		"shippingAmount": {
 			"isSortable": true,
 			"decimalSize": 2,
