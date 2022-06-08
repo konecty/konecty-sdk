@@ -1,3 +1,10 @@
+### [1.5.3](https://github.com/Konecty/konecty-sdk/compare/1.5.2...1.5.3) (2022-06-08)
+
+
+### 🛠 Fixes
+
+* add TypeUtils exports ([be28fb8](https://github.com/Konecty/konecty-sdk/commit/be28fb8bd18aff5ad89283fb37a110e81ce50f0b))
+
 ### [1.5.2](https://github.com/Konecty/konecty-sdk/compare/1.5.1...1.5.2) (2022-06-08)
 
 
