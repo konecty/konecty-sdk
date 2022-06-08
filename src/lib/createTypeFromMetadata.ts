@@ -1,5 +1,6 @@
 import { MetadataDocument, MetadataField } from '@konecty/sdk/types/metadata';
 import camelCase from 'lodash/camelCase';
+import get from 'lodash/get';
 import set from 'lodash/set';
 import startCase from 'lodash/startCase';
 import prettier from 'prettier';
@@ -26,7 +27,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	if (label != null) {
 		documentConfig.push('label: {');
 		Object.keys(label).forEach(key => {
-			documentConfig.push(`${key}: '${label[key]}',`);
+			documentConfig.push(`${key}: '${get(label, key)}',`);
 		});
 		documentConfig.push('},');
 	}
@@ -34,7 +35,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	if (plurals != null) {
 		documentConfig.push('plurals: {');
 		Object.keys(plurals).forEach(key => {
-			documentConfig.push(`${key}: '${plurals[key]}',`);
+			documentConfig.push(`${key}: '${get(plurals, key)}',`);
 		});
 		documentConfig.push('},');
 	}
