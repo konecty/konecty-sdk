@@ -37,6 +37,7 @@ export interface Product extends KonectyDocument<ProductUserType[], ProductCreat
 	sale?: Money;
 	campaign?: ProductCampaignType;
 	joinedCampaignOn?: Date;
+	'ga:pageviews'?: number;
 	shippingAmount?: Money;
 	description?: string;
 	file?: FileDescriptor[];
@@ -70,6 +71,7 @@ export type ProductFilterConditions =
 	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, ProductCampaignType>
 	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, ProductCampaignType>
 	| FilterConditionValue<'joinedCampaignOn', FieldOperators<'date'>, Date>
+	| FilterConditionValue<'ga:pageviews', FieldOperators<'number'>, number>
 	| FilterConditionValue<'shippingAmount.currency', FieldOperators<'filter.currency'>, string>
 	| FilterConditionValue<'shippingAmount.value', FieldOperators<'filter.value'>, number>
 	| FilterConditionValue<'description', FieldOperators<'text'>, string>
@@ -125,21 +127,21 @@ export class ProductModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(productConfig, clientOptions);
 	}
-	readonly active: MetadataField<boolean> = {
+	readonly 'active': MetadataField<boolean> = {
 		type: 'boolean',
 		name: 'active',
 		label: { en: 'Active', pt_BR: 'Ativo' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<boolean>;
-	readonly supplierUpdatedChanged: MetadataField<boolean> = {
+	readonly 'supplierUpdatedChanged': MetadataField<boolean> = {
 		type: 'boolean',
 		name: 'supplierUpdatedChanged',
 		label: { en: 'Supplier updated mannually', pt_BR: 'Supplier updated mannually' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<boolean>;
-	readonly code: MetadataField<number> = {
+	readonly 'code': MetadataField<number> = {
 		name: 'code',
 		label: { en: 'Code', pt_BR: 'Código' },
 		isUnique: true,
@@ -147,7 +149,7 @@ export class ProductModule extends KonectyModule<
 		type: 'autoNumber',
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly sale: MetadataField<Money> = {
+	readonly 'sale': MetadataField<Money> = {
 		isSortable: true,
 		minValue: 0,
 		type: 'money',
@@ -155,7 +157,7 @@ export class ProductModule extends KonectyModule<
 		label: { en: 'Sale', pt_BR: 'Valor de Venda' },
 		isInherited: true,
 	} as MetadataField<Money>;
-	readonly campaign: MetadataField<ProductCampaignType> = {
+	readonly 'campaign': MetadataField<ProductCampaignType> = {
 		name: 'campaign',
 		type: 'lookup',
 		label: { en: 'Campaign', pt_BR: 'Campanha' },
@@ -164,14 +166,20 @@ export class ProductModule extends KonectyModule<
 		document: 'Campaign',
 		descriptionFields: ['code', 'name'],
 	} as MetadataField<ProductCampaignType>;
-	readonly joinedCampaignOn: MetadataField<Date> = {
+	readonly 'joinedCampaignOn': MetadataField<Date> = {
 		isSortable: true,
 		type: 'date',
 		name: 'joinedCampaignOn',
 		label: { en: 'joined the Campaign On', pt_BR: 'Entrou na Campanha em' },
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly shippingAmount: MetadataField<Money> = {
+	readonly 'ga:pageviews': MetadataField<number> = {
+		type: 'number',
+		name: 'ga:pageviews',
+		label: { en: 'Page Views', pt_BR: 'Visualizações' },
+		isInherited: true,
+	} as MetadataField<number>;
+	readonly 'shippingAmount': MetadataField<Money> = {
 		isSortable: true,
 		decimalSize: 2,
 		minValue: 0,
@@ -180,13 +188,13 @@ export class ProductModule extends KonectyModule<
 		label: { en: 'Shipping Amount', pt_BR: 'Valor do Transporte' },
 		isInherited: true,
 	} as MetadataField<Money>;
-	readonly description: MetadataField<string> = {
+	readonly 'description': MetadataField<string> = {
 		type: 'text',
 		name: 'description',
 		label: { en: 'Description', pt_BR: 'Descrição' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly file: MetadataField<FileDescriptor> = {
+	readonly 'file': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'file',
 		label: { en: 'Files', pt_BR: 'Arquivos' },
@@ -194,7 +202,7 @@ export class ProductModule extends KonectyModule<
 		maxSize: 10240,
 		isInherited: true,
 	} as MetadataField<FileDescriptor>;
-	readonly name: MetadataField<string> = {
+	readonly 'name': MetadataField<string> = {
 		isSortable: true,
 		normalization: 'title',
 		type: 'text',
@@ -202,7 +210,7 @@ export class ProductModule extends KonectyModule<
 		label: { pt_BR: 'Nome', en: 'Name' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly pictures: MetadataField<FileDescriptor> = {
+	readonly 'pictures': MetadataField<FileDescriptor> = {
 		label: { en: 'Pictures', pt_BR: 'Imagens' },
 		isList: true,
 		wildcard: '(jpg|jpeg)',
@@ -211,14 +219,14 @@ export class ProductModule extends KonectyModule<
 		name: 'pictures',
 		isInherited: true,
 	} as MetadataField<FileDescriptor>;
-	readonly sku: MetadataField<string> = {
+	readonly 'sku': MetadataField<string> = {
 		name: 'sku',
 		label: { en: 'SKU', pt_BR: 'SKU' },
 		isSortable: true,
 		type: 'text',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly status: MetadataField<ProductStatusType> = {
+	readonly 'status': MetadataField<ProductStatusType> = {
 		defaultValues: [{ en: 'Draft', pt_BR: 'Rascunho' }],
 		maxSelected: 1,
 		minSelected: 1,
@@ -235,7 +243,7 @@ export class ProductModule extends KonectyModule<
 		renderAs: 'without_scroll',
 		isInherited: true,
 	} as MetadataField<ProductStatusType>;
-	readonly type: MetadataField<ProductTypeType> = {
+	readonly 'type': MetadataField<ProductTypeType> = {
 		label: { en: 'Type', pt_BR: 'Tipo' },
 		isRequired: true,
 		isSortable: true,
@@ -252,14 +260,14 @@ export class ProductModule extends KonectyModule<
 			Terreno: { pt_BR: 'Terreno', sort: 3 },
 		},
 	} as MetadataField<ProductTypeType>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		name: '_createdAt',
 		label: { en: 'Created At', pt_BR: 'Criado em' },
 		isSortable: true,
 		type: 'dateTime',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<ProductCreatedByType> = {
+	readonly '_createdBy': MetadataField<ProductCreatedByType> = {
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
@@ -268,14 +276,14 @@ export class ProductModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<ProductCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<ProductUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<ProductUpdatedByType> = {
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
@@ -283,7 +291,7 @@ export class ProductModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
 	} as MetadataField<ProductUpdatedByType>;
-	readonly _user: MetadataField<ProductUserType> = {
+	readonly '_user': MetadataField<ProductUserType> = {
 		type: 'lookup',
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },
@@ -294,24 +302,24 @@ export class ProductModule extends KonectyModule<
 		detailFields: ['phone', 'emails'],
 		isInherited: true,
 	} as MetadataField<ProductUserType>;
-	readonly sendSupplierUpdatedMail: MetadataField<boolean> = {
+	readonly 'sendSupplierUpdatedMail': MetadataField<boolean> = {
 		label: { en: 'E-mail for Supplier Updated At', pt_BR: 'E-mail Atualização Proprietário' },
 		type: 'boolean',
 		name: 'sendSupplierUpdatedMail',
 		defaultValue: true,
 	} as MetadataField<boolean>;
-	readonly offerCount: MetadataField<number> = {
+	readonly 'offerCount': MetadataField<number> = {
 		type: 'number',
 		name: 'offerCount',
 		label: { en: 'Offer Count', pt_BR: 'Quantidade de Propostas' },
 		isSortable: true,
 	} as MetadataField<number>;
-	readonly availableAt: MetadataField<Date> = {
+	readonly 'availableAt': MetadataField<Date> = {
 		type: 'date',
 		name: 'availableAt',
 		label: { pt_BR: 'Disponível em', en: 'Available at' },
 	} as MetadataField<Date>;
-	readonly banner: MetadataField<FileDescriptor> = {
+	readonly 'banner': MetadataField<FileDescriptor> = {
 		wildcard: '(jpg|jpeg|png)',
 		maxSize: 10240,
 		type: 'file',
@@ -321,33 +329,33 @@ export class ProductModule extends KonectyModule<
 		minItems: 0,
 		maxItems: 3,
 	} as MetadataField<FileDescriptor>;
-	readonly link: MetadataField<string> = {
+	readonly 'link': MetadataField<string> = {
 		type: 'url',
 		name: 'link',
 		label: { en: 'Site', pt_BR: 'Site' },
 		isList: true,
 		minItems: 0,
 	} as MetadataField<string>;
-	readonly notes: MetadataField<string> = {
+	readonly 'notes': MetadataField<string> = {
 		label: { en: 'Notes', pt_BR: 'Observações Internas' },
 		type: 'richText',
 		name: 'notes',
 	} as MetadataField<string>;
-	readonly parentProduct: MetadataField<string> = {
+	readonly 'parentProduct': MetadataField<string> = {
 		normalization: 'title',
 		type: 'text',
 		name: 'parentProduct',
 		label: { en: 'Development Name', pt_BR: 'Empreendimento VISTA' },
 		isSortable: true,
 	} as MetadataField<string>;
-	readonly siteTags: MetadataField<string> = {
+	readonly 'siteTags': MetadataField<string> = {
 		type: 'text',
 		name: 'siteTags',
 		label: { en: 'Site Tags', pt_BR: 'Tags Site' },
 		isInherited: true,
 		isList: true,
 	} as MetadataField<string>;
-	readonly campaignTags: MetadataField<string> = {
+	readonly 'campaignTags': MetadataField<string> = {
 		type: 'text',
 		name: 'campaignTags',
 		label: { en: 'Campaign Tags', pt_BR: 'Tags Campanha' },

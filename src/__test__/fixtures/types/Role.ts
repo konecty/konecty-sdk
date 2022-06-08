@@ -64,19 +64,19 @@ export class RoleModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(roleConfig, clientOptions);
 	}
-	readonly access: MetadataField<object> = {
+	readonly 'access': MetadataField<object> = {
 		name: 'access',
 		label: { en: 'Access', pt_BR: 'Acesso' },
 		type: 'json',
 		isInherited: true,
 	} as MetadataField<object>;
-	readonly admin: MetadataField<boolean> = {
+	readonly 'admin': MetadataField<boolean> = {
 		label: { en: 'Administrator', pt_BR: 'Administrador' },
 		type: 'boolean',
 		name: 'admin',
 		isInherited: true,
 	} as MetadataField<boolean>;
-	readonly name: MetadataField<string> = {
+	readonly 'name': MetadataField<string> = {
 		type: 'text',
 		name: 'name',
 		label: { en: 'Name', pt_BR: 'Nome' },
@@ -84,7 +84,7 @@ export class RoleModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly parents: MetadataField<RoleParentsType> = {
+	readonly 'parents': MetadataField<RoleParentsType> = {
 		isList: true,
 		document: 'Role',
 		descriptionFields: ['name'],
@@ -95,14 +95,14 @@ export class RoleModule extends KonectyModule<
 		minItems: 0,
 		isInherited: true,
 	} as MetadataField<RoleParentsType>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		name: '_createdAt',
 		label: { en: 'Created At', pt_BR: 'Criado em' },
 		isSortable: true,
 		type: 'dateTime',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<RoleCreatedByType> = {
+	readonly '_createdBy': MetadataField<RoleCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -111,14 +111,14 @@ export class RoleModule extends KonectyModule<
 		name: '_createdBy',
 		isInherited: true,
 	} as MetadataField<RoleCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<RoleUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<RoleUpdatedByType> = {
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
@@ -126,7 +126,7 @@ export class RoleModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
 	} as MetadataField<RoleUpdatedByType>;
-	readonly _user: MetadataField<RoleUserType> = {
+	readonly '_user': MetadataField<RoleUserType> = {
 		isList: true,
 		document: 'User',
 		descriptionFields: ['name', 'group.name', 'active'],

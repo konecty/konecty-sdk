@@ -55,28 +55,28 @@ export class ChannelModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(channelConfig, clientOptions);
 	}
-	readonly name: MetadataField<string> = {
+	readonly 'name': MetadataField<string> = {
 		type: 'text',
 		name: 'name',
 		label: { en: 'Name', pt_BR: 'Nome' },
 		isRequired: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly identifier: MetadataField<string> = {
+	readonly 'identifier': MetadataField<string> = {
 		name: 'identifier',
 		label: { en: 'Identifier', pt_BR: 'Identificador' },
 		isSortable: true,
 		type: 'text',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_createdAt',
 		label: { pt_BR: 'Criado em', en: 'Created At' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<ChannelCreatedByType> = {
+	readonly '_createdBy': MetadataField<ChannelCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -85,14 +85,14 @@ export class ChannelModule extends KonectyModule<
 		name: '_createdBy',
 		isInherited: true,
 	} as MetadataField<ChannelCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<ChannelUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<ChannelUpdatedByType> = {
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },

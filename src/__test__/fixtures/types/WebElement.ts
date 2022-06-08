@@ -128,7 +128,7 @@ export class WebElementModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(webElementConfig, clientOptions);
 	}
-	readonly campaign: MetadataField<WebElementCampaignType> = {
+	readonly 'campaign': MetadataField<WebElementCampaignType> = {
 		type: 'lookup',
 		name: 'campaign',
 		label: { en: 'Campaign', pt_BR: 'Campanha' },
@@ -137,7 +137,7 @@ export class WebElementModule extends KonectyModule<
 		descriptionFields: ['code', 'name', 'type'],
 		isInherited: true,
 	} as MetadataField<WebElementCampaignType>;
-	readonly code: MetadataField<number> = {
+	readonly 'code': MetadataField<number> = {
 		isSortable: true,
 		type: 'autoNumber',
 		name: 'code',
@@ -145,14 +145,14 @@ export class WebElementModule extends KonectyModule<
 		isUnique: true,
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly endAt: MetadataField<Date> = {
+	readonly 'endAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: 'endAt',
 		label: { en: 'End', pt_BR: 'Término' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly file: MetadataField<FileDescriptor> = {
+	readonly 'file': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'file',
 		label: { en: 'File', pt_BR: 'Arquivo' },
@@ -162,48 +162,48 @@ export class WebElementModule extends KonectyModule<
 		wildcard: '(jpg|jpeg|png|pdf|svg)',
 		isInherited: true,
 	} as MetadataField<FileDescriptor>;
-	readonly html: MetadataField<string> = {
+	readonly 'html': MetadataField<string> = {
 		type: 'richText',
 		name: 'html',
 		label: { en: 'HTML Content', pt_BR: 'Conteúdo HTML' },
 		isList: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly markdown: MetadataField<string> = {
+	readonly 'markdown': MetadataField<string> = {
 		type: 'text',
 		name: 'markdown',
 		label: { en: 'Markdown Content', pt_BR: 'Conteúdo Markdown' },
 		isList: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly linkLabel: MetadataField<string> = {
+	readonly 'linkLabel': MetadataField<string> = {
 		name: 'linkLabel',
 		label: { en: 'Link Label', pt_BR: 'Texto do Link' },
 		isSortable: true,
 		type: 'text',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly link: MetadataField<string> = {
+	readonly 'link': MetadataField<string> = {
 		name: 'link',
 		label: { en: 'Link', pt_BR: 'Link' },
 		isSortable: true,
 		type: 'text',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly slug: MetadataField<string> = {
+	readonly 'slug': MetadataField<string> = {
 		name: 'slug',
 		label: { en: 'Slug', pt_BR: 'Identificador' },
 		isSortable: true,
 		type: 'text',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly author: MetadataField<string> = {
+	readonly 'author': MetadataField<string> = {
 		name: 'author',
 		label: { en: 'Author', pt_BR: 'Autor' },
 		isSortable: true,
 		type: 'text',
 	} as MetadataField<string>;
-	readonly linkTarget: MetadataField<WebElementLinkTargetType> = {
+	readonly 'linkTarget': MetadataField<WebElementLinkTargetType> = {
 		maxSelected: 1,
 		name: 'linkTarget',
 		options: {
@@ -219,7 +219,7 @@ export class WebElementModule extends KonectyModule<
 		label: { en: 'Link Target', pt_BR: 'Target do Link' },
 		isInherited: true,
 	} as MetadataField<WebElementLinkTargetType>;
-	readonly name: MetadataField<string> = {
+	readonly 'name': MetadataField<string> = {
 		type: 'text',
 		name: 'name',
 		label: { en: 'Name', pt_BR: 'Nome' },
@@ -227,7 +227,7 @@ export class WebElementModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly order: MetadataField<number> = {
+	readonly 'order': MetadataField<number> = {
 		type: 'number',
 		name: 'order',
 		label: { en: 'Order', pt_BR: 'Ordem' },
@@ -235,7 +235,7 @@ export class WebElementModule extends KonectyModule<
 		decimalSize: 0,
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly priority: MetadataField<WebElementPriorityType> = {
+	readonly 'priority': MetadataField<WebElementPriorityType> = {
 		maxSelected: 1,
 		minSelected: 0,
 		name: 'priority',
@@ -250,14 +250,14 @@ export class WebElementModule extends KonectyModule<
 		renderAs: 'without_scroll',
 		isInherited: true,
 	} as MetadataField<WebElementPriorityType>;
-	readonly startAt: MetadataField<Date> = {
+	readonly 'startAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: 'startAt',
 		label: { en: 'Start', pt_BR: 'Início' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly status: MetadataField<WebElementStatusType> = {
+	readonly 'status': MetadataField<WebElementStatusType> = {
 		name: 'status',
 		maxSelected: 1,
 		minSelected: 1,
@@ -268,7 +268,7 @@ export class WebElementModule extends KonectyModule<
 		label: { en: 'Status', pt_BR: 'Situação' },
 		isInherited: true,
 	} as MetadataField<WebElementStatusType>;
-	readonly type: MetadataField<WebElementTypeType> = {
+	readonly 'type': MetadataField<WebElementTypeType> = {
 		isSortable: true,
 		label: { en: 'Type', pt_BR: 'Tipo' },
 		options: { HTML: { en: 'HTML', pt_BR: 'HTML' }, Konecty: { en: 'Konecty', pt_BR: 'Konecty' } },
@@ -280,7 +280,7 @@ export class WebElementModule extends KonectyModule<
 		optionsSorter: 'asc',
 		isInherited: true,
 	} as MetadataField<WebElementTypeType>;
-	readonly webElement: MetadataField<WebElementWebElementType> = {
+	readonly 'webElement': MetadataField<WebElementWebElementType> = {
 		name: 'webElement',
 		label: { en: 'Web Element', pt_BR: 'Elemento Web' },
 		isSortable: true,
@@ -291,7 +291,7 @@ export class WebElementModule extends KonectyModule<
 		type: 'lookup',
 		isInherited: true,
 	} as MetadataField<WebElementWebElementType>;
-	readonly parents: MetadataField<WebElementParentsType> = {
+	readonly 'parents': MetadataField<WebElementParentsType> = {
 		type: 'lookup',
 		name: 'parents',
 		isList: true,
@@ -301,7 +301,7 @@ export class WebElementModule extends KonectyModule<
 		descriptionFields: ['name'],
 		isInherited: true,
 	} as MetadataField<WebElementParentsType>;
-	readonly parent: MetadataField<WebElementParentType> = {
+	readonly 'parent': MetadataField<WebElementParentType> = {
 		type: 'lookup',
 		name: 'parent',
 		label: { en: 'Parent', pt_BR: 'Sub Elementos Web de' },
@@ -311,14 +311,14 @@ export class WebElementModule extends KonectyModule<
 		inheritedFields: [{ inherit: 'hierarchy_always', fieldName: 'parents' }],
 		isInherited: true,
 	} as MetadataField<WebElementParentType>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_createdAt',
 		label: { en: 'Created At', pt_BR: 'Criado em' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<WebElementCreatedByType> = {
+	readonly '_createdBy': MetadataField<WebElementCreatedByType> = {
 		isSortable: true,
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
@@ -327,14 +327,14 @@ export class WebElementModule extends KonectyModule<
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isInherited: true,
 	} as MetadataField<WebElementCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		isSortable: true,
 		type: 'dateTime',
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<WebElementUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<WebElementUpdatedByType> = {
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
 		name: '_updatedBy',
@@ -342,7 +342,7 @@ export class WebElementModule extends KonectyModule<
 		document: 'User',
 		isInherited: true,
 	} as MetadataField<WebElementUpdatedByType>;
-	readonly _user: MetadataField<WebElementUserType> = {
+	readonly '_user': MetadataField<WebElementUserType> = {
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },
 		isSortable: true,

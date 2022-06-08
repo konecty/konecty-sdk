@@ -84,7 +84,7 @@ export class TemplateModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(templateConfig, clientOptions);
 	}
-	readonly code: MetadataField<number> = {
+	readonly 'code': MetadataField<number> = {
 		type: 'autoNumber',
 		name: 'code',
 		label: { en: 'Code', pt_BR: 'Código' },
@@ -92,14 +92,14 @@ export class TemplateModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<number>;
-	readonly name: MetadataField<string> = {
+	readonly 'name': MetadataField<string> = {
 		isSortable: true,
 		type: 'text',
 		name: 'name',
 		label: { pt_BR: 'Nome', en: 'Name' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly type: MetadataField<TemplateTypeType> = {
+	readonly 'type': MetadataField<TemplateTypeType> = {
 		type: 'picklist',
 		name: 'type',
 		isSortable: true,
@@ -112,52 +112,52 @@ export class TemplateModule extends KonectyModule<
 		isInherited: true,
 		optionsSorter: 'sort',
 	} as MetadataField<TemplateTypeType>;
-	readonly webServices: MetadataField<object> = {
+	readonly 'webServices': MetadataField<object> = {
 		type: 'json',
 		name: 'webServices',
 		label: { en: 'Web Services', pt_BR: 'Serviços Web' },
 		isInherited: true,
 	} as MetadataField<object>;
-	readonly style: MetadataField<string> = {
+	readonly 'style': MetadataField<string> = {
 		name: 'style',
 		label: { en: 'Style', pt_BR: 'Estilo' },
 		type: 'text',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly document: MetadataField<string> = {
+	readonly 'document': MetadataField<string> = {
 		label: { en: 'Module', pt_BR: 'Módulo' },
 		isSortable: true,
 		type: 'text',
 		name: 'document',
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly view: MetadataField<string> = {
+	readonly 'view': MetadataField<string> = {
 		type: 'text',
 		name: 'view',
 		label: { en: 'View', pt_BR: 'Vizualização' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly value: MetadataField<string> = {
+	readonly 'value': MetadataField<string> = {
 		type: 'text',
 		name: 'value',
 		label: { en: 'Body', pt_BR: 'Corpo' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly subject: MetadataField<string> = {
+	readonly 'subject': MetadataField<string> = {
 		type: 'text',
 		name: 'subject',
 		label: { en: 'Subject', pt_BR: 'Assunto' },
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly _createdAt: MetadataField<Date> = {
+	readonly '_createdAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_createdAt',
 		label: { pt_BR: 'Criado em', en: 'Created At' },
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<TemplateCreatedByType> = {
+	readonly '_createdBy': MetadataField<TemplateCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -166,14 +166,14 @@ export class TemplateModule extends KonectyModule<
 		name: '_createdBy',
 		isInherited: true,
 	} as MetadataField<TemplateCreatedByType>;
-	readonly _updatedAt: MetadataField<Date> = {
+	readonly '_updatedAt': MetadataField<Date> = {
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isSortable: true,
 		type: 'dateTime',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<TemplateUpdatedByType> = {
+	readonly '_updatedBy': MetadataField<TemplateUpdatedByType> = {
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
@@ -181,7 +181,7 @@ export class TemplateModule extends KonectyModule<
 		name: '_updatedBy',
 		isInherited: true,
 	} as MetadataField<TemplateUpdatedByType>;
-	readonly _user: MetadataField<TemplateUserType> = {
+	readonly '_user': MetadataField<TemplateUserType> = {
 		type: 'lookup',
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },
@@ -192,7 +192,7 @@ export class TemplateModule extends KonectyModule<
 		detailFields: ['phone', 'emails'],
 		isInherited: true,
 	} as MetadataField<TemplateUserType>;
-	readonly attachment: MetadataField<FileDescriptor> = {
+	readonly 'attachment': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'attachment',
 		label: { en: 'Attachment', pt_BR: 'Anexo' },
