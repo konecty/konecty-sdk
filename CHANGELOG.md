@@ -1,3 +1,10 @@
+### [1.5.1](https://github.com/Konecty/konecty-sdk/compare/1.5.0...1.5.1) (2022-06-08)
+
+
+### 🛠 Fixes
+
+* use quotes on field names 'cause of invalid characteres ([8476162](https://github.com/Konecty/konecty-sdk/commit/847616259fd34354c9a6af7700b4df360d651f76))
+
 ## [1.5.0](https://github.com/Konecty/konecty-sdk/compare/1.4.0...1.5.0) (2022-06-06)
 
 
