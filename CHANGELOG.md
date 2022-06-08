@@ -1,3 +1,11 @@
+### [1.5.2](https://github.com/Konecty/konecty-sdk/compare/1.5.1...1.5.2) (2022-06-08)
+
+
+### 🛠 Fixes
+
+* module export ([c7395b6](https://github.com/Konecty/konecty-sdk/commit/c7395b6654313b5e5b2f8dad6e8098cb6ca11c62))
+* types export ([f67459a](https://github.com/Konecty/konecty-sdk/commit/f67459a00664ce128a0bc8ce3e3a6a228d07f205))
+
 ### [1.5.1](https://github.com/Konecty/konecty-sdk/compare/1.5.0...1.5.1) (2022-06-08)
 
 
