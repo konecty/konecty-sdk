@@ -1,3 +1,16 @@
+### [1.5.5](https://github.com/Konecty/konecty-sdk/compare/1.5.4...1.5.5) (2022-06-09)
+
+
+### 🧪 Tests
+
+* update test fixtures ([d35d8e0](https://github.com/Konecty/konecty-sdk/commit/d35d8e03f351b2b4c4fe7e0e45604727e6472315))
+
+
+### 🛠 Fixes
+
+* remove filter fields from FilterCondition to stop circular reference ([cb4de27](https://github.com/Konecty/konecty-sdk/commit/cb4de27d3c80ac0af2c855c7f8cd3b882b037afb))
+* xor value & valueField on MetadataConditionFields ([cdfb9cf](https://github.com/Konecty/konecty-sdk/commit/cdfb9cf014abc04a91249d3ba4a4c6134d11a92b))
+
 ### [1.5.4](https://github.com/Konecty/konecty-sdk/compare/1.5.3...1.5.4) (2022-06-09)
 
 
