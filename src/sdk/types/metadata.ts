@@ -112,8 +112,8 @@ export type MetadataField<T = unknown> = {
 	minItems?: number;
 	maxItems?: number;
 	maxLength?: number;
-	minValue?: T;
-	maxValue?: T;
+	minValue?: T | number;
+	maxValue?: T | number;
 	normalization?: MetadataNormalizationOptions;
 	readOnlyVersion?: boolean;
 	relations?: object[]; // TODO: define filter type
