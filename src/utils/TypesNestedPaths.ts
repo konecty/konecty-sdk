@@ -5,6 +5,14 @@ type Primitive = string | number | symbol;
 
 type GenericObject = Record<Primitive, unknown>;
 
+export type Xor<T, U> =
+	| {
+			[P in keyof T]: P extends keyof U ? never : P;
+	  }
+	| {
+			[P in keyof U]: P extends keyof T ? never : P;
+	  };
+
 type Join<L extends Primitive | undefined, R extends Primitive | undefined> = L extends string | number
 	? R extends string | number
 		? `${L}.${R}`

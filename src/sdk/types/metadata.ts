@@ -1,3 +1,6 @@
+import { Xor } from 'utils/TypesNestedPaths';
+import { Money } from '../types';
+
 export type MetadataFieldType =
 	| 'address'
 	| 'autoNumber'
@@ -59,10 +62,9 @@ export type MetadataNormalizationOptions =
 	| 'sentence'
 	| 'snake';
 
-export type MetadataConditionField = {
+export type MetadataConditionField = Xor<{ valueField: string }, { value: string | boolean | number }> & {
 	term: string;
 	operator: MetadataConditionOperator;
-	valueField: string;
 };
 
 export type MetadataLabel =
@@ -103,7 +105,7 @@ export type MetadataField<T = unknown> = {
 	compositeType?: 'reference';
 	conditionFields?: MetadataConditionField[];
 	defaultValues?: T[] | MetadataLabel[];
-	description?: string;
+	description?: MetadataLabel | string;
 	filterOnly?: boolean;
 	filterableFields?: string[];
 	help?: MetadataLabel;
@@ -112,8 +114,8 @@ export type MetadataField<T = unknown> = {
 	minItems?: number;
 	maxItems?: number;
 	maxLength?: number;
-	minValue?: T | number;
-	maxValue?: T | number;
+	minValue?: T extends Money ? number : T extends Date ? T | string : T;
+	maxValue?: T extends Money ? number : T extends Date ? T | string : T;
 	normalization?: MetadataNormalizationOptions;
 	readOnlyVersion?: boolean;
 	relations?: object[]; // TODO: define filter type
