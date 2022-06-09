@@ -190,9 +190,6 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		if (type === 'lookup') {
 			acc.push(`| FilterConditionValue<'${name}._id', FieldOperators<'lookup._id'>, ${getBaseType(field)}>`);
 		}
-		if (type === 'filter') {
-			acc.push(`| FilterConditionValue<'${name}.conditions', FieldOperators<'filter.conditions'>, ${getBaseType(field)}>`);
-		}
 
 		if (type === 'email') {
 			acc.push(`| FilterConditionValue<'${name}.address', FieldOperators<'email.address'>, string>`);

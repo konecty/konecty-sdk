@@ -54,8 +54,6 @@ export type QueueFilterConditions =
 	| FilterConditionValue<'currentPosition', FieldOperators<'number'>, number>
 	| FilterConditionValue<'name', FieldOperators<'text'>, string>
 	| FilterConditionValue<'chatInvite', FieldOperators<'text'>, string>
-	| FilterConditionValue<'queueUsers', FieldOperators<'filter'>, ModuleFilter<UserFilterConditions>>
-	| FilterConditionValue<'queueUsers.conditions', FieldOperators<'filter.conditions'>, ModuleFilter<UserFilterConditions>>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, QueueCreatedByType>
 	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, QueueCreatedByType>

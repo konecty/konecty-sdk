@@ -101,10 +101,6 @@ export type CampaignFilterConditions =
 	| FilterConditions
 	| FilterConditionValue<'mainCampaign', FieldOperators<'lookup'>, CampaignMainCampaignType>
 	| FilterConditionValue<'mainCampaign._id', FieldOperators<'lookup._id'>, CampaignMainCampaignType>
-	| FilterConditionValue<'campaignTarget', FieldOperators<'filter'>, ModuleFilter<ContactFilterConditions>>
-	| FilterConditionValue<'campaignTarget.conditions', FieldOperators<'filter.conditions'>, ModuleFilter<ContactFilterConditions>>
-	| FilterConditionValue<'campaignUser', FieldOperators<'filter'>, ModuleFilter<UserFilterConditions>>
-	| FilterConditionValue<'campaignUser.conditions', FieldOperators<'filter.conditions'>, ModuleFilter<UserFilterConditions>>
 	| FilterConditionValue<'attachment', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
 	| FilterConditionValue<'description', FieldOperators<'richText'>, string>
@@ -149,8 +145,6 @@ export type CampaignFilterConditions =
 	| FilterConditionValue<'firstTouchFile', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'firstTouchSender', FieldOperators<'lookup'>, CampaignFirstTouchSenderType>
 	| FilterConditionValue<'firstTouchSender._id', FieldOperators<'lookup._id'>, CampaignFirstTouchSenderType>
-	| FilterConditionValue<'productFilter', FieldOperators<'filter'>, ModuleFilter<ProductFilterConditions>>
-	| FilterConditionValue<'productFilter.conditions', FieldOperators<'filter.conditions'>, ModuleFilter<ProductFilterConditions>>
 	| FilterConditionValue<'badge', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'content', FieldOperators<'text'>, string>;
 export type CampaignSortFields =
