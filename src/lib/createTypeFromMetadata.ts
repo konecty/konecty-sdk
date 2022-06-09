@@ -184,7 +184,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 
 	const filterConditions = Object.values<MetadataField>(fields).reduce<string[]>((acc, field) => {
 		const { name, type } = field;
-		if (!['email', 'address', 'personName', 'money', 'phone', 'password', 'json'].includes(type)) {
+		if (!['email', 'address', 'personName', 'money', 'phone', 'password', 'json', 'filter'].includes(type)) {
 			acc.push(`| FilterConditionValue<'${name}', FieldOperators<'${type}'>, ${getBaseType(field)}>`);
 		}
 		if (type === 'lookup') {
@@ -199,8 +199,8 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 		}
 
 		if (type === 'money') {
-			acc.push(`| FilterConditionValue<'${name}.currency', FieldOperators<'filter.currency'>, string>`);
-			acc.push(`| FilterConditionValue<'${name}.value', FieldOperators<'filter.value'>, number>`);
+			acc.push(`| FilterConditionValue<'${name}.currency', FieldOperators<'money.currency'>, string>`);
+			acc.push(`| FilterConditionValue<'${name}.value', FieldOperators<'money.value'>, number>`);
 		}
 
 		if (type === 'address') {
