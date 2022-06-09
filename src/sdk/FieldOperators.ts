@@ -34,9 +34,7 @@ type OperatorType =
 	| 'file'
 	| 'percentage'
 	| 'ObjectId'
-	| 'composite'
-	| 'filter.currency'
-	| 'filter.value';
+	| 'composite';
 
 export type FieldOperators<T extends OperatorType> = T extends 'text'
 	? 'exists' | 'equals' | 'not_equals' | 'in' | 'not_in' | 'contains' | 'not_contains' | 'starts_with' | 'end_with'
@@ -189,9 +187,5 @@ export type FieldOperators<T extends OperatorType> = T extends 'text'
 	: T extends 'ObjectId'
 	? 'exists' | 'equals' | 'not_equals'
 	: T extends 'composite'
-	? 'exists' | 'equals' | 'not_equals'
-	: T extends 'filter.currency'
-	? 'exists' | 'equals' | 'not_equals'
-	: T extends 'filter.value'
 	? 'exists' | 'equals' | 'not_equals'
 	: never;

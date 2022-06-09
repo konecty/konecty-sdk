@@ -66,14 +66,14 @@ export type ProductFilterConditions =
 	| FilterConditionValue<'active', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'supplierUpdatedChanged', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
-	| FilterConditionValue<'sale.currency', FieldOperators<'filter.currency'>, string>
-	| FilterConditionValue<'sale.value', FieldOperators<'filter.value'>, number>
+	| FilterConditionValue<'sale.currency', FieldOperators<'money.currency'>, string>
+	| FilterConditionValue<'sale.value', FieldOperators<'money.value'>, number>
 	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, ProductCampaignType>
 	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, ProductCampaignType>
 	| FilterConditionValue<'joinedCampaignOn', FieldOperators<'date'>, Date>
 	| FilterConditionValue<'ga:pageviews', FieldOperators<'number'>, number>
-	| FilterConditionValue<'shippingAmount.currency', FieldOperators<'filter.currency'>, string>
-	| FilterConditionValue<'shippingAmount.value', FieldOperators<'filter.value'>, number>
+	| FilterConditionValue<'shippingAmount.currency', FieldOperators<'money.currency'>, string>
+	| FilterConditionValue<'shippingAmount.value', FieldOperators<'money.value'>, number>
 	| FilterConditionValue<'description', FieldOperators<'text'>, string>
 	| FilterConditionValue<'file', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'name', FieldOperators<'text'>, string>
