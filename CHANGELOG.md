@@ -1,3 +1,10 @@
+### [1.5.4](https://github.com/Konecty/konecty-sdk/compare/1.5.3...1.5.4) (2022-06-09)
+
+
+### 🛠 Fixes
+
+* add missing types in FieldOperators ([a279c14](https://github.com/Konecty/konecty-sdk/commit/a279c14235aff56c32a83efada4c973c1df16ed7))
+
 ### [1.5.3](https://github.com/Konecty/konecty-sdk/compare/1.5.2...1.5.3) (2022-06-08)
 
 
