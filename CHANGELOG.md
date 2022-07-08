@@ -1,3 +1,10 @@
+### [1.5.6](https://github.com/Konecty/konecty-sdk/compare/1.5.5...1.5.6) (2022-07-08)
+
+
+### 🛠 Fixes
+
+* fix __updatedAt typo ([be792ed](https://github.com/Konecty/konecty-sdk/commit/be792ed3e05e36ee4207bc7e75b09e8ed589a45c))
+
 ### [1.5.5](https://github.com/Konecty/konecty-sdk/compare/1.5.4...1.5.5) (2022-06-09)
 
 
