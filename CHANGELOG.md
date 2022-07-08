@@ -1,3 +1,10 @@
+### [1.6.1](https://github.com/Konecty/konecty-sdk/compare/1.6.0...1.6.1) (2022-07-08)
+
+
+### 🛠 Fixes
+
+* return null when findOne retrieves nothing ([5a67dde](https://github.com/Konecty/konecty-sdk/commit/5a67ddebc75fbca2c97c5fe34351fb064bbfb3eb))
+
 ## [1.6.0](https://github.com/Konecty/konecty-sdk/compare/1.5.6...1.6.0) (2022-07-08)
 
 
