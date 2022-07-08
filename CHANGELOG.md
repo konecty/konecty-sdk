@@ -1,3 +1,10 @@
+## [1.6.0](https://github.com/Konecty/konecty-sdk/compare/1.5.6...1.6.0) (2022-07-08)
+
+
+### 🚀 Features
+
+* throw error when http result is higher than 400 ([f736c9e](https://github.com/Konecty/konecty-sdk/commit/f736c9ea2e97dafbcb641342ac421e2da2fd2ad4))
+
 ### [1.5.6](https://github.com/Konecty/konecty-sdk/compare/1.5.5...1.5.6) (2022-07-08)
 
 
