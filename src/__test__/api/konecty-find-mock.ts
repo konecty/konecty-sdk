@@ -1,6 +1,7 @@
 import { MockAgent } from 'undici';
 import activeUserResponse from '../fixtures/konecty/find-active-users.json';
 import adminUserResponse from '../fixtures/konecty/find-admin-user.json';
+import findNoResults from '../fixtures/konecty/find-no-results.json';
 
 const agent = new MockAgent();
 agent.disableNetConnect();
@@ -22,5 +23,12 @@ client
 		},
 	})
 	.reply(200, activeUserResponse);
+
+client
+	.intercept({
+		path: path => /^\/rest\/data\/Campaign\/find\?.+limit=1.?/.test(path),
+		method: 'GET',
+	})
+	.reply(200, findNoResults);
 
 export default agent;

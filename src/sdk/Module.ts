@@ -145,6 +145,10 @@ export class KonectyModule<
 		if (result?.success === true && result.data?.length === 1) {
 			return result.data[0] as Document;
 		}
+		if (result.data?.length === 0) {
+			return null;
+		}
+
 		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
 	}
 

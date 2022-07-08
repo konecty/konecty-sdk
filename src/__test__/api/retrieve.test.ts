@@ -1,6 +1,7 @@
 import { KonectyClient } from '@konecty/sdk/Client';
 import { expect } from 'chai';
 import { setGlobalDispatcher } from 'undici';
+import { Campaign, CampaignModule } from '../fixtures/types/Campaign';
 import { User, UserModule } from '../fixtures/types/User';
 import KonectyFindMockAgent from './konecty-find-mock';
 
@@ -60,5 +61,25 @@ describe('Konecty Retrive Documents', () => {
 		expect(count).to.be.equal(2);
 		expect(data).to.not.be.null;
 		expect(data).to.be.an('array').lengthOf(2);
+	});
+
+	it('Should return null when findOne retrieves nothing', async () => {
+		// Arrange
+		const campaignModule = new CampaignModule();
+
+		// Act
+		const campaign: Campaign | null = await campaignModule.findOne({
+			match: 'and',
+			conditions: [
+				{
+					term: 'code',
+					operator: 'equals',
+					value: -1,
+				},
+			],
+		});
+
+		// Assert
+		expect(campaign).to.be.null;
 	});
 });
