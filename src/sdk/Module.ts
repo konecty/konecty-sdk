@@ -204,14 +204,14 @@ export class KonectyModule<
 
 	async update(
 		document: Nullable<Document>,
-		ids: Array<PickFromPath<Document, '_id' | '__updatedAt'>>,
+		ids: Array<PickFromPath<Document, '_id' | '_updatedAt'>>,
 	): Promise<ModuleActionResult<Document>> {
 		const result = await this.#client.update(this.#config.name, document, ids);
 
 		return result as ModuleActionResult<Document>;
 	}
 
-	async delete(ids: Array<PickFromPath<Document, '_id' | '__updatedAt'>>): Promise<ModuleActionResult<Document>> {
+	async delete(ids: Array<PickFromPath<Document, '_id' | '_updatedAt'>>): Promise<ModuleActionResult<Document>> {
 		const result = await this.#client.delete(this.#config.name, ids);
 
 		return result as ModuleActionResult<Document>;
