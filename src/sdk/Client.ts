@@ -105,6 +105,9 @@ export class KonectyClient {
 					Authorization: `${this.#options.accessKey}`,
 				},
 			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
 
 			const body = await result.json();
 
@@ -128,6 +131,9 @@ export class KonectyClient {
 				},
 				body: JSON.stringify(serializeDates(data)),
 			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
 
 			const body = await result.json();
 
@@ -151,6 +157,9 @@ export class KonectyClient {
 				},
 				body: JSON.stringify(serializeDates({ ids, data })),
 			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
 
 			const body = await result.json();
 
@@ -173,6 +182,9 @@ export class KonectyClient {
 				},
 				body: JSON.stringify(serializeDates({ ids })),
 			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
 
 			const body = await result.json();
 
@@ -203,6 +215,9 @@ export class KonectyClient {
 				},
 				body: qs.stringify(loginPayload),
 			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
 
 			const body = (await result.json()) as KonectyLoginResult;
 
@@ -228,6 +243,9 @@ export class KonectyClient {
 					Authorization: `${this.#options.accessKey}`,
 				},
 			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
 
 			const body = await result.json();
 
@@ -252,6 +270,9 @@ export class KonectyClient {
 					Authorization: `${this.#options.accessKey}`,
 				},
 			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
 
 			const body = await result.json();
 
