@@ -69,7 +69,7 @@ export type ProductFilterConditions =
 	| FilterConditionValue<'sale.currency', FieldOperators<'money.currency'>, string>
 	| FilterConditionValue<'sale.value', FieldOperators<'money.value'>, number>
 	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, ProductCampaignType>
-	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, ProductCampaignType>
+	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'joinedCampaignOn', FieldOperators<'date'>, Date>
 	| FilterConditionValue<'ga:pageviews', FieldOperators<'number'>, number>
 	| FilterConditionValue<'shippingAmount.currency', FieldOperators<'money.currency'>, string>
@@ -83,12 +83,12 @@ export type ProductFilterConditions =
 	| FilterConditionValue<'type', FieldOperators<'picklist'>, ProductTypeType>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, ProductCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, ProductCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, ProductUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, ProductUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, ProductUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, ProductUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'sendSupplierUpdatedMail', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'offerCount', FieldOperators<'number'>, number>
 	| FilterConditionValue<'availableAt', FieldOperators<'date'>, Date>

@@ -56,12 +56,12 @@ export type TemplateFilterConditions =
 	| FilterConditionValue<'subject', FieldOperators<'text'>, string>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, TemplateCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, TemplateCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, TemplateUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, TemplateUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, TemplateUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, TemplateUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'attachment', FieldOperators<'file'>, FileDescriptor>;
 export type TemplateSortFields =
 	| 'code'

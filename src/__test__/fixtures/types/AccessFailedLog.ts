@@ -65,13 +65,13 @@ export type AccessFailedLogFilterConditions =
 	| FilterConditionValue<'width', FieldOperators<'number'>, number>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, AccessFailedLogCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, AccessFailedLogCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, AccessFailedLogUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, AccessFailedLogUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'status', FieldOperators<'picklist'>, AccessFailedLogStatusType>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, AccessFailedLogUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, AccessFailedLogUserType>;
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>;
 export type AccessFailedLogSortFields = '_createdAt' | '_createdBy' | '_updatedAt' | '_user';
 export class AccessFailedLogModule extends KonectyModule<
 	AccessFailedLog,

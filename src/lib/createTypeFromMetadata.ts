@@ -188,7 +188,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 			acc.push(`| FilterConditionValue<'${name}', FieldOperators<'${type}'>, ${getBaseType(field)}>`);
 		}
 		if (type === 'lookup') {
-			acc.push(`| FilterConditionValue<'${name}._id', FieldOperators<'lookup._id'>, ${getBaseType(field)}>`);
+			acc.push(`| FilterConditionValue<'${name}._id', FieldOperators<'lookup._id'>, string>`);
 		}
 
 		if (type === 'email') {

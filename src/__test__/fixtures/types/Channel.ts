@@ -39,10 +39,10 @@ export type ChannelFilterConditions =
 	| FilterConditionValue<'identifier', FieldOperators<'text'>, string>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, ChannelCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, ChannelCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, ChannelUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, ChannelUpdatedByType>;
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>;
 export type ChannelSortFields = 'identifier' | '_createdAt' | '_createdBy' | '_updatedAt';
 export class ChannelModule extends KonectyModule<
 	Channel,

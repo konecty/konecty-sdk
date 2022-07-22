@@ -56,15 +56,15 @@ export type QueueFilterConditions =
 	| FilterConditionValue<'chatInvite', FieldOperators<'text'>, string>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, QueueCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, QueueCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, QueueUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, QueueUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, QueueUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, QueueUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'type', FieldOperators<'picklist'>, QueueTypeType>
 	| FilterConditionValue<'targetCampaign', FieldOperators<'lookup'>, QueueTargetCampaignType>
-	| FilterConditionValue<'targetCampaign._id', FieldOperators<'lookup._id'>, QueueTargetCampaignType>;
+	| FilterConditionValue<'targetCampaign._id', FieldOperators<'lookup._id'>, string>;
 export type QueueSortFields =
 	| 'active'
 	| 'count'

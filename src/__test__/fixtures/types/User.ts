@@ -144,9 +144,9 @@ export type UserFilterConditions =
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
 	| FilterConditionValue<'emails.address', FieldOperators<'email.address'>, string>
 	| FilterConditionValue<'group', FieldOperators<'lookup'>, UserGroupType>
-	| FilterConditionValue<'group._id', FieldOperators<'lookup._id'>, UserGroupType>
+	| FilterConditionValue<'group._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'groups', FieldOperators<'lookup'>, UserGroupsType>
-	| FilterConditionValue<'groups._id', FieldOperators<'lookup._id'>, UserGroupsType>
+	| FilterConditionValue<'groups._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'admin', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'jobTitle', FieldOperators<'text'>, string>
 	| FilterConditionValue<'lastLogin', FieldOperators<'dateTime'>, Date>
@@ -156,24 +156,24 @@ export type UserFilterConditions =
 	| FilterConditionValue<'phone.phoneNumber', FieldOperators<'phone.phoneNumber'>, string>
 	| FilterConditionValue<'phone.countryCode', FieldOperators<'phone.countryCode'>, string>
 	| FilterConditionValue<'role', FieldOperators<'lookup'>, UserRoleType>
-	| FilterConditionValue<'role._id', FieldOperators<'lookup._id'>, UserRoleType>
+	| FilterConditionValue<'role._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'sessionExpireAfterMinutes', FieldOperators<'number'>, number>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, UserCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, UserCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, UserUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, UserUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'status', FieldOperators<'picklist'>, UserStatusType>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, UserUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, UserUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'targetQueue', FieldOperators<'lookup'>, UserTargetQueueType>
-	| FilterConditionValue<'targetQueue._id', FieldOperators<'lookup._id'>, UserTargetQueueType>
+	| FilterConditionValue<'targetQueue._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'induction', FieldOperators<'date'>, Date>
 	| FilterConditionValue<'inductionStatus', FieldOperators<'picklist'>, UserInductionStatusType>
 	| FilterConditionValue<'documents', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'director', FieldOperators<'lookup'>, UserDirectorType>
-	| FilterConditionValue<'director._id', FieldOperators<'lookup._id'>, UserDirectorType>
+	| FilterConditionValue<'director._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'temporaryBadge', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'badge', FieldOperators<'picklist'>, UserBadgeType>
 	| FilterConditionValue<'recruitedBy', FieldOperators<'picklist'>, UserRecruitedByType>

@@ -65,7 +65,7 @@ export interface WebElement extends KonectyDocument<WebElementUserType[], WebEle
 export type WebElementFilterConditions =
 	| FilterConditions
 	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, WebElementCampaignType>
-	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, WebElementCampaignType>
+	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
 	| FilterConditionValue<'endAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'file', FieldOperators<'file'>, FileDescriptor>
@@ -83,19 +83,19 @@ export type WebElementFilterConditions =
 	| FilterConditionValue<'status', FieldOperators<'picklist'>, WebElementStatusType>
 	| FilterConditionValue<'type', FieldOperators<'picklist'>, WebElementTypeType>
 	| FilterConditionValue<'webElement', FieldOperators<'lookup'>, WebElementWebElementType>
-	| FilterConditionValue<'webElement._id', FieldOperators<'lookup._id'>, WebElementWebElementType>
+	| FilterConditionValue<'webElement._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'parents', FieldOperators<'lookup'>, WebElementParentsType>
-	| FilterConditionValue<'parents._id', FieldOperators<'lookup._id'>, WebElementParentsType>
+	| FilterConditionValue<'parents._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'parent', FieldOperators<'lookup'>, WebElementParentType>
-	| FilterConditionValue<'parent._id', FieldOperators<'lookup._id'>, WebElementParentType>
+	| FilterConditionValue<'parent._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, WebElementCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, WebElementCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, WebElementUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, WebElementUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, WebElementUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, WebElementUserType>;
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>;
 export type WebElementSortFields =
 	| 'campaign'
 	| 'code'
