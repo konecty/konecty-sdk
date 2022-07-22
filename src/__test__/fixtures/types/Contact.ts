@@ -88,19 +88,19 @@ export interface Contact extends KonectyDocument<ContactUserType[], ContactCreat
 export type ContactFilterConditions =
 	| FilterConditions
 	| FilterConditionValue<'mainContact', FieldOperators<'lookup'>, ContactMainContactType>
-	| FilterConditionValue<'mainContact._id', FieldOperators<'lookup._id'>, ContactMainContactType>
+	| FilterConditionValue<'mainContact._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'contactAttempts', FieldOperators<'number'>, number>
 	| FilterConditionValue<'invalidAttempts', FieldOperators<'number'>, number>
 	| FilterConditionValue<'description', FieldOperators<'text'>, string>
 	| FilterConditionValue<'priority', FieldOperators<'picklist'>, ContactPriorityType>
 	| FilterConditionValue<'queue', FieldOperators<'lookup'>, ContactQueueType>
-	| FilterConditionValue<'queue._id', FieldOperators<'lookup._id'>, ContactQueueType>
+	| FilterConditionValue<'queue._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, ContactCampaignType>
-	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, ContactCampaignType>
+	| FilterConditionValue<'campaign._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'referrerURL', FieldOperators<'url'>, string>
 	| FilterConditionValue<'doNotCall', FieldOperators<'picklist'>, ContactDoNotCallType>
 	| FilterConditionValue<'staff', FieldOperators<'lookup'>, ContactStaffType>
-	| FilterConditionValue<'staff._id', FieldOperators<'lookup._id'>, ContactStaffType>
+	| FilterConditionValue<'staff._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'type', FieldOperators<'picklist'>, ContactTypeType>
 	| FilterConditionValue<'address.country', FieldOperators<'address.country'>, string>
 	| FilterConditionValue<'address.state', FieldOperators<'address.state'>, string>
@@ -131,17 +131,17 @@ export type ContactFilterConditions =
 	| FilterConditionValue<'status', FieldOperators<'picklist'>, ContactStatusType>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, ContactCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, ContactCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, ContactUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, ContactUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, ContactUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, ContactUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'medium', FieldOperators<'picklist'>, ContactMediumType>
 	| FilterConditionValue<'channel', FieldOperators<'lookup'>, ContactChannelType>
-	| FilterConditionValue<'channel._id', FieldOperators<'lookup._id'>, ContactChannelType>
+	| FilterConditionValue<'channel._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'source', FieldOperators<'lookup'>, ContactSourceType>
-	| FilterConditionValue<'source._id', FieldOperators<'lookup._id'>, ContactSourceType>
+	| FilterConditionValue<'source._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'campaignsAsTarget', FieldOperators<'number'>, number>
 	| FilterConditionValue<'lastCampaignTargetAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'lastEmailSentAt', FieldOperators<'dateTime'>, Date>

@@ -43,15 +43,15 @@ export type RoleFilterConditions =
 	| FilterConditionValue<'admin', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'name', FieldOperators<'text'>, string>
 	| FilterConditionValue<'parents', FieldOperators<'lookup'>, RoleParentsType>
-	| FilterConditionValue<'parents._id', FieldOperators<'lookup._id'>, RoleParentsType>
+	| FilterConditionValue<'parents._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, RoleCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, RoleCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, RoleUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, RoleUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, RoleUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, RoleUserType>;
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>;
 export type RoleSortFields = 'name' | 'parents' | '_createdAt' | '_createdBy' | '_updatedAt' | '_user';
 export class RoleModule extends KonectyModule<
 	Role,

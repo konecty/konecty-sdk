@@ -100,7 +100,7 @@ export interface Campaign extends KonectyDocument<CampaignUserType[], CampaignCr
 export type CampaignFilterConditions =
 	| FilterConditions
 	| FilterConditionValue<'mainCampaign', FieldOperators<'lookup'>, CampaignMainCampaignType>
-	| FilterConditionValue<'mainCampaign._id', FieldOperators<'lookup._id'>, CampaignMainCampaignType>
+	| FilterConditionValue<'mainCampaign._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'attachment', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
 	| FilterConditionValue<'description', FieldOperators<'richText'>, string>
@@ -113,27 +113,27 @@ export type CampaignFilterConditions =
 	| FilterConditionValue<'type', FieldOperators<'picklist'>, CampaignTypeType>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, CampaignCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, CampaignCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, CampaignUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, CampaignUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, CampaignUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, CampaignUserType>
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'identifier', FieldOperators<'text'>, string>
 	| FilterConditionValue<'externalIdentifier', FieldOperators<'text'>, string>
 	| FilterConditionValue<'phone.phoneNumber', FieldOperators<'phone.phoneNumber'>, string>
 	| FilterConditionValue<'phone.countryCode', FieldOperators<'phone.countryCode'>, string>
 	| FilterConditionValue<'notes', FieldOperators<'text'>, string>
 	| FilterConditionValue<'products', FieldOperators<'lookup'>, CampaignProductsType>
-	| FilterConditionValue<'products._id', FieldOperators<'lookup._id'>, CampaignProductsType>
+	| FilterConditionValue<'products._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'webElement', FieldOperators<'lookup'>, CampaignWebElementType>
-	| FilterConditionValue<'webElement._id', FieldOperators<'lookup._id'>, CampaignWebElementType>
+	| FilterConditionValue<'webElement._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'product', FieldOperators<'lookup'>, CampaignProductType>
-	| FilterConditionValue<'product._id', FieldOperators<'lookup._id'>, CampaignProductType>
+	| FilterConditionValue<'product._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'targetQueue', FieldOperators<'lookup'>, CampaignTargetQueueType>
-	| FilterConditionValue<'targetQueue._id', FieldOperators<'lookup._id'>, CampaignTargetQueueType>
+	| FilterConditionValue<'targetQueue._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'chatQueue', FieldOperators<'lookup'>, CampaignChatQueueType>
-	| FilterConditionValue<'chatQueue._id', FieldOperators<'lookup._id'>, CampaignChatQueueType>
+	| FilterConditionValue<'chatQueue._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'chatTipTitle', FieldOperators<'text'>, string>
 	| FilterConditionValue<'chatTipDescription', FieldOperators<'text'>, string>
 	| FilterConditionValue<'chatTitle', FieldOperators<'text'>, string>
@@ -141,10 +141,10 @@ export type CampaignFilterConditions =
 	| FilterConditionValue<'chatTitleBarTextColor', FieldOperators<'text'>, string>
 	| FilterConditionValue<'sendExact', FieldOperators<'picklist'>, CampaignSendExactType>
 	| FilterConditionValue<'firstTouchTemplate', FieldOperators<'lookup'>, CampaignFirstTouchTemplateType>
-	| FilterConditionValue<'firstTouchTemplate._id', FieldOperators<'lookup._id'>, CampaignFirstTouchTemplateType>
+	| FilterConditionValue<'firstTouchTemplate._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'firstTouchFile', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'firstTouchSender', FieldOperators<'lookup'>, CampaignFirstTouchSenderType>
-	| FilterConditionValue<'firstTouchSender._id', FieldOperators<'lookup._id'>, CampaignFirstTouchSenderType>
+	| FilterConditionValue<'firstTouchSender._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'badge', FieldOperators<'file'>, FileDescriptor>
 	| FilterConditionValue<'content', FieldOperators<'text'>, string>;
 export type CampaignSortFields =

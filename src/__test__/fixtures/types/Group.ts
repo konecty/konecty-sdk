@@ -41,12 +41,12 @@ export type GroupFilterConditions =
 	| FilterConditionValue<'name', FieldOperators<'text'>, string>
 	| FilterConditionValue<'_createdAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_createdBy', FieldOperators<'lookup'>, GroupCreatedByType>
-	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, GroupCreatedByType>
+	| FilterConditionValue<'_createdBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_updatedAt', FieldOperators<'dateTime'>, Date>
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, GroupUpdatedByType>
-	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, GroupUpdatedByType>
+	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>
 	| FilterConditionValue<'_user', FieldOperators<'lookup'>, GroupUserType>
-	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, GroupUserType>;
+	| FilterConditionValue<'_user._id', FieldOperators<'lookup._id'>, string>;
 export type GroupSortFields = 'active' | 'name' | '_createdAt' | '_createdBy' | '_updatedAt' | '_user';
 export class GroupModule extends KonectyModule<
 	Group,
