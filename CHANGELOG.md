@@ -1,3 +1,10 @@
+### [1.6.2](https://github.com/Konecty/konecty-sdk/compare/1.6.1...1.6.2) (2022-07-22)
+
+
+### 🛠 Fixes
+
+* fix lookup._id filter type ([bccdcb9](https://github.com/Konecty/konecty-sdk/commit/bccdcb92bdc81f3ca0dcc53a60dfc6b16905ee9a))
+
 ### [1.6.1](https://github.com/Konecty/konecty-sdk/compare/1.6.0...1.6.1) (2022-07-08)
 
 
