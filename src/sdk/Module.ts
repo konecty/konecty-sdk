@@ -68,7 +68,7 @@ export type FilterConditionValue<
 	  }
 	: FilterOperator extends 'exists'
 	? { term: Property; operator: FilterOperator; value: boolean }
-	: FilterOperator extends 'in' | 'not_id'
+	: FilterOperator extends 'in' | 'not_in'
 	? { term: Property; operator: FilterOperator; value: PropertyType[] }
 	: { term: Property; operator: FilterOperator; value: PropertyType };
 
@@ -116,7 +116,7 @@ export type ValidateResult = {
 export type ModuleActionResult<T> = {
 	success: boolean;
 	data?: T[];
-	errors?: string[];
+	errors?: { message: string }[];
 };
 
 export class KonectyModule<
