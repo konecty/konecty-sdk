@@ -1,3 +1,10 @@
+### [1.6.3](https://github.com/Konecty/konecty-sdk/compare/1.6.2...1.6.3) (2022-10-06)
+
+
+### 🛠 Fixes
+
+* errors type & field operator typo ([293e7f0](https://github.com/Konecty/konecty-sdk/commit/293e7f00beebdaba39d43172986280c8dc59ad7f))
+
 ### [1.6.2](https://github.com/Konecty/konecty-sdk/compare/1.6.1...1.6.2) (2022-07-22)
 
 
