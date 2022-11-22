@@ -1,3 +1,10 @@
+### [1.6.4](https://github.com/Konecty/konecty-sdk/compare/1.6.3...1.6.4) (2022-11-22)
+
+
+### 🛠 Fixes
+
+* serialize dates to filter ([9ef2317](https://github.com/Konecty/konecty-sdk/commit/9ef231769639257099513c8f2ad9530b22cde262))
+
 ### [1.6.3](https://github.com/Konecty/konecty-sdk/compare/1.6.2...1.6.3) (2022-10-06)
 
 
