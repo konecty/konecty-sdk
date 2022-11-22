@@ -97,7 +97,7 @@ export class KonectyClient {
 		try {
 			const params = new URLSearchParams();
 			Object.keys(options).forEach(key => {
-				params.set(key, JSON.stringify(get(options, key)));
+				params.set(key, JSON.stringify(serializeDates(get(options, key))));
 			});
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/find?${params.toString()}`, {
 				method: 'GET',
