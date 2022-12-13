@@ -6,7 +6,7 @@ import path from 'path';
 import { KonectyClient, KonectyClientOptions } from '../sdk/Client';
 import getHomeDir from './getHomeDir';
 
-function loadCredentialsFromFile(options?: KonectyClientOptions): KonectyClientOptions | undefined {
+function createClientFromCredentialFile(options?: KonectyClientOptions): KonectyClient {
 	try {
 		const __dirname = path.resolve(process.env.INIT_CWD ?? './');
 		const credentialsFile = options?.credentialsFile ?? path.resolve(getHomeDir() ?? '', '.konecty', 'credentials');
@@ -22,24 +22,25 @@ function loadCredentialsFromFile(options?: KonectyClientOptions): KonectyClientO
 		if (credentials != null) {
 			if (get(options, 'endpoint') != null && get(credentials, get(options, 'endpoint', '')) != null) {
 				const hostCredentials = get(credentials, get(options, 'endpoint', ''));
-				return {
+				return new KonectyClient({
 					...KonectyClient.defaults,
 					endpoint: get(hostCredentials, 'host'),
 					accessKey: get(hostCredentials, 'authId'),
-				};
+				});
 			} else if (get(credentials, 'default') != null) {
 				const defaultCredentials = get(credentials, get(options, 'endpoint', ''));
-				return {
+				return new KonectyClient({
 					...KonectyClient.defaults,
 					endpoint: get(defaultCredentials, 'host'),
 					accessKey: get(defaultCredentials, 'authId'),
-				};
+				});
 			}
 		}
 	} catch (error) {
 		console.error(error);
 	}
-	return options;
+
+	throw new Error('Invalid config');
 }
 
-export default loadCredentialsFromFile;
+export default createClientFromCredentialFile;

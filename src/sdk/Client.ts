@@ -49,16 +49,6 @@ export class KonectyClient {
 	static defaults: KonectyClientOptions = {};
 	#options: KonectyClientOptions;
 
-	static async fromConfigFile(options?: KonectyClientOptions): Promise<KonectyClient> {
-		const module = await import('../lib/loadCredentialsFromFile');
-		const result = module.default(options);
-
-		if (result != null) {
-			return new KonectyClient(result);
-		}
-
-		throw new Error('Invalid file');
-	}
 	constructor(options?: KonectyClientOptions) {
 		this.#options = Object.assign({}, KonectyClient.defaults, options);
 
