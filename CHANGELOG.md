@@ -1,3 +1,23 @@
+## [1.7.0](https://github.com/Konecty/konecty-sdk/compare/1.6.4...1.7.0) (2022-12-13)
+
+
+### :scissors: Refactor
+
+* change undici to fetch ([dfe0775](https://github.com/Konecty/konecty-sdk/commit/dfe077563bcb71a57eda1323b427ba694c82db90))
+* load credential files only in node ([9c690bd](https://github.com/Konecty/konecty-sdk/commit/9c690bd1a741e88b4f4498b37cdeb051a415bd74))
+
+
+### 🚀 Features
+
+* user info ([b7fecd3](https://github.com/Konecty/konecty-sdk/commit/b7fecd385dda9cf8df8ff6766c6537e8154ae262))
+
+
+### 🛠 Fixes
+
+* browser fs error ([ce1f031](https://github.com/Konecty/konecty-sdk/commit/ce1f0311e0877152f5504052bb340967d80b178b))
+* constructor without accessKey ([b4c125b](https://github.com/Konecty/konecty-sdk/commit/b4c125b41e12ac2c4dcb90b20d3494f228596c74))
+* plugin-proposal-private-methods ([5d823c5](https://github.com/Konecty/konecty-sdk/commit/5d823c524ffc2e7caa43797b069fa01d0ccebd2c))
+
 ### [1.6.4](https://github.com/Konecty/konecty-sdk/compare/1.6.3...1.6.4) (2022-11-22)
 
 
