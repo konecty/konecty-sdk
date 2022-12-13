@@ -24,4 +24,6 @@ export default {
 	},
 
 	verbose: true,
+	setupFilesAfterEnv: ['<rootDir>/src/__test__/setup-test.ts'],
+	roots: ['./src'],
 };

@@ -1,19 +1,29 @@
 import { KonectyClient } from '@konecty/sdk/Client';
 import { expect } from 'chai';
-import { setGlobalDispatcher } from 'undici';
+
 import { Campaign, CampaignModule } from '../fixtures/types/Campaign';
 import { User, UserModule } from '../fixtures/types/User';
-import KonectyFindMockAgent from './konecty-find-mock';
+
+import { rest } from 'msw';
+import { server } from '../../__test__/setup-test';
+
+import activeUserResponse from '../fixtures/konecty/find-active-users.json';
+import adminUserResponse from '../fixtures/konecty/find-admin-user.json';
+import findNoResults from '../fixtures/konecty/find-no-results.json';
 
 describe('Konecty Retrive Documents', () => {
 	beforeAll(async () => {
-		setGlobalDispatcher(KonectyFindMockAgent);
 		KonectyClient.defaults.endpoint = 'http://localhost:3000';
 		KonectyClient.defaults.accessKey = 'fake-key';
 	});
 	it('Should retrieve admin user from username from a collection', async () => {
 		// Arrange
 		const userModule = new UserModule();
+		server.use(
+			rest.get('http://localhost:3000/rest/data/User/find', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(adminUserResponse));
+			}),
+		);
 
 		// Act
 		const user: User | null = await userModule.findOne({
@@ -34,6 +44,12 @@ describe('Konecty Retrive Documents', () => {
 	it('Should retrive active users', async () => {
 		// Arrange
 		const userModule = new UserModule();
+
+		server.use(
+			rest.get('http://localhost:3000/rest/data/User/find', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(activeUserResponse));
+			}),
+		);
 
 		// Act
 		const { count, data } = await userModule.find(
@@ -66,6 +82,12 @@ describe('Konecty Retrive Documents', () => {
 	it('Should return null when findOne retrieves nothing', async () => {
 		// Arrange
 		const campaignModule = new CampaignModule();
+
+		server.use(
+			rest.get('http://localhost:3000/rest/data/Campaign/find', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(findNoResults));
+			}),
+		);
 
 		// Act
 		const campaign: Campaign | null = await campaignModule.findOne({

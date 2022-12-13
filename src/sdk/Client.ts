@@ -1,12 +1,12 @@
-import { isBrowser } from 'browser-or-node';
+import { isBrowser, isNode } from 'browser-or-node';
 import crypto from 'crypto';
+import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
 import get from 'lodash/get';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import { DateTime } from 'luxon';
 import qs from 'qs';
-import { fetch } from 'undici';
 
 import logger from '../lib/logger';
 import { User } from './User';
@@ -48,17 +48,22 @@ export type KonectyUserInfo = {
 export class KonectyClient {
 	static defaults: KonectyClientOptions = {};
 	#options: KonectyClientOptions;
+
+	static async fromConfigFile(options?: KonectyClientOptions): Promise<KonectyClient> {
+		const module = await import('../lib/loadCredentialsFromFile');
+		const result = module.default(options);
+
+		if (result != null) {
+			return new KonectyClient(result);
+		}
+
+		throw new Error('Invalid file');
+	}
 	constructor(options?: KonectyClientOptions) {
 		this.#options = Object.assign({}, KonectyClient.defaults, options);
 
-		// if (isNode && this.#options.credentialsFile != null) {
-		// 	import('../lib/loadCredentialsFromFile').then(module => {
-		// 		const result = module.default(options);
-		// 		if (result != null) {
-		// 			this.#options = result;
-		// 		}
-		// 	});
-		// }
+		if (isNode && this.#options.credentialsFile != null) {
+		}
 	}
 
 	get options() {

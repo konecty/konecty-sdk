@@ -18,7 +18,7 @@ export default async function exportCommand(document?: string, options?: ExportC
 
 	const outputDir = path.resolve(process.env.INIT_CWD ?? './');
 
-	let client = new KonectyClient({
+	let client = await KonectyClient.fromConfigFile({
 		credentialsFile: localOptions.credentialsFile,
 		endpoint: localOptions.profile,
 	});
@@ -71,7 +71,7 @@ export default async function exportCommand(document?: string, options?: ExportC
 
 		await mkdirp(path.dirname(outputFile));
 
-		writeFileSync(outputFile, JSON.stringify(Object.assign(data, { fields }), null, 2));
+		writeFileSync(outputFile, JSON.stringify(Object.assign(data ?? {}, { fields }), null, 2));
 	};
 
 	if (document != null) {
