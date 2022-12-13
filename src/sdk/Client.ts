@@ -53,12 +53,9 @@ export class KonectyClient {
 	static defaults: KonectyClientOptions = {};
 	#options: KonectyClientOptions;
 	constructor(options?: KonectyClientOptions) {
-		if (options?.accessKey != null) {
-			this.#options = options;
-			return;
-		}
+		this.#options = Object.assign({}, KonectyClient.defaults, options);
 
-		if (options?.credentialsFile != null || KonectyClient.defaults.accessKey == null) {
+		if (this.#options.credentialsFile != null) {
 			try {
 				const __dirname = path.resolve(process.env.INIT_CWD ?? './');
 				const credentialsFile = options?.credentialsFile ?? path.resolve(getHomeDir() ?? '', '.konecty', 'credentials');
@@ -94,7 +91,6 @@ export class KonectyClient {
 				console.error(error);
 			}
 		}
-		this.#options = Object.assign({}, KonectyClient.defaults, options ?? {});
 	}
 
 	get options() {
