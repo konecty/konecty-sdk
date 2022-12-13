@@ -1,6 +1,8 @@
+import { isBrowser } from 'browser-or-node';
 import crypto from 'crypto';
 import fs from 'fs';
 import ini from 'ini';
+import Cookies from 'js-cookie';
 import get from 'lodash/get';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
@@ -8,8 +10,10 @@ import { DateTime } from 'luxon';
 import path from 'path';
 import qs from 'qs';
 import { fetch } from 'undici';
+
 import getHomeDir from '../lib/getHomeDir';
 import logger from '../lib/logger';
+import { User } from './User';
 
 export interface KonectyClientOptions {
 	credentialsFile?: string;
@@ -39,6 +43,11 @@ export type KonectyLoginResult = {
 		locale: string;
 	};
 	errors?: string[];
+};
+
+export type KonectyUserInfo = {
+	logged: boolean;
+	user?: User;
 };
 export class KonectyClient {
 	static defaults: KonectyClientOptions = {};
@@ -232,6 +241,49 @@ export class KonectyClient {
 				success: false,
 				errors: [(err as Error).message],
 			};
+		}
+	}
+
+	async info(token?: string): Promise<KonectyUserInfo> {
+		try {
+			const userToken = this.#getToken(token);
+
+			if (userToken == null) {
+				return { logged: false };
+			}
+
+			const result = await fetch(`${this.#options.endpoint}/rest/auth/info`, {
+				method: 'GET',
+				headers: {
+					Authorization: userToken,
+				},
+			});
+
+			if (result.status >= 400) {
+				return { logged: false };
+			}
+
+			const body = (await result.json()) as KonectyUserInfo;
+
+			if (body.logged) {
+				this.#options.accessKey = userToken;
+			}
+
+			return body;
+		} catch (err) {
+			logger.error(err);
+			return {
+				logged: false,
+			};
+		}
+	}
+
+	#getToken(token?: string): string | null | undefined {
+		if (token != null) {
+			return token;
+		}
+		if (isBrowser) {
+			return Cookies.get('_authTokenId');
 		}
 	}
 

@@ -1,0 +1,31 @@
+{
+	"logged": true,
+	"user": {
+		"_id": "4ffcf81084aecfbaff50fd05",
+		"access": {
+			"defaults": ["Full"]
+		},
+		"admin": true,
+		"email": "test@konecty.com",
+		"group": {
+			"_id": "521c2fe4e4b057cdcba8e454",
+			"name": "SISTEMA"
+		},
+		"locale": "pt_BR",
+		"login": "admin",
+		"name": "Administrator",
+		"namespace": {
+			"_id": "client",
+			"active": true,
+			"locale": null,
+			"name": "Client",
+			"title": "Konecty Client",
+			"trackUserGeolocation": false,
+			"version": 1
+		},
+		"role": {
+			"_id": "50a28a36e4b00438f136ae47",
+			"name": "System"
+		}
+	}
+}
