@@ -1,17 +1,13 @@
 import { isBrowser } from 'browser-or-node';
 import crypto from 'crypto';
-import fs from 'fs';
-import ini from 'ini';
 import Cookies from 'js-cookie';
 import get from 'lodash/get';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import { DateTime } from 'luxon';
-import path from 'path';
 import qs from 'qs';
 import { fetch } from 'undici';
 
-import getHomeDir from '../lib/getHomeDir';
 import logger from '../lib/logger';
 import { User } from './User';
 
@@ -55,42 +51,14 @@ export class KonectyClient {
 	constructor(options?: KonectyClientOptions) {
 		this.#options = Object.assign({}, KonectyClient.defaults, options);
 
-		if (this.#options.credentialsFile != null) {
-			try {
-				const __dirname = path.resolve(process.env.INIT_CWD ?? './');
-				const credentialsFile = options?.credentialsFile ?? path.resolve(getHomeDir() ?? '', '.konecty', 'credentials');
-
-				const resolvedFilePath = /^\~/.test(credentialsFile)
-					? path.resolve(credentialsFile.replace(/^\~/, getHomeDir() || ''))
-					: path.resolve(__dirname, credentialsFile);
-
-				const credentialsContent = fs.readFileSync(path.resolve(resolvedFilePath), 'utf8');
-
-				const credentials = ini.parse(credentialsContent);
-
-				if (credentials != null) {
-					if (get(options, 'endpoint') != null && get(credentials, get(options, 'endpoint', '')) != null) {
-						const hostCredentials = get(credentials, get(options, 'endpoint', ''));
-						this.#options = {
-							...KonectyClient.defaults,
-							endpoint: get(hostCredentials, 'host'),
-							accessKey: get(hostCredentials, 'authId'),
-						};
-						return;
-					} else if (get(credentials, 'default') != null) {
-						const defaultCredentials = get(credentials, get(options, 'endpoint', ''));
-						this.#options = {
-							...KonectyClient.defaults,
-							endpoint: get(defaultCredentials, 'host'),
-							accessKey: get(defaultCredentials, 'authId'),
-						};
-						return;
-					}
-				}
-			} catch (error) {
-				console.error(error);
-			}
-		}
+		// if (isNode && this.#options.credentialsFile != null) {
+		// 	import('../lib/loadCredentialsFromFile').then(module => {
+		// 		const result = module.default(options);
+		// 		if (result != null) {
+		// 			this.#options = result;
+		// 		}
+		// 	});
+		// }
 	}
 
 	get options() {
