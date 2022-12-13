@@ -5,6 +5,7 @@ import inquirer from 'inquirer';
 import get from 'lodash/get';
 import mkdirp from 'mkdirp';
 import path from 'path';
+import createClientFromCredentialFile from '../lib/createClientFromCredentialFile';
 import { KonectyClient } from '../sdk/Client';
 
 export interface ExportCommandOptions {
@@ -18,7 +19,7 @@ export default async function exportCommand(document?: string, options?: ExportC
 
 	const outputDir = path.resolve(process.env.INIT_CWD ?? './');
 
-	let client = new KonectyClient({
+	let client = await createClientFromCredentialFile({
 		credentialsFile: localOptions.credentialsFile,
 		endpoint: localOptions.profile,
 	});
@@ -71,7 +72,7 @@ export default async function exportCommand(document?: string, options?: ExportC
 
 		await mkdirp(path.dirname(outputFile));
 
-		writeFileSync(outputFile, JSON.stringify(Object.assign(data, { fields }), null, 2));
+		writeFileSync(outputFile, JSON.stringify(Object.assign(data ?? {}, { fields }), null, 2));
 	};
 
 	if (document != null) {

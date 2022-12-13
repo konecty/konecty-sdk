@@ -1,31 +1,15 @@
 import { KonectyClient } from '@konecty/sdk/Client';
 import { expect } from 'chai';
-import { MockAgent, setGlobalDispatcher } from 'undici';
 import insertResponse from '../fixtures/konecty/insert-response.json';
 import { WebElement, WebElementModule } from '../fixtures/types/WebElement';
 
-const agent = new MockAgent();
+import { rest } from 'msw';
+import { server } from '../../__test__/setup-test';
 
 describe('Konecty Insert Documents', () => {
 	beforeAll(async () => {
 		KonectyClient.defaults.endpoint = 'http://localhost:3000';
 		KonectyClient.defaults.accessKey = 'fake-key';
-
-		agent.disableNetConnect();
-
-		const client = agent.get('http://localhost:3000');
-		client
-			.intercept({
-				path: '/rest/data/WebElement',
-				method: 'POST',
-			})
-			.reply(200, insertResponse);
-
-		setGlobalDispatcher(agent);
-	});
-
-	afterAll(async () => {
-		await agent.close();
 	});
 
 	it('Should insert valid web element', async () => {
@@ -37,6 +21,12 @@ describe('Konecty Insert Documents', () => {
 			status: 'Ativo',
 			name: 'web element name',
 		};
+
+		server.use(
+			rest.post('http://localhost:3000/rest/data/WebElement', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(insertResponse));
+			}),
+		);
 
 		// Act
 		const { success, data } = await webElementModule.create(webElement);

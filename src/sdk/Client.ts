@@ -1,15 +1,15 @@
+import { isBrowser, isNode } from 'browser-or-node';
 import crypto from 'crypto';
-import fs from 'fs';
-import ini from 'ini';
+import fetch from 'isomorphic-fetch';
+import Cookies from 'js-cookie';
 import get from 'lodash/get';
 import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import { DateTime } from 'luxon';
-import path from 'path';
 import qs from 'qs';
-import { fetch } from 'undici';
-import getHomeDir from '../lib/getHomeDir';
+
 import logger from '../lib/logger';
+import { User } from './User';
 
 export interface KonectyClientOptions {
 	credentialsFile?: string;
@@ -40,52 +40,20 @@ export type KonectyLoginResult = {
 	};
 	errors?: string[];
 };
+
+export type KonectyUserInfo = {
+	logged: boolean;
+	user?: User;
+};
 export class KonectyClient {
 	static defaults: KonectyClientOptions = {};
 	#options: KonectyClientOptions;
+
 	constructor(options?: KonectyClientOptions) {
-		if (options?.accessKey != null) {
-			this.#options = options;
-			return;
+		this.#options = Object.assign({}, KonectyClient.defaults, options);
+
+		if (isNode && this.#options.credentialsFile != null) {
 		}
-
-		if (options?.credentialsFile != null || KonectyClient.defaults.accessKey == null) {
-			try {
-				const __dirname = path.resolve(process.env.INIT_CWD ?? './');
-				const credentialsFile = options?.credentialsFile ?? path.resolve(getHomeDir() ?? '', '.konecty', 'credentials');
-
-				const resolvedFilePath = /^\~/.test(credentialsFile)
-					? path.resolve(credentialsFile.replace(/^\~/, getHomeDir() || ''))
-					: path.resolve(__dirname, credentialsFile);
-
-				const credentialsContent = fs.readFileSync(path.resolve(resolvedFilePath), 'utf8');
-
-				const credentials = ini.parse(credentialsContent);
-
-				if (credentials != null) {
-					if (get(options, 'endpoint') != null && get(credentials, get(options, 'endpoint', '')) != null) {
-						const hostCredentials = get(credentials, get(options, 'endpoint', ''));
-						this.#options = {
-							...KonectyClient.defaults,
-							endpoint: get(hostCredentials, 'host'),
-							accessKey: get(hostCredentials, 'authId'),
-						};
-						return;
-					} else if (get(credentials, 'default') != null) {
-						const defaultCredentials = get(credentials, get(options, 'endpoint', ''));
-						this.#options = {
-							...KonectyClient.defaults,
-							endpoint: get(defaultCredentials, 'host'),
-							accessKey: get(defaultCredentials, 'authId'),
-						};
-						return;
-					}
-				}
-			} catch (error) {
-				console.error(error);
-			}
-		}
-		this.#options = Object.assign({}, KonectyClient.defaults, options ?? {});
 	}
 
 	get options() {
@@ -232,6 +200,49 @@ export class KonectyClient {
 				success: false,
 				errors: [(err as Error).message],
 			};
+		}
+	}
+
+	async info(token?: string): Promise<KonectyUserInfo> {
+		try {
+			const userToken = this.#getToken(token);
+
+			if (userToken == null) {
+				return { logged: false };
+			}
+
+			const result = await fetch(`${this.#options.endpoint}/rest/auth/info`, {
+				method: 'GET',
+				headers: {
+					Authorization: userToken,
+				},
+			});
+
+			if (result.status >= 400) {
+				return { logged: false };
+			}
+
+			const body = (await result.json()) as KonectyUserInfo;
+
+			if (body.logged) {
+				this.#options.accessKey = userToken;
+			}
+
+			return body;
+		} catch (err) {
+			logger.error(err);
+			return {
+				logged: false,
+			};
+		}
+	}
+
+	#getToken(token?: string): string | null | undefined {
+		if (token != null) {
+			return token;
+		}
+		if (isBrowser) {
+			return Cookies.get('_authTokenId');
 		}
 	}
 

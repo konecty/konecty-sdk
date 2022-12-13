@@ -1,32 +1,22 @@
 import { expect } from 'chai';
 import fs, { Stats } from 'fs';
 import path from 'path';
-import { MockAgent, setGlobalDispatcher } from 'undici';
+
+import { rest } from 'msw';
+import { server } from '../../__test__/setup-test';
+
 import createProgram from '../../cli/createProgram';
 
 jest.mock('fs');
 jest.mock('mkdirp');
 jest.mock('path');
 
-const agent = new MockAgent();
-const client = agent.get('http://localhost:3000');
-
 const mockedFs = fs as jest.Mocked<typeof fs>;
 const mocketPath = path as jest.Mocked<typeof path>;
-
-// const actualPath = jest.requireActual('path');
-// const actualFs = jest.requireActual('fs');
 
 describe('Konecty command line tool login command', () => {
 	beforeAll(async () => {
 		jest.resetAllMocks();
-		agent.disableNetConnect();
-
-		setGlobalDispatcher(agent);
-	});
-
-	afterAll(async () => {
-		await agent.close();
 	});
 
 	it('Should create typescript classes from metadata', async () => {
@@ -50,24 +40,26 @@ describe('Konecty command line tool login command', () => {
 			.mockReturnValueOnce('/dev/null/.konecty')
 			.mockReturnValueOnce('/dev/null/.konecty/credentials');
 
-		client
-			.intercept({
-				path: '/rest/auth/login',
-				method: 'POST',
-			})
-			.reply(200, {
-				success: true,
-				logged: true,
-				authId: 'new-id',
-				user: {
-					_id: 'new-user',
-					access: {
-						defaults: ['System', 'Full'],
-					},
-					admin: true,
-					locale: 'pt_BR',
-				},
-			});
+		server.use(
+			rest.post('http://localhost:3000/rest/auth/login', (req, res, ctx) => {
+				return res.once(
+					ctx.status(200),
+					ctx.json({
+						success: true,
+						logged: true,
+						authId: 'new-id',
+						user: {
+							_id: 'new-user',
+							access: {
+								defaults: ['System', 'Full'],
+							},
+							admin: true,
+							locale: 'pt_BR',
+						},
+					}),
+				);
+			}),
+		);
 
 		// Act
 		const program = createProgram();
