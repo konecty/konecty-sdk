@@ -191,6 +191,10 @@ export class KonectyClient {
 
 			if (body.success) {
 				this.#options.accessKey = body.authId;
+
+				if (isBrowser) {
+					Cookies.set('_authTokenId', body.authId as string);
+				}
 			}
 
 			return body;
@@ -226,6 +230,10 @@ export class KonectyClient {
 
 			if (body.logged) {
 				this.#options.accessKey = userToken;
+
+				if (isBrowser) {
+					Cookies.set('_authTokenId', userToken);
+				}
 			}
 
 			return body;
