@@ -1,3 +1,10 @@
+## [1.8.0](https://github.com/Konecty/konecty-sdk/compare/1.7.0...1.8.0) (2022-12-14)
+
+
+### 🚀 Features
+
+* set auth cookie on login ([a9010a0](https://github.com/Konecty/konecty-sdk/commit/a9010a024160d41a2054a1b1466cb0bfca7f7792))
+
 ## [1.7.0](https://github.com/Konecty/konecty-sdk/compare/1.6.4...1.7.0) (2022-12-13)
 
 
