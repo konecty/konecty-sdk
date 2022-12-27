@@ -1,4 +1,4 @@
-import { PickFromPath } from '@konecty/sdk/TypeUtils';
+import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import {
 	KonectyModule,
 	ModuleConfig,
@@ -33,12 +33,12 @@ export type CampaignMainCampaignType = { _id: string; code: number; name: string
 export type CampaignCreatedByType = { _id: string; name: string; group: { name: unknown } };
 export type CampaignUpdatedByType = { _id: string; name: string; group: { name: unknown } };
 export type CampaignUserType = { _id: string; name: string; group: { name: unknown } };
-export type CampaignProductsType = PickFromPath<Product, '_id' | 'code' | 'name'>;
-export type CampaignWebElementType = PickFromPath<WebElement, '_id' | 'code' | 'name' | 'type'>;
-export type CampaignProductType = PickFromPath<Product, '_id' | 'code' | 'name'>;
-export type CampaignTargetQueueType = PickFromPath<Queue, '_id' | 'name'>;
-export type CampaignChatQueueType = PickFromPath<Queue, '_id' | 'name'>;
-export type CampaignFirstTouchTemplateType = PickFromPath<Template, '_id' | 'code' | 'name'>;
+export type CampaignProductsType = UnionToIntersection<PickFromPath<Product, '_id' | 'code' | 'name'>>;
+export type CampaignWebElementType = UnionToIntersection<PickFromPath<WebElement, '_id' | 'code' | 'name' | 'type'>>;
+export type CampaignProductType = UnionToIntersection<PickFromPath<Product, '_id' | 'code' | 'name'>>;
+export type CampaignTargetQueueType = UnionToIntersection<PickFromPath<Queue, '_id' | 'name'>>;
+export type CampaignChatQueueType = UnionToIntersection<PickFromPath<Queue, '_id' | 'name'>>;
+export type CampaignFirstTouchTemplateType = UnionToIntersection<PickFromPath<Template, '_id' | 'code' | 'name'>>;
 export type CampaignFirstTouchSenderType = { _id: string; name: string; group: { name: unknown } };
 export type CampaignStatusType = 'Nova' | 'Em Andamento' | 'Concluída' | 'Cancelada';
 export type CampaignTypeType =

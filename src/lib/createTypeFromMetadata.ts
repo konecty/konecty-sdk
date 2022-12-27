@@ -12,7 +12,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	const { name, collection, label, plurals, fields } = metadata;
 
 	const imports: { [key: string]: string[] } = {
-		TypeUtils: ['PickFromPath'],
+		TypeUtils: ['PickFromPath', 'UnionToIntersection'],
 		Konecty: [],
 		Documents: [],
 		DocumentFilters: [],
@@ -77,9 +77,9 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 				return result;
 			}
 
-			return `export type ${name}${fieldName}Type = PickFromPath<${field.document}, '_id' | '${(
+			return `export type ${name}${fieldName}Type = UnionToIntersection<PickFromPath<${field.document}, '_id' | '${(
 				field.descriptionFields ?? []
-			).join(`' | '`)}'>;`;
+			).join(`' | '`)}'>>;`;
 		});
 
 	const pickListTypes: string[] = Object.values<MetadataField>(fields)

@@ -1,4 +1,4 @@
-import { PickFromPath } from '@konecty/sdk/TypeUtils';
+import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import {
 	KonectyModule,
 	ModuleConfig,
@@ -27,14 +27,14 @@ const contactConfig: ModuleConfig = {
 	},
 };
 export type ContactMainContactType = { _id: string; code: number; name: { full: unknown } };
-export type ContactQueueType = PickFromPath<Queue, '_id' | 'name'>;
-export type ContactCampaignType = PickFromPath<Campaign, '_id' | 'code' | 'name' | 'type'>;
+export type ContactQueueType = UnionToIntersection<PickFromPath<Queue, '_id' | 'name'>>;
+export type ContactCampaignType = UnionToIntersection<PickFromPath<Campaign, '_id' | 'code' | 'name' | 'type'>>;
 export type ContactStaffType = { _id: string; code: number; name: { full: unknown } };
 export type ContactCreatedByType = { _id: string; name: PersonName; group: { name: unknown } };
 export type ContactUpdatedByType = { _id: string; name: PersonName; group: { name: unknown } };
 export type ContactUserType = { _id: string; name: PersonName; group: { name: unknown } };
-export type ContactChannelType = PickFromPath<Channel, '_id' | 'name'>;
-export type ContactSourceType = PickFromPath<Channel, '_id' | 'name'>;
+export type ContactChannelType = UnionToIntersection<PickFromPath<Channel, '_id' | 'name'>>;
+export type ContactSourceType = UnionToIntersection<PickFromPath<Channel, '_id' | 'name'>>;
 export type ContactPriorityType = 'Alta' | 'Média' | 'Baixa';
 export type ContactDoNotCallType = 'Noite' | 'Manhã' | 'Tarde';
 export type ContactTypeType = 'Cliente' | 'Concorrente' | 'Fornecedor' | 'Funcionário' | 'Outro' | 'Procurador';

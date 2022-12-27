@@ -1,3 +1,20 @@
+## [1.9.0](https://github.com/Konecty/konecty-sdk/compare/1.8.0...1.9.0) (2022-12-27)
+
+
+### 🧪 Tests
+
+* fix types tests fixtures ([571be31](https://github.com/Konecty/konecty-sdk/commit/571be311003b4527b65d54c0387af68989f93ed3))
+
+
+### 🚀 Features
+
+* add type util UnionToIntesection ([d930a9b](https://github.com/Konecty/konecty-sdk/commit/d930a9bf9b5774f37d3afe8c91c4881c1b4dd1f8))
+
+
+### 🛠 Fixes
+
+* type utils imports ([4880a94](https://github.com/Konecty/konecty-sdk/commit/4880a94ee717d9cd1c6145d49222b52b4b9a6614))
+
 ## [1.8.0](https://github.com/Konecty/konecty-sdk/compare/1.7.0...1.8.0) (2022-12-14)
 
 

@@ -35,6 +35,8 @@ export type TypeFromPath<
 		: never;
 }[Path];
 
+export type UnionToIntersection<U> = (U extends unknown ? (k: U) => void : never) extends (k: infer I) => void ? I : never;
+
 export type PickFromPath<
 	T extends object,
 	Path extends string, // Or, if you prefer, Paths<T>

@@ -3,12 +3,12 @@ import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
 import 'reflect-metadata';
 import { FieldOperators } from './FieldOperators';
-import { ArrElement, Nullable, PickFromPath } from './TypeUtils';
+import { ArrElement, Nullable, PickFromPath, UnionToIntersection } from './TypeUtils';
 import { User } from './User';
 
-export type ModuleCreatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type ModuleUpdatedByType = PickFromPath<User, 'name' | 'group.name'>;
-export type ModuleUserType = PickFromPath<User, 'name' | 'group.name' | 'active'>;
+export type ModuleCreatedByType = UnionToIntersection<PickFromPath<User, 'name' | 'group.name'>>;
+export type ModuleUpdatedByType = UnionToIntersection<PickFromPath<User, 'name' | 'group.name'>>;
+export type ModuleUserType = UnionToIntersection<PickFromPath<User, 'name' | 'group.name' | 'active'>>;
 export interface ModuleConfig {
 	name: string;
 	collection: string;
@@ -29,7 +29,7 @@ export interface KonectyDocument<UserType = unknown | never, CreatedByType = unk
 	_updatedBy?: UpdatedByType extends [never] ? ModuleUpdatedByType : CreatedByType;
 }
 
-export type DocumentUser = PickFromPath<User, '_id' | 'name' | 'group.name' | 'active'>;
+export type DocumentUser = UnionToIntersection<PickFromPath<User, '_id' | 'name' | 'group.name' | 'active'>>;
 
 export type Operator =
 	| 'between'

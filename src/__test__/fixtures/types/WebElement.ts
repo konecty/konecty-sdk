@@ -1,4 +1,4 @@
-import { PickFromPath } from '@konecty/sdk/TypeUtils';
+import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import {
 	KonectyModule,
 	ModuleConfig,
@@ -24,7 +24,7 @@ const webElementConfig: ModuleConfig = {
 		pt_BR: 'Elementos Web',
 	},
 };
-export type WebElementCampaignType = PickFromPath<Campaign, '_id' | 'code' | 'name' | 'type'>;
+export type WebElementCampaignType = UnionToIntersection<PickFromPath<Campaign, '_id' | 'code' | 'name' | 'type'>>;
 export type WebElementWebElementType = { _id: string; name: string };
 export type WebElementParentsType = { _id: string; name: string };
 export type WebElementParentType = { _id: string; code: number; name: string };
