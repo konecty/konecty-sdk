@@ -1,4 +1,4 @@
-import { PickFromPath } from '@konecty/sdk/TypeUtils';
+import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import {
 	KonectyModule,
 	ModuleConfig,

@@ -3,7 +3,7 @@ import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FilterConditionValue, KonectyDocument, KonectyModule, ModuleConfig } from '@konecty/sdk/Module';
 import { Email, Phone } from '@konecty/sdk/types';
 import { MetadataField } from '@konecty/sdk/types/metadata';
-import { PickFromPath } from '@konecty/sdk/TypeUtils';
+import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import { Role } from './Role';
 const userConfig: ModuleConfig = {
 	name: 'User',
@@ -19,7 +19,7 @@ const userConfig: ModuleConfig = {
 };
 export type UserGroupType = { _id: string; name: string };
 export type UserGroupsType = { _id: string; name: string };
-export type UserRoleType = PickFromPath<Role, '_id' | 'name'>;
+export type UserRoleType = UnionToIntersection<PickFromPath<Role, '_id' | 'name'>>;
 export type UserCreatedByType = { _id: string; name: string; group: { name: unknown } };
 export type UserUpdatedByType = { _id: string; name: string; group: { name: unknown } };
 export type UserUserType = { _id: string; name: string; group: { name: unknown }; active: boolean };

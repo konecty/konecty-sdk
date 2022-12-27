@@ -1,4 +1,4 @@
-import { PickFromPath } from '@konecty/sdk/TypeUtils';
+import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import {
 	KonectyModule,
 	ModuleConfig,
@@ -24,7 +24,7 @@ const productConfig: ModuleConfig = {
 		pt_BR: 'Imóveis',
 	},
 };
-export type ProductCampaignType = PickFromPath<Campaign, '_id' | 'code' | 'name'>;
+export type ProductCampaignType = UnionToIntersection<PickFromPath<Campaign, '_id' | 'code' | 'name'>>;
 export type ProductCreatedByType = { _id: string; name: string; group: { name: unknown } };
 export type ProductUpdatedByType = { _id: string; name: string; group: { name: unknown } };
 export type ProductUserType = { _id: string; name: string; group: { name: unknown } };
