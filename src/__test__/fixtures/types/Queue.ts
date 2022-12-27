@@ -1,4 +1,4 @@
-import { PickFromPath } from '@konecty/sdk/TypeUtils';
+import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import {
 	KonectyModule,
 	ModuleConfig,
@@ -28,7 +28,7 @@ const queueConfig: ModuleConfig = {
 export type QueueCreatedByType = { _id: string; name: string; group: { name: unknown } };
 export type QueueUpdatedByType = { _id: string; name: string; group: { name: unknown } };
 export type QueueUserType = { _id: string; name: string; group: { name: unknown }; active: boolean };
-export type QueueTargetCampaignType = PickFromPath<Campaign, '_id' | 'code' | 'name'>;
+export type QueueTargetCampaignType = UnionToIntersection<PickFromPath<Campaign, '_id' | 'code' | 'name'>>;
 export type QueueTypeType = 'Chat' | 'Telefone' | 'Formulario' | 'Email';
 export interface Queue extends KonectyDocument<QueueUserType[], QueueCreatedByType, QueueUpdatedByType> {
 	active?: boolean;
