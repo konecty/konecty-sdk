@@ -2,7 +2,7 @@ import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FilterConditionValue, KonectyDocument, KonectyModule, ModuleConfig } from '@konecty/sdk/Module';
 import { Email, Phone } from '@konecty/sdk/types';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { PickFromPath } from '@konecty/sdk/TypeUtils';
 import { Role } from './Role';
 const userConfig: ModuleConfig = {
@@ -135,7 +135,7 @@ export class UserModule extends KonectyModule<
 		type: 'email',
 		isInherited: true,
 	} as MetadataField<Email>;
-	readonly group: MetadataField<UserGroupType> = {
+	readonly group: LookupMetadataField<UserGroupType> = {
 		label: { en: 'Group', pt_BR: 'Grupo' },
 		isRequired: true,
 		isSortable: true,
@@ -149,8 +149,9 @@ export class UserModule extends KonectyModule<
 			{ fieldName: 'director', inherit: 'always' },
 			{ fieldName: 'extension', inherit: 'until_edited' },
 		],
-	} as MetadataField<UserGroupType>;
-	readonly groups: MetadataField<UserGroupsType> = {
+		lookup: async (search: string) => this.lookup<UserGroupType>('group', search),
+	} as LookupMetadataField<UserGroupType>;
+	readonly groups: LookupMetadataField<UserGroupsType> = {
 		type: 'lookup',
 		name: 'groups',
 		label: { en: 'Extra Access Groups', pt_BR: 'Grupos de Acesso Extra' },
@@ -159,7 +160,8 @@ export class UserModule extends KonectyModule<
 		document: 'Group',
 		descriptionFields: ['name'],
 		isInherited: true,
-	} as MetadataField<UserGroupsType>;
+		lookup: async (search: string) => this.lookup<UserGroupsType>('groups', search),
+	} as LookupMetadataField<UserGroupsType>;
 	readonly admin: MetadataField<boolean> = {
 		type: 'boolean',
 		name: 'admin',
@@ -235,7 +237,7 @@ export class UserModule extends KonectyModule<
 		maxItems: 10,
 		isInherited: true,
 	} as MetadataField<Phone>;
-	readonly role: MetadataField<UserRoleType> = {
+	readonly role: LookupMetadataField<UserRoleType> = {
 		descriptionFields: ['name'],
 		inheritedFields: [
 			{ fieldName: 'admin', inherit: 'always' },
@@ -248,7 +250,8 @@ export class UserModule extends KonectyModule<
 		isSortable: true,
 		document: 'Role',
 		isInherited: true,
-	} as MetadataField<UserRoleType>;
+		lookup: async (search: string) => this.lookup<UserRoleType>('role', search),
+	} as LookupMetadataField<UserRoleType>;
 	readonly sessionExpireAfterMinutes: MetadataField<number> = {
 		isSortable: true,
 		type: 'number',
@@ -263,7 +266,7 @@ export class UserModule extends KonectyModule<
 		name: '_createdAt',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<UserCreatedByType> = {
+	readonly _createdBy: LookupMetadataField<UserCreatedByType> = {
 		type: 'lookup',
 		name: '_createdBy',
 		label: { en: 'Created by', pt_BR: 'Criado por' },
@@ -271,7 +274,8 @@ export class UserModule extends KonectyModule<
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
-	} as MetadataField<UserCreatedByType>;
+		lookup: async (search: string) => this.lookup<UserCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<UserCreatedByType>;
 	readonly _updatedAt: MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -286,9 +290,10 @@ export class UserModule extends KonectyModule<
 		type: 'lookup',
 		name: '_updatedBy',
 		isInherited: true,
+		lookup: async (search: string) => this.lookup<UserUpdatedByType>('_updatedBy', search),
 	} as MetadataField<UserUpdatedByType>;
 
-	readonly _user: MetadataField<UserUserType> = {
+	readonly _user: LookupMetadataField<UserUserType> = {
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
 		type: 'lookup',
@@ -298,7 +303,8 @@ export class UserModule extends KonectyModule<
 		isList: true,
 		document: 'User',
 		isInherited: true,
-	} as MetadataField<UserUserType>;
+		lookup: async (search: string) => this.lookup<UserUserType>('_user', search),
+	} as LookupMetadataField<UserUserType>;
 	readonly expire: MetadataField<Date> = {
 		type: 'date',
 		name: 'expire',

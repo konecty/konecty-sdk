@@ -1,4 +1,4 @@
-import { KonectyClient, KonectyClientOptions } from '@konecty/sdk/Client';
+import { KonectyClient, KonectyClientOptions, KonectyFindResult } from '@konecty/sdk/Client';
 import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
 import 'reflect-metadata';
@@ -223,6 +223,13 @@ export class KonectyModule<
 
 	// #endregion
 
+	// #region lookups
+
+	lookup<T>(field: string, search: string): Promise<KonectyFindResult<T>> {
+		return this.#client.lookup<T>(this.#config.name, field, search);
+	}
+	// #endregion
+
 	// #region commom properties
 	readonly _id: MetadataField<string> = {
 		label: { en: 'Unique Identifier', pt_BR: 'Identificador' },
@@ -242,6 +249,7 @@ export class KonectyModule<
 		isList: true,
 		document: 'User',
 		isInherited: true,
+		lookup: (search: string) => this.lookup<ModuleUserType>('_user', search),
 	} as MetadataField<ModuleUserType>;
 
 	readonly _createdAt: MetadataField<Date> = {
@@ -260,6 +268,7 @@ export class KonectyModule<
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
+		lookup: (search: string) => this.lookup<ModuleUserType>('_createdBy', search),
 	} as MetadataField<ModuleCreatedByType>;
 
 	readonly _updatedAt: MetadataField<Date> = {
@@ -277,6 +286,7 @@ export class KonectyModule<
 		type: 'lookup',
 		name: '_updatedBy',
 		isInherited: true,
+		lookup: (search: string) => this.lookup<ModuleUserType>('_updatedBy', search),
 	} as MetadataField<ModuleUpdatedByType>;
 	// #endregion
 }

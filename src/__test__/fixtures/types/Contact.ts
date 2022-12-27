@@ -7,7 +7,7 @@ import {
 	FilterConditions,
 	ModuleFilter,
 } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { Address, Email, FileDescriptor, PersonName, Phone } from '@konecty/sdk/types';
@@ -188,14 +188,15 @@ export class ContactModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(contactConfig, clientOptions);
 	}
-	readonly 'mainContact': MetadataField<ContactMainContactType> = {
+	readonly 'mainContact': LookupMetadataField<ContactMainContactType> = {
 		label: { en: 'Main Contact', pt_BR: 'Contato Principal' },
 		document: 'Contact',
 		descriptionFields: ['code', 'name.full'],
 		type: 'lookup',
 		name: 'mainContact',
 		isInherited: true,
-	} as MetadataField<ContactMainContactType>;
+		lookup: async (search: string) => this.lookup<ContactMainContactType>('mainContact', search),
+	} as LookupMetadataField<ContactMainContactType>;
 	readonly 'contactAttempts': MetadataField<number> = {
 		label: { en: 'Contact Attempts', pt_BR: 'Tentativas de Contato' },
 		isSortable: true,
@@ -237,15 +238,16 @@ export class ContactModule extends KonectyModule<
 		label: { pt_BR: 'Prioridade', en: 'Priority' },
 		isInherited: true,
 	} as MetadataField<ContactPriorityType>;
-	readonly 'queue': MetadataField<ContactQueueType> = {
+	readonly 'queue': LookupMetadataField<ContactQueueType> = {
 		type: 'lookup',
 		name: 'queue',
 		label: { en: 'Queue', pt_BR: 'Roleta' },
 		document: 'Queue',
 		descriptionFields: ['name'],
 		isInherited: true,
-	} as MetadataField<ContactQueueType>;
-	readonly 'campaign': MetadataField<ContactCampaignType> = {
+		lookup: async (search: string) => this.lookup<ContactQueueType>('queue', search),
+	} as LookupMetadataField<ContactQueueType>;
+	readonly 'campaign': LookupMetadataField<ContactCampaignType> = {
 		document: 'Campaign',
 		descriptionFields: ['code', 'name', 'type'],
 		type: 'lookup',
@@ -253,7 +255,8 @@ export class ContactModule extends KonectyModule<
 		label: { en: 'Campaign', pt_BR: 'Campanha' },
 		isSortable: true,
 		isInherited: true,
-	} as MetadataField<ContactCampaignType>;
+		lookup: async (search: string) => this.lookup<ContactCampaignType>('campaign', search),
+	} as LookupMetadataField<ContactCampaignType>;
 	readonly 'referrerURL': MetadataField<string> = {
 		name: 'referrerURL',
 		label: { en: 'Referrer URL', pt_BR: 'Referrer URL' },
@@ -287,7 +290,7 @@ export class ContactModule extends KonectyModule<
 		renderAs: 'without_scroll',
 		isInherited: true,
 	} as MetadataField<ContactDoNotCallType>;
-	readonly 'staff': MetadataField<ContactStaffType> = {
+	readonly 'staff': LookupMetadataField<ContactStaffType> = {
 		isList: true,
 		document: 'Contact',
 		descriptionFields: ['code', 'name.full'],
@@ -296,7 +299,8 @@ export class ContactModule extends KonectyModule<
 		name: 'staff',
 		label: { en: 'Staff', pt_BR: 'Funcionários' },
 		isInherited: true,
-	} as MetadataField<ContactStaffType>;
+		lookup: async (search: string) => this.lookup<ContactStaffType>('staff', search),
+	} as LookupMetadataField<ContactStaffType>;
 	readonly 'type': MetadataField<ContactTypeType> = {
 		name: 'type',
 		options: {
@@ -497,7 +501,7 @@ export class ContactModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_createdBy': MetadataField<ContactCreatedByType> = {
+	readonly '_createdBy': LookupMetadataField<ContactCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -505,7 +509,8 @@ export class ContactModule extends KonectyModule<
 		type: 'lookup',
 		name: '_createdBy',
 		isInherited: true,
-	} as MetadataField<ContactCreatedByType>;
+		lookup: async (search: string) => this.lookup<ContactCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<ContactCreatedByType>;
 	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -513,15 +518,16 @@ export class ContactModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_updatedBy': MetadataField<ContactUpdatedByType> = {
+	readonly '_updatedBy': LookupMetadataField<ContactUpdatedByType> = {
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
 		isInherited: true,
-	} as MetadataField<ContactUpdatedByType>;
-	readonly '_user': MetadataField<ContactUserType> = {
+		lookup: async (search: string) => this.lookup<ContactUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<ContactUpdatedByType>;
+	readonly '_user': LookupMetadataField<ContactUserType> = {
 		isSortable: true,
 		isList: true,
 		document: 'User',
@@ -531,7 +537,8 @@ export class ContactModule extends KonectyModule<
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },
 		isInherited: true,
-	} as MetadataField<ContactUserType>;
+		lookup: async (search: string) => this.lookup<ContactUserType>('_user', search),
+	} as LookupMetadataField<ContactUserType>;
 	readonly 'medium': MetadataField<ContactMediumType> = {
 		label: { en: 'Medium', pt_BR: 'Mídia' },
 		options: {
@@ -550,7 +557,7 @@ export class ContactModule extends KonectyModule<
 		maxSelected: 1,
 		isInherited: true,
 	} as MetadataField<ContactMediumType>;
-	readonly 'channel': MetadataField<ContactChannelType> = {
+	readonly 'channel': LookupMetadataField<ContactChannelType> = {
 		document: 'Channel',
 		descriptionFields: ['name'],
 		type: 'lookup',
@@ -558,8 +565,9 @@ export class ContactModule extends KonectyModule<
 		label: { en: 'Channel', pt_BR: 'Canal' },
 		isSortable: true,
 		isInherited: true,
-	} as MetadataField<ContactChannelType>;
-	readonly 'source': MetadataField<ContactSourceType> = {
+		lookup: async (search: string) => this.lookup<ContactChannelType>('channel', search),
+	} as LookupMetadataField<ContactChannelType>;
+	readonly 'source': LookupMetadataField<ContactSourceType> = {
 		document: 'Channel',
 		descriptionFields: ['name'],
 		type: 'lookup',
@@ -567,7 +575,8 @@ export class ContactModule extends KonectyModule<
 		label: { en: 'Source', pt_BR: 'Origem' },
 		isSortable: true,
 		isInherited: true,
-	} as MetadataField<ContactSourceType>;
+		lookup: async (search: string) => this.lookup<ContactSourceType>('source', search),
+	} as LookupMetadataField<ContactSourceType>;
 	readonly 'campaignsAsTarget': MetadataField<number> = {
 		type: 'number',
 		name: 'campaignsAsTarget',

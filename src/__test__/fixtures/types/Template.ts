@@ -7,7 +7,7 @@ import {
 	FilterConditions,
 	ModuleFilter,
 } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor } from '@konecty/sdk/types';
@@ -157,7 +157,7 @@ export class TemplateModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_createdBy': MetadataField<TemplateCreatedByType> = {
+	readonly '_createdBy': LookupMetadataField<TemplateCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -165,7 +165,8 @@ export class TemplateModule extends KonectyModule<
 		type: 'lookup',
 		name: '_createdBy',
 		isInherited: true,
-	} as MetadataField<TemplateCreatedByType>;
+		lookup: async (search: string) => this.lookup<TemplateCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<TemplateCreatedByType>;
 	readonly '_updatedAt': MetadataField<Date> = {
 		name: '_updatedAt',
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
@@ -173,15 +174,16 @@ export class TemplateModule extends KonectyModule<
 		type: 'dateTime',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_updatedBy': MetadataField<TemplateUpdatedByType> = {
+	readonly '_updatedBy': LookupMetadataField<TemplateUpdatedByType> = {
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
 		name: '_updatedBy',
 		isInherited: true,
-	} as MetadataField<TemplateUpdatedByType>;
-	readonly '_user': MetadataField<TemplateUserType> = {
+		lookup: async (search: string) => this.lookup<TemplateUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<TemplateUpdatedByType>;
+	readonly '_user': LookupMetadataField<TemplateUserType> = {
 		type: 'lookup',
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },
@@ -191,7 +193,8 @@ export class TemplateModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
 		isInherited: true,
-	} as MetadataField<TemplateUserType>;
+		lookup: async (search: string) => this.lookup<TemplateUserType>('_user', search),
+	} as LookupMetadataField<TemplateUserType>;
 	readonly 'attachment': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'attachment',

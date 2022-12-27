@@ -7,7 +7,7 @@ import {
 	FilterConditions,
 	ModuleFilter,
 } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor } from '@konecty/sdk/types';
@@ -128,7 +128,7 @@ export class WebElementModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(webElementConfig, clientOptions);
 	}
-	readonly 'campaign': MetadataField<WebElementCampaignType> = {
+	readonly 'campaign': LookupMetadataField<WebElementCampaignType> = {
 		type: 'lookup',
 		name: 'campaign',
 		label: { en: 'Campaign', pt_BR: 'Campanha' },
@@ -136,7 +136,8 @@ export class WebElementModule extends KonectyModule<
 		document: 'Campaign',
 		descriptionFields: ['code', 'name', 'type'],
 		isInherited: true,
-	} as MetadataField<WebElementCampaignType>;
+		lookup: async (search: string) => this.lookup<WebElementCampaignType>('campaign', search),
+	} as LookupMetadataField<WebElementCampaignType>;
 	readonly 'code': MetadataField<number> = {
 		isSortable: true,
 		type: 'autoNumber',
@@ -280,7 +281,7 @@ export class WebElementModule extends KonectyModule<
 		optionsSorter: 'asc',
 		isInherited: true,
 	} as MetadataField<WebElementTypeType>;
-	readonly 'webElement': MetadataField<WebElementWebElementType> = {
+	readonly 'webElement': LookupMetadataField<WebElementWebElementType> = {
 		name: 'webElement',
 		label: { en: 'Web Element', pt_BR: 'Elemento Web' },
 		isSortable: true,
@@ -290,8 +291,9 @@ export class WebElementModule extends KonectyModule<
 		descriptionFields: ['name'],
 		type: 'lookup',
 		isInherited: true,
-	} as MetadataField<WebElementWebElementType>;
-	readonly 'parents': MetadataField<WebElementParentsType> = {
+		lookup: async (search: string) => this.lookup<WebElementWebElementType>('webElement', search),
+	} as LookupMetadataField<WebElementWebElementType>;
+	readonly 'parents': LookupMetadataField<WebElementParentsType> = {
 		type: 'lookup',
 		name: 'parents',
 		isList: true,
@@ -300,8 +302,9 @@ export class WebElementModule extends KonectyModule<
 		linkedFormName: 'Default',
 		descriptionFields: ['name'],
 		isInherited: true,
-	} as MetadataField<WebElementParentsType>;
-	readonly 'parent': MetadataField<WebElementParentType> = {
+		lookup: async (search: string) => this.lookup<WebElementParentsType>('parents', search),
+	} as LookupMetadataField<WebElementParentsType>;
+	readonly 'parent': LookupMetadataField<WebElementParentType> = {
 		type: 'lookup',
 		name: 'parent',
 		label: { en: 'Parent', pt_BR: 'Sub Elementos Web de' },
@@ -310,7 +313,8 @@ export class WebElementModule extends KonectyModule<
 		descriptionFields: ['code', 'name'],
 		inheritedFields: [{ inherit: 'hierarchy_always', fieldName: 'parents' }],
 		isInherited: true,
-	} as MetadataField<WebElementParentType>;
+		lookup: async (search: string) => this.lookup<WebElementParentType>('parent', search),
+	} as LookupMetadataField<WebElementParentType>;
 	readonly '_createdAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_createdAt',
@@ -318,7 +322,7 @@ export class WebElementModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_createdBy': MetadataField<WebElementCreatedByType> = {
+	readonly '_createdBy': LookupMetadataField<WebElementCreatedByType> = {
 		isSortable: true,
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
@@ -326,7 +330,8 @@ export class WebElementModule extends KonectyModule<
 		name: '_createdBy',
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isInherited: true,
-	} as MetadataField<WebElementCreatedByType>;
+		lookup: async (search: string) => this.lookup<WebElementCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<WebElementCreatedByType>;
 	readonly '_updatedAt': MetadataField<Date> = {
 		isSortable: true,
 		type: 'dateTime',
@@ -334,15 +339,16 @@ export class WebElementModule extends KonectyModule<
 		label: { en: 'Updated At', pt_BR: 'Atualizado em' },
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_updatedBy': MetadataField<WebElementUpdatedByType> = {
+	readonly '_updatedBy': LookupMetadataField<WebElementUpdatedByType> = {
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		isInherited: true,
-	} as MetadataField<WebElementUpdatedByType>;
-	readonly '_user': MetadataField<WebElementUserType> = {
+		lookup: async (search: string) => this.lookup<WebElementUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<WebElementUpdatedByType>;
+	readonly '_user': LookupMetadataField<WebElementUserType> = {
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },
 		isSortable: true,
@@ -352,5 +358,6 @@ export class WebElementModule extends KonectyModule<
 		detailFields: ['phone', 'emails'],
 		type: 'lookup',
 		isInherited: true,
-	} as MetadataField<WebElementUserType>;
+		lookup: async (search: string) => this.lookup<WebElementUserType>('_user', search),
+	} as LookupMetadataField<WebElementUserType>;
 }

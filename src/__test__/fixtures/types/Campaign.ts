@@ -7,7 +7,7 @@ import {
 	FilterConditions,
 	ModuleFilter,
 } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor, Phone } from '@konecty/sdk/types';
@@ -172,7 +172,7 @@ export class CampaignModule extends KonectyModule<
 	constructor(clientOptions?: KonectyClientOptions) {
 		super(campaignConfig, clientOptions);
 	}
-	readonly 'mainCampaign': MetadataField<CampaignMainCampaignType> = {
+	readonly 'mainCampaign': LookupMetadataField<CampaignMainCampaignType> = {
 		label: { en: 'Main Campaign', pt_BR: 'Campanha Principal' },
 		isSortable: true,
 		document: 'Campaign',
@@ -180,7 +180,8 @@ export class CampaignModule extends KonectyModule<
 		type: 'lookup',
 		name: 'mainCampaign',
 		isInherited: true,
-	} as MetadataField<CampaignMainCampaignType>;
+		lookup: async (search: string) => this.lookup<CampaignMainCampaignType>('mainCampaign', search),
+	} as LookupMetadataField<CampaignMainCampaignType>;
 	readonly 'campaignTarget': MetadataField<ModuleFilter<ContactFilterConditions>> = {
 		label: { en: 'Campaign Target', pt_BR: 'Alvo da Campanha' },
 		document: 'Contact',
@@ -300,7 +301,7 @@ export class CampaignModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_createdBy': MetadataField<CampaignCreatedByType> = {
+	readonly '_createdBy': LookupMetadataField<CampaignCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -308,7 +309,8 @@ export class CampaignModule extends KonectyModule<
 		type: 'lookup',
 		name: '_createdBy',
 		isInherited: true,
-	} as MetadataField<CampaignCreatedByType>;
+		lookup: async (search: string) => this.lookup<CampaignCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<CampaignCreatedByType>;
 	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -316,15 +318,16 @@ export class CampaignModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_updatedBy': MetadataField<CampaignUpdatedByType> = {
+	readonly '_updatedBy': LookupMetadataField<CampaignUpdatedByType> = {
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
-	} as MetadataField<CampaignUpdatedByType>;
-	readonly '_user': MetadataField<CampaignUserType> = {
+		lookup: async (search: string) => this.lookup<CampaignUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<CampaignUpdatedByType>;
+	readonly '_user': LookupMetadataField<CampaignUserType> = {
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
 		type: 'lookup',
@@ -334,7 +337,8 @@ export class CampaignModule extends KonectyModule<
 		isList: true,
 		document: 'User',
 		isInherited: true,
-	} as MetadataField<CampaignUserType>;
+		lookup: async (search: string) => this.lookup<CampaignUserType>('_user', search),
+	} as LookupMetadataField<CampaignUserType>;
 	readonly 'identifier': MetadataField<string> = {
 		name: 'identifier',
 		label: { en: 'Identifier', pt_BR: 'Identificador' },
@@ -361,44 +365,49 @@ export class CampaignModule extends KonectyModule<
 		type: 'text',
 		name: 'notes',
 	} as MetadataField<string>;
-	readonly 'products': MetadataField<CampaignProductsType> = {
+	readonly 'products': LookupMetadataField<CampaignProductsType> = {
 		descriptionFields: ['code', 'name'],
 		type: 'lookup',
 		name: 'products',
 		label: { en: 'Products', pt_BR: 'Imóveis' },
 		document: 'Product',
 		isList: true,
-	} as MetadataField<CampaignProductsType>;
-	readonly 'webElement': MetadataField<CampaignWebElementType> = {
+		lookup: async (search: string) => this.lookup<CampaignProductsType>('products', search),
+	} as LookupMetadataField<CampaignProductsType>;
+	readonly 'webElement': LookupMetadataField<CampaignWebElementType> = {
 		descriptionFields: ['code', 'name', 'type'],
 		type: 'lookup',
 		name: 'webElement',
 		label: { en: 'Web Element', pt_BR: 'Elemento Web' },
 		document: 'WebElement',
-	} as MetadataField<CampaignWebElementType>;
-	readonly 'product': MetadataField<CampaignProductType> = {
+		lookup: async (search: string) => this.lookup<CampaignWebElementType>('webElement', search),
+	} as LookupMetadataField<CampaignWebElementType>;
+	readonly 'product': LookupMetadataField<CampaignProductType> = {
 		descriptionFields: ['code', 'name'],
 		type: 'lookup',
 		name: 'product',
 		label: { en: 'Product', pt_BR: 'Imóvel' },
 		document: 'Product',
-	} as MetadataField<CampaignProductType>;
-	readonly 'targetQueue': MetadataField<CampaignTargetQueueType> = {
+		lookup: async (search: string) => this.lookup<CampaignProductType>('product', search),
+	} as LookupMetadataField<CampaignProductType>;
+	readonly 'targetQueue': LookupMetadataField<CampaignTargetQueueType> = {
 		type: 'lookup',
 		name: 'targetQueue',
 		label: { en: 'Target Queue', pt_BR: 'Roleta' },
 		isSortable: true,
 		document: 'Queue',
 		descriptionFields: ['name'],
-	} as MetadataField<CampaignTargetQueueType>;
-	readonly 'chatQueue': MetadataField<CampaignChatQueueType> = {
+		lookup: async (search: string) => this.lookup<CampaignTargetQueueType>('targetQueue', search),
+	} as LookupMetadataField<CampaignTargetQueueType>;
+	readonly 'chatQueue': LookupMetadataField<CampaignChatQueueType> = {
 		type: 'lookup',
 		name: 'chatQueue',
 		label: { en: 'Chat Queue', pt_BR: 'Roleta do Chat' },
 		isSortable: true,
 		document: 'Queue',
 		descriptionFields: ['name'],
-	} as MetadataField<CampaignChatQueueType>;
+		lookup: async (search: string) => this.lookup<CampaignChatQueueType>('chatQueue', search),
+	} as LookupMetadataField<CampaignChatQueueType>;
 	readonly 'chatTipTitle': MetadataField<string> = {
 		label: { en: 'Tip Title', pt_BR: 'Título do Balão' },
 		type: 'text',
@@ -434,14 +443,15 @@ export class CampaignModule extends KonectyModule<
 		isSortable: true,
 		label: { en: 'Send Leads to Exact Sales', pt_BR: 'Envio de Leads para Exact Sales' },
 	} as MetadataField<CampaignSendExactType>;
-	readonly 'firstTouchTemplate': MetadataField<CampaignFirstTouchTemplateType> = {
+	readonly 'firstTouchTemplate': LookupMetadataField<CampaignFirstTouchTemplateType> = {
 		type: 'lookup',
 		name: 'firstTouchTemplate',
 		label: { en: 'First touch template', pt_BR: 'Modelo de email' },
 		isSortable: true,
 		document: 'Template',
 		descriptionFields: ['code', 'name'],
-	} as MetadataField<CampaignFirstTouchTemplateType>;
+		lookup: async (search: string) => this.lookup<CampaignFirstTouchTemplateType>('firstTouchTemplate', search),
+	} as LookupMetadataField<CampaignFirstTouchTemplateType>;
 	readonly 'firstTouchFile': MetadataField<FileDescriptor> = {
 		type: 'file',
 		name: 'firstTouchFile',
@@ -449,14 +459,15 @@ export class CampaignModule extends KonectyModule<
 		wildcard: '(pdf|jpg|jpeg|png)',
 		isInherited: true,
 	} as MetadataField<FileDescriptor>;
-	readonly 'firstTouchSender': MetadataField<CampaignFirstTouchSenderType> = {
+	readonly 'firstTouchSender': LookupMetadataField<CampaignFirstTouchSenderType> = {
 		type: 'lookup',
 		name: 'firstTouchSender',
 		label: { en: 'Sender', pt_BR: 'Remetente' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
-	} as MetadataField<CampaignFirstTouchSenderType>;
+		lookup: async (search: string) => this.lookup<CampaignFirstTouchSenderType>('firstTouchSender', search),
+	} as LookupMetadataField<CampaignFirstTouchSenderType>;
 	readonly 'productFilter': MetadataField<ModuleFilter<ProductFilterConditions>> = {
 		type: 'filter',
 		name: 'productFilter',

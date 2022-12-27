@@ -24,10 +24,10 @@ export type KonectyFindParams = {
 	sort?: Array<object>;
 };
 
-export type KonectyFindResult = {
+export type KonectyFindResult<T = object> = {
 	success: boolean;
 	total?: number;
-	data?: Array<object>;
+	data?: Array<T>;
 	errors?: string[];
 };
 
@@ -241,6 +241,36 @@ export class KonectyClient {
 			logger.error(err);
 			return {
 				logged: false,
+			};
+		}
+	}
+
+	async lookup<T>(module: string, field: string, search: string): Promise<KonectyFindResult<T>> {
+		try {
+			const params = new URLSearchParams();
+			params.set('search', search);
+			params.set('page', '1');
+			params.set('start', '0');
+			params.set('limit', '100');
+
+			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/lookup/${field}?${params.toString()}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return deserializeDates(body) as KonectyFindResult<T>;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
 			};
 		}
 	}

@@ -7,7 +7,7 @@ import {
 	FilterConditions,
 	ModuleFilter,
 } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import {} from '@konecty/sdk/types';
@@ -76,7 +76,7 @@ export class ChannelModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_createdBy': MetadataField<ChannelCreatedByType> = {
+	readonly '_createdBy': LookupMetadataField<ChannelCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -84,7 +84,8 @@ export class ChannelModule extends KonectyModule<
 		type: 'lookup',
 		name: '_createdBy',
 		isInherited: true,
-	} as MetadataField<ChannelCreatedByType>;
+		lookup: async (search: string) => this.lookup<ChannelCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<ChannelCreatedByType>;
 	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -92,12 +93,13 @@ export class ChannelModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_updatedBy': MetadataField<ChannelUpdatedByType> = {
+	readonly '_updatedBy': LookupMetadataField<ChannelUpdatedByType> = {
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
-	} as MetadataField<ChannelUpdatedByType>;
+		lookup: async (search: string) => this.lookup<ChannelUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<ChannelUpdatedByType>;
 }
