@@ -225,8 +225,31 @@ export class KonectyModule<
 
 	// #region lookups
 
-	lookup<T>(field: string, search: string): Promise<KonectyFindResult<T>> {
-		return this.#client.lookup<T>(this.#config.name, field, search);
+	async lookup<T>(field: string, search: string, filter?: ModuleFilter<ModuleFilterConditions>): Promise<KonectyFindResult<T>> {
+		const result = await this.#client.lookup<T>(
+			this.#config.name,
+			field,
+			search,
+			filter
+				? Object.assign(
+						{},
+						{
+							filter,
+							start: 0,
+							limit: 100,
+						},
+				  )
+				: undefined,
+		);
+
+		if (result?.success === true) {
+			return {
+				success: true,
+				data: result.data as T[],
+				total: result.total as number,
+			};
+		}
+		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
 	}
 	// #endregion
 

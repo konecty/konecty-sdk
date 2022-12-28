@@ -245,13 +245,19 @@ export class KonectyClient {
 		}
 	}
 
-	async lookup<T>(module: string, field: string, search: string): Promise<KonectyFindResult<T>> {
+	async lookup<T>(module: string, field: string, search: string, options?: KonectyFindParams): Promise<KonectyFindResult<T>> {
 		try {
 			const params = new URLSearchParams();
 			params.set('search', search);
 			params.set('page', '1');
 			params.set('start', '0');
 			params.set('limit', '100');
+
+			if (options != null) {
+				Object.keys(options).forEach(key => {
+					params.set(key, JSON.stringify(serializeDates(get(options, key))));
+				});
+			}
 
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/lookup/${field}?${params.toString()}`, {
 				method: 'GET',
