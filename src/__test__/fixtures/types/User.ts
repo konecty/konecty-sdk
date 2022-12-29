@@ -7,7 +7,7 @@ import {
 	FilterConditions,
 	ModuleFilter,
 } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { Address, Email, FileDescriptor, Phone } from '@konecty/sdk/types';
@@ -286,7 +286,7 @@ export class UserModule extends KonectyModule<
 		type: 'email',
 		isInherited: true,
 	} as MetadataField<Email>;
-	readonly 'group': MetadataField<UserGroupType> = {
+	readonly 'group': LookupMetadataField<UserGroupType> = {
 		label: { en: 'Group', pt_BR: 'Grupo' },
 		isRequired: true,
 		isSortable: true,
@@ -300,8 +300,9 @@ export class UserModule extends KonectyModule<
 			{ fieldName: 'director', inherit: 'always' },
 			{ fieldName: 'extension', inherit: 'until_edited' },
 		],
-	} as MetadataField<UserGroupType>;
-	readonly 'groups': MetadataField<UserGroupsType> = {
+		lookup: async (search: string) => this.lookup<UserGroupType>('group', search),
+	} as LookupMetadataField<UserGroupType>;
+	readonly 'groups': LookupMetadataField<UserGroupsType> = {
 		type: 'lookup',
 		name: 'groups',
 		label: { en: 'Extra Access Groups', pt_BR: 'Grupos de Acesso Extra' },
@@ -310,7 +311,8 @@ export class UserModule extends KonectyModule<
 		document: 'Group',
 		descriptionFields: ['name'],
 		isInherited: true,
-	} as MetadataField<UserGroupsType>;
+		lookup: async (search: string) => this.lookup<UserGroupsType>('groups', search),
+	} as LookupMetadataField<UserGroupsType>;
 	readonly 'admin': MetadataField<boolean> = {
 		type: 'boolean',
 		name: 'admin',
@@ -394,7 +396,7 @@ export class UserModule extends KonectyModule<
 		maxItems: 10,
 		isInherited: true,
 	} as MetadataField<Phone>;
-	readonly 'role': MetadataField<UserRoleType> = {
+	readonly 'role': LookupMetadataField<UserRoleType> = {
 		descriptionFields: ['name'],
 		inheritedFields: [
 			{ fieldName: 'admin', inherit: 'always' },
@@ -407,7 +409,8 @@ export class UserModule extends KonectyModule<
 		isSortable: true,
 		document: 'Role',
 		isInherited: true,
-	} as MetadataField<UserRoleType>;
+		lookup: async (search: string) => this.lookup<UserRoleType>('role', search),
+	} as LookupMetadataField<UserRoleType>;
 	readonly 'sessionExpireAfterMinutes': MetadataField<number> = {
 		isSortable: true,
 		type: 'number',
@@ -422,7 +425,7 @@ export class UserModule extends KonectyModule<
 		name: '_createdAt',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_createdBy': MetadataField<UserCreatedByType> = {
+	readonly '_createdBy': LookupMetadataField<UserCreatedByType> = {
 		type: 'lookup',
 		name: '_createdBy',
 		label: { en: 'Created by', pt_BR: 'Criado por' },
@@ -430,7 +433,8 @@ export class UserModule extends KonectyModule<
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
-	} as MetadataField<UserCreatedByType>;
+		lookup: async (search: string) => this.lookup<UserCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<UserCreatedByType>;
 	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -438,14 +442,15 @@ export class UserModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_updatedBy': MetadataField<UserUpdatedByType> = {
+	readonly '_updatedBy': LookupMetadataField<UserUpdatedByType> = {
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
 		name: '_updatedBy',
 		isInherited: true,
-	} as MetadataField<UserUpdatedByType>;
+		lookup: async (search: string) => this.lookup<UserUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<UserUpdatedByType>;
 	readonly 'status': MetadataField<UserStatusType> = {
 		type: 'picklist',
 		name: 'status',
@@ -463,7 +468,7 @@ export class UserModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<UserStatusType>;
-	readonly '_user': MetadataField<UserUserType> = {
+	readonly '_user': LookupMetadataField<UserUserType> = {
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
 		type: 'lookup',
@@ -473,15 +478,17 @@ export class UserModule extends KonectyModule<
 		isList: true,
 		document: 'User',
 		isInherited: true,
-	} as MetadataField<UserUserType>;
-	readonly 'targetQueue': MetadataField<UserTargetQueueType> = {
+		lookup: async (search: string) => this.lookup<UserUserType>('_user', search),
+	} as LookupMetadataField<UserUserType>;
+	readonly 'targetQueue': LookupMetadataField<UserTargetQueueType> = {
 		type: 'lookup',
 		name: 'targetQueue',
 		label: { en: 'Target Queue', pt_BR: 'Roleta' },
 		isSortable: true,
 		document: 'Queue',
 		descriptionFields: ['name'],
-	} as MetadataField<UserTargetQueueType>;
+		lookup: async (search: string) => this.lookup<UserTargetQueueType>('targetQueue', search),
+	} as LookupMetadataField<UserTargetQueueType>;
 	readonly 'induction': MetadataField<Date> = {
 		type: 'date',
 		name: 'induction',
@@ -508,7 +515,7 @@ export class UserModule extends KonectyModule<
 		label: { en: 'Documents', pt_BR: 'Documentação' },
 		isList: true,
 	} as MetadataField<FileDescriptor>;
-	readonly 'director': MetadataField<UserDirectorType> = {
+	readonly 'director': LookupMetadataField<UserDirectorType> = {
 		label: { en: 'Director', pt_BR: 'Diretor' },
 		isSortable: true,
 		document: 'User',
@@ -518,7 +525,8 @@ export class UserModule extends KonectyModule<
 		access: 'Directors',
 		type: 'lookup',
 		name: 'director',
-	} as MetadataField<UserDirectorType>;
+		lookup: async (search: string) => this.lookup<UserDirectorType>('director', search),
+	} as LookupMetadataField<UserDirectorType>;
 	readonly 'temporaryBadge': MetadataField<boolean> = {
 		name: 'temporaryBadge',
 		label: { en: 'Temporary Badge', pt_BR: 'Crachá Provisório' },

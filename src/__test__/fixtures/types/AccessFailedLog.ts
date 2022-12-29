@@ -7,7 +7,7 @@ import {
 	FilterConditions,
 	ModuleFilter,
 } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import {} from '@konecty/sdk/types';
@@ -170,7 +170,7 @@ export class AccessFailedLogModule extends KonectyModule<
 		type: 'dateTime',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_createdBy': MetadataField<AccessFailedLogCreatedByType> = {
+	readonly '_createdBy': LookupMetadataField<AccessFailedLogCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -178,7 +178,8 @@ export class AccessFailedLogModule extends KonectyModule<
 		type: 'lookup',
 		name: '_createdBy',
 		isInherited: true,
-	} as MetadataField<AccessFailedLogCreatedByType>;
+		lookup: async (search: string) => this.lookup<AccessFailedLogCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<AccessFailedLogCreatedByType>;
 	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -186,14 +187,15 @@ export class AccessFailedLogModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_updatedBy': MetadataField<AccessFailedLogUpdatedByType> = {
+	readonly '_updatedBy': LookupMetadataField<AccessFailedLogUpdatedByType> = {
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
 		name: '_updatedBy',
 		isInherited: true,
-	} as MetadataField<AccessFailedLogUpdatedByType>;
+		lookup: async (search: string) => this.lookup<AccessFailedLogUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<AccessFailedLogUpdatedByType>;
 	readonly 'status': MetadataField<AccessFailedLogStatusType> = {
 		optionsSorter: 'asc',
 		type: 'picklist',
@@ -204,7 +206,7 @@ export class AccessFailedLogModule extends KonectyModule<
 		maxSelected: 1,
 		isInherited: true,
 	} as MetadataField<AccessFailedLogStatusType>;
-	readonly '_user': MetadataField<AccessFailedLogUserType> = {
+	readonly '_user': LookupMetadataField<AccessFailedLogUserType> = {
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },
 		isSortable: true,
@@ -214,5 +216,6 @@ export class AccessFailedLogModule extends KonectyModule<
 		detailFields: ['phone', 'emails'],
 		type: 'lookup',
 		isInherited: true,
-	} as MetadataField<AccessFailedLogUserType>;
+		lookup: async (search: string) => this.lookup<AccessFailedLogUserType>('_user', search),
+	} as LookupMetadataField<AccessFailedLogUserType>;
 }

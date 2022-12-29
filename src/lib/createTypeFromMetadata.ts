@@ -156,6 +156,15 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	);
 
 	const classProperties: string[] = Object.values<MetadataField>(fields).reduce<string[]>((acc, field) => {
+		if (field.type === 'lookup') {
+			return acc.concat([
+				`readonly "${field.name}":LookupMetadataField<${getBaseType(field)}> = ${JSON.stringify(field).replace(/\}$/, '')}
+				, lookup: async (search: string) => this.lookup<${getBaseType(field)}>('${field.name}', search)
+				} as LookupMetadataField<${getBaseType(field)}>;`,
+			]);
+
+			// ,
+		}
 		return acc.concat([
 			`readonly "${field.name}":MetadataField<${getBaseType(field)}> = ${JSON.stringify(
 				field,
@@ -234,7 +243,7 @@ export function createTypeFromMetadata(metadata: MetadataDocument): string {
 	const code = [
 		`import { ${imports.TypeUtils.join(', ')} } from '@konecty/sdk/TypeUtils';`,
 		`import { KonectyModule, ModuleConfig, KonectyDocument, FilterConditionValue, FilterConditions, ModuleFilter } from '@konecty/sdk/Module'`,
-		`import { MetadataField } from '@konecty/sdk/types/metadata';`,
+		`import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';`,
 		`import { KonectyClientOptions } from '@konecty/sdk/Client';`,
 		`import { FieldOperators } from '@konecty/sdk/FieldOperators';`,
 	]

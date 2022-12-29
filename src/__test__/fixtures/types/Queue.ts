@@ -7,7 +7,7 @@ import {
 	FilterConditions,
 	ModuleFilter,
 } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import {} from '@konecty/sdk/types';
@@ -152,7 +152,7 @@ export class QueueModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_createdBy': MetadataField<QueueCreatedByType> = {
+	readonly '_createdBy': LookupMetadataField<QueueCreatedByType> = {
 		type: 'lookup',
 		name: '_createdBy',
 		label: { pt_BR: 'Criado por', en: 'Created by' },
@@ -160,7 +160,8 @@ export class QueueModule extends KonectyModule<
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
-	} as MetadataField<QueueCreatedByType>;
+		lookup: async (search: string) => this.lookup<QueueCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<QueueCreatedByType>;
 	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -168,15 +169,16 @@ export class QueueModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_updatedBy': MetadataField<QueueUpdatedByType> = {
+	readonly '_updatedBy': LookupMetadataField<QueueUpdatedByType> = {
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { pt_BR: 'Atualizado por', en: 'Updated by' },
 		isInherited: true,
-	} as MetadataField<QueueUpdatedByType>;
-	readonly '_user': MetadataField<QueueUserType> = {
+		lookup: async (search: string) => this.lookup<QueueUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<QueueUpdatedByType>;
+	readonly '_user': LookupMetadataField<QueueUserType> = {
 		document: 'User',
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
@@ -186,7 +188,8 @@ export class QueueModule extends KonectyModule<
 		isSortable: true,
 		isList: true,
 		isInherited: true,
-	} as MetadataField<QueueUserType>;
+		lookup: async (search: string) => this.lookup<QueueUserType>('_user', search),
+	} as LookupMetadataField<QueueUserType>;
 	readonly 'type': MetadataField<QueueTypeType> = {
 		type: 'picklist',
 		label: { pt_BR: 'Tipo', en: 'Type' },
@@ -203,12 +206,13 @@ export class QueueModule extends KonectyModule<
 		renderAs: 'without_scroll',
 		isInherited: true,
 	} as MetadataField<QueueTypeType>;
-	readonly 'targetCampaign': MetadataField<QueueTargetCampaignType> = {
+	readonly 'targetCampaign': LookupMetadataField<QueueTargetCampaignType> = {
 		type: 'lookup',
 		label: { en: 'Target Campaign', pt_BR: 'Campanha da Roleta' },
 		name: 'targetCampaign',
 		document: 'Campaign',
 		isInherited: true,
 		descriptionFields: ['code', 'name'],
-	} as MetadataField<QueueTargetCampaignType>;
+		lookup: async (search: string) => this.lookup<QueueTargetCampaignType>('targetCampaign', search),
+	} as LookupMetadataField<QueueTargetCampaignType>;
 }

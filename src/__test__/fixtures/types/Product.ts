@@ -7,7 +7,7 @@ import {
 	FilterConditions,
 	ModuleFilter,
 } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FileDescriptor, Money } from '@konecty/sdk/types';
@@ -157,7 +157,7 @@ export class ProductModule extends KonectyModule<
 		label: { en: 'Sale', pt_BR: 'Valor de Venda' },
 		isInherited: true,
 	} as MetadataField<Money>;
-	readonly 'campaign': MetadataField<ProductCampaignType> = {
+	readonly 'campaign': LookupMetadataField<ProductCampaignType> = {
 		name: 'campaign',
 		type: 'lookup',
 		label: { en: 'Campaign', pt_BR: 'Campanha' },
@@ -165,7 +165,8 @@ export class ProductModule extends KonectyModule<
 		detailFields: ['code', 'name'],
 		document: 'Campaign',
 		descriptionFields: ['code', 'name'],
-	} as MetadataField<ProductCampaignType>;
+		lookup: async (search: string) => this.lookup<ProductCampaignType>('campaign', search),
+	} as LookupMetadataField<ProductCampaignType>;
 	readonly 'joinedCampaignOn': MetadataField<Date> = {
 		isSortable: true,
 		type: 'date',
@@ -267,7 +268,7 @@ export class ProductModule extends KonectyModule<
 		type: 'dateTime',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_createdBy': MetadataField<ProductCreatedByType> = {
+	readonly '_createdBy': LookupMetadataField<ProductCreatedByType> = {
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
@@ -275,7 +276,8 @@ export class ProductModule extends KonectyModule<
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		isInherited: true,
-	} as MetadataField<ProductCreatedByType>;
+		lookup: async (search: string) => this.lookup<ProductCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<ProductCreatedByType>;
 	readonly '_updatedAt': MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -283,15 +285,16 @@ export class ProductModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly '_updatedBy': MetadataField<ProductUpdatedByType> = {
+	readonly '_updatedBy': LookupMetadataField<ProductUpdatedByType> = {
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
-	} as MetadataField<ProductUpdatedByType>;
-	readonly '_user': MetadataField<ProductUserType> = {
+		lookup: async (search: string) => this.lookup<ProductUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<ProductUpdatedByType>;
+	readonly '_user': LookupMetadataField<ProductUserType> = {
 		type: 'lookup',
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },
@@ -301,7 +304,8 @@ export class ProductModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name'],
 		detailFields: ['phone', 'emails'],
 		isInherited: true,
-	} as MetadataField<ProductUserType>;
+		lookup: async (search: string) => this.lookup<ProductUserType>('_user', search),
+	} as LookupMetadataField<ProductUserType>;
 	readonly 'sendSupplierUpdatedMail': MetadataField<boolean> = {
 		label: { en: 'E-mail for Supplier Updated At', pt_BR: 'E-mail Atualização Proprietário' },
 		type: 'boolean',

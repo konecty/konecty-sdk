@@ -1,7 +1,7 @@
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FilterConditions, FilterConditionValue, KonectyDocument, KonectyModule, ModuleConfig } from '@konecty/sdk/Module';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 const roleConfig: ModuleConfig = {
 	name: 'Role',
 	collection: 'data.Role',
@@ -75,7 +75,7 @@ export class RoleModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<string>;
-	readonly parents: MetadataField<RoleParentsType> = {
+	readonly parents: LookupMetadataField<RoleParentsType> = {
 		isList: true,
 		document: 'Role',
 		descriptionFields: ['name'],
@@ -85,7 +85,8 @@ export class RoleModule extends KonectyModule<
 		isSortable: true,
 		minItems: 0,
 		isInherited: true,
-	} as MetadataField<RoleParentsType>;
+		lookup: async (search: string) => this.lookup<RoleParentsType>('parents', search),
+	} as LookupMetadataField<RoleParentsType>;
 	readonly _createdAt: MetadataField<Date> = {
 		name: '_createdAt',
 		label: { en: 'Created At', pt_BR: 'Criado em' },
@@ -93,7 +94,7 @@ export class RoleModule extends KonectyModule<
 		type: 'dateTime',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<RoleCreatedByType> = {
+	readonly _createdBy: LookupMetadataField<RoleCreatedByType> = {
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		document: 'User',
@@ -101,7 +102,8 @@ export class RoleModule extends KonectyModule<
 		type: 'lookup',
 		name: '_createdBy',
 		isInherited: true,
-	} as MetadataField<RoleCreatedByType>;
+		lookup: async (search: string) => this.lookup<RoleCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<RoleCreatedByType>;
 	readonly _updatedAt: MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -116,8 +118,9 @@ export class RoleModule extends KonectyModule<
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
+		lookup: async (search: string) => this.lookup<RoleUpdatedByType>('_updatedBy', search),
 	} as MetadataField<RoleUpdatedByType>;
-	readonly _user: MetadataField<RoleUserType> = {
+	readonly _user: LookupMetadataField<RoleUserType> = {
 		isList: true,
 		document: 'User',
 		descriptionFields: ['name', 'group.name', 'active'],
@@ -127,5 +130,6 @@ export class RoleModule extends KonectyModule<
 		label: { en: 'User', pt_BR: 'Usuário' },
 		isSortable: true,
 		isInherited: true,
-	} as MetadataField<RoleUserType>;
+		lookup: async (search: string) => this.lookup<RoleUserType>('_user', search),
+	} as LookupMetadataField<RoleUserType>;
 }

@@ -2,7 +2,7 @@ import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
 import { FilterConditions, FilterConditionValue, KonectyDocument, KonectyModule, ModuleConfig } from '@konecty/sdk/Module';
 import {} from '@konecty/sdk/types';
-import { MetadataField } from '@konecty/sdk/types/metadata';
+import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 const groupConfig: ModuleConfig = {
 	name: 'Group',
 	collection: 'data.Group',
@@ -77,7 +77,7 @@ export class GroupModule extends KonectyModule<
 		type: 'dateTime',
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _createdBy: MetadataField<GroupCreatedByType> = {
+	readonly _createdBy: LookupMetadataField<GroupCreatedByType> = {
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		type: 'lookup',
@@ -85,7 +85,8 @@ export class GroupModule extends KonectyModule<
 		label: { en: 'Created by', pt_BR: 'Criado por' },
 		isSortable: true,
 		isInherited: true,
-	} as MetadataField<GroupCreatedByType>;
+		lookup: async (search: string) => this.lookup<GroupCreatedByType>('_createdBy', search),
+	} as LookupMetadataField<GroupCreatedByType>;
 	readonly _updatedAt: MetadataField<Date> = {
 		type: 'dateTime',
 		name: '_updatedAt',
@@ -93,15 +94,16 @@ export class GroupModule extends KonectyModule<
 		isSortable: true,
 		isInherited: true,
 	} as MetadataField<Date>;
-	readonly _updatedBy: MetadataField<GroupUpdatedByType> = {
+	readonly _updatedBy: LookupMetadataField<GroupUpdatedByType> = {
 		type: 'lookup',
 		name: '_updatedBy',
 		label: { en: 'Updated by', pt_BR: 'Atualizado por' },
 		document: 'User',
 		descriptionFields: ['name', 'group.name'],
 		isInherited: true,
-	} as MetadataField<GroupUpdatedByType>;
-	readonly _user: MetadataField<GroupUserType> = {
+		lookup: async (search: string) => this.lookup<GroupUpdatedByType>('_updatedBy', search),
+	} as LookupMetadataField<GroupUpdatedByType>;
+	readonly _user: LookupMetadataField<GroupUserType> = {
 		type: 'lookup',
 		name: '_user',
 		label: { en: 'User', pt_BR: 'Usuário' },
@@ -111,5 +113,6 @@ export class GroupModule extends KonectyModule<
 		descriptionFields: ['name', 'group.name', 'active'],
 		detailFields: ['phone', 'emails'],
 		isInherited: true,
-	} as MetadataField<GroupUserType>;
+		lookup: async (search: string) => this.lookup<GroupUserType>('_user', search),
+	} as LookupMetadataField<GroupUserType>;
 }

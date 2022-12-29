@@ -1,4 +1,5 @@
 import { Xor } from 'utils/TypesNestedPaths';
+import { KonectyFindResult } from '../Client';
 import { Money } from '../types';
 
 export type MetadataFieldType =
@@ -73,9 +74,14 @@ export type MetadataLabel =
 	  }
 	| { sort: number };
 
-export type MetadataField<T = unknown> = {
-	name: string;
+export interface LookupMetadataField<T = unknown> extends MetadataField<T> {
+	type: 'lookup';
+	lookup: (search: string) => Promise<KonectyFindResult<T> | null>;
+}
+
+export interface MetadataField<T = unknown> {
 	type: MetadataFieldType;
+	name: string;
 	size?: number;
 	label?: MetadataLabel;
 	options?: T extends string ? Record<T, MetadataLabel> : never;
@@ -126,7 +132,7 @@ export type MetadataField<T = unknown> = {
 	typeOptions?: {
 		[key: string]: MetadataLabel;
 	};
-};
+}
 
 export type MetadataDocument = {
 	_id: string;
