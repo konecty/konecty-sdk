@@ -1,3 +1,16 @@
+## [1.10.0](https://github.com/Konecty/konecty-sdk/compare/1.9.0...1.10.0) (2022-12-29)
+
+
+### 🚀 Features
+
+* add filter suport to lookup function ([2bfc22d](https://github.com/Konecty/konecty-sdk/commit/2bfc22d466ae314373a0d3c306973378ebea792a))
+* add lookup function to field in a module ([324f4a4](https://github.com/Konecty/konecty-sdk/commit/324f4a423111ecc1d7f550abbb0df5e2502de85e))
+
+
+### Other
+
+* merge branch 'main' into feature/field-lookup ([780212d](https://github.com/Konecty/konecty-sdk/commit/780212d05e0712007b53eb3fe418f42a888fc7cf))
+
 ## [1.9.0](https://github.com/Konecty/konecty-sdk/compare/1.8.0...1.9.0) (2022-12-27)
 
 
