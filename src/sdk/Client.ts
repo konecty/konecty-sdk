@@ -370,11 +370,11 @@ function deserializeDates(obj: unknown): unknown {
 	}
 
 	if (isArray(obj)) {
-		return obj.map(serializeDates);
+		return obj.map(deserializeDates);
 	}
 
 	if (isObject(obj)) {
-		return Object.keys(obj).reduce((acc, key) => Object.assign(acc, { [key]: serializeDates(get(obj, key)) }), {});
+		return Object.keys(obj).reduce((acc, key) => Object.assign(acc, { [key]: deserializeDates(get(obj, key)) }), {});
 	}
 
 	return obj;

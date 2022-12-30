@@ -1,0 +1,277 @@
+{
+	"success": true,
+	"data": [
+		{
+			"_id": "51547ab4e4b017ed0a26f109",
+			"_createdAt": {
+				"$date": "2012-01-06T02:00:00.000Z"
+			},
+			"_createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"group": { "_id": "521c2fe4e4b057cdcba8e454", "name": "SISTEMA" },
+				"name": "Administrador"
+			},
+			"_updatedAt": "2022-12-29T14:23:40.410Z",
+			"_updatedBy": {
+				"_id": "51fc07d7e4b094e1eb999960",
+				"name": "Adami Portela",
+				"group": { "_id": "519460cae4b0832f20a29cde", "name": "LEANDRORIBAS" },
+				"ts": "2022-12-29T14:23:40.410Z"
+			},
+			"_user": [
+				{
+					"_id": "51fc07d7e4b094e1eb999960",
+					"group": { "_id": "Ejtn9nCAvN7YXi5Hi", "name": "PEDRO AQUINO" },
+					"director": { "_id": "51f02583e4b0073ee30972c7", "nickname": "ROGER" },
+					"name": "Adami Portela"
+				}
+			],
+			"address": {
+				"complement": "206 - 51547ab4e4b017ed0a26f109",
+				"city": "Porto Alegre",
+				"country": "BRA",
+				"district": "Menino Deus",
+				"geolocation": [-51.2212249, -30.0509852],
+				"number": "661",
+				"place": "General Caldwell",
+				"placeType": "Rua",
+				"postalCode": "90130051",
+				"state": "RS"
+			},
+			"areaPrice": { "currency": "BRL", "value": 5127.895337606462 },
+			"areaPrivate": 113.89,
+			"areaTotal": 143.45,
+			"bathrooms": 2,
+			"bedrooms": 3,
+			"code": 4212,
+			"condominiumAmount": { "currency": "BRL", "value": 580 },
+			"conservation": "Impecável",
+			"constructionEndAt": "1994-12-31T02:00:00.208Z",
+			"description": "Excelente apartamento com 3 dormitórios, sendo 1 suíte, living amplo com sacada e churrasqueira, piso em porcelanato, cozinha impecável, apartamento totalmente reformado, moveis sob medida na cozinha, dormitórios e banheiros. Área privativa com 102m², com 1 vaga de garagem, edifício com portaria 24 horas, 2 salões de festas, fitness e próximo a todos os recursos do bairro.",
+			"development": { "_id": "527b8dc20cf278a7ed87241c", "code": 568, "name": "Boulevard Saint Michel", "status": "Ativo" },
+			"developmentDescription": "Condomínio Residencial localizado no bairro Menino Deus, imediações com Av. Getúlio Vargas, Av. Érico Veríssimo e próximo a Av. Ipiranga. Empreendimento de 9 pavimentos, sendo 4 unidades por andar, com Agua Quente, Churrasqueira, Circuito TV Interno, Copa, Elevador, Espaço Gourmet, Espera Para Split, Fitness, Gás Central, Interfone, Medição Agua Individual, Medição, Gás Individual, Portaria, Portaria 24hs, Porteiro Eletrônico, Sacada na Sala, Sala de Jogos, Salão de Festas, Vagas para Visitantes, Vestiário para Funcionários e Zelador.",
+			"duplicateOf": { "_id": "51547ab4e4b017ed0a26f109", "code": 4212 },
+			"elevators": 2,
+			"floors": 9,
+			"focus": true,
+			"keysPlace": ["Proprietario"],
+			"kitches": 1,
+			"leadType": ["Indicação"],
+			"negotiable": true,
+			"occupancy": "Ocupado",
+			"parentProduct": "Boulevard Saint Michel",
+			"parkingInside": 1,
+			"parkingNumber": "24",
+			"parkingOutside": 0,
+			"parkingSpaces": 1,
+			"parkingType": ["Escriturado"],
+			"pictures": [
+				{
+					"created": "20130918200351277",
+					"kind": "image/jpeg",
+					"processed": true,
+					"old_name": "iengelneg4212_154162.jpg",
+					"eTag": "0df34463f7bdb6de640033483d9832a0",
+					"name": "iengelneg4212_154162.jpg",
+					"key": "Product/4212/pictures/iengelneg4212_154162.jpg",
+					"size": 31359,
+					"publish": true
+				}
+			],
+			"position": "Frente",
+			"purpose": ["Residencial"],
+			"registryZone": "5",
+			"resale": true,
+			"rooms": 1,
+			"sale": { "value": 584016, "currency": "BRL" },
+			"solarOrientation": ["Leste", "Oeste", "Norte"],
+			"status": "Ativo",
+			"suites": 1,
+			"supplier": [{ "_id": "X8eNQMJKeaApuYM4N", "name": { "full": "Vera Lucia Simon De Menezes" }, "code": 1178240 }],
+			"supplierUpdatedAt": "2022-12-28T00:00:00.000Z",
+			"tower": "A",
+			"towers": 2,
+			"type": "Apartamento",
+			"unitsPerFloor": 4,
+			"zone": "Porto Alegre - Centro",
+			"_merge": [
+				"528cbd2291a7a9644600e000",
+				"542323f80cf24ffcc372f981",
+				"51526756e4b0380ca9fc625d",
+				"53d9459a0cf2540f6d9b96c9"
+			],
+			"file": null,
+			"launch": "1991-12-01T02:00:00.000Z",
+			"inCondominium": true,
+			"developmentPictures": [
+				{
+					"name": "00-FACHADA-161438.JPG",
+					"size": 841392,
+					"created": "",
+					"etag": "3d13afd561695b8a8b9a443f29e99c4a",
+					"headers": "",
+					"key": "Development/568/developmentPictures/00-FACHADA-161438.JPG",
+					"kind": "image/jpeg",
+					"last_modified": "",
+					"label": "",
+					"description": ""
+				}
+			],
+			"link": null,
+			"videos": null,
+			"streetView": null,
+			"picturesPriority": "Empreendimento",
+			"sendPriceUpdateMail": true,
+			"sendSupplierUpdatedMail": true,
+			"builder": [{ "_id": "52e965a80cf21bc0ebf976d9", "name": { "full": "Maiojama Incorporações" }, "code": 161445 }],
+			"notes": "VERIFICADO // Vendido pela concorrência.",
+			"editorialStatus": "Vendido Concorrência",
+			"checked": "Sim",
+			"targetPercent": 0,
+			"office": "Zona Sul",
+			"features_bkp": [
+				"Agua Quente",
+				"Churrasqueira",
+				"Circuito TV Interno",
+				"Elevador",
+				"Espaço Gourmet",
+				"Gás Central",
+				"Interfone",
+				"Medição Gás Individual",
+				"Portaria 24hs",
+				"Porteiro Eletrônico",
+				"Sacada na Sala",
+				"Sala de Jogos",
+				"Salão de Festas",
+				"Vagas para Visitantes",
+				"Vestiário para Funcionários",
+				"Zelador",
+				"Copa",
+				"Espera Para Split",
+				"Fitness",
+				"Medição Agua Individual",
+				"Portaria"
+			],
+			"developmentFeatures": [
+				"Churrasqueira no Condomínio",
+				"Circuito FTV",
+				"Elevador",
+				"Espaço Gourmet",
+				"Gás Central",
+				"Interfone",
+				"Portaria 24hs",
+				"Portaria Virtual/Eletrônica",
+				"Sala de Jogos",
+				"Salão de Festas",
+				"Estacionamento para visitantes",
+				"Vestiário para Funcionários",
+				"Zelador",
+				"Fitness",
+				"Portaria Parcial"
+			],
+			"features": [
+				"Agua Quente",
+				"Churrasqueira no Imóvel",
+				"Medição Gás Individual",
+				"Sacada",
+				"Copa",
+				"Espera Para Split",
+				"Medição Agua Individual"
+			],
+			"featuresDiff": [
+				"Churrasqueira",
+				"Circuito TV Interno",
+				"Elevador",
+				"Espaço Gourmet",
+				"Gás Central",
+				"Interfone",
+				"Portaria 24hs",
+				"Porteiro Eletrônico",
+				"Sacada na Sala",
+				"Sala de Jogos",
+				"Salão de Festas",
+				"Vagas para Visitantes",
+				"Vestiário para Funcionários",
+				"Zelador",
+				"Fitness",
+				"Portaria"
+			],
+			"featuresUpdated": true,
+			"checkedNotes": "Verificado 2019",
+			"checkedUser": {
+				"_id": "DCNdm6dCz3abYy9Nz",
+				"group": { "_id": "AaGyLaNfqjnXN5m6S", "name": "IMÓVEIS FOXTER" },
+				"name": "Pedro Verçoza"
+			},
+			"professionalPicturesStatus": "Cliente não quer fotos",
+			"signPlacedOn": false,
+			"signProhibited": false,
+			"signStatus": "Cliente não quer placa",
+			"agencyOpportunity": {
+				"_id": "zPFjkquz6tN2XZgfQ",
+				"_user": [
+					{
+						"_id": "51fc07d7e4b094e1eb999960",
+						"group": { "_id": "519460cae4b0832f20a29cde", "name": "LEANDRORIBAS" },
+						"director": { "_id": "519460dde4b0832f20a29d17", "nickname": "LEANDRORIBAS" },
+						"name": "Adami Portela",
+						"active": true
+					}
+				],
+				"status": "Ativo",
+				"editorialStatus": "Vendido Concorrência",
+				"supplier": [
+					{
+						"_id": "X8eNQMJKeaApuYM4N",
+						"name": { "full": "Vera Lucia Simon De Menezes" },
+						"code": 1178240,
+						"email": [
+							{ "type": "Pessoal", "address": "vera.simon@hotmail.com" },
+							{ "address": "rafaela-m.fontoura@hotmail.com" },
+							{ "address": "vera.simon@hotmail.com" }
+						]
+					}
+				],
+				"supplierUpdatedAt": "2022-12-28T00:00:00.000Z",
+				"product": {
+					"_id": "51547ab4e4b017ed0a26f109",
+					"code": 4212,
+					"type": "Apartamento",
+					"sale": { "value": 584018, "currency": "BRL" },
+					"address": {
+						"complement": "206 - 51547ab4e4b017ed0a26f109",
+						"city": "Porto Alegre",
+						"country": "BRA",
+						"district": "Menino Deus",
+						"geolocation": [-51.2212249, -30.0509852],
+						"number": "661",
+						"place": "General Caldwell",
+						"placeType": "Rua",
+						"postalCode": "90130051",
+						"state": "RS"
+					}
+				},
+				"pricingStatus": "Aguardando Precificação",
+				"sale": { "value": 584016, "currency": "BRL" },
+				"source": "Lead Foxter - Formulário - Site",
+				"code": 6594,
+				"_createdAt": "2022-12-20T16:39:06.953Z",
+				"_createdBy": {
+					"_id": "4ffcf81084aecfbaff50fd05",
+					"name": "Administrador",
+					"group": { "_id": "521c2fe4e4b057cdcba8e454", "name": "SISTEMA" }
+				},
+				"_updatedAt": "2022-12-29T14:23:40.410Z",
+				"_updatedBy": {
+					"_id": "51fc07d7e4b094e1eb999960",
+					"name": "Adami Portela",
+					"group": { "_id": "519460cae4b0832f20a29cde", "name": "LEANDRORIBAS" },
+					"ts": "2022-12-29T14:23:40.410Z"
+				},
+				"previousSale": { "value": 584018, "currency": "BRL" }
+			},
+			"saleDiscount": { "value": 2, "currency": "BRL" }
+		}
+	],
+	"total": 1
+}
