@@ -1,3 +1,10 @@
+### [1.10.1](https://github.com/Konecty/konecty-sdk/compare/1.10.0...1.10.1) (2022-12-30)
+
+
+### 🛠 Fixes
+
+* deserialize date function ([343a476](https://github.com/Konecty/konecty-sdk/commit/343a47641d60d9a5cbfdebb8b445ee6c4684ef95))
+
 ## [1.10.0](https://github.com/Konecty/konecty-sdk/compare/1.9.0...1.10.0) (2022-12-29)
 
 
