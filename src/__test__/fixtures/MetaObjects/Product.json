@@ -32,6 +32,16 @@
 			"type": "autoNumber",
 			"isInherited": true
 		},
+		"address": {
+			"isRequired": true,
+			"isSortable": true,
+			"label": {
+				"en": "Address",
+				"pt_BR": "Endereço"
+			},
+			"name": "address",
+			"type": "address"
+		},
 		"sale": {
 			"isSortable": true,
 			"minValue": 0,
