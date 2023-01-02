@@ -1,3 +1,10 @@
+### [1.10.2](https://github.com/Konecty/konecty-sdk/compare/1.10.1...1.10.2) (2023-01-02)
+
+
+### 🛠 Fixes
+
+* add verification to iso date format ([407ca0e](https://github.com/Konecty/konecty-sdk/commit/407ca0e2cc57ec7b5f13fc07daee98d5a454b6a2))
+
 ### [1.10.1](https://github.com/Konecty/konecty-sdk/compare/1.10.0...1.10.1) (2022-12-30)
 
 
