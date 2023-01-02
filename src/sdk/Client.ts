@@ -366,7 +366,11 @@ function deserializeDates(obj: unknown): unknown {
 		return DateTime.fromISO(get(obj, '$date')).toJSDate();
 	}
 	if (typeof obj === 'string' && DateTime.fromISO(obj).isValid) {
-		return DateTime.fromISO(obj).toJSDate();
+		try {
+			if (new Date(obj).toISOString() == obj) {
+				return DateTime.fromISO(obj).toJSDate();
+			}
+		} catch (e) {}
 	}
 
 	if (isArray(obj)) {

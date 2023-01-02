@@ -10,7 +10,7 @@ import {
 import { LookupMetadataField, MetadataField } from '@konecty/sdk/types/metadata';
 import { KonectyClientOptions } from '@konecty/sdk/Client';
 import { FieldOperators } from '@konecty/sdk/FieldOperators';
-import { FileDescriptor, Money } from '@konecty/sdk/types';
+import { Address, FileDescriptor, Money } from '@konecty/sdk/types';
 import { Campaign } from './Campaign';
 const productConfig: ModuleConfig = {
 	name: 'Product',
@@ -34,6 +34,7 @@ export interface Product extends KonectyDocument<ProductUserType[], ProductCreat
 	active?: boolean;
 	supplierUpdatedChanged?: boolean;
 	code?: number;
+	address?: Address;
 	sale?: Money;
 	campaign?: ProductCampaignType;
 	joinedCampaignOn?: Date;
@@ -66,6 +67,16 @@ export type ProductFilterConditions =
 	| FilterConditionValue<'active', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'supplierUpdatedChanged', FieldOperators<'boolean'>, boolean>
 	| FilterConditionValue<'code', FieldOperators<'autoNumber'>, number>
+	| FilterConditionValue<'address.country', FieldOperators<'address.country'>, string>
+	| FilterConditionValue<'address.state', FieldOperators<'address.state'>, string>
+	| FilterConditionValue<'address.city', FieldOperators<'address.city'>, string>
+	| FilterConditionValue<'address.district', FieldOperators<'address.district'>, string>
+	| FilterConditionValue<'address.place', FieldOperators<'address.place'>, string>
+	| FilterConditionValue<'address.number', FieldOperators<'address.number'>, string>
+	| FilterConditionValue<'address.postalCode', FieldOperators<'address.postalCode'>, string>
+	| FilterConditionValue<'address.complement', FieldOperators<'address.complement'>, string>
+	| FilterConditionValue<'address.geolocation.0', FieldOperators<'address.geolocation.0'>, number>
+	| FilterConditionValue<'address.geolocation.1', FieldOperators<'address.geolocation.1'>, number>
 	| FilterConditionValue<'sale.currency', FieldOperators<'money.currency'>, string>
 	| FilterConditionValue<'sale.value', FieldOperators<'money.value'>, number>
 	| FilterConditionValue<'campaign', FieldOperators<'lookup'>, ProductCampaignType>
@@ -102,6 +113,7 @@ export type ProductSortFields =
 	| 'active'
 	| 'supplierUpdatedChanged'
 	| 'code'
+	| 'address'
 	| 'sale'
 	| 'campaign'
 	| 'joinedCampaignOn'
@@ -149,6 +161,13 @@ export class ProductModule extends KonectyModule<
 		type: 'autoNumber',
 		isInherited: true,
 	} as MetadataField<number>;
+	readonly 'address': MetadataField<Address> = {
+		isRequired: true,
+		isSortable: true,
+		label: { en: 'Address', pt_BR: 'Endereço' },
+		name: 'address',
+		type: 'address',
+	} as MetadataField<Address>;
 	readonly 'sale': MetadataField<Money> = {
 		isSortable: true,
 		minValue: 0,
