@@ -1,3 +1,10 @@
+## [1.11.0](https://github.com/Konecty/konecty-sdk/compare/1.10.2...1.11.0) (2023-02-17)
+
+
+### 🚀 Features
+
+* add fields option to find and findOne ([18ba3d1](https://github.com/Konecty/konecty-sdk/commit/18ba3d1084b600ba7e8e42e837ea97f9fd42d97e))
+
 ### [1.10.2](https://github.com/Konecty/konecty-sdk/compare/1.10.1...1.10.2) (2023-01-02)
 
 
