@@ -95,10 +95,11 @@ export type ModuleSort<T> = {
 	direction: 'ASC' | 'DESC';
 };
 
-export type ModuleFindAllOptions<T> = {
+export type ModuleFindAllOptions<T, F> = {
 	start?: number;
 	limit?: number;
 	sort?: ModuleSort<T>[];
+	fields?: Array<F>;
 };
 
 export type FindResult<T> = {
@@ -136,11 +137,21 @@ export class KonectyModule<
 	}
 
 	// #region Retrieve
-	async findOne(filter: ModuleFilter<ModuleFilterConditions>): Promise<Document | null> {
-		const result = await this.#client.find(this.#config.name, {
-			filter,
-			limit: 1,
-		});
+	async findOne(
+		filter: ModuleFilter<ModuleFilterConditions>,
+		options?: Pick<ModuleFindAllOptions<ModuleSortFields, keyof Document>, 'sort' | 'fields'>,
+	): Promise<Document | null> {
+		const result = await this.#client.find(
+			this.#config.name,
+			Object.assign(
+				{},
+				{
+					filter,
+					limit: 1,
+				},
+				options ?? {},
+			),
+		);
 
 		if (result?.success === true && result.data?.length === 1) {
 			return result.data[0] as Document;
@@ -154,7 +165,7 @@ export class KonectyModule<
 
 	async find(
 		filter: ModuleFilter<ModuleFilterConditions>,
-		options?: ModuleFindAllOptions<ModuleSortFields>,
+		options?: ModuleFindAllOptions<ModuleSortFields, keyof Document>,
 	): Promise<FindResult<Document>> {
 		const result = await this.#client.find(
 			this.#config.name,
