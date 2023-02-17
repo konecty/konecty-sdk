@@ -22,6 +22,7 @@ export type KonectyFindParams = {
 	start?: number;
 	limit?: number;
 	sort?: Array<object>;
+	fields?: Array<string | number | symbol>;
 };
 
 export type KonectyFindResult<T = object> = {
@@ -65,7 +66,11 @@ export class KonectyClient {
 		try {
 			const params = new URLSearchParams();
 			Object.keys(options).forEach(key => {
-				params.set(key, JSON.stringify(serializeDates(get(options, key))));
+				if (key === 'fields') {
+					params.set(key, (options.fields ?? []).map(String).join(','));
+				} else {
+					params.set(key, JSON.stringify(serializeDates(get(options, key))));
+				}
 			});
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/find?${params.toString()}`, {
 				method: 'GET',
