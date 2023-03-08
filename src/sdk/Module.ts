@@ -1,4 +1,4 @@
-import { KonectyClient, KonectyClientOptions, KonectyFindResult } from '@konecty/sdk/Client';
+import { History, KonectyClient, KonectyClientOptions, KonectyFindResult } from '@konecty/sdk/Client';
 import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
 import 'reflect-metadata';
@@ -183,6 +183,18 @@ export class KonectyModule<
 		if (result?.success === true) {
 			return {
 				data: result.data as Document[],
+				count: result.total as number,
+			};
+		}
+		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
+	}
+
+	async getHistory(_id: string): Promise<FindResult<History>> {
+		const result = await this.#client.getHistory(this.#config.name, _id);
+
+		if (result?.success === true) {
+			return {
+				data: result.data as History[],
 				count: result.total as number,
 			};
 		}
