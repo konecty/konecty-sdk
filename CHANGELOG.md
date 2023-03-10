@@ -1,3 +1,10 @@
+### [1.12.1](https://github.com/Konecty/konecty-sdk/compare/1.12.0...1.12.1) (2023-03-10)
+
+
+### 🛠 Fixes
+
+* history diffs type ([0c18e2a](https://github.com/Konecty/konecty-sdk/commit/0c18e2a149ae5fe7778e9b982f5f0893957363f4))
+
 ## [1.12.0](https://github.com/Konecty/konecty-sdk/compare/1.11.0...1.12.0) (2023-03-10)
 
 
