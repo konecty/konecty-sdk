@@ -1,3 +1,15 @@
+## [1.12.0](https://github.com/Konecty/konecty-sdk/compare/1.11.0...1.12.0) (2023-03-10)
+
+
+### 🧪 Tests
+
+* add get history test ([1da23a5](https://github.com/Konecty/konecty-sdk/commit/1da23a54e151eac770fbede9620c999f6172f4ac))
+
+
+### 🚀 Features
+
+* get document history ([498b7f2](https://github.com/Konecty/konecty-sdk/commit/498b7f2af39e8a743b2e2735ddff655a3e57ae70))
+
 ## [1.11.0](https://github.com/Konecty/konecty-sdk/compare/1.10.2...1.11.0) (2023-02-17)
 
 
