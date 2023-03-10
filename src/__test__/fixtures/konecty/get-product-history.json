@@ -1,0 +1,361 @@
+{
+	"data": [
+		{
+			"_id": 167397382600001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-01-17T16:43:46.317Z"
+			},
+			"createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"name": "Administrador",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-01-17T16:43:46.317Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"rooms": {
+					"to": 2
+				},
+				"tags": {
+					"to": ["Mercado Primário"]
+				},
+				"sale": {
+					"to": {
+						"currency": "BRL",
+						"value": 670000
+					}
+				}
+			}
+		},
+		{
+			"_id": 167467158700002,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-01-25T18:33:07.629Z"
+			},
+			"createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"name": "Administrador",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-01-25T18:33:07.629Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"editorialNotes": {
+					"to": ".."
+				}
+			}
+		},
+		{
+			"_id": 167467346700001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-01-25T19:04:27.740Z"
+			},
+			"createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"name": "Administrador",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-01-25T19:04:27.740Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"editorialNotes": {
+					"to": "."
+				}
+			}
+		},
+		{
+			"_id": 167467438900001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-01-25T19:19:49.871Z"
+			},
+			"createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"name": "Administrador",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-01-25T19:19:49.871Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"editorialNotes": {
+					"to": ".."
+				}
+			}
+		},
+		{
+			"_id": 167467448800001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-01-25T19:21:28.917Z"
+			},
+			"createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"name": "Administrador",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-01-25T19:21:28.917Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"editorialNotes": {
+					"to": "."
+				}
+			}
+		},
+		{
+			"_id": 167467456900001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-01-25T19:22:49.362Z"
+			},
+			"createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"name": "Administrador",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-01-25T19:22:49.362Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"editorialNotes": {
+					"to": ".."
+				}
+			}
+		},
+		{
+			"_id": 167467464000007,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-01-25T19:24:00.368Z"
+			},
+			"createdBy": {
+				"_id": "4ffcf81084aecfbaff50fd05",
+				"name": "Administrador",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-01-25T19:24:00.368Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"editorialNotes": {
+					"to": "."
+				}
+			}
+		},
+		{
+			"_id": 167604757100001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-02-10T16:46:11.729Z"
+			},
+			"createdBy": {
+				"_id": "CkjARQqDJknfJtAt5666",
+				"name": "Carlos Eduardo Gomes",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-02-10T16:46:11.729Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"supplierUpdatedAt": {
+					"to": {
+						"$date": "2023-02-10T00:00:00.000Z"
+					}
+				},
+				"supplierUpdatedChanged": {
+					"to": true
+				}
+			}
+		},
+		{
+			"_id": 167604779300001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-02-10T16:49:53.465Z"
+			},
+			"createdBy": {
+				"_id": "CkjARQqDJknfJtAt5666",
+				"name": "Carlos Eduardo Gomes",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-02-10T16:49:53.465Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"supplierUpdatedChanged": {
+					"to": true
+				}
+			}
+		},
+		{
+			"_id": 167628804700001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-02-13T11:34:07.964Z"
+			},
+			"createdBy": {
+				"_id": "CkjARQqDJknfJtAt5666",
+				"name": "Carlos Eduardo Gomes",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-02-13T11:34:07.964Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"supplierUpdatedAt": {
+					"to": {
+						"$date": "2023-02-13T00:00:00.000Z"
+					}
+				},
+				"supplierUpdatedChanged": {
+					"to": true
+				}
+			}
+		},
+		{
+			"_id": 167628837400001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-02-13T11:39:34.953Z"
+			},
+			"createdBy": {
+				"_id": "CkjARQqDJknfJtAt5666",
+				"name": "Carlos Eduardo Gomes",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-02-13T11:39:34.953Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"supplier": {
+					"to": [
+						{
+							"_id": "ud2njGAxS6BPrwetn",
+							"name": {
+								"full": "Marcus Teste"
+							},
+							"code": 1539599
+						}
+					]
+				}
+			}
+		},
+		{
+			"_id": 167628838800001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-02-13T11:39:48.367Z"
+			},
+			"createdBy": {
+				"_id": "CkjARQqDJknfJtAt5666",
+				"name": "Carlos Eduardo Gomes",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-02-13T11:39:48.367Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"supplierUpdatedChanged": {
+					"to": true
+				}
+			}
+		},
+		{
+			"_id": 167828993300001,
+			"dataId": "productId",
+			"createdAt": {
+				"$date": "2023-03-08T15:38:53.759Z"
+			},
+			"createdBy": {
+				"_id": "CkjARQqDJknfJtAt5666",
+				"name": "Carlos Eduardo Gomes",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"ts": {
+					"$date": "2023-03-08T15:38:53.759Z"
+				}
+			},
+			"type": "update",
+			"diffs": {
+				"areaPrice": {
+					"to": {
+						"currency": "BRL",
+						"value": 10079.413561392792
+					}
+				},
+				"sale": {
+					"to": {
+						"currency": "BRL",
+						"value": 660000
+					}
+				},
+				"saleTargetDifference": {
+					"to": {
+						"currency": "BRL",
+						"value": 10000
+					}
+				},
+				"targetPercent": {
+					"to": 1.02
+				}
+			}
+		}
+	]
+}

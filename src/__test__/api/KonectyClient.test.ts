@@ -1,9 +1,10 @@
-import { KonectyClient, KonectyClientOptions, KonectyFindResult } from '@konecty/sdk/Client';
+import { History, KonectyClient, KonectyClientOptions, KonectyFindResult } from '@konecty/sdk/Client';
 import { expect } from 'chai';
 import { rest } from 'msw';
 import { Product } from '../../__test__/fixtures/types/Product';
 import { server } from '../../__test__/setup-test';
 import clientProductsResponse from '../fixtures/konecty/find-client-products.json';
+import productHistoryResponse from '../fixtures/konecty/get-product-history.json';
 
 describe('Konecty Client Tests', () => {
 	it('should create a client', () => {
@@ -80,5 +81,25 @@ describe('Konecty Client Tests', () => {
 
 		// Assert
 		expect(product.data?.[0]?.address?.number).to.be.equal('0336');
+	});
+
+	it('should return module history', async () => {
+		// Arrange
+		const options: KonectyClientOptions = {
+			endpoint: 'http://localhost:3000',
+			accessKey: 'asdfasdfsadfsadf',
+		};
+		const client = new KonectyClient(options);
+		server.use(
+			rest.get('http://localhost:3000/rest/data/Product/productId/history', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(productHistoryResponse));
+			}),
+		);
+
+		// Act
+		const product: KonectyFindResult<History> = await client.getHistory('product', 'productId');
+
+		// Assert
+		expect(product?.data?.[0].dataId).to.be.equal('productId');
 	});
 });

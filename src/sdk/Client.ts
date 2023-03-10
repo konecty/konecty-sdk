@@ -7,6 +7,7 @@ import isArray from 'lodash/isArray';
 import isObject from 'lodash/isObject';
 import { DateTime } from 'luxon';
 import qs from 'qs';
+import { UserGroupType } from './User';
 
 import logger from '../lib/logger';
 import { User } from './User';
@@ -23,6 +24,23 @@ export type KonectyFindParams = {
 	limit?: number;
 	sort?: Array<object>;
 	fields?: Array<string | number | symbol>;
+};
+
+export type History = {
+	_id: number;
+	type: 'create' | 'update';
+	createdAt: Date;
+	createdBy: {
+		group: UserGroupType;
+		name: string;
+		_id: string;
+	};
+	dataId: string;
+	diffs: {
+		[key: string]: {
+			to: any;
+		};
+	}[];
 };
 
 export type KonectyFindResult<T = object> = {
@@ -172,6 +190,37 @@ export class KonectyClient {
 	}
 
 	// #endregion
+
+	async getHistory(module: string, _id: string): Promise<KonectyFindResult<History>> {
+		try {
+			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/${_id}/history`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			const deserializedDates = deserializeDates(body) as KonectyFindResult<History>;
+
+			return {
+				success: true,
+				data: deserializedDates.data,
+				total: deserializedDates.data?.length ?? 0,
+			};
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
 
 	async login(user: string, password: string): Promise<KonectyLoginResult> {
 		try {
