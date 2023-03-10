@@ -40,7 +40,7 @@ export type History = {
 		[key: string]: {
 			to: any;
 		};
-	}[];
+	};
 };
 
 export type KonectyFindResult<T = object> = {
