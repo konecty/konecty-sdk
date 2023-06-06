@@ -155,6 +155,59 @@ describe('Konecty Retrive Documents', () => {
 		expect(data).to.be.an('array').lengthOf(2);
 	});
 
+	it('Should use textSearch', async () => {
+		// Arrange
+		const userModule = new UserModule();
+
+		let fieldsParam;
+		let filterParam;
+		server.use(
+			rest.get('http://localhost:3000/rest/data/User/find', (req, res, ctx) => {
+				fieldsParam = req.url.searchParams.get('fields');
+				filterParam = JSON.parse(req.url.searchParams.get('filter') as string);
+				return res.once(
+					ctx.status(200),
+					ctx.json({
+						success: true,
+						data: activeUserResponse.data.map(p => pick(p, ['_id', 'code', 'name'])),
+						total: 2,
+					}),
+				);
+			}),
+		);
+
+		// Act
+		const { count, data } = await userModule.find(
+			{
+				match: 'and',
+				conditions: [
+					{
+						term: 'active',
+						operator: 'equals',
+						value: true,
+					},
+				],
+				textSearch: 'test',
+			},
+			{
+				sort: [
+					{
+						property: 'name',
+						direction: 'ASC',
+					},
+				],
+				fields: ['code', 'name'],
+			},
+		);
+
+		// Assert
+		expect(fieldsParam).to.be.equals('code,name');
+		expect(filterParam).to.have.property('textSearch', 'test');
+		expect(count).to.be.equal(2);
+		expect(data).to.not.be.null;
+		expect(data).to.be.an('array').lengthOf(2);
+	});
+
 	it('Should retrieve admin user from username with only _id, code and name', async () => {
 		// Arrange
 		const userModule = new UserModule();

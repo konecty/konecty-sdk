@@ -83,9 +83,15 @@ export type FilterConditions =
 	| FilterConditionValue<'_updatedBy', FieldOperators<'lookup'>, string>
 	| FilterConditionValue<'_updatedBy._id', FieldOperators<'lookup._id'>, string>;
 
+export type NestedModuleFilter<T> = {
+	match: 'and' | 'or';
+	conditions: (NestedModuleFilter<T> | T)[];
+};
+
 export type ModuleFilter<T> = {
 	match: 'and' | 'or';
-	conditions: (ModuleFilter<T> | T)[];
+	conditions: (NestedModuleFilter<T> | T)[];
+	textSearch?: string;
 };
 
 export type SortableFields = '_createdAt' | '_updatedAt';
