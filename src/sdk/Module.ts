@@ -91,7 +91,7 @@ export type NestedModuleFilter<T> = {
 
 export type ModuleFilter<T> = {
 	match: 'and' | 'or';
-	conditions: T[];
+	conditions?: T[];
 	filters?: NestedModuleFilter<T>[];
 	textSearch?: string;
 };
