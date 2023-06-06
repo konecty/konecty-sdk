@@ -85,12 +85,14 @@ export type FilterConditions =
 
 export type NestedModuleFilter<T> = {
 	match: 'and' | 'or';
-	conditions: (NestedModuleFilter<T> | T)[];
+	conditions?: T[];
+	filters?: NestedModuleFilter<T>[];
 };
 
 export type ModuleFilter<T> = {
 	match: 'and' | 'or';
-	conditions: (NestedModuleFilter<T> | T)[];
+	conditions?: T[];
+	filters?: NestedModuleFilter<T>[];
 	textSearch?: string;
 };
 
