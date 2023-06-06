@@ -1,3 +1,15 @@
+## [1.13.0](https://github.com/konecty/konecty-sdk/compare/1.12.1...1.13.0) (2023-06-06)
+
+
+### 🧪 Tests
+
+* ensure text search is sent ([a4814d7](https://github.com/konecty/konecty-sdk/commit/a4814d72ee4f7bf549f0594ca72be0dbaab3dbab))
+
+
+### 🚀 Features
+
+* add typing for text search ([8031993](https://github.com/konecty/konecty-sdk/commit/80319937dea092ba6c097e958a1f314886af2931))
+
 ### [1.12.1](https://github.com/Konecty/konecty-sdk/compare/1.12.0...1.12.1) (2023-03-10)
 
 
