@@ -1,3 +1,11 @@
+### [1.13.1](https://github.com/konecty/konecty-sdk/compare/1.13.0...1.13.1) (2023-06-06)
+
+
+### 🛠 Fixes
+
+* update "conditions" field to be optional ([86f5f7d](https://github.com/konecty/konecty-sdk/commit/86f5f7d9a13bfbb7596670d427a8f683319efd61))
+* update filter type w/ correct nesting pattern ([1333aca](https://github.com/konecty/konecty-sdk/commit/1333aca92222293866dcfc0fbc61e4e2b00ab974))
+
 ## [1.13.0](https://github.com/konecty/konecty-sdk/compare/1.12.1...1.13.0) (2023-06-06)
 
 
