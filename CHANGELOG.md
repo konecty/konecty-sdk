@@ -1,3 +1,10 @@
+## [1.14.0](https://github.com/konecty/konecty-sdk/compare/1.13.1...1.14.0) (2023-07-10)
+
+
+### 🚀 Features
+
+* konecty client get menu ([8f7e8ec](https://github.com/konecty/konecty-sdk/commit/8f7e8ec6566fd51256b61339755bcf852d935f46))
+
 ### [1.13.1](https://github.com/konecty/konecty-sdk/compare/1.13.0...1.13.1) (2023-06-06)
 
 
