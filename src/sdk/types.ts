@@ -75,3 +75,62 @@ export type FileDescriptor = {
 	kind?: string;
 	size?: number;
 };
+
+export interface Menu {
+	name: string;
+	type: string;
+	document?: string;
+	menuSorter?: number;
+	icon: string;
+	lists?: List[];
+	pivots?: Pivot[];
+	children?: Menu[];
+}
+
+export interface Pivot {
+	name: string;
+	type: string;
+	document: string;
+}
+
+export interface List {
+	name: string;
+	type: string;
+	document: string;
+	menuSorter?: number;
+}
+
+export interface DocumentTranslation {
+	label: string;
+	plural?: string;
+	fields?: {
+		[key: string]: string;
+	};
+	list?: {
+		[key: string]: {
+			label: string;
+			plural: string;
+		};
+	};
+	pivot?: {
+		[key: string]: {
+			label: string;
+			plural: string;
+			columns: {
+				[key: string]: string;
+			};
+			rows: {
+				[key: string]: string;
+			};
+			values: {
+				[key: string]: string;
+			};
+		};
+	};
+	view?: {
+		[key: string]: {
+			label: string;
+			plural: string;
+		};
+	};
+}
