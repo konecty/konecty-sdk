@@ -4,6 +4,7 @@ import { rest } from 'msw';
 import { Product } from '../../__test__/fixtures/types/Product';
 import { server } from '../../__test__/setup-test';
 import clientProductsResponse from '../fixtures/konecty/find-client-products.json';
+import getMenuMainResponse from '../fixtures/konecty/get-menu-main.json';
 import productHistoryResponse from '../fixtures/konecty/get-product-history.json';
 
 describe('Konecty Client Tests', () => {
@@ -101,5 +102,25 @@ describe('Konecty Client Tests', () => {
 
 		// Assert
 		expect(product?.data?.[0].dataId).to.be.equal('productId');
+	});
+
+	it('should return menu main', async () => {
+		// Arrange
+		const options: KonectyClientOptions = {
+			endpoint: 'http://localhost:3000',
+			accessKey: 'asdfasdfsadfsadf',
+		};
+		const client = new KonectyClient(options);
+		server.use(
+			rest.get('http://localhost:3000/api/menu/main', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(getMenuMainResponse));
+			}),
+		);
+
+		// Act
+		const product = await client.getMenu();
+
+		// Assert
+		expect(product?.data?.[0].name).to.be.equal('Activity');
 	});
 });

@@ -9,8 +9,10 @@ import { DateTime } from 'luxon';
 import qs from 'qs';
 import { UserGroupType } from './User';
 
+import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
 import { User } from './User';
+import { Menu } from './types';
 
 export interface KonectyClientOptions {
 	credentialsFile?: string;
@@ -53,10 +55,9 @@ export type KonectyFindResult<T = object> = {
 export type KonectyLoginResult = {
 	success: boolean;
 	authId?: string;
-	user?: {
-		_id: string;
-		locale: string;
-	};
+	user?: UnionToIntersection<
+		PickFromPath<User, 'access' | 'admin' | 'email' | 'group' | 'locale' | 'login' | 'name' | 'role' | '_id'>
+	>;
 	errors?: string[];
 };
 
@@ -261,6 +262,32 @@ export class KonectyClient {
 		}
 	}
 
+	async getMenu(menu = 'main'): Promise<KonectyFindResult<Menu>> {
+		try {
+			const result = await fetch<Menu[]>(`${this.#options.endpoint}/api/menu/${menu}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return {
+				success: true,
+				data: deserializeDates(body),
+			} as KonectyFindResult<Menu>;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
 	async info(token?: string): Promise<KonectyUserInfo> {
 		try {
 			const userToken = this.#getToken(token);

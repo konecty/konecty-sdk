@@ -1,0 +1,88 @@
+[
+	{
+		"name": "Activity",
+		"type": "document",
+		"document": "Activity",
+		"menuSorter": 1,
+		"icon": "check",
+		"lists": [
+			{
+				"name": "Default",
+				"type": "list",
+				"document": "Activity"
+			}
+		],
+		"pivots": [
+			{
+				"name": "ColdCall",
+				"type": "pivot",
+				"document": "Activity"
+			},
+			{
+				"name": "Default",
+				"type": "pivot",
+				"document": "Activity"
+			},
+			{
+				"name": "Reception",
+				"type": "pivot",
+				"document": "Activity"
+			},
+			{
+				"name": "SignCall",
+				"type": "pivot",
+				"document": "Activity"
+			}
+		]
+	},
+	{
+		"name": "Contact",
+		"type": "document",
+		"document": "Contact",
+		"menuSorter": 3,
+		"icon": "book",
+		"lists": [
+			{
+				"name": "CustomerJourney",
+				"type": "list",
+				"document": "Contact"
+			},
+			{
+				"name": "Default",
+				"type": "list",
+				"document": "Contact"
+			}
+		],
+		"pivots": [
+			{
+				"name": "Default",
+				"type": "pivot",
+				"document": "Contact"
+			}
+		],
+		"children": [
+			{
+				"name": "SavedFilter",
+				"type": "document",
+				"document": "SavedFilter",
+				"menuSorter": 6,
+				"icon": "gittip",
+				"lists": [
+					{
+						"name": "Default",
+						"type": "list",
+						"document": "SavedFilter",
+						"menuSorter": 6
+					}
+				],
+				"pivots": [
+					{
+						"name": "Default",
+						"type": "pivot",
+						"document": "SavedFilter"
+					}
+				]
+			}
+		]
+	}
+]
