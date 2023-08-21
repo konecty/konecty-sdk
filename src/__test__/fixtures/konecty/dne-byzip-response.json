@@ -1,0 +1,17 @@
+[
+	{
+		"placeAbbr": "Tv Morada do Sol",
+		"status": "S",
+		"placeType": "Travessa",
+		"postalCode": "69902458",
+		"place": "Morada do Sol",
+		"startNeighbourhoodAbbr": "Eldorado",
+		"cityAbbr": "Rio Branco",
+		"city": "Rio Branco",
+		"state": "AC",
+		"odd": true,
+		"even": true,
+		"end": 99999,
+		"district": "Eldorado"
+	}
+]

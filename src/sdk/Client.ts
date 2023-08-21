@@ -12,7 +12,7 @@ import { UserGroupType } from './User';
 import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
 import { User } from './User';
-import { Menu } from './types';
+import { Menu, ZipCodeEntry } from './types';
 
 export interface KonectyClientOptions {
 	credentialsFile?: string;
@@ -416,6 +416,33 @@ export class KonectyClient {
 				success: true,
 				data: deserializeDates(body),
 			} as KonectyFindResult;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
+	async getAddressByZipCode(zipCode: string): Promise<KonectyFindResult<Array<ZipCodeEntry>>> {
+		try {
+			const result = await fetch(`${this.#options.endpoint}/rest/dne/cep/${zipCode}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return {
+				success: true,
+				data: deserializeDates(body),
+			} as KonectyFindResult<Array<ZipCodeEntry>>;
 		} catch (err) {
 			logger.error(err);
 			return {

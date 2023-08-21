@@ -134,3 +134,16 @@ export interface DocumentTranslation {
 		};
 	};
 }
+
+export type ZipCodeEntry = {
+	postalCode: string;
+	state: string;
+	city: string;
+	placeType?: string;
+	place?: string;
+	odd?: boolean;
+	even?: boolean;
+	start?: number;
+	end?: number;
+	district?: string;
+};
