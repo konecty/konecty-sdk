@@ -425,7 +425,7 @@ export class KonectyClient {
 		}
 	}
 
-	async getAddressByZipCode(zipCode: string): Promise<KonectyFindResult<Array<ZipCodeEntry>>> {
+	async getAddressByZipCode(zipCode: string): Promise<KonectyFindResult<ZipCodeEntry>> {
 		try {
 			const result = await fetch(`${this.#options.endpoint}/rest/dne/cep/${zipCode}`, {
 				method: 'GET',
@@ -442,7 +442,7 @@ export class KonectyClient {
 			return {
 				success: true,
 				data: deserializeDates(body),
-			} as KonectyFindResult<Array<ZipCodeEntry>>;
+			} as KonectyFindResult<ZipCodeEntry>;
 		} catch (err) {
 			logger.error(err);
 			return {
