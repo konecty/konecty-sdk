@@ -1,3 +1,10 @@
+## [1.15.0](https://github.com/konecty/konecty-sdk/compare/1.14.0...1.15.0) (2023-08-21)
+
+
+### 🚀 Features
+
+* get address by zipcode ([681f367](https://github.com/konecty/konecty-sdk/commit/681f367cde36398dd76bc2bdf9aa583a0e32c635))
+
 ## [1.14.0](https://github.com/konecty/konecty-sdk/compare/1.13.1...1.14.0) (2023-07-10)
 
 
