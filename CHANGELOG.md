@@ -1,3 +1,10 @@
+### [1.15.1](https://github.com/konecty/konecty-sdk/compare/1.15.0...1.15.1) (2023-08-21)
+
+
+### 🛠 Fixes
+
+* fix address result ([1ed1aa5](https://github.com/konecty/konecty-sdk/commit/1ed1aa5de5ae221fdac8a0bb265ecc2503797bc6))
+
 ## [1.15.0](https://github.com/konecty/konecty-sdk/compare/1.14.0...1.15.0) (2023-08-21)
 
 
