@@ -12,7 +12,7 @@ import { UserGroupType } from './User';
 import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
 import { User } from './User';
-import { Menu, ZipCodeEntry } from './types';
+import { List, Menu, ZipCodeEntry } from './types';
 
 export interface KonectyClientOptions {
 	credentialsFile?: string;
@@ -164,6 +164,7 @@ export class KonectyClient {
 			};
 		}
 	}
+
 	async delete(module: string, ids: object[]): Promise<KonectyFindResult> {
 		try {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}`, {
@@ -288,6 +289,35 @@ export class KonectyClient {
 			};
 		}
 	}
+
+	async getListView(module: string, id = 'Default'): Promise<KonectyFindResult<List>> {
+		try {
+			const result = await fetch<List[]>(`${this.#options.endpoint}/api/list-view/${module}/${id}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return {
+				success: true,
+				data: deserializeDates(body),
+			} as KonectyFindResult<List>;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
 	async info(token?: string): Promise<KonectyUserInfo> {
 		try {
 			const userToken = this.#getToken(token);
