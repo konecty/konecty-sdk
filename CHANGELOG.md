@@ -1,3 +1,15 @@
+## [1.16.0](https://github.com/konecty/konecty-sdk/compare/1.15.1...1.16.0) (2023-09-19)
+
+
+### 🧪 Tests
+
+* add test for get listview method ([0cf3ab4](https://github.com/konecty/konecty-sdk/commit/0cf3ab463d73d9d924b28e74c3740b648449c0f3))
+
+
+### 🚀 Features
+
+* add get listview method ([668832b](https://github.com/konecty/konecty-sdk/commit/668832b5a40fad0b44127ec22d88a50e07ab8297))
+
 ### [1.15.1](https://github.com/konecty/konecty-sdk/compare/1.15.0...1.15.1) (2023-08-21)
 
 
