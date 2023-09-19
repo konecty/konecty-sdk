@@ -4,6 +4,7 @@ import { rest } from 'msw';
 import { Product } from '../../__test__/fixtures/types/Product';
 import { server } from '../../__test__/setup-test';
 import clientProductsResponse from '../fixtures/konecty/find-client-products.json';
+import getListViewProductResponse from '../fixtures/konecty/get-list-view-products-default.json';
 import getMenuMainResponse from '../fixtures/konecty/get-menu-main.json';
 import productHistoryResponse from '../fixtures/konecty/get-product-history.json';
 
@@ -122,5 +123,25 @@ describe('Konecty Client Tests', () => {
 
 		// Assert
 		expect(product?.data?.[0].name).to.be.equal('Activity');
+	});
+
+	it('should return list view', async () => {
+		// Arrange
+		const options: KonectyClientOptions = {
+			endpoint: 'http://localhost:3000',
+			accessKey: 'asdfasdfsadfsadf',
+		};
+		const client = new KonectyClient(options);
+		server.use(
+			rest.get('http://localhost:3000/api/list-view/Product/Default', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(getListViewProductResponse));
+			}),
+		);
+
+		// Act
+		const product = await client.getListView('Product');
+
+		// Assert
+		expect(product?.data?.[0].document).to.be.equal('Product');
 	});
 });
