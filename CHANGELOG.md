@@ -1,3 +1,10 @@
+## [1.17.0](https://github.com/konecty/konecty-sdk/compare/1.16.0...1.17.0) (2023-09-21)
+
+
+### 🚀 Features
+
+* get next user on queue ([5b51ca6](https://github.com/konecty/konecty-sdk/commit/5b51ca6c398b8dc0943a26ee5f85dd5bb2bc0938))
+
 ## [1.16.0](https://github.com/konecty/konecty-sdk/compare/1.15.1...1.16.0) (2023-09-19)
 
 
