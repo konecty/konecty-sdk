@@ -65,6 +65,25 @@ export type KonectyUserInfo = {
 	logged: boolean;
 	user?: User;
 };
+
+export type KonectyNextOnQueueResult = {
+	success: boolean;
+	user?: {
+		_id: string;
+		user: UnionToIntersection<PickFromPath<User, '_id' | 'director' | 'group' | 'emails' | 'name' | 'code'>>;
+		queue: {
+			_id: string;
+			name: string;
+		};
+		count: number;
+		order: number;
+		_user: Array<UnionToIntersection<PickFromPath<User, '_id' | 'group' | 'name'>>>;
+		_createdAt: Date;
+		_updatedAt: Date;
+		_createdBy: Array<UnionToIntersection<PickFromPath<User, '_id' | 'group' | 'name'>>>;
+		_updatedBy: Array<UnionToIntersection<PickFromPath<User, '_id' | 'group' | 'name'>>>;
+	};
+};
 export class KonectyClient {
 	static defaults: KonectyClientOptions = {};
 	#options: KonectyClientOptions;
@@ -451,6 +470,29 @@ export class KonectyClient {
 			return {
 				success: false,
 				errors: [(err as Error).message],
+			};
+		}
+	}
+
+	async getNextOnQueue(queueId: string): Promise<KonectyNextOnQueueResult> {
+		try {
+			const result = await fetch(`${this.#options.endpoint}/rest/data/Queue/queue/next/${queueId}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return deserializeDates(body) as KonectyNextOnQueueResult;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
 			};
 		}
 	}

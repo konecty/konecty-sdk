@@ -1,0 +1,63 @@
+{
+	"success": true,
+	"user": {
+		"_id": "a7e4dfa9-5c89-44b9-8a11-38bdb01f4cc1",
+		"user": {
+			"_id": "TY8qfA5tGCHBh4wnS",
+			"director": {
+				"_id": "50badd2ae4b0a33d84887997",
+				"nickname": "LEOBRUNELLI"
+			},
+			"group": {
+				"_id": "8jtbsBnA8gipnMadC",
+				"name": "LUCIANA SCHUNCK"
+			},
+			"emails": [
+				{
+					"address": "adi.foxter@gmail.com",
+					"verified": true
+				}
+			],
+			"name": "Adi Armelin",
+			"code": 5318
+		},
+		"queue": {
+			"_id": "51ea8807e4b098e83d2eb232",
+			"name": "Revendas Zona Norte Prime"
+		},
+		"count": 3,
+		"order": 0,
+		"_user": [
+			{
+				"_id": "518553c8e4b06b7f8c9eeaee",
+				"group": {
+					"_id": "521c2fe4e4b057cdcba8e454",
+					"name": "SISTEMA"
+				},
+				"name": "www.foxterciaimobiliaria.com.br"
+			}
+		],
+		"_createdAt": {
+			"$date": "2023-03-18T11:02:27.474Z"
+		},
+		"_updatedAt": {
+			"$date": "2023-06-21T19:04:01.882Z"
+		},
+		"_createdBy": {
+			"_id": "518553c8e4b06b7f8c9eeaee",
+			"group": {
+				"_id": "521c2fe4e4b057cdcba8e454",
+				"name": "SISTEMA"
+			},
+			"name": "www.foxterciaimobiliaria.com.br"
+		},
+		"_updatedBy": {
+			"_id": "518553c8e4b06b7f8c9eeaee",
+			"name": "Www.foxterciaimobiliaria.com.br",
+			"group": {
+				"_id": "521c2fe4e4b057cdcba8e454",
+				"name": "SISTEMA"
+			}
+		}
+	}
+}

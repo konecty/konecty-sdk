@@ -6,6 +6,7 @@ import { server } from '../../__test__/setup-test';
 import clientProductsResponse from '../fixtures/konecty/find-client-products.json';
 import getListViewProductResponse from '../fixtures/konecty/get-list-view-products-default.json';
 import getMenuMainResponse from '../fixtures/konecty/get-menu-main.json';
+import getNextOnQueueResponse from '../fixtures/konecty/get-next-on-queue.json';
 import productHistoryResponse from '../fixtures/konecty/get-product-history.json';
 
 describe('Konecty Client Tests', () => {
@@ -143,5 +144,26 @@ describe('Konecty Client Tests', () => {
 
 		// Assert
 		expect(product?.data?.[0].document).to.be.equal('Product');
+	});
+
+	it('should return the next on queue', async () => {
+		// Arrange
+		const options: KonectyClientOptions = {
+			endpoint: 'http://localhost:3000',
+			accessKey: 'asdfasdfsadfsadf',
+		};
+		const client = new KonectyClient(options);
+		server.use(
+			rest.get('http://localhost:3000/rest/data/Queue/queue/next/*', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(getNextOnQueueResponse));
+			}),
+		);
+
+		// Act
+		const queue = await client.getNextOnQueue('queue');
+
+		// Assert
+		expect(queue.success).to.be.equal(true);
+		expect(queue?.user?.user.name).to.be.equal('Adi Armelin');
 	});
 });
