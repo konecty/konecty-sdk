@@ -52,6 +52,12 @@ export type KonectyFindResult<T = object> = {
 	errors?: string[];
 };
 
+export type KonectyGetListviewResult = {
+	success: boolean;
+	data?: List;
+	errors?: string[];
+};
+
 export type KonectyLoginResult = {
 	success: boolean;
 	authId?: string;
@@ -309,7 +315,7 @@ export class KonectyClient {
 		}
 	}
 
-	async getListView(module: string, id = 'Default'): Promise<KonectyFindResult<List>> {
+	async getListView(module: string, id = 'Default'): Promise<KonectyGetListviewResult> {
 		try {
 			const result = await fetch<List[]>(`${this.#options.endpoint}/api/list-view/${module}/${id}`, {
 				method: 'GET',
@@ -327,9 +333,10 @@ export class KonectyClient {
 			return {
 				success: true,
 				data: deserializeDates(body),
-			} as KonectyFindResult<List>;
+			} as KonectyGetListviewResult;
 		} catch (err) {
 			logger.error(err);
+
 			return {
 				success: false,
 				errors: [(err as Error).message],
