@@ -1,3 +1,10 @@
+### [1.17.1](https://github.com/konecty/konecty-sdk/compare/1.17.0...1.17.1) (2023-09-22)
+
+
+### 🛠 Fixes
+
+* adjust getListView with better types ([3421c92](https://github.com/konecty/konecty-sdk/commit/3421c923ee80c233c5e606a6c9e04b96c3d621f7))
+
 ## [1.17.0](https://github.com/konecty/konecty-sdk/compare/1.16.0...1.17.0) (2023-09-21)
 
 
