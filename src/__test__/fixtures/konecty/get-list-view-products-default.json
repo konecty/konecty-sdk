@@ -1,2076 +1,2074 @@
-[
-  {
-    "_id": "Product:list:Default",
-    "columns": {
-      "code": {
-        "name": "code",
-        "linkField": "code",
-        "visible": true,
-        "minWidth": 60,
+{
+  "_id": "Product:list:Default",
+  "columns": {
+    "code": {
+      "name": "code",
+      "linkField": "code",
+      "visible": true,
+      "minWidth": 60,
+      "sort": 0
+    },
+    "sku": {
+      "name": "sku",
+      "linkField": "sku",
+      "minWidth": 100,
+      "sort": 1
+    },
+    "active": {
+      "name": "active",
+      "linkField": "active",
+      "minWidth": 40,
+      "sort": 2
+    },
+    "status": {
+      "visible": true,
+      "minWidth": 100,
+      "name": "status",
+      "linkField": "status",
+      "sort": 14
+    },
+    "type": {
+      "name": "type",
+      "linkField": "type",
+      "visible": true,
+      "minWidth": 100,
+      "sort": 6
+    },
+    "name": {
+      "minWidth": 100,
+      "name": "name",
+      "linkField": "name",
+      "visible": false,
+      "sort": 99
+    },
+    "description": {
+      "name": "description",
+      "linkField": "description",
+      "minWidth": 100,
+      "sort": 6
+    },
+    "file": {
+      "name": "file",
+      "linkField": "file",
+      "minWidth": 50,
+      "sort": 7
+    },
+    "pictures": {
+      "name": "pictures",
+      "linkField": "pictures",
+      "minWidth": 50,
+      "sort": 1,
+      "visible": true
+    },
+    "geolocation": {
+      "name": "geolocation",
+      "linkField": "geolocation",
+      "minWidth": 50,
+      "sort": 9
+    },
+    "_createdAt": {
+      "minWidth": 100,
+      "name": "_createdAt",
+      "linkField": "_createdAt",
+      "sort": 10
+    },
+    "kuiLink": {
+      "linkField": "kuiLink",
+      "visible": false,
+      "minWidth": 50,
+      "name": "kuiLink",
+      "sort": 2
+    },
+    "_createdBy": {
+      "linkField": "_createdBy",
+      "minWidth": 200,
+      "name": "_createdBy",
+      "sort": 11
+    },
+    "quotesBroker": {
+      "name": "quotesBroker",
+      "linkField": "quotesBroker",
+      "minWidth": 100,
+      "sort": 4
+    },
+    "_updatedAt": {
+      "minWidth": 100,
+      "name": "_updatedAt",
+      "linkField": "_updatedAt",
+      "sort": 12
+    },
+    "_updatedBy": {
+      "name": "_updatedBy",
+      "linkField": "_updatedBy",
+      "minWidth": 200,
+      "sort": 13
+    },
+    "_user": {
+      "name": "_user",
+      "linkField": "_user",
+      "minWidth": 200,
+      "sort": 14
+    },
+    "leadOverflow": {
+      "name": "leadOverflow",
+      "linkField": "leadOverflow",
+      "minWidth": 200,
+      "sort": 14
+    },
+    "leadOverflowUser": {
+      "name": "leadOverflowUser",
+      "linkField": "leadOverflowUser",
+      "minWidth": 200,
+      "sort": 14
+    },
+    "source": {
+      "name": "source",
+      "linkField": "source",
+      "minWidth": 200,
+      "sort": 14
+    },
+    "sale": {
+      "name": "sale",
+      "linkField": "sale",
+      "minWidth": 120,
+      "sort": 7,
+      "visible": true
+    },
+    "shippingAmount": {
+      "name": "shippingAmount",
+      "linkField": "shippingAmount",
+      "minWidth": 50,
+      "sort": 16
+    },
+    "joinedCampaignOn": {
+      "name": "joinedCampaignOn",
+      "linkField": "joinedCampaignOn",
+      "minWidth": 70,
+      "sort": 6
+    },
+    "blogTag": {
+      "name": "blogTag",
+      "linkfield": "blogTag",
+      "minWidth": 100,
+      "sort": 17
+    },
+    "developmentPictures": {
+      "linkField": "developmentPictures",
+      "visible": true,
+      "minWidth": 50,
+      "name": "developmentPictures",
+      "sort": 2
+    },
+    "score": {
+      "name": "score",
+      "linkField": "score",
+      "visible": true,
+      "minWidth": 75,
+      "sort": 3
+    },
+    "quotes": {
+      "name": "quotes",
+      "linkField": "quotes",
+      "style": {
+        "template": "<tpl if=\"quotes === true\">\n<i class=\"icon-warning-sign\" style=\"color: #FF7A00;\"></i>\n</tpl>"
+      },
+      "visible": true,
+      "minWidth": 25,
+      "sort": 3
+    },
+    "quotesUser": {
+      "name": "quotesUser",
+      "linkField": "quotesUser",
+      "minWidth": 100,
+      "sort": 4
+    },
+    "quotesDate": {
+      "name": "quotesDate",
+      "linkField": "quotesDate",
+      "minWidth": 100,
+      "sort": 4
+    },
+    "address": {
+      "name": "address",
+      "linkField": "address",
+      "visible": true,
+      "minWidth": 240,
+      "sort": 4
+    },
+    "development": {
+      "linkField": "development",
+      "visible": true,
+      "minWidth": 120,
+      "name": "development",
+      "sort": 5
+    },
+    "externalId": {
+      "linkField": "externalId",
+      "minWidth": 80,
+      "name": "externalId",
+      "sort": 5
+    },
+    "saleDiscount": {
+      "linkField": "saleDiscount",
+      "visible": true,
+      "minWidth": 120,
+      "name": "saleDiscount",
+      "sort": 7
+    },
+    "areaPrice": {
+      "minWidth": 120,
+      "name": "areaPrice",
+      "linkField": "areaPrice",
+      "visible": true,
+      "sort": 8
+    },
+    "areaPrivate": {
+      "name": "areaPrivate",
+      "linkField": "areaPrivate",
+      "visible": true,
+      "minWidth": 50,
+      "sort": 9
+    },
+    "bedrooms": {
+      "name": "bedrooms",
+      "linkField": "bedrooms",
+      "visible": true,
+      "minWidth": 20,
+      "sort": 10
+    },
+    "suites": {
+      "minWidth": 50,
+      "name": "suites",
+      "linkField": "suites",
+      "visible": true,
+      "sort": 11
+    },
+    "bathrooms": {
+      "name": "bathrooms",
+      "linkField": "bathrooms",
+      "visible": true,
+      "minWidth": 20,
+      "sort": 12
+    },
+    "parkingSpaces": {
+      "name": "parkingSpaces",
+      "linkField": "parkingSpaces",
+      "visible": true,
+      "minWidth": 20,
+      "sort": 13
+    },
+    "siteTags": {
+      "name": "siteTags",
+      "linkField": "siteTags",
+      "visible": false,
+      "minWidth": 20,
+      "sort": 13
+    },
+    "campaignTags": {
+      "name": "campaignTags",
+      "linkField": "campaignTags",
+      "visible": false,
+      "minWidth": 20,
+      "sort": 13
+    },
+    "divulgation": {
+      "name": "divulgation",
+      "linkField": "divulgation",
+      "minWidth": 70,
+      "sort": 7
+    },
+    "supplierUpdatedAt": {
+      "linkField": "supplierUpdatedAt",
+      "visible": true,
+      "style": {
+        "colorBasedOnTime": "0:green:white,11:yellow,23:red:white,35:gray:white,47:black:white"
+      },
+      "minWidth": 100,
+      "description": {
+        "pt_BR": "Data em que o agenciador confirmou situação de venda com o proprietário do imóvel"
+      },
+      "name": "supplierUpdatedAt",
+      "sort": 15
+    },
+    "editorialStatus": {
+      "name": "editorialStatus",
+      "linkField": "editorialStatus",
+      "visible": true,
+      "minWidth": 150,
+      "sort": 16
+    },
+    "builder": {
+      "minWidth": 100,
+      "name": "builder",
+      "linkField": "builder",
+      "visible": true,
+      "sort": 17
+    },
+    "rejectedAt": {
+      "minWidth": 50,
+      "name": "rejectedAt",
+      "linkField": "rejectedAt",
+      "visible": false,
+      "sort": 11
+    },
+    "signUser": {
+      "name": "signUser",
+      "linkField": "signUser",
+      "minWidth": 100,
+      "sort": 74
+    },
+    "active-2": {
+      "name": "active-2",
+      "linkField": "active-2",
+      "minWidth": 100,
+      "sort": 4,
+      "active": true
+    },
+    "signStatus": {
+      "name": "signStatus",
+      "linkField": "signStatus",
+      "minWidth": 100,
+      "sort": 74
+    },
+    "constructionEndAt": {
+      "linkField": "constructionEndAt",
+      "visible": true,
+      "minWidth": 100,
+      "name": "constructionEndAt",
+      "sort": 18
+    },
+    "availableAt": {
+      "minWidth": 100,
+      "name": "availableAt",
+      "linkField": "availableAt",
+      "visible": true,
+      "sort": 19
+    },
+    "launch": {
+      "name": "launch",
+      "linkField": "launch",
+      "visible": true,
+      "minWidth": 80,
+      "sort": 20
+    },
+    "purpose": {
+      "minWidth": 100,
+      "name": "purpose",
+      "linkField": "purpose",
+      "visible": true,
+      "sort": 21
+    },
+    "modelUnit": {
+      "minWidth": 40,
+      "name": "modelUnit",
+      "linkField": "modelUnit",
+      "visible": true,
+      "sort": 22
+    },
+    "resale": {
+      "name": "resale",
+      "linkField": "resale",
+      "style": {
+        "template": "<tpl if=\"resale === true\">\n<i class=\"icon-share-alt\" style=\"color: #336666;\"></i>\n</tpl>"
+      },
+      "visible": true,
+      "minWidth": 40,
+      "sort": 23
+    },
+    "corporate": {
+      "name": "corporate",
+      "linkField": "corporate",
+      "visible": true,
+      "minWidth": 70,
+      "sort": 24
+    },
+    "exclusive": {
+      "name": "exclusive",
+      "linkField": "exclusive",
+      "visible": true,
+      "minWidth": 40,
+      "sort": 25
+    },
+    "duplicateOf": {
+      "name": "duplicateOf",
+      "linkField": "duplicateOf",
+      "minWidth": 50,
+      "sort": 27
+    },
+    "plannedDistrict": {
+      "minWidth": 120,
+      "name": "plannedDistrict",
+      "linkField": "plannedDistrict",
+      "sort": 28
+    },
+    "rooms": {
+      "linkField": "rooms",
+      "minWidth": 20,
+      "name": "rooms",
+      "sort": 30
+    },
+    "features": {
+      "name": "features",
+      "linkField": "features",
+      "minWidth": 150,
+      "sort": 31
+    },
+    "developmentFeatures": {
+      "name": "developmentFeatures",
+      "linkField": "developmentFeatures",
+      "minWidth": 150,
+      "sort": 31
+    },
+    "zone": {
+      "name": "zone",
+      "linkField": "zone",
+      "minWidth": 150,
+      "sort": 32
+    },
+    "areaLand": {
+      "name": "areaLand",
+      "linkField": "areaLand",
+      "minWidth": 50,
+      "sort": 33
+    },
+    "areaTotal": {
+      "name": "areaTotal",
+      "linkField": "areaTotal",
+      "minWidth": 50,
+      "sort": 34
+    },
+    "furniture": {
+      "name": "furniture",
+      "linkField": "furniture",
+      "minWidth": 50,
+      "sort": 35
+    },
+    "negotiable": {
+      "linkField": "negotiable",
+      "minWidth": 50,
+      "name": "negotiable",
+      "sort": 37
+    },
+    "solarOrientation": {
+      "name": "solarOrientation",
+      "linkField": "solarOrientation",
+      "minWidth": 50,
+      "sort": 38
+    },
+    "isMarketplace": {
+      "minWidth": 40,
+      "name": "isMarketplace",
+      "linkField": "isMarketplace",
+      "sort": 22
+    },
+    "marketplaceOrigin": {
+      "minWidth": 40,
+      "name": "marketplaceOrigin",
+      "linkField": "marketplaceOrigin",
+      "sort": 22
+    },
+    "marketplaceLastUpdate": {
+      "minWidth": 40,
+      "name": "marketplaceLastUpdate",
+      "linkField": "marketplaceLastUpdate",
+      "sort": 22
+    },
+    "externalFiles": {
+      "minWidth": 40,
+      "name": "externalFiles",
+      "linkField": "externalFiles",
+      "sort": 22
+    },
+    "supplier": {
+      "name": "supplier",
+      "linkField": "supplier",
+      "minWidth": 200,
+      "sort": 39
+    },
+    "banner": {
+      "name": "banner",
+      "linkField": "banner",
+      "minWidth": 50,
+      "sort": 40
+    },
+    "commission": {
+      "name": "commission",
+      "linkField": "commission",
+      "minWidth": 50,
+      "sort": 41
+    },
+    "condominiumAdmin": {
+      "linkField": "condominiumAdmin",
+      "minWidth": 75,
+      "name": "condominiumAdmin",
+      "sort": 42
+    },
+    "condominiumAmount": {
+      "name": "condominiumAmount",
+      "linkField": "condominiumAmount",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "statusReelsProduct": {
+      "name": "statusReelsProduct",
+      "linkField": "statusReelsProduct",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "ReelsRequestDate": {
+      "name": "ReelsRequestDate",
+      "linkField": "ReelsRequestDate",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "ReelsSession": {
+      "name": "ReelsSession",
+      "linkField": "ReelsSession",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "ReelsNotes": {
+      "name": "ReelsNotes",
+      "linkField": "ReelsNotes",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "ReelsPhotographer": {
+      "name": "ReelsPhotographer",
+      "linkField": "ReelsPhotographer",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "LinkReels": {
+      "name": "LinkReels",
+      "linkField": "LinkReels",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "ReelsDownload": {
+      "name": "ReelsDownload",
+      "linkField": "ReelsDownload",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "developmentLinkReels": {
+      "name": "developmentLinkReels",
+      "linkField": "developmentLinkReels",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "developmentReelsDownload": {
+      "name": "developmentReelsDownload",
+      "linkField": "developmentReelsDownload",
+      "minWidth": 50,
+      "sort": 43
+    },
+    "conservation": {
+      "minWidth": 100,
+      "name": "conservation",
+      "linkField": "conservation",
+      "sort": 44
+    },
+    "deepth": {
+      "name": "deepth",
+      "linkField": "deepth",
+      "minWidth": 70,
+      "sort": 45
+    },
+    "dontDisplay": {
+      "minWidth": 150,
+      "name": "dontDisplay",
+      "linkField": "dontDisplay",
+      "sort": 46
+    },
+    "elevators": {
+      "name": "elevators",
+      "linkField": "elevators",
+      "minWidth": 70,
+      "sort": 47
+    },
+    "exclusiveStart": {
+      "name": "exclusiveStart",
+      "linkField": "exclusiveStart",
+      "minWidth": 40,
+      "sort": 48
+    },
+    "exclusiveEnd": {
+      "name": "exclusiveEnd",
+      "linkField": "exclusiveEnd",
+      "minWidth": 40,
+      "sort": 49
+    },
+    "exclusiveEndedAt": {
+      "name": "exclusiveEndedAt",
+      "linkField": "exclusiveEndedAt",
+      "minWidth": 40,
+      "sort": 50
+    },
+    "exclusiveCancelAtEnd": {
+      "name": "exclusiveCancelAtEnd",
+      "linkField": "exclusiveCancelAtEnd",
+      "minWidth": 40,
+      "sort": 50
+    },
+    "exclusiveAuthorization": {
+      "name": "exclusiveAuthorization",
+      "linkField": "exclusiveAuthorization",
+      "minWidth": 40,
+      "sort": 50
+    },
+    "floors": {
+      "name": "floors",
+      "linkField": "floors",
+      "minWidth": 70,
+      "sort": 51
+    },
+    "focus": {
+      "linkField": "focus",
+      "style": {
+        "template": "<tpl if=\"focus === true\">\n<i class=\"icon-bolt\" style=\"color: #669900;\"></i>\n</tpl>"
+      },
+      "minWidth": 25,
+      "name": "focus",
+      "sort": 52
+    },
+    "internalHighlight": {
+      "linkField": "internalHighlight",
+      "style": {
+        "template": "<tpl if=\"internalHighlight === 'Zona Norte'\"><i class=\"icon-bookmark\" style=\"color:#690630;\"></i><tpl elseif=\"internalHighlight === 'Zona Sul'\"><i class=\"icon-bookmark\" style=\"color:#306906;\"></i></tpl>"
+      },
+      "minWidth": 25,
+      "name": "internalHighlight",
+      "sort": 53
+    },
+    "recommendHighlight": {
+      "minWidth": 25,
+      "name": "recommendHighlight",
+      "linkField": "recommendHighlight",
+      "style": {},
+      "sort": 54
+    },
+    "hiddenBySupplier": {
+      "name": "hiddenBySupplier",
+      "linkField": "hiddenBySupplier",
+      "minWidth": 40,
+      "sort": 55
+    },
+    "keysLocker": {
+      "minWidth": 75,
+      "name": "keysLocker",
+      "linkField": "keysLocker",
+      "sort": 56
+    },
+    "keysPlace": {
+      "name": "keysPlace",
+      "linkField": "keysPlace",
+      "minWidth": 75,
+      "sort": 57
+    },
+    "keysTakenBy": {
+      "minWidth": 75,
+      "name": "keysTakenBy",
+      "linkField": "keysTakenBy",
+      "sort": 58
+    },
+    "keysTakenAt": {
+      "name": "keysTakenAt",
+      "linkField": "keysTakenAt",
+      "minWidth": 75,
+      "sort": 59
+    },
+    "marketplaceExternal": {
+      "name": "marketplaceExternal",
+      "linkField": "marketplaceExternal",
+      "minWidth": 75,
+      "sort": 59
+    },
+    "keysImage": {
+      "name": "keysImage",
+      "linkField": "keysImage",
+      "minWidth": 75,
+      "sort": 59
+    },
+    "kitches": {
+      "name": "kitches",
+      "linkField": "kitches",
+      "minWidth": 70,
+      "sort": 60
+    },
+    "lavatories": {
+      "name": "lavatories",
+      "linkField": "lavatories",
+      "minWidth": 70,
+      "sort": 61
+    },
+    "link": {
+      "name": "link",
+      "linkField": "link",
+      "minWidth": 100,
+      "sort": 62
+    },
+    "notes": {
+      "name": "notes",
+      "linkField": "notes",
+      "minWidth": 100,
+      "sort": 63
+    },
+    "requestedApprovalAt": {
+      "minWidth": 70,
+      "name": "requestedApprovalAt",
+      "linkField": "requestedApprovalAt",
+      "sort": 64
+    },
+    "occupancy": {
+      "linkField": "occupancy",
+      "minWidth": 150,
+      "name": "occupancy",
+      "sort": 64
+    },
+    "parkingInside": {
+      "name": "parkingInside",
+      "linkField": "parkingInside",
+      "minWidth": 70,
+      "sort": 65
+    },
+    "parkingNumber": {
+      "minWidth": 100,
+      "name": "parkingNumber",
+      "linkField": "parkingNumber",
+      "sort": 66
+    },
+    "parkingOutside": {
+      "name": "parkingOutside",
+      "linkField": "parkingOutside",
+      "minWidth": 70,
+      "sort": 67
+    },
+    "parkingRegistryId": {
+      "name": "parkingRegistryId",
+      "linkField": "parkingRegistryId",
+      "minWidth": 50,
+      "sort": 68
+    },
+    "parkingType": {
+      "name": "parkingType",
+      "linkField": "parkingType",
+      "minWidth": 50,
+      "sort": 69
+    },
+    "position": {
+      "name": "position",
+      "linkField": "position",
+      "minWidth": 50,
+      "sort": 70
+    },
+    "registryId": {
+      "name": "registryId",
+      "linkField": "registryId",
+      "minWidth": 100,
+      "sort": 71
+    },
+    "registryZone": {
+      "linkField": "registryZone",
+      "minWidth": 50,
+      "name": "registryZone",
+      "sort": 72
+    },
+    "rent": {
+      "name": "rent",
+      "linkField": "rent",
+      "minWidth": 120,
+      "sort": 73
+    },
+    "signPlacedAt": {
+      "name": "signPlacedAt",
+      "linkField": "signPlacedAt",
+      "minWidth": 100,
+      "sort": 74
+    },
+    "signPlacedOn": {
+      "name": "signPlacedOn",
+      "linkField": "signPlacedOn",
+      "style": {
+        "template": "<tpl if=\"signPlacedOn === true\">\n<i class=\"icon-circle\" style=\"color: #CCCC33;\"></i>\n</tpl>"
+      },
+      "minWidth": 25,
+      "sort": 75
+    },
+    "streetView": {
+      "name": "streetView",
+      "linkField": "streetView",
+      "minWidth": 100,
+      "sort": 76
+    },
+    "suppliersReps": {
+      "linkField": "suppliersReps",
+      "minWidth": 75,
+      "name": "suppliersReps",
+      "sort": 77
+    },
+    "tax": {
+      "minWidth": 120,
+      "name": "tax",
+      "linkField": "tax",
+      "sort": 78
+    },
+    "team": {
+      "linkField": "team",
+      "minWidth": 150,
+      "name": "team",
+      "sort": 79
+    },
+    "incompleteOnWebsite": {
+      "minWidth": 100,
+      "name": "incompleteOnWebsite",
+      "linkField": "incompleteOnWebsite",
+      "sort": 17
+    },
+    "towers": {
+      "minWidth": 70,
+      "name": "towers",
+      "linkField": "towers",
+      "sort": 80
+    },
+    "unitsPerFloor": {
+      "name": "unitsPerFloor",
+      "linkField": "unitsPerFloor",
+      "minWidth": 70,
+      "sort": 81
+    },
+    "videos": {
+      "name": "videos",
+      "linkField": "videos",
+      "minWidth": 100,
+      "sort": 82
+    },
+    "webHighlight": {
+      "name": "webHighlight",
+      "linkField": "webHighlight",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "webHighlightFoxter": {
+      "name": "webHighlightFoxter",
+      "linkField": "webHighlightFoxter",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "webHighlightPerdigueiro": {
+      "name": "webHighlightPerdigueiro",
+      "linkField": "webHighlightPerdigueiro",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "webHighlightVivaReal": {
+      "name": "webHighlightVivaReal",
+      "linkField": "webHighlightVivaReal",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "webHighlightZap": {
+      "name": "webHighlightZap",
+      "linkField": "webHighlightZap",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "superHighlightZap": {
+      "name": "superHighlightZap",
+      "linkField": "superHighlightZap",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "webHighlightMercadoLivre": {
+      "name": "webHighlightMercadoLivre",
+      "linkField": "webHighlightMercadoLivre",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "superHighlightMercadoLivre": {
+      "name": "superHighlightMercadoLivre",
+      "linkField": "superHighlightMercadoLivre",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "webHighlightImovelWeb": {
+      "name": "webHighlightImovelWeb",
+      "linkField": "webHighlightImovelWeb",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "webHighlightRemarketing": {
+      "name": "webHighlightRemarketing",
+      "linkField": "webHighlightRemarketing",
+      "minWidth": 150,
+      "sort": 83
+    },
+    "width": {
+      "minWidth": 70,
+      "name": "width",
+      "linkField": "width",
+      "sort": 84
+    },
+    "privateFile": {
+      "name": "privateFile",
+      "linkField": "privateFile",
+      "minWidth": 50,
+      "sort": 85
+    },
+    "signPicture": {
+      "name": "signPicture",
+      "linkField": "signPicture",
+      "minWidth": 50,
+      "sort": 86
+    },
+    "developmentDescription": {
+      "name": "developmentDescription",
+      "linkField": "developmentDescription",
+      "minWidth": 100,
+      "sort": 88
+    },
+    "editorialNotes": {
+      "name": "editorialNotes",
+      "linkField": "editorialNotes",
+      "minWidth": 100,
+      "sort": 89
+    },
+    "office": {
+      "linkField": "office",
+      "minWidth": 150,
+      "name": "office",
+      "sort": 90
+    },
+    "tower": {
+      "name": "tower",
+      "linkField": "tower",
+      "minWidth": 100,
+      "sort": 4,
+      "visible": true
+    },
+    "approvedAt": {
+      "name": "approvedAt",
+      "linkField": "approvedAt",
+      "minWidth": 100,
+      "sort": 92
+    },
+    "highlight": {
+      "name": "highlight",
+      "linkField": "highlight",
+      "minWidth": 50,
+      "sort": 94
+    },
+    "secondaryBroker": {
+      "linkField": "secondaryBroker",
+      "minWidth": 200,
+      "name": "secondaryBroker",
+      "sort": 95
+    },
+    "signBroker": {
+      "name": "signBroker",
+      "linkField": "signBroker",
+      "minWidth": 200,
+      "sort": 96
+    },
+    "saleReason": {
+      "name": "saleReason",
+      "linkField": "saleReason",
+      "minwidth": 100,
+      "sort": 118
+    },
+    "acceptDation": {
+      "name": "acceptDation",
+      "linkField": "acceptDation",
+      "minWidth": 50
+    },
+    "dationDescription": {
+      "name": "dationDescription",
+      "linkField": "dationDescription"
+    },
+    "dationLimit": {
+      "name": "dationLimit",
+      "linkField": "dationLimit"
+    },
+    "dationType": {
+      "name": "dationType",
+      "linkField": "dationType"
+    },
+    "dationZone": {
+      "name": "dationZone",
+      "linkField": "dationZone"
+    },
+    "developmentVirtualTour": {
+      "name": "developmentVirtualTour",
+      "linkField": "developmentVirtualTour"
+    },
+    "leadType": {
+      "name": "leadType",
+      "linkField": "leadType"
+    },
+    "offerCount": {
+      "name": "offerCount",
+      "linkField": "offerCount"
+    },
+    "photographer": {
+      "name": "photographer",
+      "linkField": "photographer"
+    },
+    "privatePicture": {
+      "name": "privatePicture",
+      "linkField": "privatePicture"
+    },
+    "professionalPicturesSession": {
+      "name": "professionalPicturesSession",
+      "linkField": "professionalPicturesSession"
+    },
+    "professionalPicturesRequestDate": {
+      "name": "professionalPicturesRequestDate",
+      "linkField": "professionalPicturesRequestDate"
+    },
+    "professionalPicturesStatus": {
+      "name": "professionalPicturesStatus",
+      "linkField": "professionalPicturesStatus"
+    },
+    "signProhibited": {
+      "name": "signProhibited",
+      "linkField": "signProhibited"
+    },
+    "surroundings": {
+      "name": "surroundings",
+      "linkField": "surroundings"
+    },
+    "tags": {
+      "name": "tags",
+      "linkField": "tags"
+    },
+    "virtualTour": {
+      "name": "virtualTour",
+      "linkField": "virtualTour"
+    },
+    "actualProfitability": {
+      "name": "actualProfitability",
+      "linkField": "actualProfitability",
+      "minWidth": 80,
+      "sort": 100
+    },
+    "areaMezzanine": {
+      "name": "areaMezzanine",
+      "linkField": "areaMezzanine",
+      "minWidth": 80,
+      "sort": 101
+    },
+    "atCorner": {
+      "name": "atCorner",
+      "linkField": "atCorner",
+      "minWidth": 80,
+      "sort": 102
+    },
+    "ceilingHeight": {
+      "name": "ceilingHeight",
+      "linkField": "ceilingHeight",
+      "minWidth": 80,
+      "sort": 103
+    },
+    "corporatePresentation": {
+      "name": "corporatePresentation",
+      "linkField": "corporatePresentation",
+      "minWidth": 80,
+      "sort": 104
+    },
+    "corporateType": {
+      "name": "corporateType",
+      "linkField": "corporateType",
+      "minWidth": 80,
+      "sort": 105
+    },
+    "builderDation": {
+      "name": "builderDation",
+      "linkField": "builderDation",
+      "minWidth": 80,
+      "sort": 105
+    },
+    "estimatedProfitability": {
+      "name": "estimatedProfitability",
+      "linkField": "estimatedProfitability",
+      "minWidth": 80,
+      "sort": 106
+    },
+    "estimatedRent": {
+      "name": "estimatedRent",
+      "linkField": "estimatedRent",
+      "minWidth": 80,
+      "sort": 107
+    },
+    "showOnCorporateWebsite": {
+      "name": "showOnCorporateWebsite",
+      "linkField": "showOnCorporateWebsite",
+      "minWidth": 80,
+      "sort": 108
+    },
+    "stage": {
+      "name": "stage",
+      "linkField": "stage",
+      "minWidth": 80,
+      "sort": 109
+    },
+    "nexchangeOffered": {
+      "name": "nexchangeOffered",
+      "linkField": "nexchangeOffered",
+      "minWidth": 80,
+      "sort": 110
+    },
+    "nexchangeOfferedAt": {
+      "name": "nexchangeOfferedAt",
+      "linkField": "nexchangeOfferedAt",
+      "minWidth": 80,
+      "sort": 111
+    },
+    "targetPercent": {
+      "name": "targetPercent",
+      "linkField": "targetPercent",
+      "minwidth": 100,
+      "sort": 112
+    },
+    "realEstateAppraiser": {
+      "name": "realEstateAppraiser",
+      "linkField": "realEstateAppraiser",
+      "minwidth": 100,
+      "sort": 113
+    },
+    "saleTarget": {
+      "name": "saleTarget",
+      "linkField": "saleTarget",
+      "minwidth": 100,
+      "sort": 114
+    },
+    "professionalPicturesNotes": {
+      "name": "professionalPicturesNotes",
+      "linkField": "professionalPicturesNotes",
+      "minwidth": 100,
+      "sort": 115
+    },
+    "professionalPicturesUserNotes": {
+      "name": "professionalPicturesUserNotes",
+      "linkField": "professionalPicturesUserNotes",
+      "minwidth": 100,
+      "sort": 116
+    },
+    "saleNotes": {
+      "name": "saleNotes",
+      "linkField": "saleNotes",
+      "minwidth": 100,
+      "sort": 117
+    },
+    "saleDeadline": {
+      "name": "saleDeadline",
+      "linkField": "saleDeadline",
+      "minwidth": 100,
+      "sort": 119
+    },
+    "deactivatedAt": {
+      "name": "deactivatedAt",
+      "linkField": "deactivatedAt",
+      "minwidth": 100,
+      "sort": 120
+    },
+    "outdatedAt": {
+      "name": "outdatedAt",
+      "linkField": "outdatedAt",
+      "minWidth": 100,
+      "sort": 121
+    },
+    "soldBy": {
+      "name": "soldBy",
+      "linkField": "soldBy",
+      "minwidth": 100,
+      "sort": 121
+    },
+    "soldPrice": {
+      "name": "soldPrice",
+      "linkField": "soldPrice",
+      "minwidth": 100,
+      "sort": 122
+    },
+    "checked": {
+      "name": "checked",
+      "linkField": "checked",
+      "minwidth": 100,
+      "sort": 123
+    },
+    "checkedUser": {
+      "name": "checkedUser",
+      "linkField": "checkedUser",
+      "minwidth": 100,
+      "sort": 124
+    },
+    "lastCheckedDate": {
+      "name": "lastCheckedDate",
+      "linkField": "lastCheckedDate",
+      "minwidth": 100,
+      "sort": 125
+    },
+    "statusBeforeChecked": {
+      "name": "statusBeforeChecked",
+      "linkField": "statusBeforeChecked",
+      "minwidth": 100,
+      "sort": 126
+    },
+    "statusAfterChecked": {
+      "name": "statusAfterChecked",
+      "linkField": "statusAfterChecked",
+      "minwidth": 100,
+      "sort": 127
+    },
+    "checkedNotes": {
+      "name": "checkedNotes",
+      "linkField": "checkedNotes",
+      "minwidth": 100,
+      "sort": 128
+    },
+    "contactAttempts": {
+      "name": "contactAttempts",
+      "linkField": "contactAttempts",
+      "minwidth": 100,
+      "sort": 129
+    },
+    "statusChecked": {
+      "name": "statusChecked",
+      "linkField": "statusChecked",
+      "minwidth": 100,
+      "sort": 130
+    },
+    "picturesPriority": {
+      "minWidth": 40,
+      "name": "picturesPriority",
+      "linkField": "picturesPriority",
+      "visible": false,
+      "sort": 123
+    },
+    "conversionsLastUpdate": {
+      "minWidth": 40,
+      "name": "conversionsLastUpdate",
+      "linkField": "conversionsLastUpdate",
+      "visible": false,
+      "sort": 124
+    },
+    "conversionsSite": {
+      "minWidth": 40,
+      "name": "conversionsSite",
+      "linkField": "conversionsSite",
+      "visible": false,
+      "sort": 125
+    },
+    "conversionsPortals": {
+      "minWidth": 40,
+      "name": "conversionsPortals",
+      "linkField": "conversionsPortals",
+      "visible": false,
+      "sort": 126
+    },
+    "conversionsAnothers": {
+      "minWidth": 40,
+      "name": "conversionsAnothers",
+      "linkField": "conversionsAnothers",
+      "visible": false,
+      "sort": 127
+    },
+    "conversionsTotal": {
+      "minWidth": 40,
+      "name": "conversionsTotal",
+      "linkField": "conversionsTotal",
+      "visible": false,
+      "sort": 128
+    },
+    "scoreAdjust": {
+      "minWidth": 40,
+      "name": "scoreAdjust",
+      "linkField": "scoreAdjust",
+      "visible": false,
+      "sort": 129
+    },
+    "ownerApproached": {
+      "minWidth": 50,
+      "name": "ownerApproached",
+      "linkField": "ownerApproached",
+      "visible": false,
+      "sort": 130
+    },
+    "campaignProductStatus": {
+      "minWidth": 70,
+      "name": "campaignProductStatus",
+      "linkField": "campaignProductStatus",
+      "visible": false,
+      "sort": 131
+    },
+    "campaignAuthorization": {
+      "minWidth": 60,
+      "name": "campaignAuthorization",
+      "linkField": "campaignAuthorization",
+      "visible": false,
+      "sort": 132
+    },
+    "campaignParticipation": {
+      "minWidth": 70,
+      "name": "campaignParticipation",
+      "linkField": "campaignParticipation",
+      "visible": false,
+      "sort": 133
+    },
+    "previousDiscount": {
+      "minWidth": 80,
+      "name": "previousDiscount",
+      "linkField": "previousDiscount",
+      "visible": false,
+      "sort": 133
+    },
+    "webHighlightChavesNaMao": {
+      "minWidth": 80,
+      "name": "webHighlightChavesNaMao",
+      "linkField": "webHighlightChavesNaMao",
+      "visible": false,
+      "sort": 134
+    },
+    "visitationNotes": {
+      "minWidth": 80,
+      "name": "visitationNotes",
+      "linkField": "visitationNotes",
+      "visible": false,
+      "sort": 135
+    },
+    "inactivationReason": {
+      "minWidth": 100,
+      "name": "inactivationReason",
+      "linkField": "inactivationReason",
+      "visible": false,
+      "sort": 139
+    },
+    "approvationNotes": {
+      "minWidth": 100,
+      "name": "approvationNotes",
+      "linkField": "approvationNotes",
+      "visible": false,
+      "sort": 140
+    },
+    "pricingStatus": {
+      "minWidth": 100,
+      "name": "pricingStatus",
+      "linkField": "pricingStatus",
+      "visible": false,
+      "sort": 142
+    },
+    "saleTargetDifference": {
+      "minWidth": 100,
+      "name": "saleTargetDifference",
+      "linkField": "saleTargetDifference",
+      "visible": false,
+      "sort": 143
+    },
+    "pricedAt": {
+      "minWidth": 100,
+      "name": "pricedAt",
+      "linkField": "pricedAt",
+      "visible": false,
+      "sort": 144
+    },
+    "loftLink": {
+      "minWidth": 100,
+      "name": "loftLink",
+      "linkField": "loftLink",
+      "visible": false,
+      "sort": 144
+    },
+    "loftMaxPrice": {
+      "minWidth": 100,
+      "name": "loftMaxPrice",
+      "linkField": "loftMaxPrice",
+      "visible": false,
+      "sort": 144
+    },
+    "loftMinPrice": {
+      "minWidth": 100,
+      "name": "loftMinPrice",
+      "linkField": "loftMinPrice",
+      "visible": false,
+      "sort": 144
+    },
+    "loftPositioning": {
+      "minWidth": 100,
+      "name": "loftPositioning",
+      "linkField": "loftPositioning",
+      "visible": false,
+      "sort": 144
+    },
+    "loftSuggestedPrice": {
+      "minWidth": 100,
+      "name": "loftSuggestedPrice",
+      "linkField": "loftSuggestedPrice",
+      "visible": false,
+      "sort": 144
+    },
+    "loftPricingFeedback": {
+      "minWidth": 100,
+      "name": "loftPricingFeedback",
+      "linkField": "loftPricingFeedback",
+      "visible": false,
+      "sort": 144
+    },
+    "loftListingId": {
+      "minWidth": 100,
+      "name": "loftListingId",
+      "linkField": "loftListingId",
+      "visible": false,
+      "sort": 144
+    },
+    "loftPriceClassification": {
+      "minWidth": 100,
+      "name": "loftPriceClassification",
+      "linkField": "loftPriceClassification",
+      "visible": false,
+      "sort": 144
+    },
+    "loftSuggestedFinalPrice": {
+      "minWidth": 100,
+      "name": "loftSuggestedFinalPrice",
+      "linkField": "loftSuggestedFinalPrice",
+      "visible": false,
+      "sort": 144
+    },
+    "premiumHighlightZap": {
+      "name": "premiumHighlightZap",
+      "linkField": "premiumHighlightZap",
+      "minWidth": 50,
+      "sort": 83
+    },
+    "specialHighlightZap": {
+      "name": "specialHighlightZap",
+      "linkField": "specialHighlightZap",
+      "minWidth": 50,
+      "sort": 83
+    }
+  },
+  "document": "Product",
+  "label": {
+    "en": "Product",
+    "pt_BR": "Imóvel"
+  },
+  "loadDataAtOpen": true,
+  "name": "Default",
+  "namespace": [
+    "base",
+    "foxter"
+  ],
+  "plurals": {
+    "en": "Products",
+    "pt_BR": "Imóveis"
+  },
+  "refreshRate": {
+    "options": [
+      0,
+      5,
+      10,
+      15,
+      30,
+      60,
+      300,
+      600,
+      900,
+      1800,
+      3600
+    ],
+    "default": 0
+  },
+  "rowsPerPage": {
+    "options": [
+      5,
+      10,
+      15,
+      20,
+      25,
+      50,
+      100,
+      200
+    ],
+    "default": 25
+  },
+  "sorters": [
+    {
+      "direction": "desc",
+      "term": "score"
+    }
+  ],
+  "type": "list",
+  "view": "Default",
+  "filter": {
+    "match": "and",
+    "conditions": {
+      "code:equals": {
+        "term": "code",
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "numberfield"
+        },
         "sort": 0
       },
-      "sku": {
-        "name": "sku",
-        "linkField": "sku",
-        "minWidth": 100,
+      "active-2:contains": {
+        "term": "active-2",
+        "operator": "contain",
+        "editable": true,
+        "disabled": true,
+        "style": {},
         "sort": 1
       },
-      "active": {
-        "name": "active",
-        "linkField": "active",
-        "minWidth": 40,
-        "sort": 2
-      },
-      "status": {
-        "visible": true,
-        "minWidth": 100,
-        "name": "status",
-        "linkField": "status",
-        "sort": 14
-      },
-      "type": {
-        "name": "type",
-        "linkField": "type",
-        "visible": true,
-        "minWidth": 100,
-        "sort": 6
-      },
-      "name": {
-        "minWidth": 100,
-        "name": "name",
-        "linkField": "name",
-        "visible": false,
-        "sort": 99
-      },
-      "description": {
-        "name": "description",
-        "linkField": "description",
-        "minWidth": 100,
-        "sort": 6
-      },
-      "file": {
-        "name": "file",
-        "linkField": "file",
-        "minWidth": 50,
-        "sort": 7
-      },
-      "pictures": {
-        "name": "pictures",
-        "linkField": "pictures",
-        "minWidth": 50,
-        "sort": 1,
-        "visible": true
-      },
-      "geolocation": {
-        "name": "geolocation",
-        "linkField": "geolocation",
-        "minWidth": 50,
-        "sort": 9
-      },
-      "_createdAt": {
-        "minWidth": 100,
-        "name": "_createdAt",
-        "linkField": "_createdAt",
-        "sort": 10
-      },
-      "kuiLink": {
-        "linkField": "kuiLink",
-        "visible": false,
-        "minWidth": 50,
-        "name": "kuiLink",
-        "sort": 2
-      },
-      "_createdBy": {
-        "linkField": "_createdBy",
-        "minWidth": 200,
-        "name": "_createdBy",
-        "sort": 11
-      },
-      "quotesBroker": {
-        "name": "quotesBroker",
-        "linkField": "quotesBroker",
-        "minWidth": 100,
-        "sort": 4
-      },
-      "_updatedAt": {
-        "minWidth": 100,
-        "name": "_updatedAt",
-        "linkField": "_updatedAt",
-        "sort": 12
-      },
-      "_updatedBy": {
-        "name": "_updatedBy",
-        "linkField": "_updatedBy",
-        "minWidth": 200,
-        "sort": 13
-      },
-      "_user": {
-        "name": "_user",
-        "linkField": "_user",
-        "minWidth": 200,
-        "sort": 14
-      },
-      "leadOverflow": {
-        "name": "leadOverflow",
-        "linkField": "leadOverflow",
-        "minWidth": 200,
-        "sort": 14
-      },
-      "leadOverflowUser": {
-        "name": "leadOverflowUser",
-        "linkField": "leadOverflowUser",
-        "minWidth": 200,
-        "sort": 14
-      },
-      "source": {
-        "name": "source",
-        "linkField": "source",
-        "minWidth": 200,
-        "sort": 14
-      },
-      "sale": {
-        "name": "sale",
-        "linkField": "sale",
-        "minWidth": 120,
-        "sort": 7,
-        "visible": true
-      },
-      "shippingAmount": {
-        "name": "shippingAmount",
-        "linkField": "shippingAmount",
-        "minWidth": 50,
-        "sort": 16
-      },
-      "joinedCampaignOn": {
-        "name": "joinedCampaignOn",
-        "linkField": "joinedCampaignOn",
-        "minWidth": 70,
-        "sort": 6
-      },
-      "blogTag": {
-        "name": "blogTag",
-        "linkfield": "blogTag",
-        "minWidth": 100,
-        "sort": 17
-      },
-      "developmentPictures": {
-        "linkField": "developmentPictures",
-        "visible": true,
-        "minWidth": 50,
-        "name": "developmentPictures",
-        "sort": 2
-      },
-      "score": {
-        "name": "score",
-        "linkField": "score",
-        "visible": true,
-        "minWidth": 75,
-        "sort": 3
-      },
-      "quotes": {
-        "name": "quotes",
-        "linkField": "quotes",
+      "status:in": {
+        "term": "status",
+        "value": [
+          "Ativo"
+        ],
+        "operator": "in",
+        "editable": true,
         "style": {
-          "template": "<tpl if=\"quotes === true\">\n<i class=\"icon-warning-sign\" style=\"color: #FF7A00;\"></i>\n</tpl>"
+          "columns": 1,
+          "renderAs": "checkbox"
         },
-        "visible": true,
-        "minWidth": 25,
+        "sort": 1
+      },
+      "type:in": {
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "customLabel": "Tipo",
+          "renderAs": "checkbox"
+        },
+        "term": "type",
+        "operator": "in",
+        "sort": 2
+      },
+      "address:equals": {
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "addressfield"
+        },
+        "term": "address",
+        "value": {
+          "city": "Porto Alegre",
+          "country": "BRA",
+          "state": "RS"
+        },
+        "operator": "equals",
         "sort": 3
       },
-      "quotesUser": {
-        "name": "quotesUser",
-        "linkField": "quotesUser",
-        "minWidth": 100,
+      "zone:in": {
+        "style": {
+          "renderAs": "checkbox",
+          "columns": 1,
+          "hideOnDisable": true
+        },
+        "term": "zone",
+        "operator": "in",
+        "editable": true,
+        "disabled": true,
         "sort": 4
       },
-      "quotesDate": {
-        "name": "quotesDate",
-        "linkField": "quotesDate",
-        "minWidth": 100,
-        "sort": 4
-      },
-      "address": {
-        "name": "address",
-        "linkField": "address",
-        "visible": true,
-        "minWidth": 240,
-        "sort": 4
-      },
-      "development": {
-        "linkField": "development",
-        "visible": true,
-        "minWidth": 120,
-        "name": "development",
+      "development:_id:equals": {
+        "style": {
+          "renderAs": "lookupfield",
+          "hideOnDisable": true
+        },
+        "term": "development._id",
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
         "sort": 5
       },
-      "externalId": {
-        "linkField": "externalId",
-        "minWidth": 80,
-        "name": "externalId",
-        "sort": 5
+      "blogTag:_id:equals": {
+        "style": {
+          "renderAs": "lookupfield",
+          "hideOnDisable": true
+        },
+        "term": "blogTag._id",
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
+        "sort": 6
       },
-      "saleDiscount": {
-        "linkField": "saleDiscount",
-        "visible": true,
-        "minWidth": 120,
-        "name": "saleDiscount",
+      "sale:value:between": {
+        "disabled": true,
+        "style": {
+          "customLabel": "Valor",
+          "renderAs": "slider",
+          "minValue": 0,
+          "steps": 50000,
+          "maxValue": 3000000.06,
+          "unlimitedMaxValue": true,
+          "infinity": true
+        },
+        "term": "sale.value",
+        "value": {
+          "greater_or_equals": "0.00",
+          "less_or_equals": "3050000.00"
+        },
+        "operator": "between",
+        "editable": true,
+        "sort": 6
+      },
+      "acceptDation:equals": {
+        "style": {
+          "renderAs": "radiobox",
+          "columns": 2,
+          "hideOnDisable": true
+        },
+        "term": "acceptDation",
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
         "sort": 7
       },
-      "areaPrice": {
-        "minWidth": 120,
-        "name": "areaPrice",
-        "linkField": "areaPrice",
-        "visible": true,
+      "bedrooms:between": {
+        "disabled": true,
+        "style": {
+          "renderAs": "slider",
+          "minValue": 0,
+          "steps": 1,
+          "maxValue": 10
+        },
+        "term": "bedrooms",
+        "value": {
+          "greater_or_equals": 0,
+          "less_or_equals": 10
+        },
+        "operator": "between",
+        "editable": true,
         "sort": 8
       },
-      "areaPrivate": {
-        "name": "areaPrivate",
-        "linkField": "areaPrivate",
-        "visible": true,
-        "minWidth": 50,
+      "parkingSpaces:between": {
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "maxValue": 10,
+          "customLabel": "Vagas",
+          "renderAs": "slider",
+          "minValue": 0,
+          "steps": 1
+        },
+        "term": "parkingSpaces",
+        "value": {
+          "greater_or_equals": 0,
+          "less_or_equals": 10
+        },
+        "operator": "between",
         "sort": 9
       },
-      "bedrooms": {
-        "name": "bedrooms",
-        "linkField": "bedrooms",
-        "visible": true,
-        "minWidth": 20,
+      "areaPrivate:between": {
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "hideOnDisable": true,
+          "maxValue": 2000,
+          "renderAs": "slider",
+          "minValue": 0,
+          "steps": 10
+        },
+        "term": "areaPrivate",
+        "value": {
+          "greater_or_equals": 0,
+          "less_or_equals": 2000
+        },
         "sort": 10
       },
-      "suites": {
-        "minWidth": 50,
-        "name": "suites",
-        "linkField": "suites",
-        "visible": true,
+      "suites:between": {
+        "value": {
+          "greater_or_equals": 0,
+          "less_or_equals": 6
+        },
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "hideOnDisable": true,
+          "maxValue": 5,
+          "unlimitedMaxValue": true,
+          "renderAs": "slider",
+          "minValue": 0,
+          "removable": true,
+          "steps": 1
+        },
+        "term": "suites",
         "sort": 11
       },
-      "bathrooms": {
-        "name": "bathrooms",
-        "linkField": "bathrooms",
-        "visible": true,
-        "minWidth": 20,
+      "bathrooms:between": {
+        "term": "bathrooms",
+        "value": {
+          "greater_or_equals": 0,
+          "less_or_equals": 6
+        },
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "maxValue": 5,
+          "customLabel": "Banheiros",
+          "unlimitedMaxValue": true,
+          "renderAs": "slider",
+          "minValue": 0,
+          "steps": 1,
+          "hideOnDisable": true,
+          "infinity": true
+        },
         "sort": 12
       },
-      "parkingSpaces": {
-        "name": "parkingSpaces",
-        "linkField": "parkingSpaces",
-        "visible": true,
-        "minWidth": 20,
-        "sort": 13
-      },
-      "siteTags": {
-        "name": "siteTags",
-        "linkField": "siteTags",
-        "visible": false,
-        "minWidth": 20,
-        "sort": 13
-      },
-      "campaignTags": {
-        "name": "campaignTags",
-        "linkField": "campaignTags",
-        "visible": false,
-        "minWidth": 20,
-        "sort": 13
-      },
-      "divulgation": {
-        "name": "divulgation",
-        "linkField": "divulgation",
-        "minWidth": 70,
-        "sort": 7
-      },
-      "supplierUpdatedAt": {
-        "linkField": "supplierUpdatedAt",
-        "visible": true,
+      "purpose:in": {
         "style": {
-          "colorBasedOnTime": "0:green:white,11:yellow,23:red:white,35:gray:white,47:black:white"
+          "renderAs": "checkbox",
+          "columns": 2,
+          "hideOnDisable": true
         },
-        "minWidth": 100,
-        "description": {
-          "pt_BR": "Data em que o agenciador confirmou situação de venda com o proprietário do imóvel"
+        "term": "purpose",
+        "operator": "in",
+        "editable": true,
+        "disabled": true,
+        "sort": 14
+      },
+      "elevators:between": {
+        "style": {
+          "hideOnDisable": true,
+          "maxValue": 1,
+          "unlimitedMaxValue": true,
+          "renderAs": "slider",
+          "minValue": 0,
+          "removable": true,
+          "steps": 1
         },
-        "name": "supplierUpdatedAt",
+        "term": "elevators",
+        "value": {
+          "greater_or_equals": 0,
+          "less_or_equals": 6
+        },
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
         "sort": 15
       },
-      "editorialStatus": {
-        "name": "editorialStatus",
-        "linkField": "editorialStatus",
-        "visible": true,
-        "minWidth": 150,
+      "launch:between": {
+        "term": "launch",
+        "value": {},
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "datefield",
+          "hideOnDisable": true
+        },
         "sort": 16
       },
-      "builder": {
-        "minWidth": 100,
-        "name": "builder",
-        "linkField": "builder",
-        "visible": true,
+      "constructionEndAt:between": {
+        "term": "constructionEndAt",
+        "value": {},
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "datefield",
+          "hideOnDisable": true
+        },
         "sort": 17
       },
-      "rejectedAt": {
-        "minWidth": 50,
-        "name": "rejectedAt",
-        "linkField": "rejectedAt",
-        "visible": false,
-        "sort": 11
-      },
-      "signUser": {
-        "name": "signUser",
-        "linkField": "signUser",
-        "minWidth": 100,
-        "sort": 74
-      },
-      "active-2": {
-        "name": "active-2",
-        "linkField": "active-2",
-        "minWidth": 100,
-        "sort": 4,
-        "active": true
-      },
-      "signStatus": {
-        "name": "signStatus",
-        "linkField": "signStatus",
-        "minWidth": 100,
-        "sort": 74
-      },
-      "constructionEndAt": {
-        "linkField": "constructionEndAt",
-        "visible": true,
-        "minWidth": 100,
-        "name": "constructionEndAt",
+      "plannedDistrict:_id:equals": {
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "lookupfield",
+          "hideOnDisable": true
+        },
+        "term": "plannedDistrict._id",
         "sort": 18
       },
-      "availableAt": {
-        "minWidth": 100,
-        "name": "availableAt",
-        "linkField": "availableAt",
-        "visible": true,
+      "features:in": {
+        "term": "features",
+        "operator": "in",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "checkbox",
+          "height": 100,
+          "withScroll": true,
+          "hideOnDisable": true
+        },
         "sort": 19
       },
-      "launch": {
-        "name": "launch",
-        "linkField": "launch",
-        "visible": true,
-        "minWidth": 80,
+      "builder:_id:equals": {
+        "term": "builder._id",
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "lookupfield",
+          "hideOnDisable": true
+        },
         "sort": 20
       },
-      "purpose": {
-        "minWidth": 100,
-        "name": "purpose",
-        "linkField": "purpose",
-        "visible": true,
+      "supplier:_id:equals": {
+        "term": "supplier._id",
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "lookupfield",
+          "hideOnDisable": true
+        },
         "sort": 21
       },
-      "modelUnit": {
-        "minWidth": 40,
-        "name": "modelUnit",
-        "linkField": "modelUnit",
-        "visible": true,
+      "supplierUpdatedAt:between": {
+        "term": "supplierUpdatedAt",
+        "value": {},
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "datefield",
+          "hideOnDisable": true
+        },
         "sort": 22
       },
-      "resale": {
-        "name": "resale",
-        "linkField": "resale",
+      "signPlacedOn:equals": {
+        "term": "signPlacedOn",
+        "value": true,
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
         "style": {
-          "template": "<tpl if=\"resale === true\">\n<i class=\"icon-share-alt\" style=\"color: #336666;\"></i>\n</tpl>"
+          "renderAs": "radiobox",
+          "columns": 1,
+          "hideOnDisable": true
         },
-        "visible": true,
-        "minWidth": 40,
         "sort": 23
       },
-      "corporate": {
-        "name": "corporate",
-        "linkField": "corporate",
-        "visible": true,
-        "minWidth": 70,
+      "signProhibited:equals": {
+        "term": "signProhibited",
+        "value": true,
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "radiobox",
+          "columns": 1,
+          "hideOnDisable": true
+        },
         "sort": 24
       },
-      "exclusive": {
-        "name": "exclusive",
-        "linkField": "exclusive",
-        "visible": true,
-        "minWidth": 40,
+      "signPlacedAt:between": {
+        "term": "signPlacedAt",
+        "value": {},
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "hideOnDisable": true,
+          "renderAs": "datefield"
+        },
         "sort": 25
       },
-      "duplicateOf": {
-        "name": "duplicateOf",
-        "linkField": "duplicateOf",
-        "minWidth": 50,
-        "sort": 27
+      "exclusive:equals": {
+        "style": {
+          "hideOnDisable": true,
+          "renderAs": "radiobox",
+          "columns": 2
+        },
+        "term": "exclusive",
+        "value": true,
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
+        "sort": 26
       },
-      "plannedDistrict": {
-        "minWidth": 120,
-        "name": "plannedDistrict",
-        "linkField": "plannedDistrict",
+      "recommendHighlight:equals": {
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "columns": 2,
+          "hideOnDisable": true,
+          "renderAs": "radiobox"
+        },
+        "term": "recommendHighlight",
+        "value": true,
+        "operator": "equals",
         "sort": 28
       },
-      "rooms": {
-        "linkField": "rooms",
-        "minWidth": 20,
-        "name": "rooms",
+      "office:in": {
+        "term": "office",
+        "value": [],
+        "operator": "in",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "columns": 1,
+          "renderAs": "checkbox",
+          "hideOnDisable": true
+        },
+        "sort": 29
+      },
+      "dontDisplay:in": {
+        "term": "dontDisplay",
+        "operator": "in",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "withScroll": true,
+          "hideOnDisable": true,
+          "renderAs": "checkbox",
+          "height": 100
+        },
+        "sort": 29
+      },
+      "dontDisplay:not_in": {
+        "term": "dontDisplay",
+        "operator": "not_in",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "customLabel": "Exibir no portal",
+          "withScroll": true,
+          "hideOnDisable": true,
+          "renderAs": "checkbox",
+          "height": 100
+        },
+        "sort": 29
+      },
+      "editorialStatus:in": {
+        "disabled": true,
+        "style": {
+          "columns": 1,
+          "hideOnDisable": true,
+          "renderAs": "checkbox"
+        },
+        "term": "editorialStatus",
+        "operator": "in",
+        "editable": true,
         "sort": 30
       },
-      "features": {
-        "name": "features",
-        "linkField": "features",
-        "minWidth": 150,
+      "ownerApproached:in": {
+        "disabled": true,
+        "style": {
+          "columns": 1,
+          "hideOnDisable": true,
+          "renderAs": "checkbox"
+        },
+        "term": "ownerApproached",
+        "operator": "in",
+        "editable": true,
+        "sort": 30
+      },
+      "quotes:equals": {
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "radiobox",
+          "columns": 2,
+          "hideOnDisable": true
+        },
+        "term": "quotes",
+        "value": true,
         "sort": 31
       },
-      "developmentFeatures": {
-        "name": "developmentFeatures",
-        "linkField": "developmentFeatures",
-        "minWidth": 150,
+      "pictures:exists": {
+        "operator": "exists",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "radiobox",
+          "columns": 1,
+          "hideOnDisable": true
+        },
+        "term": "pictures",
+        "value": true,
         "sort": 31
       },
-      "zone": {
-        "name": "zone",
-        "linkField": "zone",
-        "minWidth": 150,
-        "sort": 32
-      },
-      "areaLand": {
-        "name": "areaLand",
-        "linkField": "areaLand",
-        "minWidth": 50,
-        "sort": 33
-      },
-      "areaTotal": {
-        "name": "areaTotal",
-        "linkField": "areaTotal",
-        "minWidth": 50,
-        "sort": 34
-      },
-      "furniture": {
-        "name": "furniture",
-        "linkField": "furniture",
-        "minWidth": 50,
-        "sort": 35
-      },
-      "negotiable": {
-        "linkField": "negotiable",
-        "minWidth": 50,
-        "name": "negotiable",
-        "sort": 37
-      },
-      "solarOrientation": {
-        "name": "solarOrientation",
-        "linkField": "solarOrientation",
-        "minWidth": 50,
-        "sort": 38
-      },
-      "isMarketplace": {
-        "minWidth": 40,
-        "name": "isMarketplace",
-        "linkField": "isMarketplace",
-        "sort": 22
-      },
-      "marketplaceOrigin": {
-        "minWidth": 40,
-        "name": "marketplaceOrigin",
-        "linkField": "marketplaceOrigin",
-        "sort": 22
-      },
-      "marketplaceLastUpdate": {
-        "minWidth": 40,
-        "name": "marketplaceLastUpdate",
-        "linkField": "marketplaceLastUpdate",
-        "sort": 22
-      },
-      "externalFiles": {
-        "minWidth": 40,
-        "name": "externalFiles",
-        "linkField": "externalFiles",
-        "sort": 22
-      },
-      "supplier": {
-        "name": "supplier",
-        "linkField": "supplier",
-        "minWidth": 200,
-        "sort": 39
-      },
-      "banner": {
-        "name": "banner",
-        "linkField": "banner",
-        "minWidth": 50,
-        "sort": 40
-      },
-      "commission": {
-        "name": "commission",
-        "linkField": "commission",
-        "minWidth": 50,
-        "sort": 41
-      },
-      "condominiumAdmin": {
-        "linkField": "condominiumAdmin",
-        "minWidth": 75,
-        "name": "condominiumAdmin",
-        "sort": 42
-      },
-      "condominiumAmount": {
-        "name": "condominiumAmount",
-        "linkField": "condominiumAmount",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "statusReelsProduct": {
-        "name": "statusReelsProduct",
-        "linkField": "statusReelsProduct",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "ReelsRequestDate": {
-        "name": "ReelsRequestDate",
-        "linkField": "ReelsRequestDate",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "ReelsSession": {
-        "name": "ReelsSession",
-        "linkField": "ReelsSession",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "ReelsNotes": {
-        "name": "ReelsNotes",
-        "linkField": "ReelsNotes",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "ReelsPhotographer": {
-        "name": "ReelsPhotographer",
-        "linkField": "ReelsPhotographer",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "LinkReels": {
-        "name": "LinkReels",
-        "linkField": "LinkReels",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "ReelsDownload": {
-        "name": "ReelsDownload",
-        "linkField": "ReelsDownload",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "developmentLinkReels": {
-        "name": "developmentLinkReels",
-        "linkField": "developmentLinkReels",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "developmentReelsDownload": {
-        "name": "developmentReelsDownload",
-        "linkField": "developmentReelsDownload",
-        "minWidth": 50,
-        "sort": 43
-      },
-      "conservation": {
-        "minWidth": 100,
-        "name": "conservation",
-        "linkField": "conservation",
-        "sort": 44
-      },
-      "deepth": {
-        "name": "deepth",
-        "linkField": "deepth",
-        "minWidth": 70,
-        "sort": 45
-      },
-      "dontDisplay": {
-        "minWidth": 150,
-        "name": "dontDisplay",
-        "linkField": "dontDisplay",
-        "sort": 46
-      },
-      "elevators": {
-        "name": "elevators",
-        "linkField": "elevators",
-        "minWidth": 70,
-        "sort": 47
-      },
-      "exclusiveStart": {
-        "name": "exclusiveStart",
-        "linkField": "exclusiveStart",
-        "minWidth": 40,
-        "sort": 48
-      },
-      "exclusiveEnd": {
-        "name": "exclusiveEnd",
-        "linkField": "exclusiveEnd",
-        "minWidth": 40,
-        "sort": 49
-      },
-      "exclusiveEndedAt": {
-        "name": "exclusiveEndedAt",
-        "linkField": "exclusiveEndedAt",
-        "minWidth": 40,
-        "sort": 50
-      },
-      "exclusiveCancelAtEnd": {
-        "name": "exclusiveCancelAtEnd",
-        "linkField": "exclusiveCancelAtEnd",
-        "minWidth": 40,
-        "sort": 50
-      },
-      "exclusiveAuthorization": {
-        "name": "exclusiveAuthorization",
-        "linkField": "exclusiveAuthorization",
-        "minWidth": 40,
-        "sort": 50
-      },
-      "floors": {
-        "name": "floors",
-        "linkField": "floors",
-        "minWidth": 70,
-        "sort": 51
-      },
-      "focus": {
-        "linkField": "focus",
+      "isMarketplace:equals": {
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
         "style": {
-          "template": "<tpl if=\"focus === true\">\n<i class=\"icon-bolt\" style=\"color: #669900;\"></i>\n</tpl>"
+          "renderAs": "radiobox",
+          "columns": 2,
+          "hideOnDisable": true
         },
-        "minWidth": 25,
-        "name": "focus",
-        "sort": 52
+        "term": "isMarketplace",
+        "value": true,
+        "sort": 31
       },
-      "internalHighlight": {
-        "linkField": "internalHighlight",
+      "_user:_id:equals": {
+        "operator": "equals",
+        "editable": true,
+        "disabled": true,
         "style": {
-          "template": "<tpl if=\"internalHighlight === 'Zona Norte'\"><i class=\"icon-bookmark\" style=\"color:#690630;\"></i><tpl elseif=\"internalHighlight === 'Zona Sul'\"><i class=\"icon-bookmark\" style=\"color:#306906;\"></i></tpl>"
+          "renderAs": "lookupfield",
+          "hideOnDisable": true
         },
-        "minWidth": 25,
-        "name": "internalHighlight",
-        "sort": 53
-      },
-      "recommendHighlight": {
-        "minWidth": 25,
-        "name": "recommendHighlight",
-        "linkField": "recommendHighlight",
-        "style": {},
-        "sort": 54
-      },
-      "hiddenBySupplier": {
-        "name": "hiddenBySupplier",
-        "linkField": "hiddenBySupplier",
-        "minWidth": 40,
-        "sort": 55
-      },
-      "keysLocker": {
-        "minWidth": 75,
-        "name": "keysLocker",
-        "linkField": "keysLocker",
-        "sort": 56
-      },
-      "keysPlace": {
-        "name": "keysPlace",
-        "linkField": "keysPlace",
-        "minWidth": 75,
-        "sort": 57
-      },
-      "keysTakenBy": {
-        "minWidth": 75,
-        "name": "keysTakenBy",
-        "linkField": "keysTakenBy",
-        "sort": 58
-      },
-      "keysTakenAt": {
-        "name": "keysTakenAt",
-        "linkField": "keysTakenAt",
-        "minWidth": 75,
-        "sort": 59
-      },
-      "marketplaceExternal": {
-        "name": "marketplaceExternal",
-        "linkField": "marketplaceExternal",
-        "minWidth": 75,
-        "sort": 59
-      },
-      "keysImage": {
-        "name": "keysImage",
-        "linkField": "keysImage",
-        "minWidth": 75,
-        "sort": 59
-      },
-      "kitches": {
-        "name": "kitches",
-        "linkField": "kitches",
-        "minWidth": 70,
-        "sort": 60
-      },
-      "lavatories": {
-        "name": "lavatories",
-        "linkField": "lavatories",
-        "minWidth": 70,
-        "sort": 61
-      },
-      "link": {
-        "name": "link",
-        "linkField": "link",
-        "minWidth": 100,
-        "sort": 62
-      },
-      "notes": {
-        "name": "notes",
-        "linkField": "notes",
-        "minWidth": 100,
-        "sort": 63
-      },
-      "requestedApprovalAt": {
-        "minWidth": 70,
-        "name": "requestedApprovalAt",
-        "linkField": "requestedApprovalAt",
-        "sort": 64
-      },
-      "occupancy": {
-        "linkField": "occupancy",
-        "minWidth": 150,
-        "name": "occupancy",
-        "sort": 64
-      },
-      "parkingInside": {
-        "name": "parkingInside",
-        "linkField": "parkingInside",
-        "minWidth": 70,
-        "sort": 65
-      },
-      "parkingNumber": {
-        "minWidth": 100,
-        "name": "parkingNumber",
-        "linkField": "parkingNumber",
-        "sort": 66
-      },
-      "parkingOutside": {
-        "name": "parkingOutside",
-        "linkField": "parkingOutside",
-        "minWidth": 70,
-        "sort": 67
-      },
-      "parkingRegistryId": {
-        "name": "parkingRegistryId",
-        "linkField": "parkingRegistryId",
-        "minWidth": 50,
-        "sort": 68
-      },
-      "parkingType": {
-        "name": "parkingType",
-        "linkField": "parkingType",
-        "minWidth": 50,
-        "sort": 69
-      },
-      "position": {
-        "name": "position",
-        "linkField": "position",
-        "minWidth": 50,
-        "sort": 70
-      },
-      "registryId": {
-        "name": "registryId",
-        "linkField": "registryId",
-        "minWidth": 100,
-        "sort": 71
-      },
-      "registryZone": {
-        "linkField": "registryZone",
-        "minWidth": 50,
-        "name": "registryZone",
-        "sort": 72
-      },
-      "rent": {
-        "name": "rent",
-        "linkField": "rent",
-        "minWidth": 120,
-        "sort": 73
-      },
-      "signPlacedAt": {
-        "name": "signPlacedAt",
-        "linkField": "signPlacedAt",
-        "minWidth": 100,
-        "sort": 74
-      },
-      "signPlacedOn": {
-        "name": "signPlacedOn",
-        "linkField": "signPlacedOn",
-        "style": {
-          "template": "<tpl if=\"signPlacedOn === true\">\n<i class=\"icon-circle\" style=\"color: #CCCC33;\"></i>\n</tpl>"
-        },
-        "minWidth": 25,
-        "sort": 75
-      },
-      "streetView": {
-        "name": "streetView",
-        "linkField": "streetView",
-        "minWidth": 100,
-        "sort": 76
-      },
-      "suppliersReps": {
-        "linkField": "suppliersReps",
-        "minWidth": 75,
-        "name": "suppliersReps",
-        "sort": 77
-      },
-      "tax": {
-        "minWidth": 120,
-        "name": "tax",
-        "linkField": "tax",
-        "sort": 78
-      },
-      "team": {
-        "linkField": "team",
-        "minWidth": 150,
-        "name": "team",
-        "sort": 79
-      },
-      "incompleteOnWebsite": {
-        "minWidth": 100,
-        "name": "incompleteOnWebsite",
-        "linkField": "incompleteOnWebsite",
-        "sort": 17
-      },
-      "towers": {
-        "minWidth": 70,
-        "name": "towers",
-        "linkField": "towers",
-        "sort": 80
-      },
-      "unitsPerFloor": {
-        "name": "unitsPerFloor",
-        "linkField": "unitsPerFloor",
-        "minWidth": 70,
-        "sort": 81
-      },
-      "videos": {
-        "name": "videos",
-        "linkField": "videos",
-        "minWidth": 100,
-        "sort": 82
-      },
-      "webHighlight": {
-        "name": "webHighlight",
-        "linkField": "webHighlight",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "webHighlightFoxter": {
-        "name": "webHighlightFoxter",
-        "linkField": "webHighlightFoxter",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "webHighlightPerdigueiro": {
-        "name": "webHighlightPerdigueiro",
-        "linkField": "webHighlightPerdigueiro",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "webHighlightVivaReal": {
-        "name": "webHighlightVivaReal",
-        "linkField": "webHighlightVivaReal",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "webHighlightZap": {
-        "name": "webHighlightZap",
-        "linkField": "webHighlightZap",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "superHighlightZap": {
-        "name": "superHighlightZap",
-        "linkField": "superHighlightZap",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "webHighlightMercadoLivre": {
-        "name": "webHighlightMercadoLivre",
-        "linkField": "webHighlightMercadoLivre",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "superHighlightMercadoLivre": {
-        "name": "superHighlightMercadoLivre",
-        "linkField": "superHighlightMercadoLivre",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "webHighlightImovelWeb": {
-        "name": "webHighlightImovelWeb",
-        "linkField": "webHighlightImovelWeb",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "webHighlightRemarketing": {
-        "name": "webHighlightRemarketing",
-        "linkField": "webHighlightRemarketing",
-        "minWidth": 150,
-        "sort": 83
-      },
-      "width": {
-        "minWidth": 70,
-        "name": "width",
-        "linkField": "width",
-        "sort": 84
-      },
-      "privateFile": {
-        "name": "privateFile",
-        "linkField": "privateFile",
-        "minWidth": 50,
-        "sort": 85
-      },
-      "signPicture": {
-        "name": "signPicture",
-        "linkField": "signPicture",
-        "minWidth": 50,
-        "sort": 86
-      },
-      "developmentDescription": {
-        "name": "developmentDescription",
-        "linkField": "developmentDescription",
-        "minWidth": 100,
-        "sort": 88
-      },
-      "editorialNotes": {
-        "name": "editorialNotes",
-        "linkField": "editorialNotes",
-        "minWidth": 100,
-        "sort": 89
-      },
-      "office": {
-        "linkField": "office",
-        "minWidth": 150,
-        "name": "office",
-        "sort": 90
-      },
-      "tower": {
-        "name": "tower",
-        "linkField": "tower",
-        "minWidth": 100,
-        "sort": 4,
-        "visible": true
-      },
-      "approvedAt": {
-        "name": "approvedAt",
-        "linkField": "approvedAt",
-        "minWidth": 100,
-        "sort": 92
-      },
-      "highlight": {
-        "name": "highlight",
-        "linkField": "highlight",
-        "minWidth": 50,
-        "sort": 94
-      },
-      "secondaryBroker": {
-        "linkField": "secondaryBroker",
-        "minWidth": 200,
-        "name": "secondaryBroker",
-        "sort": 95
-      },
-      "signBroker": {
-        "name": "signBroker",
-        "linkField": "signBroker",
-        "minWidth": 200,
-        "sort": 96
-      },
-      "saleReason": {
-        "name": "saleReason",
-        "linkField": "saleReason",
-        "minwidth": 100,
-        "sort": 118
-      },
-      "acceptDation": {
-        "name": "acceptDation",
-        "linkField": "acceptDation",
-        "minWidth": 50
-      },
-      "dationDescription": {
-        "name": "dationDescription",
-        "linkField": "dationDescription"
-      },
-      "dationLimit": {
-        "name": "dationLimit",
-        "linkField": "dationLimit"
-      },
-      "dationType": {
-        "name": "dationType",
-        "linkField": "dationType"
-      },
-      "dationZone": {
-        "name": "dationZone",
-        "linkField": "dationZone"
-      },
-      "developmentVirtualTour": {
-        "name": "developmentVirtualTour",
-        "linkField": "developmentVirtualTour"
-      },
-      "leadType": {
-        "name": "leadType",
-        "linkField": "leadType"
-      },
-      "offerCount": {
-        "name": "offerCount",
-        "linkField": "offerCount"
-      },
-      "photographer": {
-        "name": "photographer",
-        "linkField": "photographer"
-      },
-      "privatePicture": {
-        "name": "privatePicture",
-        "linkField": "privatePicture"
-      },
-      "professionalPicturesSession": {
-        "name": "professionalPicturesSession",
-        "linkField": "professionalPicturesSession"
-      },
-      "professionalPicturesRequestDate": {
-        "name": "professionalPicturesRequestDate",
-        "linkField": "professionalPicturesRequestDate"
-      },
-      "professionalPicturesStatus": {
-        "name": "professionalPicturesStatus",
-        "linkField": "professionalPicturesStatus"
-      },
-      "signProhibited": {
-        "name": "signProhibited",
-        "linkField": "signProhibited"
-      },
-      "surroundings": {
-        "name": "surroundings",
-        "linkField": "surroundings"
-      },
-      "tags": {
-        "name": "tags",
-        "linkField": "tags"
-      },
-      "virtualTour": {
-        "name": "virtualTour",
-        "linkField": "virtualTour"
-      },
-      "actualProfitability": {
-        "name": "actualProfitability",
-        "linkField": "actualProfitability",
-        "minWidth": 80,
+        "term": "_user._id",
         "sort": 100
       },
-      "areaMezzanine": {
-        "name": "areaMezzanine",
-        "linkField": "areaMezzanine",
-        "minWidth": 80,
+      "_user:active:equals": {
+        "disabled": true,
+        "style": {
+          "renderAs": "radiobox",
+          "columns": 2,
+          "hideOnDisable": true
+        },
+        "term": "_user.active",
+        "operator": "equals",
+        "editable": true,
         "sort": 101
       },
-      "atCorner": {
-        "name": "atCorner",
-        "linkField": "atCorner",
-        "minWidth": 80,
+      "_user:group:_id:equals": {
+        "disabled": true,
+        "style": {
+          "renderAs": "lookupfield",
+          "hideOnDisable": true
+        },
+        "term": "_user.group._id",
+        "operator": "equals",
+        "editable": true,
         "sort": 102
       },
-      "ceilingHeight": {
-        "name": "ceilingHeight",
-        "linkField": "ceilingHeight",
-        "minWidth": 80,
+      "_user:director:_id:equals": {
+        "disabled": true,
+        "style": {
+          "renderAs": "lookupfield",
+          "hideOnDisable": true
+        },
+        "term": "_user.director._id",
+        "operator": "equals",
+        "editable": true,
         "sort": 103
       },
-      "corporatePresentation": {
-        "name": "corporatePresentation",
-        "linkField": "corporatePresentation",
-        "minWidth": 80,
+      "_createdAt:between": {
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "datetimefield",
+          "hideOnDisable": true
+        },
+        "term": "_createdAt",
+        "value": {},
         "sort": 104
       },
-      "corporateType": {
-        "name": "corporateType",
-        "linkField": "corporateType",
-        "minWidth": 80,
+      "_updatedAt:between": {
+        "value": {},
+        "operator": "between",
+        "editable": true,
+        "disabled": true,
+        "style": {
+          "renderAs": "datetimefield",
+          "hideOnDisable": true
+        },
+        "term": "_updatedAt",
         "sort": 105
-      },
-      "builderDation": {
-        "name": "builderDation",
-        "linkField": "builderDation",
-        "minWidth": 80,
-        "sort": 105
-      },
-      "estimatedProfitability": {
-        "name": "estimatedProfitability",
-        "linkField": "estimatedProfitability",
-        "minWidth": 80,
-        "sort": 106
-      },
-      "estimatedRent": {
-        "name": "estimatedRent",
-        "linkField": "estimatedRent",
-        "minWidth": 80,
-        "sort": 107
-      },
-      "showOnCorporateWebsite": {
-        "name": "showOnCorporateWebsite",
-        "linkField": "showOnCorporateWebsite",
-        "minWidth": 80,
-        "sort": 108
-      },
-      "stage": {
-        "name": "stage",
-        "linkField": "stage",
-        "minWidth": 80,
-        "sort": 109
-      },
-      "nexchangeOffered": {
-        "name": "nexchangeOffered",
-        "linkField": "nexchangeOffered",
-        "minWidth": 80,
-        "sort": 110
-      },
-      "nexchangeOfferedAt": {
-        "name": "nexchangeOfferedAt",
-        "linkField": "nexchangeOfferedAt",
-        "minWidth": 80,
-        "sort": 111
-      },
-      "targetPercent": {
-        "name": "targetPercent",
-        "linkField": "targetPercent",
-        "minwidth": 100,
-        "sort": 112
-      },
-      "realEstateAppraiser": {
-        "name": "realEstateAppraiser",
-        "linkField": "realEstateAppraiser",
-        "minwidth": 100,
-        "sort": 113
-      },
-      "saleTarget": {
-        "name": "saleTarget",
-        "linkField": "saleTarget",
-        "minwidth": 100,
-        "sort": 114
-      },
-      "professionalPicturesNotes": {
-        "name": "professionalPicturesNotes",
-        "linkField": "professionalPicturesNotes",
-        "minwidth": 100,
-        "sort": 115
-      },
-      "professionalPicturesUserNotes": {
-        "name": "professionalPicturesUserNotes",
-        "linkField": "professionalPicturesUserNotes",
-        "minwidth": 100,
-        "sort": 116
-      },
-      "saleNotes": {
-        "name": "saleNotes",
-        "linkField": "saleNotes",
-        "minwidth": 100,
-        "sort": 117
-      },
-      "saleDeadline": {
-        "name": "saleDeadline",
-        "linkField": "saleDeadline",
-        "minwidth": 100,
-        "sort": 119
-      },
-      "deactivatedAt": {
-        "name": "deactivatedAt",
-        "linkField": "deactivatedAt",
-        "minwidth": 100,
-        "sort": 120
-      },
-      "outdatedAt": {
-        "name": "outdatedAt",
-        "linkField": "outdatedAt",
-        "minWidth": 100,
-        "sort": 121
-      },
-      "soldBy": {
-        "name": "soldBy",
-        "linkField": "soldBy",
-        "minwidth": 100,
-        "sort": 121
-      },
-      "soldPrice": {
-        "name": "soldPrice",
-        "linkField": "soldPrice",
-        "minwidth": 100,
-        "sort": 122
-      },
-      "checked": {
-        "name": "checked",
-        "linkField": "checked",
-        "minwidth": 100,
-        "sort": 123
-      },
-      "checkedUser": {
-        "name": "checkedUser",
-        "linkField": "checkedUser",
-        "minwidth": 100,
-        "sort": 124
-      },
-      "lastCheckedDate": {
-        "name": "lastCheckedDate",
-        "linkField": "lastCheckedDate",
-        "minwidth": 100,
-        "sort": 125
-      },
-      "statusBeforeChecked": {
-        "name": "statusBeforeChecked",
-        "linkField": "statusBeforeChecked",
-        "minwidth": 100,
-        "sort": 126
-      },
-      "statusAfterChecked": {
-        "name": "statusAfterChecked",
-        "linkField": "statusAfterChecked",
-        "minwidth": 100,
-        "sort": 127
-      },
-      "checkedNotes": {
-        "name": "checkedNotes",
-        "linkField": "checkedNotes",
-        "minwidth": 100,
-        "sort": 128
-      },
-      "contactAttempts": {
-        "name": "contactAttempts",
-        "linkField": "contactAttempts",
-        "minwidth": 100,
-        "sort": 129
-      },
-      "statusChecked": {
-        "name": "statusChecked",
-        "linkField": "statusChecked",
-        "minwidth": 100,
-        "sort": 130
-      },
-      "picturesPriority": {
-        "minWidth": 40,
-        "name": "picturesPriority",
-        "linkField": "picturesPriority",
-        "visible": false,
-        "sort": 123
-      },
-      "conversionsLastUpdate": {
-        "minWidth": 40,
-        "name": "conversionsLastUpdate",
-        "linkField": "conversionsLastUpdate",
-        "visible": false,
-        "sort": 124
-      },
-      "conversionsSite": {
-        "minWidth": 40,
-        "name": "conversionsSite",
-        "linkField": "conversionsSite",
-        "visible": false,
-        "sort": 125
-      },
-      "conversionsPortals": {
-        "minWidth": 40,
-        "name": "conversionsPortals",
-        "linkField": "conversionsPortals",
-        "visible": false,
-        "sort": 126
-      },
-      "conversionsAnothers": {
-        "minWidth": 40,
-        "name": "conversionsAnothers",
-        "linkField": "conversionsAnothers",
-        "visible": false,
-        "sort": 127
-      },
-      "conversionsTotal": {
-        "minWidth": 40,
-        "name": "conversionsTotal",
-        "linkField": "conversionsTotal",
-        "visible": false,
-        "sort": 128
-      },
-      "scoreAdjust": {
-        "minWidth": 40,
-        "name": "scoreAdjust",
-        "linkField": "scoreAdjust",
-        "visible": false,
-        "sort": 129
-      },
-      "ownerApproached": {
-        "minWidth": 50,
-        "name": "ownerApproached",
-        "linkField": "ownerApproached",
-        "visible": false,
-        "sort": 130
-      },
-      "campaignProductStatus": {
-        "minWidth": 70,
-        "name": "campaignProductStatus",
-        "linkField": "campaignProductStatus",
-        "visible": false,
-        "sort": 131
-      },
-      "campaignAuthorization": {
-        "minWidth": 60,
-        "name": "campaignAuthorization",
-        "linkField": "campaignAuthorization",
-        "visible": false,
-        "sort": 132
-      },
-      "campaignParticipation": {
-        "minWidth": 70,
-        "name": "campaignParticipation",
-        "linkField": "campaignParticipation",
-        "visible": false,
-        "sort": 133
-      },
-      "previousDiscount": {
-        "minWidth": 80,
-        "name": "previousDiscount",
-        "linkField": "previousDiscount",
-        "visible": false,
-        "sort": 133
-      },
-      "webHighlightChavesNaMao": {
-        "minWidth": 80,
-        "name": "webHighlightChavesNaMao",
-        "linkField": "webHighlightChavesNaMao",
-        "visible": false,
-        "sort": 134
-      },
-      "visitationNotes": {
-        "minWidth": 80,
-        "name": "visitationNotes",
-        "linkField": "visitationNotes",
-        "visible": false,
-        "sort": 135
-      },
-      "inactivationReason": {
-        "minWidth": 100,
-        "name": "inactivationReason",
-        "linkField": "inactivationReason",
-        "visible": false,
-        "sort": 139
-      },
-      "approvationNotes": {
-        "minWidth": 100,
-        "name": "approvationNotes",
-        "linkField": "approvationNotes",
-        "visible": false,
-        "sort": 140
-      },
-      "pricingStatus": {
-        "minWidth": 100,
-        "name": "pricingStatus",
-        "linkField": "pricingStatus",
-        "visible": false,
-        "sort": 142
-      },
-      "saleTargetDifference": {
-        "minWidth": 100,
-        "name": "saleTargetDifference",
-        "linkField": "saleTargetDifference",
-        "visible": false,
-        "sort": 143
-      },
-      "pricedAt": {
-        "minWidth": 100,
-        "name": "pricedAt",
-        "linkField": "pricedAt",
-        "visible": false,
-        "sort": 144
-      },
-      "loftLink": {
-        "minWidth": 100,
-        "name": "loftLink",
-        "linkField": "loftLink",
-        "visible": false,
-        "sort": 144
-      },
-      "loftMaxPrice": {
-        "minWidth": 100,
-        "name": "loftMaxPrice",
-        "linkField": "loftMaxPrice",
-        "visible": false,
-        "sort": 144
-      },
-      "loftMinPrice": {
-        "minWidth": 100,
-        "name": "loftMinPrice",
-        "linkField": "loftMinPrice",
-        "visible": false,
-        "sort": 144
-      },
-      "loftPositioning": {
-        "minWidth": 100,
-        "name": "loftPositioning",
-        "linkField": "loftPositioning",
-        "visible": false,
-        "sort": 144
-      },
-      "loftSuggestedPrice": {
-        "minWidth": 100,
-        "name": "loftSuggestedPrice",
-        "linkField": "loftSuggestedPrice",
-        "visible": false,
-        "sort": 144
-      },
-      "loftPricingFeedback": {
-        "minWidth": 100,
-        "name": "loftPricingFeedback",
-        "linkField": "loftPricingFeedback",
-        "visible": false,
-        "sort": 144
-      },
-      "loftListingId": {
-        "minWidth": 100,
-        "name": "loftListingId",
-        "linkField": "loftListingId",
-        "visible": false,
-        "sort": 144
-      },
-      "loftPriceClassification": {
-        "minWidth": 100,
-        "name": "loftPriceClassification",
-        "linkField": "loftPriceClassification",
-        "visible": false,
-        "sort": 144
-      },
-      "loftSuggestedFinalPrice": {
-        "minWidth": 100,
-        "name": "loftSuggestedFinalPrice",
-        "linkField": "loftSuggestedFinalPrice",
-        "visible": false,
-        "sort": 144
-      },
-      "premiumHighlightZap": {
-        "name": "premiumHighlightZap",
-        "linkField": "premiumHighlightZap",
-        "minWidth": 50,
-        "sort": 83
-      },
-      "specialHighlightZap": {
-        "name": "specialHighlightZap",
-        "linkField": "specialHighlightZap",
-        "minWidth": 50,
-        "sort": 83
       }
-    },
-    "document": "Product",
-    "label": {
-      "en": "Product",
-      "pt_BR": "Imóvel"
-    },
-    "loadDataAtOpen": true,
-    "name": "Default",
-    "namespace": [
-      "base",
-      "foxter"
-    ],
-    "plurals": {
-      "en": "Products",
-      "pt_BR": "Imóveis"
-    },
-    "refreshRate": {
-      "options": [
-        0,
-        5,
-        10,
-        15,
-        30,
-        60,
-        300,
-        600,
-        900,
-        1800,
-        3600
-      ],
-      "default": 0
-    },
-    "rowsPerPage": {
-      "options": [
-        5,
-        10,
-        15,
-        20,
-        25,
-        50,
-        100,
-        200
-      ],
-      "default": 25
-    },
-    "sorters": [
-      {
-        "direction": "desc",
-        "term": "score"
-      }
-    ],
-    "type": "list",
-    "view": "Default",
-    "filter": {
-      "match": "and",
-      "conditions": {
-        "code:equals": {
-          "term": "code",
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "numberfield"
-          },
-          "sort": 0
-        },
-        "active-2:contains": {
-          "term": "active-2",
-          "operator": "contain",
-          "editable": true,
-          "disabled": true,
-          "style": {},
-          "sort": 1
-        },
-        "status:in": {
-          "term": "status",
-          "value": [
-            "Ativo"
-          ],
-          "operator": "in",
-          "editable": true,
-          "style": {
-            "columns": 1,
-            "renderAs": "checkbox"
-          },
-          "sort": 1
-        },
-        "type:in": {
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "customLabel": "Tipo",
-            "renderAs": "checkbox"
-          },
-          "term": "type",
-          "operator": "in",
-          "sort": 2
-        },
-        "address:equals": {
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "addressfield"
-          },
-          "term": "address",
-          "value": {
-            "city": "Porto Alegre",
-            "country": "BRA",
-            "state": "RS"
-          },
-          "operator": "equals",
-          "sort": 3
-        },
-        "zone:in": {
-          "style": {
-            "renderAs": "checkbox",
-            "columns": 1,
-            "hideOnDisable": true
-          },
-          "term": "zone",
-          "operator": "in",
-          "editable": true,
-          "disabled": true,
-          "sort": 4
-        },
-        "development:_id:equals": {
-          "style": {
-            "renderAs": "lookupfield",
-            "hideOnDisable": true
-          },
-          "term": "development._id",
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "sort": 5
-        },
-        "blogTag:_id:equals": {
-          "style": {
-            "renderAs": "lookupfield",
-            "hideOnDisable": true
-          },
-          "term": "blogTag._id",
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "sort": 6
-        },
-        "sale:value:between": {
-          "disabled": true,
-          "style": {
-            "customLabel": "Valor",
-            "renderAs": "slider",
-            "minValue": 0,
-            "steps": 50000,
-            "maxValue": 3000000.06,
-            "unlimitedMaxValue": true,
-            "infinity": true
-          },
-          "term": "sale.value",
-          "value": {
-            "greater_or_equals": "0.00",
-            "less_or_equals": "3050000.00"
-          },
-          "operator": "between",
-          "editable": true,
-          "sort": 6
-        },
-        "acceptDation:equals": {
-          "style": {
-            "renderAs": "radiobox",
-            "columns": 2,
-            "hideOnDisable": true
-          },
-          "term": "acceptDation",
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "sort": 7
-        },
-        "bedrooms:between": {
-          "disabled": true,
-          "style": {
-            "renderAs": "slider",
-            "minValue": 0,
-            "steps": 1,
-            "maxValue": 10
-          },
-          "term": "bedrooms",
-          "value": {
-            "greater_or_equals": 0,
-            "less_or_equals": 10
-          },
-          "operator": "between",
-          "editable": true,
-          "sort": 8
-        },
-        "parkingSpaces:between": {
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "maxValue": 10,
-            "customLabel": "Vagas",
-            "renderAs": "slider",
-            "minValue": 0,
-            "steps": 1
-          },
-          "term": "parkingSpaces",
-          "value": {
-            "greater_or_equals": 0,
-            "less_or_equals": 10
-          },
-          "operator": "between",
-          "sort": 9
-        },
-        "areaPrivate:between": {
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "hideOnDisable": true,
-            "maxValue": 2000,
-            "renderAs": "slider",
-            "minValue": 0,
-            "steps": 10
-          },
-          "term": "areaPrivate",
-          "value": {
-            "greater_or_equals": 0,
-            "less_or_equals": 2000
-          },
-          "sort": 10
-        },
-        "suites:between": {
-          "value": {
-            "greater_or_equals": 0,
-            "less_or_equals": 6
-          },
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "hideOnDisable": true,
-            "maxValue": 5,
-            "unlimitedMaxValue": true,
-            "renderAs": "slider",
-            "minValue": 0,
-            "removable": true,
-            "steps": 1
-          },
-          "term": "suites",
-          "sort": 11
-        },
-        "bathrooms:between": {
-          "term": "bathrooms",
-          "value": {
-            "greater_or_equals": 0,
-            "less_or_equals": 6
-          },
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "maxValue": 5,
-            "customLabel": "Banheiros",
-            "unlimitedMaxValue": true,
-            "renderAs": "slider",
-            "minValue": 0,
-            "steps": 1,
-            "hideOnDisable": true,
-            "infinity": true
-          },
-          "sort": 12
-        },
-        "purpose:in": {
-          "style": {
-            "renderAs": "checkbox",
-            "columns": 2,
-            "hideOnDisable": true
-          },
-          "term": "purpose",
-          "operator": "in",
-          "editable": true,
-          "disabled": true,
-          "sort": 14
-        },
-        "elevators:between": {
-          "style": {
-            "hideOnDisable": true,
-            "maxValue": 1,
-            "unlimitedMaxValue": true,
-            "renderAs": "slider",
-            "minValue": 0,
-            "removable": true,
-            "steps": 1
-          },
-          "term": "elevators",
-          "value": {
-            "greater_or_equals": 0,
-            "less_or_equals": 6
-          },
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "sort": 15
-        },
-        "launch:between": {
-          "term": "launch",
-          "value": {},
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "datefield",
-            "hideOnDisable": true
-          },
-          "sort": 16
-        },
-        "constructionEndAt:between": {
-          "term": "constructionEndAt",
-          "value": {},
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "datefield",
-            "hideOnDisable": true
-          },
-          "sort": 17
-        },
-        "plannedDistrict:_id:equals": {
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "lookupfield",
-            "hideOnDisable": true
-          },
-          "term": "plannedDistrict._id",
-          "sort": 18
-        },
-        "features:in": {
-          "term": "features",
-          "operator": "in",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "checkbox",
-            "height": 100,
-            "withScroll": true,
-            "hideOnDisable": true
-          },
-          "sort": 19
-        },
-        "builder:_id:equals": {
-          "term": "builder._id",
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "lookupfield",
-            "hideOnDisable": true
-          },
-          "sort": 20
-        },
-        "supplier:_id:equals": {
-          "term": "supplier._id",
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "lookupfield",
-            "hideOnDisable": true
-          },
-          "sort": 21
-        },
-        "supplierUpdatedAt:between": {
-          "term": "supplierUpdatedAt",
-          "value": {},
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "datefield",
-            "hideOnDisable": true
-          },
-          "sort": 22
-        },
-        "signPlacedOn:equals": {
-          "term": "signPlacedOn",
-          "value": true,
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "radiobox",
-            "columns": 1,
-            "hideOnDisable": true
-          },
-          "sort": 23
-        },
-        "signProhibited:equals": {
-          "term": "signProhibited",
-          "value": true,
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "radiobox",
-            "columns": 1,
-            "hideOnDisable": true
-          },
-          "sort": 24
-        },
-        "signPlacedAt:between": {
-          "term": "signPlacedAt",
-          "value": {},
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "hideOnDisable": true,
-            "renderAs": "datefield"
-          },
-          "sort": 25
-        },
-        "exclusive:equals": {
-          "style": {
-            "hideOnDisable": true,
-            "renderAs": "radiobox",
-            "columns": 2
-          },
-          "term": "exclusive",
-          "value": true,
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "sort": 26
-        },
-        "recommendHighlight:equals": {
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "columns": 2,
-            "hideOnDisable": true,
-            "renderAs": "radiobox"
-          },
-          "term": "recommendHighlight",
-          "value": true,
-          "operator": "equals",
-          "sort": 28
-        },
-        "office:in": {
-          "term": "office",
-          "value": [],
-          "operator": "in",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "columns": 1,
-            "renderAs": "checkbox",
-            "hideOnDisable": true
-          },
-          "sort": 29
-        },
-        "dontDisplay:in": {
-          "term": "dontDisplay",
-          "operator": "in",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "withScroll": true,
-            "hideOnDisable": true,
-            "renderAs": "checkbox",
-            "height": 100
-          },
-          "sort": 29
-        },
-        "dontDisplay:not_in": {
-          "term": "dontDisplay",
-          "operator": "not_in",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "customLabel": "Exibir no portal",
-            "withScroll": true,
-            "hideOnDisable": true,
-            "renderAs": "checkbox",
-            "height": 100
-          },
-          "sort": 29
-        },
-        "editorialStatus:in": {
-          "disabled": true,
-          "style": {
-            "columns": 1,
-            "hideOnDisable": true,
-            "renderAs": "checkbox"
-          },
-          "term": "editorialStatus",
-          "operator": "in",
-          "editable": true,
-          "sort": 30
-        },
-        "ownerApproached:in": {
-          "disabled": true,
-          "style": {
-            "columns": 1,
-            "hideOnDisable": true,
-            "renderAs": "checkbox"
-          },
-          "term": "ownerApproached",
-          "operator": "in",
-          "editable": true,
-          "sort": 30
-        },
-        "quotes:equals": {
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "radiobox",
-            "columns": 2,
-            "hideOnDisable": true
-          },
-          "term": "quotes",
-          "value": true,
-          "sort": 31
-        },
-        "pictures:exists": {
-          "operator": "exists",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "radiobox",
-            "columns": 1,
-            "hideOnDisable": true
-          },
-          "term": "pictures",
-          "value": true,
-          "sort": 31
-        },
-        "isMarketplace:equals": {
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "radiobox",
-            "columns": 2,
-            "hideOnDisable": true
-          },
-          "term": "isMarketplace",
-          "value": true,
-          "sort": 31
-        },
-        "_user:_id:equals": {
-          "operator": "equals",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "lookupfield",
-            "hideOnDisable": true
-          },
-          "term": "_user._id",
-          "sort": 100
-        },
-        "_user:active:equals": {
-          "disabled": true,
-          "style": {
-            "renderAs": "radiobox",
-            "columns": 2,
-            "hideOnDisable": true
-          },
-          "term": "_user.active",
-          "operator": "equals",
-          "editable": true,
-          "sort": 101
-        },
-        "_user:group:_id:equals": {
-          "disabled": true,
-          "style": {
-            "renderAs": "lookupfield",
-            "hideOnDisable": true
-          },
-          "term": "_user.group._id",
-          "operator": "equals",
-          "editable": true,
-          "sort": 102
-        },
-        "_user:director:_id:equals": {
-          "disabled": true,
-          "style": {
-            "renderAs": "lookupfield",
-            "hideOnDisable": true
-          },
-          "term": "_user.director._id",
-          "operator": "equals",
-          "editable": true,
-          "sort": 103
-        },
-        "_createdAt:between": {
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "datetimefield",
-            "hideOnDisable": true
-          },
-          "term": "_createdAt",
-          "value": {},
-          "sort": 104
-        },
-        "_updatedAt:between": {
-          "value": {},
-          "operator": "between",
-          "editable": true,
-          "disabled": true,
-          "style": {
-            "renderAs": "datetimefield",
-            "hideOnDisable": true
-          },
-          "term": "_updatedAt",
-          "sort": 105
-        }
-      }
-    },
-    "parent": "base:Product:list:Default"
-  }
-]
+    }
+  },
+  "parent": "base:Product:list:Default"
+}

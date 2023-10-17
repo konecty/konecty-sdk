@@ -1,0 +1,1540 @@
+{
+  "_id": "Product:view:Default",
+  "name": "Default",
+  "document": "Product",
+  "label": "{code}",
+  "plurals": "New Product",
+  "visuals": [
+    {
+      "type": "visualGroup",
+      "style": {},
+      "label": {
+        "en": "Formulário",
+        "pt_BR": "Formulário"
+      },
+      "visuals": [
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "bullhorn",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Foxter Festival",
+            "pt_BR": "Festival Foxter"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "ownerApproached"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "campaignProductStatus"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "saleDiscount"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "campaignAuthorization"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "joinedCampaignOn"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "campaignParticipation"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "previousDiscount"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "check-sign",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Checked Product",
+            "pt_BR": "Verificação do Imóvel"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "checked"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "checkedUser"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "contactAttempts"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "lastCheckedDate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "statusChecked"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "statusBeforeChecked"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "statusAfterChecked"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "soldPrice"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "soldBy"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "soldAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "checkedNotes"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "info-sign",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Information",
+            "pt_BR": "Informações"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "code"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "status"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "tags"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "editorialStatus"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "incompleteOnWebsite"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "requestedApprovalAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "inactivationReason"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "stageUpdatedBy"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "stageUpdatedAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "editorialNotes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "approvationNotes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "approvedAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "deactivatedAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "outdatedAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "quotes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "quotesBroker"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "quotesUser"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "quotesDate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "type"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "development"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "agencyOpportunity"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "modelUnit"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "plannedDistrict"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "purpose"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "builderDation"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "notes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "source"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "info-sign",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Restricted Sale Information",
+            "pt_BR": "Informações Restritas da Venda"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "supplierUpdatedAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "sendSupplierUpdatedMail"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "saleDeadline"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "saleReason"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "saleNotes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "active-2"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "ownerDashboard"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "brokerDashboard"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "zoom-in",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Detalhes",
+            "pt_BR": "Detalhes"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "address"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "surroundings"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "duplicateOf"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "zone"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "elevators"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "towers"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "tower"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "floors"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "unitsPerFloor"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "launch"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "developmentConstructionEndAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "constructionEndAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "builder"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "atCorner"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "zoom-in",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Cadastros da Mesma Unidade",
+            "pt_BR": "Cadastros da Mesma Unidade"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "relatedProducts"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "wrench",
+            "collapsed": true
+          },
+          "label": {
+            "pt_BR": "Transbordo de Leads",
+            "en": "Leads Overflow"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "leadOverflow"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "leadOverflowUser"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "camera",
+            "collapsed": true,
+            "title": {
+              "en": "Imagens",
+              "pt_BR": "Imagens"
+            }
+          },
+          "label": {
+            "en": "Imagens",
+            "pt_BR": "Imagens"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "professionalPicturesStatus"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "professionalPicturesRequestDate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "professionalPicturesSession"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "professionalPicturesNotes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "professionalPicturesUserNotes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "photographer"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "kuiLink"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "pictures"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "banner"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "streetView"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "virtualTour"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "videos"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "propertyVideo"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "link"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "developmentPictures"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "developmentVirtualTour"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "picturesPriority"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "flag",
+            "collapsed": false
+          },
+          "label": {
+            "en": "Sign",
+            "pt_BR": "Placas"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "signTarget"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "signStatus"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "signProhibited"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "signPlacedOn"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "signUser"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "signPlacedAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "signFollowUp"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "signNotes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "signPicture"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "instagram",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Reels",
+            "pt_BR": "Reels"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "statusReelsProduct"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "ReelsRequestDate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "ReelsSession"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "ReelsNotes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "ReelsPhotographer"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "LinkReels"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "ReelsDownload"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "developmentLinkReels"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "developmentReelsDownload"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "puzzle-piece",
+            "title": {
+              "en": "Unit",
+              "pt_BR": "Unidade"
+            },
+            "collapsed": true
+          },
+          "label": {
+            "en": "Unit",
+            "pt_BR": "Unidade"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "rooms"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "kitches"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "bathrooms"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "lavatories"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "suites"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "bedrooms"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "furniture"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "conservation"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "position"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "occupancy"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "availableAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "solarOrientation"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "features"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "features_bkp"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "developmentFeatures"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "title": {
+              "en": "Keys",
+              "pt_BR": "Chaves"
+            },
+            "icon": "key",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Keys",
+            "pt_BR": "Chaves"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "keysPlace"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "keysLocker"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "keysImage"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "visitationNotes"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "keysTakenBy"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "keysTakenAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "keyswithdrawnLast30Days"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "keyswithdrawnLast90Days"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "keyswithdrawnSinceApproved"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "hasVisitationFeedback"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "truck",
+            "collapsed": true,
+            "title": {
+              "en": "Parking",
+              "pt_BR": "Vagas"
+            }
+          },
+          "label": {
+            "pt_BR": "Vagas",
+            "en": "Parking"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "parkingSpaces"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "parkingInside"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "parkingOutside"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "parkingNumber"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "parkingType"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "parkingModel"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "usd",
+            "collapsed": true,
+            "title": {
+              "en": "Prices",
+              "pt_BR": "Valores"
+            }
+          },
+          "label": {
+            "pt_BR": "Valores",
+            "en": "Prices"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "sale"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "areaPrice"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "saleTarget"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "condominiumAmount"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "rent"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "actualProfitability"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "estimatedRent"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "estimatedProfitability"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "tax"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "condominiumAdmin"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "developmentDoc"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "commission"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "commisionAuthorization"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "negotiable"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "sendPriceUpdateMail"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "wrench",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Liquidity Stage",
+            "pt_BR": "Estágio de Liquidez"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "liquidityStage"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "wrench",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Pricing Stage",
+            "pt_BR": "Estágio da Precificação"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "pricingStatus"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "saleTargetDifference"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "targetPercent"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "realEstateAppraiser"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "pricedAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "nextPricingAt"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "search",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Similar Filter",
+            "pt_BR": "Filtro de similares"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "similarFilter"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "searchRadius"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "validatedFilter"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "validatedFilterBy"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "similarCount"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "similarLastUpdate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "similarNeedsUpdate"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "home",
+            "title": {
+              "en": "Dation",
+              "pt_BR": "Dação"
+            },
+            "collapsed": true
+          },
+          "label": {
+            "en": "Dations",
+            "pt_BR": "Dações"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "acceptDation"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "dationLimit"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "dationType"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "dationZone"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "dationDescription"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "dationPriority"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "productsToPrice"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "compass",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Neighborhood price mean",
+            "pt_BR": "Média preço região (1km)"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "meansLastUpdate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "meansCount"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "meansPrice"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "meansPriceMin"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "meansPriceMax"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "meansAreaPrice"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "meansAreaPriceMin"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "meansAreaPriceMax"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "zoom-in",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Loft Valuation",
+            "pt_BR": "Avaliação Loft"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftListingId"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftPricingLastUpdate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftPositioning"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftMinPrice"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftSuggestedPrice"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftMaxPrice"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftSuggestedFinalPrice"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftPriceClassification"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftMinPriceM2"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftSuggestedPriceM2"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftMaxPriceM2"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftPricingFeedback"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "loftLink"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "trophy",
+            "collapsed": true,
+            "title": {
+              "en": "Exclusive",
+              "pt_BR": "Exclusividade"
+            }
+          },
+          "label": {
+            "pt_BR": "Exclusividade",
+            "en": "Exclusive"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "exclusive"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "exclusiveStart"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "exclusiveEnd"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "exclusiveCancelAtEnd"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "exclusiveEndedAt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "exclusiveAuthorization"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "exchange",
+            "collapsed": true,
+            "title": {
+              "en": "Measures",
+              "pt_BR": "Medidas"
+            }
+          },
+          "label": {
+            "en": "Measures",
+            "pt_BR": "Medidas"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "areaPrivate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "areaMezzanine"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "areaTotal"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "ceilingHeight"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "width"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "deepth"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "areaLand"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "building",
+            "collapsed": true,
+            "title": {
+              "en": "Corporate",
+              "pt_BR": "Imóvel Corporate"
+            }
+          },
+          "label": {
+            "pt_BR": "Imóveis Corporate",
+            "en": "Corporate"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "corporate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "stage"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "corporateType"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "corporatePresentation"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "showOnCorporateWebsite"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "globe",
+            "title": {
+              "pt_BR": "Divulgação",
+              "en": "Plublicity"
+            },
+            "collapsed": true
+          },
+          "label": {
+            "en": "Plublicity",
+            "pt_BR": "Divulgação"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "description"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "developmentDescription"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "dontDisplay"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "signBroker"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "recommendToMkt"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "webHighlightFoxter"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "webHighlightPerdigueiro"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "webHighlightVivaReal"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "showZap"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "webHighlightZap"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "superHighlightZap"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "specialHighlightZap"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "premiumHighlightZap"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "webHighlightMercadoLivre"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "superHighlightMercadoLivre"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "webHighlightImovelWeb"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "superWebHighlightImovelWeb"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "webHighlightRemarketing"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "webHighlightChavesNaMao"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "highlight"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "blogTag"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "score"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "scoreAdjust"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "siteTags"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "divulgation"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "dashboard",
+            "collapsed": true
+          },
+          "label": {
+            "pt_BR": "Estatísticas Site",
+            "en": "Statistics"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "pageViewsChart"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "bullseye",
+            "collapsed": true
+          },
+          "label": {
+            "en": "Statistics",
+            "pt_BR": "Estatísticas Conversões"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "conversionsLastUpdate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "conversionsSite"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "conversionsPortals"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "conversionsAnothers"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "conversionsTotal"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "file-text",
+            "title": {
+              "en": "Registry",
+              "pt_BR": "Registro"
+            },
+            "collapsed": true
+          },
+          "label": {
+            "en": "Registry",
+            "pt_BR": "Registro"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "registryId"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "parkingRegistryId"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "registryZone"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "isMarketplace"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "marketplaceExternal"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "marketplaceLastUpdate"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "marketplaceOrigin"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "externalId"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "paper-clip",
+            "title": {
+              "en": "Attachments",
+              "pt_BR": "Anexos"
+            },
+            "collapsed": true
+          },
+          "label": {
+            "en": "Attachments",
+            "pt_BR": "Anexos"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "file"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "privateFile"
+            }
+          ]
+        },
+        {
+          "type": "visualGroup",
+          "style": {
+            "icon": "book",
+            "title": {
+              "en": "Owner",
+              "pt_BR": "Proprietário"
+            },
+            "collapsed": true
+          },
+          "label": {
+            "en": "Owner",
+            "pt_BR": "Proprietário"
+          },
+          "visuals": [
+            {
+              "type": "visualSymlink",
+              "fieldName": "supplier"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "suppliersReps"
+            },
+            {
+              "type": "visualSymlink",
+              "fieldName": "secondaryBroker"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "type": "reverseLookup",
+      "style": {
+        "title": {
+          "en": "Activities",
+          "pt_BR": "Atividade"
+        }
+      },
+      "field": "product",
+      "document": "Activity",
+      "list": "ForLookup"
+    },
+    {
+      "type": "reverseLookup",
+      "style": {
+        "title": {
+          "en": "Similar Products",
+          "pt_BR": "Imóveis similares"
+        }
+      },
+      "field": "MainProduct",
+      "document": "SimilarProducts",
+      "list": "Default"
+    },
+    {
+      "type": "reverseLookup",
+      "style": {
+        "title": {
+          "en": "Offers",
+          "pt_BR": "Propostas"
+        }
+      },
+      "field": "product",
+      "document": "Offer",
+      "list": "Default"
+    },
+    {
+      "type": "reverseLookup",
+      "style": {
+        "title": {
+          "en": "Opportunity",
+          "pt_BR": "Oportunidade"
+        }
+      },
+      "field": "product",
+      "document": "Opportunity",
+      "list": "Default"
+    },
+    {
+      "type": "reverseLookup",
+      "style": {
+        "title": {
+          "en": "Similar products for pricing",
+          "pt_BR": "Produtos similares para precificação"
+        }
+      },
+      "field": "product",
+      "document": "ProductsSimilarForPricing",
+      "list": "Default"
+    },
+    {
+      "type": "reverseLookup",
+      "style": {
+        "title": {
+          "en": "Offered",
+          "pt_BR": "Ofertado"
+        }
+      },
+      "field": "product",
+      "document": "ProductsPerOpportunities",
+      "list": "Default"
+    }
+  ]
+}
