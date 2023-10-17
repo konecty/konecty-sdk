@@ -58,6 +58,12 @@ export type KonectyGetListviewResult = {
 	errors?: string[];
 };
 
+export type KonectyGetFormResult = {
+	success: boolean;
+	data?: any;
+	errors?: string[];
+};
+
 export type KonectyLoginResult = {
 	success: boolean;
 	authId?: string;
@@ -317,7 +323,36 @@ export class KonectyClient {
 
 	async getListView(module: string, id = 'Default'): Promise<KonectyGetListviewResult> {
 		try {
-			const result = await fetch<List[]>(`${this.#options.endpoint}/api/list-view/${module}/${id}`, {
+			const result = await fetch<List>(`${this.#options.endpoint}/api/list-view/${module}/${id}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return {
+				success: true,
+				data: deserializeDates(body),
+			} as KonectyGetListviewResult;
+		} catch (err) {
+			logger.error(err);
+
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
+	async getForm(module: string, id = 'Default'): Promise<KonectyGetFormResult> {
+		try {
+			const result = await fetch<List[]>(`${this.#options.endpoint}/api/form/${module}/${id}`, {
 				method: 'GET',
 				headers: {
 					Authorization: `${this.#options.accessKey}`,
