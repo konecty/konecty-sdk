@@ -1,3 +1,20 @@
+## [1.18.0](https://github.com/konecty/konecty-sdk/compare/1.17.1...1.18.0) (2023-10-17)
+
+
+### 🧪 Tests
+
+* add tests for getForm method ([fb34640](https://github.com/konecty/konecty-sdk/commit/fb34640af40228d8721ef0f76a5ebfb3c441e4e4))
+
+
+### 🚀 Features
+
+* add getForm method ([8ac9aca](https://github.com/konecty/konecty-sdk/commit/8ac9aca1fd380f95bdff1e38402c5fd2f6a2ca6d))
+
+
+### Other
+
+* update yarn.lock ([1dbbb9e](https://github.com/konecty/konecty-sdk/commit/1dbbb9e57a21b9d9871d72d21042b83c146a48ab))
+
 ### [1.17.1](https://github.com/konecty/konecty-sdk/compare/1.17.0...1.17.1) (2023-09-22)
 
 
