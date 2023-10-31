@@ -12,7 +12,7 @@ import { UserGroupType } from './User';
 import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
 import { User } from './User';
-import { List, Menu, ZipCodeEntry } from './types';
+import { DocumentTranslation, List, Menu, ZipCodeEntry } from './types';
 
 export interface KonectyClientOptions {
 	credentialsFile?: string;
@@ -52,15 +52,9 @@ export type KonectyFindResult<T = object> = {
 	errors?: string[];
 };
 
-export type KonectyGetListviewResult = {
+export type KonectyGetMetaResult<T> = {
 	success: boolean;
-	data?: List;
-	errors?: string[];
-};
-
-export type KonectyGetFormResult = {
-	success: boolean;
-	data?: any;
+	data?: T;
 	errors?: string[];
 };
 
@@ -321,7 +315,7 @@ export class KonectyClient {
 		}
 	}
 
-	async getListView(module: string, id = 'Default'): Promise<KonectyGetListviewResult> {
+	async getListView(module: string, id = 'Default'): Promise<KonectyGetMetaResult<List>> {
 		try {
 			const result = await fetch<List>(`${this.#options.endpoint}/api/list-view/${module}/${id}`, {
 				method: 'GET',
@@ -339,7 +333,7 @@ export class KonectyClient {
 			return {
 				success: true,
 				data: deserializeDates(body),
-			} as KonectyGetListviewResult;
+			} as KonectyGetMetaResult<List>;
 		} catch (err) {
 			logger.error(err);
 
@@ -350,7 +344,36 @@ export class KonectyClient {
 		}
 	}
 
-	async getForm(module: string, id = 'Default'): Promise<KonectyGetFormResult> {
+	async getDocument(name: string): Promise<KonectyGetMetaResult<DocumentTranslation>> {
+		try {
+			const result = await fetch<List[]>(`${this.#options.endpoint}/api/document/${name}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return {
+				success: true,
+				data: deserializeDates(body),
+			} as KonectyGetMetaResult<DocumentTranslation>;
+		} catch (err) {
+			logger.error(err);
+
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
+	async getForm(module: string, id = 'Default'): Promise<KonectyGetMetaResult<any>> {
 		try {
 			const result = await fetch<List[]>(`${this.#options.endpoint}/api/form/${module}/${id}`, {
 				method: 'GET',
@@ -368,7 +391,7 @@ export class KonectyClient {
 			return {
 				success: true,
 				data: deserializeDates(body),
-			} as KonectyGetListviewResult;
+			};
 		} catch (err) {
 			logger.error(err);
 
@@ -489,32 +512,32 @@ export class KonectyClient {
 		}
 	}
 
-	async getDocument(name: string): Promise<KonectyFindResult> {
-		try {
-			const result = await fetch(`${this.#options.endpoint}/rest/menu/documents/${name}`, {
-				method: 'GET',
-				headers: {
-					Authorization: `${this.#options.accessKey}`,
-				},
-			});
-			if (result.status >= 400) {
-				throw new Error(`${result.status} - ${result.statusText}`);
-			}
+	// async getDocument(name: string): Promise<KonectyFindResult> {
+	// 	try {
+	// 		const result = await fetch(`${this.#options.endpoint}/rest/menu/documents/${name}`, {
+	// 			method: 'GET',
+	// 			headers: {
+	// 				Authorization: `${this.#options.accessKey}`,
+	// 			},
+	// 		});
+	// 		if (result.status >= 400) {
+	// 			throw new Error(`${result.status} - ${result.statusText}`);
+	// 		}
 
-			const body = await result.json();
+	// 		const body = await result.json();
 
-			return {
-				success: true,
-				data: deserializeDates(body),
-			} as KonectyFindResult;
-		} catch (err) {
-			logger.error(err);
-			return {
-				success: false,
-				errors: [(err as Error).message],
-			};
-		}
-	}
+	// 		return {
+	// 			success: true,
+	// 			data: deserializeDates(body),
+	// 		} as KonectyFindResult;
+	// 	} catch (err) {
+	// 		logger.error(err);
+	// 		return {
+	// 			success: false,
+	// 			errors: [(err as Error).message],
+	// 		};
+	// 	}
+	// }
 
 	async getNextOnQueue(queueId: string): Promise<KonectyNextOnQueueResult> {
 		try {

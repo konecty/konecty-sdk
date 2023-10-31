@@ -4,6 +4,7 @@ import { rest } from 'msw';
 import { Product } from '../../__test__/fixtures/types/Product';
 import { server } from '../../__test__/setup-test';
 import clientProductsResponse from '../fixtures/konecty/find-client-products.json';
+import getDocumentProducts from '../fixtures/konecty/get-document-products.json';
 import getFormProductResponse from '../fixtures/konecty/get-form-products-default.json';
 import getListViewProductResponse from '../fixtures/konecty/get-list-view-products-default.json';
 import getMenuMainResponse from '../fixtures/konecty/get-menu-main.json';
@@ -165,6 +166,26 @@ describe('Konecty Client Tests', () => {
 
 		// Assert
 		expect(product?.data?.document).to.be.equal('Product');
+	});
+
+	it('should return document', async () => {
+		// Arrange
+		const options: KonectyClientOptions = {
+			endpoint: 'http://localhost:3000',
+			accessKey: 'asdfasdfsadfsadf',
+		};
+		const client = new KonectyClient(options);
+		server.use(
+			rest.get('http://localhost:3000/api/document/Product', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(getDocumentProducts));
+			}),
+		);
+
+		// Act
+		const product = await client.getDocument('Product');
+
+		// Assert
+		expect(product?.data?._id).to.be.equal('Product');
 	});
 
 	it('should return the next on queue', async () => {
