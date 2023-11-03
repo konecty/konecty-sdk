@@ -182,7 +182,7 @@ describe('Konecty Client Tests', () => {
 		);
 
 		// Act
-		const product = await client.getDocument('Product');
+		const product = await client.getDocumentNew('Product');
 
 		// Assert
 		expect(product?.data?._id).to.be.equal('Product');
