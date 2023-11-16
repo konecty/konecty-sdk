@@ -1,3 +1,15 @@
+## [1.19.0](https://github.com/konecty/konecty-sdk/compare/1.18.0...1.19.0) (2023-11-16)
+
+
+### 🚀 Features
+
+* add api document ([f2df169](https://github.com/konecty/konecty-sdk/commit/f2df1695c99165a6ddc63f614895af1716efc727))
+
+
+### 🛠 Fixes
+
+* bad naming of method ([0e74587](https://github.com/konecty/konecty-sdk/commit/0e74587916e4ab95dd4adb9995bcdaf8eecfc043))
+
 ## [1.18.0](https://github.com/konecty/konecty-sdk/compare/1.17.1...1.18.0) (2023-10-17)
 
 
