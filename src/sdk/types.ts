@@ -101,6 +101,7 @@ export interface List {
 }
 
 export interface DocumentTranslation {
+	_id: string;
 	label: string;
 	plural?: string;
 	fields?: {

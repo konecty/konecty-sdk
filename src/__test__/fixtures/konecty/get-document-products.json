@@ -1,0 +1,5108 @@
+{
+  "_id": "Product",
+  "fields": {
+    "active": {
+      "type": "boolean",
+      "name": "active",
+      "label": {
+        "en": "Active",
+        "pt_BR": "Ativo"
+      },
+      "isSortable": true,
+      "isInherited": true
+    },
+    "active-2": {
+      "type": "richText",
+      "name": "active-2",
+      "label": {
+        "en": "Active 2",
+        "pt_BR": "Ativo 2"
+      },
+      "isInherited": true
+    },
+    "emailsSent": {
+      "type": "text",
+      "name": "emailsSent",
+      "label": {
+        "en": "Emails Sent",
+        "pt_BR": "Emails enviados"
+      },
+      "isSortable": true,
+      "isInherited": true,
+      "isList": true
+    },
+    "supplierUpdatedChanged": {
+      "type": "boolean",
+      "name": "supplierUpdatedChanged",
+      "label": {
+        "en": "Supplier updated mannually",
+        "pt_BR": "Supplier updated mannually"
+      },
+      "isSortable": true,
+      "isInherited": true
+    },
+    "code": {
+      "name": "code",
+      "label": {
+        "en": "Code",
+        "pt_BR": "Código"
+      },
+      "isUnique": true,
+      "isSortable": true,
+      "type": "autoNumber",
+      "isInherited": true
+    },
+    "sale": {
+      "isSortable": true,
+      "minValue": 0,
+      "type": "money",
+      "name": "sale",
+      "label": {
+        "en": "Sale",
+        "pt_BR": "Valor de Venda"
+      },
+      "isInherited": true
+    },
+    "campaign": {
+      "name": "campaign",
+      "type": "lookup",
+      "label": {
+        "en": "Campaign",
+        "pt_BR": "Campanha"
+      },
+      "isSortable": true,
+      "detailFields": [
+        "code",
+        "name"
+      ],
+      "document": "Campaign",
+      "descriptionFields": [
+        "code",
+        "name"
+      ]
+    },
+    "joinedCampaignOn": {
+      "isSortable": true,
+      "type": "date",
+      "name": "joinedCampaignOn",
+      "label": {
+        "en": "joined the Campaign On",
+        "pt_BR": "Entrou na Campanha em"
+      },
+      "isInherited": true
+    },
+    "shippingAmount": {
+      "isSortable": true,
+      "decimalSize": 2,
+      "minValue": 0,
+      "type": "money",
+      "name": "shippingAmount",
+      "label": {
+        "en": "Shipping Amount",
+        "pt_BR": "Valor do Transporte"
+      },
+      "isInherited": true
+    },
+    "targetPercent": {
+      "decimalSize": 2,
+      "minValue": 0,
+      "maxValue": 1000,
+      "defaultValue": 0,
+      "type": "percentage",
+      "name": "targetPercent",
+      "label": {
+        "en": "Sale Target percent",
+        "pt_BR": "Percentual de Adequação da Meta"
+      },
+      "isSortable": true
+    },
+    "recommendToMkt": {
+      "defaultValues": [
+        {
+          "en": "No",
+          "pt_BR": "Não"
+        }
+      ],
+      "maxSelected": 1,
+      "minSelected": 1,
+      "name": "recommendToMkt",
+      "type": "picklist",
+      "isSortable": true,
+      "label": {
+        "en": "Recommend to MKT",
+        "pt_BR": "Recomendar para MKT"
+      },
+      "options": {
+        "Não": {
+          "en": "No",
+          "pt_BR": "Não"
+        },
+        "Sim": {
+          "pt_BR": "Sim",
+          "en": "Yes"
+        },
+        "Publicado": {
+          "en": "Published",
+          "pt_BR": "Publicado"
+        }
+      },
+      "renderAs": "without_scroll",
+      "isInherited": true
+    },
+    "description": {
+      "type": "text",
+      "name": "description",
+      "label": {
+        "en": "Description",
+        "pt_BR": "Descrição"
+      },
+      "isInherited": true
+    },
+    "file": {
+      "type": "file",
+      "name": "file",
+      "label": {
+        "en": "Files",
+        "pt_BR": "Arquivos"
+      },
+      "isList": true,
+      "maxSize": 10240,
+      "isInherited": true
+    },
+    "name": {
+      "isSortable": true,
+      "normalization": "title",
+      "type": "text",
+      "name": "name",
+      "label": {
+        "pt_BR": "Nome",
+        "en": "Name"
+      },
+      "isInherited": true
+    },
+    "pictures": {
+      "label": {
+        "en": "Pictures",
+        "pt_BR": "Imagens"
+      },
+      "isList": true,
+      "wildcard": "(jpg|jpeg)",
+      "maxSize": 10240,
+      "type": "file",
+      "name": "pictures",
+      "isInherited": true
+    },
+    "sku": {
+      "name": "sku",
+      "label": {
+        "en": "SKU",
+        "pt_BR": "SKU"
+      },
+      "isSortable": true,
+      "type": "text",
+      "isInherited": true
+    },
+    "status": {
+      "defaultValues": [
+        {
+          "en": "Draft",
+          "pt_BR": "Rascunho"
+        }
+      ],
+      "maxSelected": 1,
+      "minSelected": 1,
+      "name": "status",
+      "type": "picklist",
+      "isSortable": true,
+      "label": {
+        "en": "Status",
+        "pt_BR": "Situação"
+      },
+      "options": {
+        "Rascunho": {
+          "en": "Draft",
+          "pt_BR": "Rascunho"
+        },
+        "Ativo": {
+          "pt_BR": "Ativo",
+          "en": "Active"
+        },
+        "Inativo": {
+          "en": "Inactive",
+          "pt_BR": "Inativo"
+        },
+        "Não Realizado": {
+          "en": "Not Done",
+          "pt_BR": "Não Realizado"
+        }
+      },
+      "renderAs": "without_scroll",
+      "isInherited": true
+    },
+    "type": {
+      "label": {
+        "en": "Type",
+        "pt_BR": "Tipo"
+      },
+      "isRequired": true,
+      "isSortable": true,
+      "renderAs": "without_scroll",
+      "minSelected": 1,
+      "maxSelected": 1,
+      "optionsSorter": "asc",
+      "type": "picklist",
+      "name": "type",
+      "isInherited": true,
+      "options": {
+        "Apartamento": {
+          "pt_BR": "Apartamento",
+          "sort": 1
+        },
+        "Apartamento Garden": {
+          "pt_BR": "Apartamento Garden",
+          "sort": 2
+        },
+        "Box / Garagem": {
+          "pt_BR": "Box / Garagem",
+          "sort": 3
+        },
+        "Casa": {
+          "pt_BR": "Casa",
+          "sort": 4
+        },
+        "Casa em Condomínio": {
+          "pt_BR": "Casa em Condomínio",
+          "sort": 5
+        },
+        "Cobertura": {
+          "pt_BR": "Cobertura",
+          "sort": 6
+        },
+        "Edifício Inteiro": {
+          "pt_BR": "Edifício Inteiro",
+          "sort": 7
+        },
+        "Fazenda / Sítio / Chácara": {
+          "pt_BR": "Fazenda / Sítio / Chácara",
+          "sort": 8
+        },
+        "Flat": {
+          "pt_BR": "Flat",
+          "sort": 9
+        },
+        "Fração Imobiliária": {
+          "pt_BR": "Fração Imobiliária",
+          "sort": 10
+        },
+        "Galpão / Depósito / Armazém / Pavilhão": {
+          "pt_BR": "Galpão / Depósito / Armazém / Pavilhão",
+          "sort": 11
+        },
+        "Hotel / Motel / Pousada": {
+          "pt_BR": "Hotel / Motel / Pousada",
+          "sort": 12
+        },
+        "Kitnet / JK / Studio": {
+          "pt_BR": "Kitnet / JK / Studio",
+          "sort": 13
+        },
+        "Loft": {
+          "pt_BR": "Loft",
+          "sort": 14
+        },
+        "Loja": {
+          "pt_BR": "Loja",
+          "sort": 15
+        },
+        "Sala / Conjunto Comercial": {
+          "pt_BR": "Sala / Conjunto Comercial",
+          "sort": 16
+        },
+        "Terreno": {
+          "pt_BR": "Terreno",
+          "sort": 17
+        },
+        "Terreno em Condomínio": {
+          "pt_BR": "Terreno em Condomínio",
+          "sort": 18
+        }
+      }
+    },
+    "_createdAt": {
+      "name": "_createdAt",
+      "label": {
+        "en": "Created At",
+        "pt_BR": "Criado em"
+      },
+      "isSortable": true,
+      "type": "dateTime",
+      "isInherited": true
+    },
+    "_createdBy": {
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name"
+      ],
+      "type": "lookup",
+      "name": "_createdBy",
+      "label": {
+        "en": "Created by",
+        "pt_BR": "Criado por"
+      },
+      "isSortable": true,
+      "isInherited": true
+    },
+    "_updatedAt": {
+      "type": "dateTime",
+      "name": "_updatedAt",
+      "label": {
+        "en": "Updated At",
+        "pt_BR": "Atualizado em"
+      },
+      "isSortable": true,
+      "isInherited": true
+    },
+    "_updatedBy": {
+      "type": "lookup",
+      "name": "_updatedBy",
+      "label": {
+        "en": "Updated by",
+        "pt_BR": "Atualizado por"
+      },
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name"
+      ],
+      "isInherited": true
+    },
+    "_user": {
+      "type": "lookup",
+      "name": "_user",
+      "label": {
+        "en": "User",
+        "pt_BR": "Usuário"
+      },
+      "isSortable": true,
+      "isList": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "director.nickname",
+        "active"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "isInherited": true
+    },
+    "sendSupplierUpdatedMail": {
+      "label": {
+        "en": "E-mail for Supplier Updated At",
+        "pt_BR": "E-mail Atualização Proprietário"
+      },
+      "type": "boolean",
+      "name": "sendSupplierUpdatedMail",
+      "defaultValue": true
+    },
+    "professionalPicturesNotes": {
+      "label": {
+        "en": "Schedule Notes",
+        "pt_BR": "Observações do Agendamento"
+      },
+      "type": "richText",
+      "name": "professionalPicturesNotes"
+    },
+    "professionalPicturesUserNotes": {
+      "label": {
+        "en": "Broker Notes",
+        "pt_BR": "Observações do Corretor"
+      },
+      "type": "text",
+      "name": "professionalPicturesUserNotes"
+    },
+    "webHighlightMercadoLivre": {
+      "label": {
+        "en": "Highlight Mercado Livre",
+        "pt_BR": "Destaque Mercado Livre"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "webHighlightMercadoLivre"
+    },
+    "sendPriceUpdateMail": {
+      "label": {
+        "en": "Send Price Update Mail",
+        "pt_BR": "Email Atualização de Valor"
+      },
+      "type": "boolean",
+      "name": "sendPriceUpdateMail",
+      "defaultValue": true
+    },
+    "superHighlightMercadoLivre": {
+      "label": {
+        "en": "Super Highlight Mercado Livre",
+        "pt_BR": "Super Destaque Mercado Livre"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "superHighlightMercadoLivre"
+    },
+    "superHighlightZap": {
+      "label": {
+        "en": "Super Highlight Zap",
+        "pt_BR": "Super Destaque Zap"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "superHighlightZap"
+    },
+    "webHighlightFoxter": {
+      "label": {
+        "en": "Highlight Foxter",
+        "pt_BR": "Destaque Foxter"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "webHighlightFoxter"
+    },
+    "webHighlightPerdigueiro": {
+      "label": {
+        "en": "Highlight Perdigueiro",
+        "pt_BR": "Destaque Perdigueiro Imovelweb"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "webHighlightPerdigueiro"
+    },
+    "webHighlightVivaReal": {
+      "label": {
+        "en": "Highlight VivaReal",
+        "pt_BR": "Destaque VivaReal"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "webHighlightVivaReal"
+    },
+    "showZap": {
+      "label": {
+        "en": "Show Zap",
+        "pt_BR": "Exibir Zap"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "showZap"
+    },
+    "webHighlightZap": {
+      "label": {
+        "en": "Highlight Zap",
+        "pt_BR": "Destaque Zap"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "webHighlightZap"
+    },
+    "webHighlightImovelWeb": {
+      "label": {
+        "en": "Highlight ImovelWeb",
+        "pt_BR": "Destaque ImovelWeb"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "webHighlightImovelWeb"
+    },
+    "superWebHighlightImovelWeb": {
+      "label": {
+        "en": "Super Highlight ImovelWeb",
+        "pt_BR": "Super Destaque ImovelWeb"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "superWebHighlightImovelWeb"
+    },
+    "webHighlightRemarketing": {
+      "label": {
+        "en": "Highlight Remarketing",
+        "pt_BR": "Destaque Remarketing"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "webHighlightRemarketing"
+    },
+    "nexchangeOffered": {
+      "label": {
+        "en": "Nexchange Offered",
+        "pt_BR": "Oferecido Nexchange"
+      },
+      "renderAs": "without_scroll",
+      "minSelected": 0,
+      "maxSelected": 1,
+      "optionsSorter": "sort",
+      "type": "picklist",
+      "name": "nexchangeOffered",
+      "options": {
+        "Não oferecido": {
+          "pt_BR": "Não oferecido",
+          "sort": 1
+        },
+        "Cliente não tem interesse": {
+          "pt_BR": "Cliente não tem interesse",
+          "sort": 2
+        },
+        "Cliente está estudando": {
+          "pt_BR": "Cliente está estudando",
+          "sort": 3
+        },
+        "Cliente tem interesse": {
+          "pt_BR": "Cliente tem interesse",
+          "sort": 4
+        }
+      }
+    },
+    "nexchangeOfferedAt": {
+      "type": "date",
+      "name": "nexchangeOfferedAt",
+      "label": {
+        "en": "Nexchange Offered At",
+        "pt_BR": "Oferecido Nexchange Em"
+      }
+    },
+    "campaignParticipation": {
+      "label": {
+        "en": "Participou de Festivais",
+        "pt_BR": "Participou de Festivais"
+      },
+      "renderAs": "without_scroll",
+      "minSelected": 0,
+      "maxSelected": 999,
+      "optionsSorter": "sort",
+      "type": "picklist",
+      "name": "campaignParticipation",
+      "options": {
+        "Primeiro Festival Foxter": {
+          "pt_BR": "Primeiro Festival Foxter",
+          "sort": 1
+        },
+        "Segundo Festival Foxter": {
+          "pt_BR": "Segundo Festival Foxter",
+          "sort": 2
+        },
+        "Megafestival 2020": {
+          "pt_BR": "Megafestival 2020",
+          "en": "Megafestival 2020",
+          "sort": 3
+        }
+      }
+    },
+    "ownerApproached": {
+      "label": {
+        "en": "Owner Approached",
+        "pt_BR": "Proprietário Abordado"
+      },
+      "renderAs": "without_scroll",
+      "minSelected": 0,
+      "maxSelected": 1,
+      "optionsSorter": "sort",
+      "type": "picklist",
+      "name": "ownerApproached",
+      "options": {
+        "1 QuerParticipar": {
+          "pt_BR": "Quer Participar (Aguardando Precificação)",
+          "sort": 1
+        },
+        "2 AguardandoAprovacao": {
+          "pt_BR": "Aguardando Aprovação (Precificação Realizada)",
+          "sort": 2
+        },
+        "5 NaoTemInteresse": {
+          "pt_BR": "Não tem interesse",
+          "sort": 5
+        },
+        "3 Aprovado": {
+          "pt_BR": "Aprovado (Somente Diretoria)",
+          "sort": 3
+        },
+        "4 Rejeitado": {
+          "pt_BR": "Rejeitado (Falta Autorização ou Informações Incompletas)",
+          "sort": 4
+        }
+      }
+    },
+    "campaignProductStatus": {
+      "label": {
+        "en": "Campaign Product Status",
+        "pt_BR": "Situação do imóvel para a Campanha"
+      },
+      "renderAs": "without_scroll",
+      "minSelected": 0,
+      "maxSelected": 1,
+      "optionsSorter": "asc",
+      "type": "picklist",
+      "name": "campaignProductStatus",
+      "options": {
+        "Rascunho": {
+          "en": "Draft",
+          "pt_BR": "Rascunho"
+        },
+        "Ativo": {
+          "pt_BR": "Ativo",
+          "en": "Active"
+        },
+        "Inativo": {
+          "en": "Inactive",
+          "pt_BR": "Inativo"
+        }
+      }
+    },
+    "saleDiscount": {
+      "decimalSize": 2,
+      "minValue": 0,
+      "sortable": true,
+      "type": "money",
+      "name": "saleDiscount",
+      "label": {
+        "en": "Sale Discount",
+        "pt_BR": "Valor de Venda Baixou (Ex: 50.000,00. Altere o novo valor no Valor de venda)"
+      }
+    },
+    "previousDiscount": {
+      "decimalSize": 2,
+      "minValue": 0,
+      "type": "money",
+      "name": "previousDiscount",
+      "label": {
+        "en": "Previous Discount",
+        "pt_BR": "Desconto no Último Festival"
+      }
+    },
+    "campaignAuthorization": {
+      "maxSize": 10240,
+      "type": "file",
+      "name": "campaignAuthorization",
+      "label": {
+        "en": "Campaign Authorization",
+        "pt_BR": "Autorização Campanha"
+      },
+      "isList": true,
+      "minItems": 0,
+      "maxItems": 50
+    },
+    "keysTakenBy": {
+      "type": "lookup",
+      "label": {
+        "en": "Taken by",
+        "pt_BR": "Retirada por"
+      },
+      "detailFields": [
+        "emails",
+        "phone"
+      ],
+      "name": "keysTakenBy",
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "active"
+      ]
+    },
+    "keysTakenAt": {
+      "type": "date",
+      "name": "keysTakenAt",
+      "label": {
+        "en": "Taken at",
+        "pt_BR": "Retirada em"
+      }
+    },
+    "deactivatedAt": {
+      "label": {
+        "en": "Inactived at",
+        "pt_BR": "Data de Inativação"
+      },
+      "type": "date",
+      "name": "deactivatedAt",
+      "isSortable": true
+    },
+    "rejectedAt": {
+      "label": {
+        "en": "Rejected at",
+        "pt_BR": "Rejeitado em"
+      },
+      "type": "dateTime",
+      "name": "rejectedAt",
+      "isSortable": true
+    },
+    "outdatedAt": {
+      "label": {
+        "en": "Outdated at",
+        "pt_BR": "Data Desatualização Automática"
+      },
+      "type": "dateTime",
+      "name": "outdatedAt",
+      "isSortable": true
+    },
+    "acceptDation": {
+      "label": {
+        "en": "Accept Dation",
+        "pt_BR": "Aceita Dação"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "acceptDation"
+    },
+    "dationLimit": {
+      "decimalSize": 2,
+      "minValue": 0,
+      "type": "money",
+      "name": "dationLimit",
+      "label": {
+        "en": "Dation Limit",
+        "pt_BR": "Imóvel de até que valor"
+      }
+    },
+    "dationType": {
+      "label": {
+        "en": "Dation Type",
+        "pt_BR": "Tipo de Dação"
+      },
+      "renderAs": "with_scroll",
+      "minSelected": 0,
+      "maxSelected": 1,
+      "optionsSorter": "asc",
+      "type": "picklist",
+      "name": "dationType",
+      "options": {
+        "Terreno": {
+          "pt_BR": "Terreno"
+        },
+        "Cobertura": {
+          "pt_BR": "Cobertura"
+        },
+        "Flat": {
+          "pt_BR": "Flat"
+        },
+        "Loft": {
+          "pt_BR": "Loft"
+        },
+        "Sala": {
+          "pt_BR": "Sala"
+        },
+        "Prédio": {
+          "pt_BR": "Prédio"
+        },
+        "Apartamento": {
+          "pt_BR": "Apartamento"
+        },
+        "Casa": {
+          "pt_BR": "Casa"
+        },
+        "Depósito": {
+          "pt_BR": "Depósito"
+        },
+        "Loja": {
+          "pt_BR": "Loja"
+        },
+        "Rural": {
+          "pt_BR": "Rural"
+        },
+        "Box": {
+          "pt_BR": "Box"
+        },
+        "Lote": {
+          "pt_BR": "Lote"
+        }
+      }
+    },
+    "dationZone": {
+      "minSelected": 0,
+      "name": "dationZone",
+      "optionsSorter": "asc",
+      "maxSelected": 1,
+      "label": {
+        "en": "Dation Zone",
+        "pt_BR": "Zona da Dação"
+      },
+      "options": {
+        "Porto Alegre - Norte": {
+          "pt_BR": "Porto Alegre - Norte"
+        },
+        "Porto Alegre - Sul": {
+          "pt_BR": "Porto Alegre - Sul"
+        },
+        "Serra": {
+          "pt_BR": "Serra"
+        },
+        "Grande Porto Alegre": {
+          "pt_BR": "Grande Porto Alegre"
+        },
+        "Litoral": {
+          "pt_BR": "Litoral"
+        },
+        "Porto Alegre - Centro": {
+          "pt_BR": "Porto Alegre - Centro"
+        },
+        "Porto Alegre - Leste": {
+          "pt_BR": "Porto Alegre - Leste"
+        },
+        "Porto Alegre - Moinhos / Nilo": {
+          "pt_BR": "Porto Alegre - Moinhos / Nilo"
+        }
+      },
+      "renderAs": "with_scroll",
+      "type": "picklist"
+    },
+    "dationDescription": {
+      "type": "text",
+      "name": "dationDescription",
+      "label": {
+        "en": "Dation Description",
+        "pt_BR": "Descrição da Dação"
+      }
+    },
+    "duplicateOf": {
+      "type": "lookup",
+      "name": "duplicateOf",
+      "label": {
+        "pt_BR": "Duplicado de",
+        "en": "Duplicate of"
+      },
+      "document": "Product",
+      "descriptionFields": [
+        "code"
+      ]
+    },
+    "highlight": {
+      "label": {
+        "en": "Highlight",
+        "pt_BR": "Destaque"
+      },
+      "type": "number",
+      "name": "highlight"
+    },
+    "divulgation": {
+      "label": {
+        "en": "Chaves na Mao Divulgation",
+        "pt_BR": "Divulgação Chaves na Mao"
+      },
+      "type": "text",
+      "isList": true,
+      "name": "divulgation"
+    },
+    "offerCount": {
+      "type": "number",
+      "name": "offerCount",
+      "label": {
+        "en": "Offer Count",
+        "pt_BR": "Quantidade de Propostas"
+      },
+      "isSortable": true
+    },
+    "address": {
+      "type": "address",
+      "name": "address",
+      "label": {
+        "pt_BR": "Endereço",
+        "en": "Address"
+      },
+      "isRequired": true,
+      "isSortable": true
+    },
+    "tags": {
+      "name": "tags",
+      "optionsSorter": "asc",
+      "maxSelected": 6,
+      "minSelected": 0,
+      "options": {
+        "Endereço inválido": {
+          "pt_BR": "Endereço inválido"
+        },
+        "Endereço duplicado": {
+          "pt_BR": "Endereço duplicado"
+        },
+        "Incompleto": {
+          "pt_BR": "Incompleto"
+        },
+        "Bairro inexistente": {
+          "pt_BR": "Bairro inexistente"
+        },
+        "Número inválido": {
+          "pt_BR": "Número inválido"
+        },
+        "Gestão de Imóveis": {
+          "pt_BR": "Gestão de Imóveis"
+        },
+        "Verificado": {
+          "pt_BR": "Verificado"
+        },
+        "5Andar": {
+          "pt_BR": "5 Andar",
+          "en": "5 Andar"
+        },
+        "Mercado Primário": {
+          "pt_BR": "Mercado Primário",
+          "en": "Primary market"
+        },
+        "Imóveis Foxter": {
+          "pt_BR": "Imóveis Foxter",
+          "en": "Foxter product"
+        },
+        "Imagens Corrigidas (Guarida)": {
+          "pt_BR": "Imagens Corrigidas (Guarida)"
+        }
+      },
+      "renderAs": "with_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Tags",
+        "pt_BR": "Tags"
+      }
+    },
+    "photographer": {
+      "isSortable": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "type": "lookup",
+      "name": "photographer",
+      "label": {
+        "pt_BR": "Fotógrafo",
+        "en": "Photographer"
+      }
+    },
+    "professionalPicturesSession": {
+      "label": {
+        "en": "Professional Pictures Session",
+        "pt_BR": "Data da Sessão de Fotos"
+      },
+      "type": "dateTime",
+      "name": "professionalPicturesSession",
+      "isSortable": true
+    },
+    "professionalPicturesRequestDate": {
+      "label": {
+        "en": "Professional Pictures Request Date",
+        "pt_BR": "Data da Solicitação das Fotos Profissionais"
+      },
+      "type": "dateTime",
+      "name": "professionalPicturesRequestDate",
+      "isSortable": true
+    },
+    "areaLand": {
+      "type": "number",
+      "name": "areaLand",
+      "label": {
+        "pt_BR": "Area do Terreno",
+        "en": "Land Area"
+      },
+      "decimalSize": 3,
+      "minValue": 0
+    },
+    "areaPrice": {
+      "label": {
+        "en": "Price m²",
+        "pt_BR": "Valor m²"
+      },
+      "isSortable": true,
+      "decimalSize": 2,
+      "minValue": 0,
+      "type": "money",
+      "name": "areaPrice"
+    },
+    "areaPrivate": {
+      "type": "number",
+      "name": "areaPrivate",
+      "label": {
+        "en": "Private Area",
+        "pt_BR": "Area Privativa"
+      },
+      "isSortable": true,
+      "decimalSize": 3,
+      "minValue": 0
+    },
+    "blogTag": {
+      "name": "blogTag",
+      "type": "lookup",
+      "document": "BlogTag",
+      "label": {
+        "en": "Tag",
+        "pt_BR": "Tag"
+      },
+      "descriptionFields": [
+        "code",
+        "name"
+      ],
+      "isList": true
+    },
+    "areaTotal": {
+      "name": "areaTotal",
+      "label": {
+        "en": "Total Area",
+        "pt_BR": "Area Total"
+      },
+      "decimalSize": 3,
+      "minValue": 0,
+      "type": "number"
+    },
+    "availableAt": {
+      "type": "date",
+      "name": "availableAt",
+      "label": {
+        "pt_BR": "Disponível em",
+        "en": "Available at"
+      }
+    },
+    "banner": {
+      "wildcard": "(jpg|jpeg|png)",
+      "maxSize": 10240,
+      "type": "file",
+      "name": "banner",
+      "label": {
+        "en": "Banners",
+        "pt_BR": "Banners"
+      },
+      "isList": true,
+      "minItems": 0,
+      "maxItems": 3
+    },
+    "bathrooms": {
+      "type": "number",
+      "name": "bathrooms",
+      "label": {
+        "en": "Bathrooms",
+        "pt_BR": "Banheiros Total"
+      },
+      "isSortable": true,
+      "minValue": 0
+    },
+    "bedrooms": {
+      "label": {
+        "en": "Bedrooms",
+        "pt_BR": "Dormitórios Total"
+      },
+      "isSortable": true,
+      "minValue": 0,
+      "type": "number",
+      "name": "bedrooms"
+    },
+    "builder": {
+      "type": "lookup",
+      "label": {
+        "en": "Builder",
+        "pt_BR": "Construtora"
+      },
+      "isSortable": true,
+      "isList": true,
+      "access": "Builder",
+      "detailFields": [
+        "email",
+        "phone"
+      ],
+      "name": "builder",
+      "document": "Contact",
+      "descriptionFields": [
+        "code",
+        "name.full"
+      ],
+      "minItems": 0
+    },
+    "commission": {
+      "decimalSize": 2,
+      "minValue": 0,
+      "maxValue": 1,
+      "defaultValue": 0.06,
+      "type": "percentage",
+      "name": "commission",
+      "label": {
+        "en": "Comission",
+        "pt_BR": "Comissão"
+      }
+    },
+    "commisionAuthorization": {
+      "name": "commisionAuthorization",
+      "isList": true,
+      "wildcard": "(jpg|jpeg|pdf)",
+      "maxSize": 102400,
+      "type": "file",
+      "label": {
+        "pt_BR": "Autorizaçao de comissão",
+        "en": "Commision authorization"
+      },
+      "minItems": 0,
+      "maxItems": 5
+    },
+    "condominiumAdmin": {
+      "name": "condominiumAdmin",
+      "document": "Contact",
+      "descriptionFields": [
+        "name.full",
+        "code"
+      ],
+      "detailFields": [
+        "email",
+        "phone"
+      ],
+      "type": "lookup",
+      "label": {
+        "en": "Condominium Admin",
+        "pt_BR": "Administradora do Condomínio"
+      },
+      "isSortable": true,
+      "access": "CondominiumAdmin"
+    },
+    "condominiumAmount": {
+      "isSortable": true,
+      "decimalSize": 2,
+      "minValue": 0,
+      "type": "money",
+      "name": "condominiumAmount",
+      "label": {
+        "pt_BR": "Valor do Condominio",
+        "en": "Condominium Amount"
+      }
+    },
+    "conservation": {
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Conservation",
+        "pt_BR": "Conservação"
+      },
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "conservation",
+      "options": {
+        "Conservado": {
+          "pt_BR": "Conservado"
+        },
+        "Impecável": {
+          "pt_BR": "Impecável"
+        },
+        "Necessita Reforma": {
+          "pt_BR": "Necessita Reforma"
+        }
+      }
+    },
+    "constructionEndAt": {
+      "type": "date",
+      "name": "constructionEndAt",
+      "label": {
+        "en": "Construction End",
+        "pt_BR": "Término da Construção"
+      }
+    },
+    "deepth": {
+      "type": "number",
+      "name": "deepth",
+      "label": {
+        "en": "Deeph",
+        "pt_BR": "Metragem Profundidade"
+      },
+      "decimalSize": 3,
+      "minValue": 0
+    },
+    "development": {
+      "name": "development",
+      "label": {
+        "en": "Development",
+        "pt_BR": "Empreendimento"
+      },
+      "isSortable": true,
+      "document": "Development",
+      "descriptionFields": [
+        "code",
+        "name",
+        "status"
+      ],
+      "inheritedFields": [
+        {
+          "fieldName": "condominiumAdmin",
+          "inherit": "always"
+        },
+        {
+          "inherit": "always",
+          "fieldName": "file"
+        },
+        {
+          "fieldName": "plannedDistrict",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "developmentFeatures",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "builder",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "launch",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "developmentLinkReels",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "developmentReelsDownload",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "developmentDescription",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "elevators",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "purpose",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "developmentPictures",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "developmentVirtualTour",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "floors",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "link",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "towers",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "constructionEndAt",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "unitsPerFloor",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "videos",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "streetView",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "zone",
+          "inherit": "always"
+        },
+        {
+          "fieldName": "registryZone",
+          "inherit": "always"
+        }
+      ],
+      "conditionFields": [
+        {
+          "value": "Ativo",
+          "operator": "equals",
+          "term": "status"
+        }
+      ],
+      "type": "lookup"
+    },
+    "developmentDescription": {
+      "name": "developmentDescription",
+      "label": {
+        "en": "Development Description",
+        "pt_BR": "Descrição do Empreendimento"
+      },
+      "type": "text"
+    },
+    "developmentPictures": {
+      "isList": true,
+      "wildcard": "(jpg|jpeg)",
+      "maxSize": 102400,
+      "type": "file",
+      "name": "developmentPictures",
+      "label": {
+        "pt_BR": "Imagens do Empreendimento",
+        "en": "Development Pictures"
+      },
+      "minItems": 0,
+      "maxItems": 100
+    },
+    "dontDisplay": {
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Don't Display",
+        "pt_BR": "Não Exibir"
+      },
+      "maxSelected": 20,
+      "minSelected": 0,
+      "name": "dontDisplay",
+      "options": {
+        "Novidade Imobiliária": {
+          "en": "Novidade Imobiliária",
+          "pt_BR": "Novidade Imobiliária"
+        },
+        "OLX": {
+          "pt_BR": "OLX",
+          "en": "OLX"
+        },
+        "Rede Morar": {
+          "en": "Rede Morar",
+          "pt_BR": "Rede Morar"
+        },
+        "WebCasas": {
+          "en": "WebCasas",
+          "pt_BR": "WebCasas"
+        },
+        "ImóvelAVenda": {
+          "pt_BR": "ImóvelAVenda",
+          "en": "ImóvelAVenda"
+        },
+        "Lançamentos no Mapa": {
+          "en": "Lançamentos no Mapa",
+          "pt_BR": "Lançamentos no Mapa"
+        },
+        "Ta Tri": {
+          "en": "Ta Tri",
+          "pt_BR": "Ta Tri"
+        },
+        "Viva Real": {
+          "en": "Viva Real",
+          "pt_BR": "Viva Real"
+        },
+        "ImóvelClass": {
+          "en": "ImovelWeb",
+          "pt_BR": "ImovelWeb"
+        },
+        "Linklar": {
+          "en": "Linklar",
+          "pt_BR": "Linklar"
+        },
+        "BraProp": {
+          "en": "BraProp",
+          "pt_BR": "BraProp"
+        },
+        "Foxter Cia Imobiliária": {
+          "pt_BR": "Foxter Cia Imobiliária",
+          "en": "Foxter Cia Imobiliária"
+        },
+        "Imobox": {
+          "en": "Imobox",
+          "pt_BR": "Imobox"
+        },
+        "Pense Imóveis": {
+          "en": "ZAP",
+          "pt_BR": "ZAP"
+        },
+        "Tique Imóveis": {
+          "en": "Tique Imóveis",
+          "pt_BR": "Tique Imóveis"
+        },
+        "Mercado Livre": {
+          "en": "Mercado Livre",
+          "pt_BR": "Mercado Livre"
+        },
+        "Loft": {
+          "en": "Loft",
+          "pt_BR": "Loft"
+        }
+      }
+    },
+    "editorialNotes": {
+      "type": "richText",
+      "name": "editorialNotes",
+      "label": {
+        "en": "Editorial Notes",
+        "pt_BR": "Observação dos Aprovadores"
+      }
+    },
+    "visitationNotes": {
+      "label": {
+        "en": "Visitation Notes",
+        "pt_BR": "Observações da Visitação"
+      },
+      "type": "richText",
+      "name": "visitationNotes"
+    },
+    "elevators": {
+      "isSortable": true,
+      "minValue": 0,
+      "type": "number",
+      "name": "elevators",
+      "label": {
+        "pt_BR": "Elevadores",
+        "en": "Elevators"
+      }
+    },
+    "exclusive": {
+      "label": {
+        "en": "Exclusive",
+        "pt_BR": "Exclusividade"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "exclusive"
+    },
+    "exclusiveStart": {
+      "type": "date",
+      "name": "exclusiveStart",
+      "isSortable": true,
+      "label": {
+        "en": "Exclusive Start",
+        "pt_BR": "Início da Exclusividade"
+      }
+    },
+    "exclusiveEnd": {
+      "type": "date",
+      "name": "exclusiveEnd",
+      "isSortable": true,
+      "label": {
+        "en": "Exclusive End",
+        "pt_BR": "Término da Exclusividade"
+      }
+    },
+    "exclusiveEndedAt": {
+      "type": "date",
+      "name": "exclusiveEndedAt",
+      "label": {
+        "en": "Exclusive Ended At",
+        "pt_BR": "Data Cancelamento"
+      }
+    },
+    "exclusiveCancelAtEnd": {
+      "type": "boolean",
+      "name": "exclusiveCancelAtEnd",
+      "label": {
+        "en": "Exclusive Cancel At End",
+        "pt_BR": "Cancelar Automaticamente Ao Término"
+      },
+      "defaultValue": false
+    },
+    "corporate": {
+      "type": "boolean",
+      "name": "corporate",
+      "label": {
+        "en": "Corporate",
+        "pt_BR": "Imóvel Corporate"
+      }
+    },
+    "modelUnit": {
+      "type": "boolean",
+      "name": "modelUnit",
+      "label": {
+        "en": "Model Unit",
+        "pt_BR": "Unidade Modelo de Tipologia"
+      }
+    },
+    "features": {
+      "renderAs": "with_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Product Features",
+        "pt_BR": "Características do Imóvel"
+      },
+      "maxSelected": 180,
+      "minSelected": 0,
+      "name": "features",
+      "options": {
+        "Acesso para PCD": {
+          "pt_BR": "Acesso para PCD"
+        },
+        "Adega": {
+          "pt_BR": "Adega"
+        },
+        "Adega climatizada": {
+          "pt_BR": "Adega climatizada"
+        },
+        "Agua Quente": {
+          "pt_BR": "Agua Quente"
+        },
+        "Alarme de pânico": {
+          "pt_BR": "Alarme de pânico"
+        },
+        "Aquecedor a gás manual": {
+          "pt_BR": "Aquecedor a gás manual"
+        },
+        "Aquecedor a gás digital": {
+          "pt_BR": "Aquecedor a gás digital"
+        },
+        "Ar Condicinado de Parede": {
+          "pt_BR": "Ar Condicinado de Parede"
+        },
+        "Ar Condicionado Inverter": {
+          "pt_BR": "Ar Condicionado Inverter"
+        },
+        "Ar Condicionado Split": {
+          "pt_BR": "Ar Condicionado Split"
+        },
+        "Ar-condicionado Central": {
+          "pt_BR": "Ar-condicionado Central"
+        },
+        "Área de Serviço": {
+          "pt_BR": "Área de Serviço"
+        },
+        "Área de Serviço integrada": {
+          "pt_BR": "Área de Serviço integrada"
+        },
+        "Área de Serviço separada": {
+          "pt_BR": "Área de Serviço separada"
+        },
+        "Armários área de serviço": {
+          "pt_BR": "Armários área de serviço"
+        },
+        "Armários de sala": {
+          "pt_BR": "Armários de sala"
+        },
+        "Armários na cozinha": {
+          "pt_BR": "Armários na cozinha"
+        },
+        "Armários no quarto": {
+          "pt_BR": "Armários no quarto"
+        },
+        "Armários nos banheiros": {
+          "pt_BR": "Armários nos banheiros"
+        },
+        "Automação": {
+          "pt_BR": "Automação"
+        },
+        "Baby/Kids Play": {
+          "pt_BR": "Baby/Kids Play"
+        },
+        "Banheiro Auxiliar": {
+          "pt_BR": "Banheiro Auxiliar"
+        },
+        "Banheiro com ventilação forçada": {
+          "pt_BR": "Banheiro com ventilação forçada"
+        },
+        "Banheiro com ventilação natural": {
+          "pt_BR": "Banheiro com ventilação natural"
+        },
+        "Banheiro ele e ela": {
+          "pt_BR": "Banheiro ele e ela"
+        },
+        "Banheiro Social": {
+          "pt_BR": "Banheiro Social"
+        },
+        "Boiler": {
+          "pt_BR": "Boiler"
+        },
+        "Bosque": {
+          "pt_BR": "Bosque"
+        },
+        "Brinquedoteca": {
+          "pt_BR": "Brinquedoteca"
+        },
+        "Cama de casal": {
+          "pt_BR": "Cama de casal"
+        },
+        "Cama de solteiro": {
+          "pt_BR": "Cama de solteiro"
+        },
+        "Canil": {
+          "pt_BR": "Canil"
+        },
+        "Casa para caseiro": {
+          "pt_BR": "Casa para caseiro"
+        },
+        "Casa Térrea": {
+          "pt_BR": "Casa Térrea"
+        },
+        "Casa tipo Chalé": {
+          "pt_BR": "Casa tipo Chalé"
+        },
+        "Casa tipo Geminada": {
+          "pt_BR": "Casa tipo Geminada"
+        },
+        "Casa tipo Sobrado": {
+          "pt_BR": "Casa tipo Sobrado"
+        },
+        "Cerca Elétrica": {
+          "pt_BR": "Cerca Elétrica"
+        },
+        "Churrasqueira no Imóvel": {
+          "pt_BR": "Churrasqueira no Imóvel"
+        },
+        "Chuveiro a gás": {
+          "pt_BR": "Chuveiro a gás"
+        },
+        "Chuveiro elétrico": {
+          "pt_BR": "Chuveiro elétrico"
+        },
+        "Circuito FTV": {
+          "pt_BR": "Circuito FTV"
+        },
+        "Closet": {
+          "pt_BR": "Closet"
+        },
+        "Closet ele e ela": {
+          "pt_BR": "Closet ele e ela"
+        },
+        "Cobertura Horizontal": {
+          "pt_BR": "Cobertura Horizontal"
+        },
+        "Cooktop": {
+          "pt_BR": "Cooktop"
+        },
+        "Copa": {
+          "pt_BR": "Copa"
+        },
+        "Cozinha Americana": {
+          "pt_BR": "Cozinha Americana"
+        },
+        "Deck": {
+          "pt_BR": "Deck"
+        },
+        "Deck Molhado": {
+          "pt_BR": "Deck Molhado"
+        },
+        "Deck Pergolado": {
+          "pt_BR": "Deck Pergolado"
+        },
+        "Dependência Empregada": {
+          "pt_BR": "Dependência Empregada"
+        },
+        "Depósito": {
+          "pt_BR": "Depósito"
+        },
+        "Dormitório integrado ao living ": {
+          "pt_BR": "Dormitório integrado ao living "
+        },
+        "Duplex": {
+          "pt_BR": "Duplex"
+        },
+        "Edícula": {
+          "pt_BR": "Edícula"
+        },
+        "Elevador Panorâmico": {
+          "pt_BR": "Elevador Panorâmico"
+        },
+        "Elevador Privativo": {
+          "pt_BR": "Elevador Privativo"
+        },
+        "Entrada de serviço": {
+          "pt_BR": "Entrada de serviço"
+        },
+        "Espaço Gourmet": {
+          "pt_BR": "Espaço Gourmet"
+        },
+        "Espaço Kids": {
+          "pt_BR": "Espaço Kids"
+        },
+        "Espelho no banheiro": {
+          "pt_BR": "Espelho no banheiro"
+        },
+        "Espera Fibra Ótica": {
+          "pt_BR": "Espera Fibra Ótica"
+        },
+        "Espera Para Ar Condicionado": {
+          "pt_BR": "Espera Para Ar Condicionado"
+        },
+        "Espera para automação": {
+          "pt_BR": "Espera para automação"
+        },
+        "Espera Para Split": {
+          "pt_BR": "Espera Para Split"
+        },
+        "Estacionamento Rotativo": {
+          "pt_BR": "Estacionamento Rotativo"
+        },
+        "Fechadura eletrônica": {
+          "pt_BR": "Fechadura eletrônica"
+        },
+        "Fitness": {
+          "pt_BR": "Fitness"
+        },
+        "Fitness Ao Ar Livre": {
+          "pt_BR": "Fitness Ao Ar Livre"
+        },
+        "Fogão": {
+          "pt_BR": "Fogão"
+        },
+        "Fogo de chão": {
+          "pt_BR": "Fogo de chão"
+        },
+        "Geladeira": {
+          "pt_BR": "Geladeira"
+        },
+        "Gerador": {
+          "pt_BR": "Gerador"
+        },
+        "Heliporto": {
+          "pt_BR": "Heliporto"
+        },
+        "Banheira Hidromassagem": {
+          "pt_BR": "Banheira Hidromassagem"
+        },
+        "Home Office": {
+          "pt_BR": "Home Office"
+        },
+        "Home Theater": {
+          "pt_BR": "Home Theater"
+        },
+        "Horta": {
+          "pt_BR": "Horta"
+        },
+        "Interfone": {
+          "pt_BR": "Interfone"
+        },
+        "Jacuzzi": {
+          "pt_BR": "Jacuzzi"
+        },
+        "Janela com vidro duplo": {
+          "pt_BR": "Janela com vidro duplo"
+        },
+        "Janelas Gradeadas": {
+          "pt_BR": "Janelas Gradeadas"
+        },
+        "Jardim": {
+          "pt_BR": "Jardim"
+        },
+        "Jardim de Inverno": {
+          "pt_BR": "Jardim de Inverno"
+        },
+        "Lago": {
+          "pt_BR": "Lago"
+        },
+        "Lareira": {
+          "pt_BR": "Lareira"
+        },
+        "Lareira a Gás": {
+          "pt_BR": "Lareira a Gás"
+        },
+        "Lareira Ecológica": {
+          "pt_BR": "Lareira Ecológica"
+        },
+        "Lareira Elétrica": {
+          "pt_BR": "Lareira Elétrica"
+        },
+        "Lavabo": {
+          "pt_BR": "Lavabo"
+        },
+        "Lavanderia Individual": {
+          "pt_BR": "Lavanderia Individual"
+        },
+        "Living com iluminação natural": {
+          "pt_BR": "Living com iluminação natural"
+        },
+        "Mansão": {
+          "pt_BR": "Mansão"
+        },
+        "Máquina de lavar louças": {
+          "pt_BR": "Máquina de lavar louças"
+        },
+        "Máquina de lavar roupas": {
+          "pt_BR": "Máquina de lavar roupas"
+        },
+        "Máquina de secar": {
+          "pt_BR": "Máquina de secar"
+        },
+        "Máquina lava e seca": {
+          "pt_BR": "Máquina lava e seca"
+        },
+        "Medição Agua Individual": {
+          "pt_BR": "Medição Agua Individual"
+        },
+        "Medição Gás Individual": {
+          "pt_BR": "Medição Gás Individual"
+        },
+        "Mesa e cadeiras": {
+          "pt_BR": "Mesa e cadeiras"
+        },
+        "Mezanino": {
+          "pt_BR": "Mezanino"
+        },
+        "Microondas": {
+          "pt_BR": "Microondas"
+        },
+        "Ofurô": {
+          "pt_BR": "Ofurô"
+        },
+        "Paisagismo": {
+          "pt_BR": "Paisagismo"
+        },
+        "Pátio": {
+          "pt_BR": "Pátio"
+        },
+        "Pé Direito Alto (entre 3 e 5m)": {
+          "pt_BR": "Pé Direito Alto (entre 3 e 5m)"
+        },
+        "Pé Direito Duplo (entre 5 e 8m)": {
+          "pt_BR": "Pé Direito Duplo (entre 5 e 8m)"
+        },
+        "Pé Direito Triplo (a partir de 8 m)": {
+          "pt_BR": "Pé Direito Triplo (a partir de 8 m)"
+        },
+        "Persianas automatizadas": {
+          "pt_BR": "Persianas automatizadas"
+        },
+        "Pier": {
+          "pt_BR": "Pier"
+        },
+        "Piscina Adulta": {
+          "pt_BR": "Piscina Adulta"
+        },
+        "Piscina Aquecida": {
+          "pt_BR": "Piscina Aquecida"
+        },
+        "Piscina Coberta": {
+          "pt_BR": "Piscina Coberta"
+        },
+        "Piscina com Borda Infinita": {
+          "pt_BR": "Piscina com Borda Infinita"
+        },
+        "Piscina com Raia": {
+          "pt_BR": "Piscina com Raia"
+        },
+        "Piscina Infantil": {
+          "pt_BR": "Piscina Infantil"
+        },
+        "Piscina Privativa": {
+          "pt_BR": "Piscina Privativa"
+        },
+        "Piscina Térmica ": {
+          "pt_BR": "Piscina Térmica "
+        },
+        "Piso aquecido": {
+          "pt_BR": "Piso aquecido"
+        },
+        "Piso Elevado": {
+          "pt_BR": "Piso Elevado"
+        },
+        "Pista De Caminhada": {
+          "pt_BR": "Pista De Caminhada"
+        },
+        "Placa Solar": {
+          "pt_BR": "Placa Solar"
+        },
+        "Planejado/decorado por arquiteto": {
+          "pt_BR": "Planejado/decorado por arquiteto"
+        },
+        "Playground": {
+          "pt_BR": "Playground"
+        },
+        "Pomar": {
+          "pt_BR": "Pomar"
+        },
+        "Port Cochere": {
+          "pt_BR": "Port Cochere"
+        },
+        "Porta Blindada": {
+          "pt_BR": "Porta Blindada"
+        },
+        "Portaria Remota 24 hs": {
+          "pt_BR": "Portaria Remota 24 hs"
+        },
+        "Portaria Virtual/Eletrônica": {
+          "pt_BR": "Portaria Virtual/Eletrônica"
+        },
+        "Quadra Poliesportiva": {
+          "pt_BR": "Quadra Poliesportiva"
+        },
+        "Quadra Tênis": {
+          "pt_BR": "Quadra Tênis"
+        },
+        "Quiosque": {
+          "pt_BR": "Quiosque"
+        },
+        "Redário": {
+          "pt_BR": "Redário"
+        },
+        "Reformado": {
+          "pt_BR": "Reformado"
+        },
+        "Rua sem saída": {
+          "pt_BR": "Rua sem saída"
+        },
+        "Rua silenciosa": {
+          "pt_BR": "Rua silenciosa"
+        },
+        "Sacada": {
+          "pt_BR": "Sacada"
+        },
+        "Sala de Cinema": {
+          "pt_BR": "Sala de Cinema"
+        },
+        "Sala de Jogos": {
+          "pt_BR": "Sala de Jogos"
+        },
+        "Sala de Reunião": {
+          "pt_BR": "Sala de Reunião"
+        },
+        "Salão de Festas": {
+          "pt_BR": "Salão de Festas"
+        },
+        "Sistema de alarme": {
+          "pt_BR": "Sistema de alarme"
+        },
+        "Sofá": {
+          "pt_BR": "Sofá"
+        },
+        "Sol da manhã": {
+          "pt_BR": "Sol da manhã"
+        },
+        "Sol da tarde": {
+          "pt_BR": "Sol da tarde"
+        },
+        "SPA Sauna Úmida": {
+          "pt_BR": "SPA Sauna Úmida"
+        },
+        "SPA Sauna Seca": {
+          "pt_BR": "SPA Sauna Seca"
+        },
+        "Studio de musica com isolamento acustico": {
+          "pt_BR": "Studio de musica com isolamento acustico"
+        },
+        "Suíte Americana": {
+          "pt_BR": "Suíte Americana"
+        },
+        "Suíte com estar íntimo": {
+          "pt_BR": "Suíte com estar íntimo"
+        },
+        "Suíte Master": {
+          "pt_BR": "Suíte Master"
+        },
+        "Tanque": {
+          "pt_BR": "Tanque"
+        },
+        "Telas des segurança nas janelas": {
+          "pt_BR": "Telas des segurança nas janelas"
+        },
+        "Televisão": {
+          "pt_BR": "Televisão"
+        },
+        "Terraço": {
+          "pt_BR": "Terraço"
+        },
+        "Térreo": {
+          "pt_BR": "Térreo"
+        },
+        "Triplex": {
+          "pt_BR": "Triplex"
+        },
+        "Último Andar": {
+          "pt_BR": "Último Andar"
+        },
+        "Utensílios de cozinha": {
+          "pt_BR": "Utensílios de cozinha"
+        },
+        "Varanda Gourmet": {
+          "pt_BR": "Varanda Gourmet"
+        },
+        "Ventilação cruzada": {
+          "pt_BR": "Ventilação cruzada"
+        },
+        "Ventilador de teto": {
+          "pt_BR": "Ventilador de teto"
+        },
+        "Vestiário para Funcionários": {
+          "pt_BR": "Vestiário para Funcionários"
+        },
+        "Vista 360º": {
+          "pt_BR": "Vista 360º"
+        },
+        "Vista livre": {
+          "pt_BR": "Vista livre"
+        }
+      },
+      "optionsSorter": "asc"
+    },
+    "features_bkp": {
+      "renderAs": "with_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Features OLD",
+        "pt_BR": "Características OLD"
+      },
+      "maxSelected": 180,
+      "minSelected": 0,
+      "name": "features_bkp",
+      "options": {
+        "Restaurante": {
+          "pt_BR": "Restaurante"
+        },
+        "Baby Play": {
+          "pt_BR": "Baby Play"
+        },
+        "Deck Pergolado": {
+          "pt_BR": "Deck Pergolado"
+        },
+        "Dependência Empregada": {
+          "pt_BR": "Dependência Empregada"
+        },
+        "Pista De Caminhada": {
+          "pt_BR": "Pista De Caminhada"
+        },
+        "Portaria": {
+          "pt_BR": "Portaria"
+        },
+        "Praça": {
+          "pt_BR": "Praça"
+        },
+        "Acesso por Catracas com Cartão": {
+          "pt_BR": "Acesso por Catracas com Cartão"
+        },
+        "Ar-condicionado Central": {
+          "pt_BR": "Ar-condicionado Central"
+        },
+        "Medição Gás Individual": {
+          "pt_BR": "Medição Gás Individual"
+        },
+        "Quiosque Churrasqueira": {
+          "pt_BR": "Quiosque Churrasqueira"
+        },
+        "Zelador": {
+          "pt_BR": "Zelador"
+        },
+        "Salão de Festas": {
+          "pt_BR": "Salão de Festas"
+        },
+        "Vagas para Visitantes": {
+          "pt_BR": "Vagas para Visitantes"
+        },
+        "Agua Quente": {
+          "pt_BR": "Agua Quente"
+        },
+        "Cerca Elétrica": {
+          "pt_BR": "Cerca Elétrica"
+        },
+        "Heliporto": {
+          "pt_BR": "Heliporto"
+        },
+        "Piscina Adulta": {
+          "pt_BR": "Piscina Adulta"
+        },
+        "Piscina Aquecida": {
+          "pt_BR": "Piscina Aquecida"
+        },
+        "SPA Sauna": {
+          "pt_BR": "SPA Sauna"
+        },
+        "Auditório": {
+          "pt_BR": "Auditório"
+        },
+        "Pet Play": {
+          "pt_BR": "Pet Play"
+        },
+        "Portaria Noturna": {
+          "pt_BR": "Portaria Noturna"
+        },
+        "Acesso por Catracas com Biometria": {
+          "pt_BR": "Acesso por Catracas com Biometria"
+        },
+        "Sala de Reunião": {
+          "pt_BR": "Sala de Reunião"
+        },
+        "Terraço Coletivo": {
+          "pt_BR": "Terraço Coletivo"
+        },
+        "Área de Serviço": {
+          "pt_BR": "Área de Serviço"
+        },
+        "Circuito TV Interno": {
+          "pt_BR": "Circuito TV Interno"
+        },
+        "Espaço Gourmet": {
+          "pt_BR": "Espaço Gourmet"
+        },
+        "Portaria Guarita": {
+          "pt_BR": "Portaria Guarita"
+        },
+        "Quadra Poliesportiva": {
+          "pt_BR": "Quadra Poliesportiva"
+        },
+        "Sacada na Sala": {
+          "pt_BR": "Sacada na Sala"
+        },
+        "Serviços": {
+          "pt_BR": "Serviços"
+        },
+        "Central de Entrega": {
+          "pt_BR": "Central de Entrega"
+        },
+        "Garage Band": {
+          "pt_BR": "Garage Band"
+        },
+        "Lavanderia Individual": {
+          "pt_BR": "Lavanderia Individual"
+        },
+        "Quiosque": {
+          "pt_BR": "Quiosque"
+        },
+        "Térreo": {
+          "pt_BR": "Térreo"
+        },
+        "Último Andar": {
+          "pt_BR": "Último Andar"
+        },
+        "Bosque": {
+          "pt_BR": "Bosque"
+        },
+        "Fitness Ao Ar Livre": {
+          "pt_BR": "Fitness Ao Ar Livre"
+        },
+        "Terraço": {
+          "pt_BR": "Terraço"
+        },
+        "Automação": {
+          "pt_BR": "Automação"
+        },
+        "Brinquedoteca": {
+          "pt_BR": "Brinquedoteca"
+        },
+        "Elevador": {
+          "pt_BR": "Elevador"
+        },
+        "Hidro": {
+          "pt_BR": "Hidro"
+        },
+        "Churrasqueira": {
+          "pt_BR": "Churrasqueira"
+        },
+        "Gás Central": {
+          "pt_BR": "Gás Central"
+        },
+        "Lan House": {
+          "pt_BR": "Lan House"
+        },
+        "Medição Agua Individual": {
+          "pt_BR": "Medição Agua Individual"
+        },
+        "Quadra Tênis": {
+          "pt_BR": "Quadra Tênis"
+        },
+        "Adega": {
+          "pt_BR": "Adega"
+        },
+        "Espera Para Split": {
+          "pt_BR": "Espera Para Split"
+        },
+        "Sala de Jogos": {
+          "pt_BR": "Sala de Jogos"
+        },
+        "Web Space": {
+          "pt_BR": "Web Space"
+        },
+        "Pé Direito Duplo": {
+          "pt_BR": "Pé Direito Duplo"
+        },
+        "Espera Para Ar Condicionado": {
+          "pt_BR": "Espera Para Ar Condicionado"
+        },
+        "Kids Play": {
+          "pt_BR": "Kids Play"
+        },
+        "Sala de Cinema": {
+          "pt_BR": "Sala de Cinema"
+        },
+        "Sacada no Quarto": {
+          "pt_BR": "Sacada no Quarto"
+        },
+        "Vestiário para Funcionários": {
+          "pt_BR": "Vestiário para Funcionários"
+        },
+        "Depósito": {
+          "pt_BR": "Depósito"
+        },
+        "Estacionamento Rotativo": {
+          "pt_BR": "Estacionamento Rotativo"
+        },
+        "Gerador": {
+          "pt_BR": "Gerador"
+        },
+        "Pay Per Use": {
+          "pt_BR": "Pay Per Use"
+        },
+        "Piscina Infantil": {
+          "pt_BR": "Piscina Infantil"
+        },
+        "Port Cochere": {
+          "pt_BR": "Port Cochere"
+        },
+        "Espera Fibra Ótica": {
+          "pt_BR": "Espera Fibra Ótica"
+        },
+        "Redário": {
+          "pt_BR": "Redário"
+        },
+        "Living Sacada": {
+          "pt_BR": "Living Sacada"
+        },
+        "Porteiro Eletrônico": {
+          "pt_BR": "Porteiro Eletrônico"
+        },
+        "Acesso para Deficientes Físicos": {
+          "pt_BR": "Acesso para Deficientes Físicos"
+        },
+        "Churrasqueiras Quiosque": {
+          "pt_BR": "Churrasqueiras Quiosque"
+        },
+        "Fitness": {
+          "pt_BR": "Fitness"
+        },
+        "Interfone": {
+          "pt_BR": "Interfone"
+        },
+        "Lavanderia Coletiva": {
+          "pt_BR": "Lavanderia Coletiva"
+        },
+        "Living Piscina": {
+          "pt_BR": "Living Piscina"
+        },
+        "Copa": {
+          "pt_BR": "Copa"
+        },
+        "Espaço de Leitura": {
+          "pt_BR": "Espaço de Leitura"
+        },
+        "Living Lareira": {
+          "pt_BR": "Living Lareira"
+        },
+        "Piso Elevado": {
+          "pt_BR": "Piso Elevado"
+        },
+        "Playground": {
+          "pt_BR": "Playground"
+        },
+        "Portaria 24hs": {
+          "pt_BR": "Portaria 24hs"
+        },
+        "Garden": {
+          "pt_BR": "Garden"
+        },
+        "Portaria Virtual": {
+          "pt_BR": "Portaria Virtual"
+        }
+      },
+      "optionsSorter": "asc"
+    },
+    "developmentFeatures": {
+      "name": "developmentFeatures",
+      "type": "text",
+      "isList": true,
+      "label": {
+        "en": "Development Features",
+        "pt_BR": "Características do Empreendimento"
+      }
+    },
+    "floors": {
+      "minValue": 0,
+      "type": "number",
+      "name": "floors",
+      "label": {
+        "en": "Floors",
+        "pt_BR": "Numero de Pavimentos"
+      }
+    },
+    "furniture": {
+      "options": {
+        "Mobiliado": {
+          "pt_BR": "Mobiliado"
+        },
+        "Não Mobiliado": {
+          "pt_BR": "Não Mobiliado"
+        },
+        "Semi-mobiliado": {
+          "pt_BR": "Semi-mobiliado"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Furniture",
+        "pt_BR": "Mobiliado"
+      },
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "furniture"
+    },
+    "inCondominium": {
+      "name": "inCondominium",
+      "label": {
+        "en": "In Condominium",
+        "pt_BR": "Em Condomínio"
+      },
+      "isRequired": false,
+      "isSortable": true,
+      "type": "boolean"
+    },
+    "keysImage": {
+      "maxSize": 10240,
+      "type": "file",
+      "name": "keysImage",
+      "label": {
+        "en": "Keys Image",
+        "pt_BR": "Imagem das Chaves"
+      },
+      "isList": true,
+      "minItems": 0,
+      "maxItems": 10
+    },
+    "keysLocker": {
+      "type": "text",
+      "name": "keysLocker",
+      "label": {
+        "pt_BR": "Posição da Chave",
+        "en": "Keys Position"
+      },
+      "isSortable": true
+    },
+    "keysPlace": {
+      "isRequired": true,
+      "name": "keysPlace",
+      "options": {
+        "Porteiro": {
+          "pt_BR": "Porteiro"
+        },
+        "Proprietario": {
+          "pt_BR": "Proprietario"
+        },
+        "Sem Chaves": {
+          "pt_BR": "Sem Chaves"
+        },
+        "Agenciador": {
+          "pt_BR": "Agenciador"
+        },
+        "Alugado": {
+          "pt_BR": "Alugado"
+        },
+        "Painel": {
+          "pt_BR": "Painel"
+        },
+        "Plantão": {
+          "pt_BR": "Plantão"
+        },
+        "Cadastradores ZS": {
+          "pt_BR": "Cadastradores ZS"
+        },
+        "Cadastradores ZN": {
+          "pt_BR": "Cadastradores ZN"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "with_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Keys Place",
+        "pt_BR": "Local da Chave"
+      },
+      "maxSelected": 7,
+      "isSortable": true
+    },
+    "kitches": {
+      "type": "number",
+      "name": "kitches",
+      "label": {
+        "en": "Kitches",
+        "pt_BR": "Cozinhas"
+      },
+      "minValue": 0
+    },
+    "launch": {
+      "name": "launch",
+      "label": {
+        "en": "Launch Date",
+        "pt_BR": "Data Lançamento"
+      },
+      "type": "date"
+    },
+    "approvedAt": {
+      "label": {
+        "en": "Approval Date",
+        "pt_BR": "Data Aprovação"
+      },
+      "type": "dateTime",
+      "name": "approvedAt",
+      "isSortable": true
+    },
+    "lavatories": {
+      "name": "lavatories",
+      "label": {
+        "en": "Lavatories",
+        "pt_BR": "Lavabo"
+      },
+      "minValue": 0,
+      "type": "number"
+    },
+    "leadType": {
+      "options": {
+        "Evento": {
+          "pt_BR": "Evento"
+        },
+        "Indicação": {
+          "pt_BR": "Indicação"
+        },
+        "Internet": {
+          "pt_BR": "Internet"
+        },
+        "Oferta Via Telefone": {
+          "pt_BR": "Oferta Via Telefone"
+        },
+        "Placa": {
+          "pt_BR": "Placa"
+        },
+        "Porta A Porta": {
+          "pt_BR": "Porta A Porta"
+        },
+        "Folder": {
+          "pt_BR": "Folder"
+        },
+        "Jornal": {
+          "pt_BR": "Jornal"
+        },
+        "Outros": {
+          "pt_BR": "Outros"
+        },
+        "Revista": {
+          "pt_BR": "Revista"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "with_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Lead Type",
+        "pt_BR": "Midia Corretor"
+      },
+      "maxSelected": 10,
+      "minSelected": 0,
+      "name": "leadType"
+    },
+    "link": {
+      "type": "url",
+      "name": "link",
+      "label": {
+        "en": "Site",
+        "pt_BR": "Site"
+      },
+      "isList": true,
+      "minItems": 0
+    },
+    "propertyVideo": {
+      "type": "url",
+      "name": "propertyVideo",
+      "label": {
+        "en": "Property Videos",
+        "pt_BR": "Vídeos do Imóvel"
+      },
+      "isList": true,
+      "minItems": 0
+    },
+    "negotiable": {
+      "type": "boolean",
+      "name": "negotiable",
+      "label": {
+        "en": "Negotiable",
+        "pt_BR": "Negociável"
+      }
+    },
+    "notes": {
+      "label": {
+        "en": "Notes",
+        "pt_BR": "Observações Internas"
+      },
+      "type": "richText",
+      "name": "notes"
+    },
+    "occupancy": {
+      "maxSelected": 1,
+      "name": "occupancy",
+      "options": {
+        "Ocupado": {
+          "pt_BR": "Ocupado"
+        },
+        "Alugado": {
+          "pt_BR": "Alugado"
+        },
+        "Desocupado": {
+          "pt_BR": "Desocupado"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "label": {
+        "pt_BR": "Ocupação",
+        "en": "Occupancy"
+      },
+      "isRequired": true
+    },
+    "office": {
+      "minSelected": 0,
+      "name": "office",
+      "options": {
+        "Zona Sul": {
+          "pt_BR": "Zona Sul",
+          "en": "South"
+        },
+        "Zona Norte": {
+          "en": "North",
+          "pt_BR": "Zona Norte"
+        },
+        "Convergência": {
+          "en": "Convergence",
+          "pt_BR": "Convergência"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "with_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Office",
+        "pt_BR": "Escritório"
+      },
+      "maxSelected": 1
+    },
+    "parentProduct": {
+      "normalization": "title",
+      "type": "text",
+      "name": "parentProduct",
+      "label": {
+        "en": "Development Name",
+        "pt_BR": "Empreendimento VISTA"
+      },
+      "isSortable": true
+    },
+    "parkingInside": {
+      "type": "number",
+      "name": "parkingInside",
+      "label": {
+        "en": "Parking Inside",
+        "pt_BR": "Vagas Cobertas"
+      },
+      "minValue": 0
+    },
+    "parkingNumber": {
+      "type": "text",
+      "name": "parkingNumber",
+      "label": {
+        "pt_BR": "Número da Vaga",
+        "en": "Parking Number"
+      }
+    },
+    "parkingOutside": {
+      "type": "number",
+      "name": "parkingOutside",
+      "label": {
+        "en": "Parking Outside",
+        "pt_BR": "Vagas Descobertas"
+      },
+      "minValue": 0
+    },
+    "parkingRegistryId": {
+      "type": "text",
+      "name": "parkingRegistryId",
+      "label": {
+        "en": "Parking Registry",
+        "pt_BR": "Matrícula da Vaga"
+      }
+    },
+    "parkingSpaces": {
+      "minValue": 0,
+      "type": "number",
+      "name": "parkingSpaces",
+      "label": {
+        "en": "Parking Spaces",
+        "pt_BR": "Vagas Total"
+      },
+      "isSortable": true
+    },
+    "parkingType": {
+      "label": {
+        "en": "Parking Type",
+        "pt_BR": "Tipo de Vagas"
+      },
+      "maxSelected": 8,
+      "minSelected": 0,
+      "name": "parkingType",
+      "options": {
+        "Box": {
+          "pt_BR": "Box"
+        },
+        "Convenção": {
+          "pt_BR": "Convenção"
+        },
+        "Duplo": {
+          "pt_BR": "Duplo"
+        },
+        "Duplo Escriturado": {
+          "pt_BR": "Duplo Escriturado"
+        },
+        "Escriturado": {
+          "pt_BR": "Escriturado"
+        },
+        "Estacionamento": {
+          "pt_BR": "Estacionamento"
+        },
+        "Garagem": {
+          "pt_BR": "Garagem"
+        },
+        "Não Informado": {
+          "pt_BR": "Não Informado"
+        },
+        "Rotativo": {
+          "pt_BR": "Rotativo"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "with_scroll",
+      "type": "picklist"
+    },
+    "plannedDistrict": {
+      "type": "lookup",
+      "name": "plannedDistrict",
+      "label": {
+        "pt_BR": "Bairro Planejado",
+        "en": "Planned District"
+      },
+      "isSortable": true,
+      "document": "Development",
+      "descriptionFields": [
+        "code",
+        "name"
+      ]
+    },
+    "quotesBroker": {
+      "type": "lookup",
+      "name": "quotesBroker",
+      "label": {
+        "en": "Quotes Broker",
+        "pt_BR": "Corretor da proposta"
+      },
+      "isSortable": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "director.nickname"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "isInherited": true
+    },
+    "position": {
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Position",
+        "pt_BR": "Posição"
+      },
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "position",
+      "options": {
+        "Frente a Fundos": {
+          "pt_BR": "Frente a Fundos"
+        },
+        "Fundos": {
+          "pt_BR": "Fundos"
+        },
+        "Lateral": {
+          "pt_BR": "Lateral"
+        },
+        "Andar Inteiro": {
+          "pt_BR": "Andar Inteiro"
+        },
+        "Frente": {
+          "pt_BR": "Frente"
+        }
+      }
+    },
+    "privateFile": {
+      "maxSize": 10240,
+      "type": "file",
+      "name": "privateFile",
+      "label": {
+        "en": "Private Files",
+        "pt_BR": "Matrícula e Autorização"
+      },
+      "isList": true,
+      "minItems": 0,
+      "maxItems": 50
+    },
+    "privatePicture": {
+      "maxSize": 10240,
+      "name": "privatePicture",
+      "label": {
+        "en": "Private Pictures",
+        "pt_BR": "Imagens Restritas"
+      },
+      "comments": "Imagens para uso interno",
+      "isList": true,
+      "wildcard": "(jpg|jpeg)",
+      "type": "file",
+      "minItems": 0,
+      "maxItems": 50
+    },
+    "exclusiveAuthorization": {
+      "maxSize": 10240,
+      "type": "file",
+      "name": "exclusiveAuthorization",
+      "label": {
+        "en": "Exclusive Authorization",
+        "pt_BR": "Autorização de Exclusividade"
+      },
+      "isList": true,
+      "minItems": 0,
+      "maxItems": 50
+    },
+    "purpose": {
+      "maxSelected": 2,
+      "minSelected": 1,
+      "name": "purpose",
+      "optionsSorter": "asc",
+      "type": "picklist",
+      "isSortable": true,
+      "label": {
+        "en": "Purpose",
+        "pt_BR": "Finalidade"
+      },
+      "options": {
+        "Comercial": {
+          "pt_BR": "Comercial"
+        },
+        "Residencial": {
+          "pt_BR": "Residencial"
+        }
+      },
+      "renderAs": "without_scroll"
+    },
+    "quotes": {
+      "type": "boolean",
+      "name": "quotes",
+      "label": {
+        "en": "Quotes",
+        "pt_BR": "Proposta em Andamento"
+      },
+      "isSortable": true
+    },
+    "quotesUser": {
+      "type": "lookup",
+      "name": "quotesUser",
+      "label": {
+        "en": "Quotes User",
+        "pt_BR": "Usuário da proposta"
+      },
+      "isSortable": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "director.nickname",
+        "active"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "isInherited": true
+    },
+    "quotesDate": {
+      "name": "quotesDate",
+      "label": {
+        "en": "Quotes date",
+        "pt_BR": "Data da proposta"
+      },
+      "isSortable": true,
+      "type": "date",
+      "isInherited": true
+    },
+    "recommendHighlight": {
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "recommendHighlight",
+      "options": {
+        "Zona Sul": {
+          "pt_BR": "Zona Sul"
+        },
+        "Zona Norte": {
+          "pt_BR": "Zona Norte"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "with_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Recommend Highlight",
+        "pt_BR": "Recomendar para Destaque"
+      }
+    },
+    "registryId": {
+      "type": "text",
+      "name": "registryId",
+      "label": {
+        "en": "Registry id",
+        "pt_BR": "Matricula"
+      }
+    },
+    "registryZone": {
+      "name": "registryZone",
+      "options": {
+        "1": {
+          "pt_BR": "1"
+        },
+        "2": {
+          "pt_BR": "2"
+        },
+        "3": {
+          "pt_BR": "3"
+        },
+        "4": {
+          "pt_BR": "4"
+        },
+        "5": {
+          "pt_BR": "5"
+        },
+        "6": {
+          "pt_BR": "6"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Registry zone",
+        "pt_BR": "Zona de Registro"
+      },
+      "maxSelected": 1,
+      "minSelected": 0
+    },
+    "rent": {
+      "name": "rent",
+      "label": {
+        "en": "Rent",
+        "pt_BR": "Valor do Aluguel Vigente"
+      },
+      "decimalSize": 2,
+      "minValue": 0,
+      "type": "money"
+    },
+    "builderDation": {
+      "type": "boolean",
+      "name": "builderDation",
+      "label": {
+        "en": "Builder Dation",
+        "pt_BR": "Dação de Construtora"
+      },
+      "isSortable": true
+    },
+    "rooms": {
+      "type": "number",
+      "name": "rooms",
+      "label": {
+        "en": "Rooms",
+        "pt_BR": "Salas"
+      },
+      "minValue": 0
+    },
+    "signPicture": {
+      "wildcard": "(jpg|jpeg)",
+      "maxSize": 10240,
+      "type": "file",
+      "name": "signPicture",
+      "label": {
+        "en": "Sign Picture",
+        "pt_BR": "Foto da Placa"
+      },
+      "isList": true,
+      "minItems": 0,
+      "maxItems": 10
+    },
+    "signPlacedAt": {
+      "type": "date",
+      "name": "signPlacedAt",
+      "label": {
+        "en": "Sign Placement Date",
+        "pt_BR": "Data Colocação da Placa"
+      }
+    },
+    "signPlacedOn": {
+      "name": "signPlacedOn",
+      "label": {
+        "en": "Sign Placement",
+        "pt_BR": "Tem Placa"
+      },
+      "isSortable": true,
+      "type": "boolean"
+    },
+    "signProhibited": {
+      "isSortable": true,
+      "type": "boolean",
+      "name": "signProhibited",
+      "label": {
+        "pt_BR": "Aceita Placa",
+        "en": "Sign Accept"
+      }
+    },
+    "solarOrientation": {
+      "minSelected": 0,
+      "name": "solarOrientation",
+      "options": {
+        "Sul": {
+          "pt_BR": "Sul"
+        },
+        "Leste": {
+          "pt_BR": "Leste"
+        },
+        "Norte": {
+          "pt_BR": "Norte"
+        },
+        "Oeste": {
+          "pt_BR": "Oeste"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Solar Orientation",
+        "pt_BR": "Orientação Solar"
+      },
+      "maxSelected": 4
+    },
+    "streetView": {
+      "type": "url",
+      "name": "streetView",
+      "label": {
+        "en": "Street View",
+        "pt_BR": "Visão da Rua"
+      }
+    },
+    "virtualTour": {
+      "label": {
+        "en": "Product's Virtual Tour",
+        "pt_BR": "Tour Virtual do Imóvel"
+      },
+      "type": "url",
+      "name": "virtualTour"
+    },
+    "developmentVirtualTour": {
+      "name": "developmentVirtualTour",
+      "label": {
+        "en": "Development Virtual Tour",
+        "pt_BR": "Tour Virtual do Empreendimento"
+      },
+      "type": "url"
+    },
+    "suites": {
+      "minValue": 0,
+      "type": "number",
+      "name": "suites",
+      "label": {
+        "en": "Suites",
+        "pt_BR": "Suites"
+      },
+      "isSortable": true
+    },
+    "supplier": {
+      "type": "lookup",
+      "label": {
+        "en": "Owner",
+        "pt_BR": "Proprietário"
+      },
+      "isSortable": true,
+      "isList": true,
+      "detailFields": [
+        "email",
+        "phone"
+      ],
+      "name": "supplier",
+      "document": "Contact",
+      "descriptionFields": [
+        "code",
+        "name.full"
+      ],
+      "minItems": 0
+    },
+    "suppliersReps": {
+      "descriptionFields": [
+        "name.full",
+        "code"
+      ],
+      "detailFields": [
+        "email",
+        "phone"
+      ],
+      "type": "lookup",
+      "name": "suppliersReps",
+      "label": {
+        "en": "Owners Representative",
+        "pt_BR": "Representante"
+      },
+      "isList": true,
+      "document": "Contact",
+      "minItems": 0
+    },
+    "supplierUpdatedAt": {
+      "name": "supplierUpdatedAt",
+      "label": {
+        "en": "Supplier Updated at",
+        "pt_BR": "Atualizado com Proprietário"
+      },
+      "description": {
+        "pt_BR": "Data em que o agenciador confirmou situação de venda com o proprietário do imóvel"
+      },
+      "maxValue": "$now",
+      "isSortable": true,
+      "type": "date"
+    },
+    "surroundings": {
+      "type": "text",
+      "name": "surroundings",
+      "label": {
+        "en": "Surroundings",
+        "pt_BR": "Imediações"
+      }
+    },
+    "tax": {
+      "isSortable": true,
+      "type": "money",
+      "name": "tax",
+      "label": {
+        "en": "Tax Amount",
+        "pt_BR": "Valor do IPTU Anual"
+      },
+      "decimalSize": 2,
+      "minValue": 0
+    },
+    "team": {
+      "type": "picklist",
+      "label": {
+        "pt_BR": "Equipe",
+        "en": "Team"
+      },
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "team",
+      "options": {
+        "RES-POA-LAN-ALT": {
+          "pt_BR": "RES-POA-LAN-ALT"
+        },
+        "RES-POA-LUX": {
+          "pt_BR": "RES-POA-LUX"
+        },
+        "RES-POA-REV-ALT": {
+          "pt_BR": "RES-POA-REV-ALT"
+        },
+        "RES-SER": {
+          "pt_BR": "RES-SER"
+        },
+        "COM": {
+          "pt_BR": "COM"
+        },
+        "RES-GPA": {
+          "pt_BR": "RES-GPA"
+        },
+        "RES-POA-REV-MED": {
+          "pt_BR": "RES-POA-REV-MED"
+        },
+        "RES-LIT": {
+          "pt_BR": "RES-LIT"
+        },
+        "RES-POA-LAN-MED": {
+          "pt_BR": "RES-POA-LAN-MED"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "with_scroll"
+    },
+    "tower": {
+      "normalization": "title",
+      "type": "text",
+      "name": "tower",
+      "label": {
+        "en": "Tower",
+        "pt_BR": "Torre"
+      }
+    },
+    "towers": {
+      "type": "number",
+      "name": "towers",
+      "label": {
+        "en": "Towers",
+        "pt_BR": "Torres"
+      },
+      "minValue": 0
+    },
+    "unitsPerFloor": {
+      "type": "number",
+      "name": "unitsPerFloor",
+      "label": {
+        "pt_BR": "Unidades por Andar",
+        "en": "Units Per Floor"
+      },
+      "minValue": 0
+    },
+    "validatedFilter": {
+      "label": {
+        "en": "Validated Filter",
+        "pt_BR": "Filtro Validado"
+      },
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "validatedFilter",
+      "options": {
+        "Não": {
+          "en": "No",
+          "pt_BR": "Não"
+        },
+        "Sim": {
+          "en": "Yes",
+          "pt_BR": "Sim"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist"
+    },
+    "validatedFilterBy": {
+      "descriptionFields": [
+        "name",
+        "group.name"
+      ],
+      "document": "User",
+      "isInherited": true,
+      "isSortable": true,
+      "label": {
+        "en": "Validated Filter By",
+        "pt_BR": "Filtro Validado Por"
+      },
+      "name": "validatedFilterBy",
+      "type": "lookup"
+    },
+    "videos": {
+      "label": {
+        "en": "Development Videos",
+        "pt_BR": "Videos do Empreendimento"
+      },
+      "isList": true,
+      "type": "url",
+      "name": "videos",
+      "minItems": 0
+    },
+    "webHighlight": {
+      "type": "picklist",
+      "label": {
+        "en": "Highlight Web",
+        "pt_BR": "Destaque Web"
+      },
+      "maxSelected": 14,
+      "minSelected": 0,
+      "name": "webHighlight",
+      "options": {
+        "Ta Tri": {
+          "pt_BR": "Ta Tri",
+          "en": "Ta Tri"
+        },
+        "BraProp": {
+          "en": "BraProp",
+          "pt_BR": "BraProp"
+        },
+        "Foxter Cia Imobiliária": {
+          "en": "Foxter Cia Imobiliária",
+          "pt_BR": "Foxter Cia Imobiliária"
+        },
+        "Lançamentos no Mapa": {
+          "en": "Lançamentos no Mapa",
+          "pt_BR": "Lançamentos no Mapa"
+        },
+        "Linklar": {
+          "en": "Linklar",
+          "pt_BR": "Linklar"
+        },
+        "Rede Morar": {
+          "en": "Rede Morar",
+          "pt_BR": "Rede Morar"
+        },
+        "WebCasas": {
+          "pt_BR": "WebCasas",
+          "en": "WebCasas"
+        },
+        "Viva Real": {
+          "en": "Viva Real",
+          "pt_BR": "Viva Real"
+        },
+        "Imobox": {
+          "en": "Imobox",
+          "pt_BR": "Imobox"
+        },
+        "ImóvelAVenda": {
+          "en": "ImóvelAVenda",
+          "pt_BR": "ImóvelAVenda"
+        },
+        "Pense Imóveis": {
+          "pt_BR": "Pense Imóveis",
+          "en": "Pense Imóveis"
+        },
+        "ImóvelClass": {
+          "en": "ImóvelClass",
+          "pt_BR": "ImóvelClass"
+        },
+        "Novidade Imobiliária": {
+          "en": "Novidade Imobiliária",
+          "pt_BR": "Novidade Imobiliária"
+        },
+        "OLX": {
+          "en": "OLX",
+          "pt_BR": "OLX"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll"
+    },
+    "width": {
+      "type": "number",
+      "name": "width",
+      "label": {
+        "en": "Width",
+        "pt_BR": "Metragem Frente"
+      },
+      "decimalSize": 3,
+      "minValue": 0
+    },
+    "zone": {
+      "minSelected": 0,
+      "name": "zone",
+      "optionsSorter": "asc",
+      "maxSelected": 1,
+      "label": {
+        "en": "Zone",
+        "pt_BR": "Zona"
+      },
+      "options": {
+        "Porto Alegre - Norte": {
+          "pt_BR": "Porto Alegre - Norte"
+        },
+        "Porto Alegre - Sul": {
+          "pt_BR": "Porto Alegre - Sul"
+        },
+        "Serra": {
+          "pt_BR": "Serra"
+        },
+        "Grande Porto Alegre": {
+          "pt_BR": "Grande Porto Alegre"
+        },
+        "Litoral": {
+          "pt_BR": "Litoral"
+        },
+        "Porto Alegre - Centro": {
+          "pt_BR": "Porto Alegre - Centro"
+        },
+        "Porto Alegre - Leste": {
+          "pt_BR": "Porto Alegre - Leste"
+        },
+        "Porto Alegre - Moinhos / Nilo": {
+          "pt_BR": "Porto Alegre - Moinhos / Nilo"
+        }
+      },
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "isSortable": true
+    },
+    "secondaryBroker": {
+      "type": "lookup",
+      "name": "secondaryBroker",
+      "label": {
+        "en": "Secondary Broker",
+        "pt_BR": "Agenciador Secundário"
+      },
+      "isSortable": true,
+      "isList": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "active"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ]
+    },
+    "signBroker": {
+      "name": "signBroker",
+      "label": {
+        "en": "Sign Broker",
+        "pt_BR": "Agenciador da Placa"
+      },
+      "isSortable": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "active"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "type": "lookup"
+    },
+    "ceilingHeight": {
+      "type": "number",
+      "name": "ceilingHeight",
+      "label": {
+        "en": "Ceiling Height",
+        "pt_BR": "Pé Direito"
+      },
+      "decimalSize": 3,
+      "minValue": 0
+    },
+    "areaMezzanine": {
+      "type": "number",
+      "name": "areaMezzanine",
+      "label": {
+        "en": "Mezzanine Area",
+        "pt_BR": "Área Mezanino"
+      },
+      "isSortable": true,
+      "decimalSize": 3,
+      "minValue": 0
+    },
+    "atCorner": {
+      "type": "boolean",
+      "name": "atCorner",
+      "label": {
+        "en": "At Corner",
+        "pt_BR": "Imóvel de Esquina"
+      },
+      "isSortable": true
+    },
+    "actualProfitability": {
+      "type": "percentage",
+      "name": "actualProfitability",
+      "label": {
+        "en": "Actual Profitability",
+        "pt_BR": "Rentabilidade Vigente"
+      },
+      "isSortable": true,
+      "decimalSize": 2
+    },
+    "estimatedRent": {
+      "type": "money",
+      "name": "estimatedRent",
+      "label": {
+        "en": "Estimated Rent",
+        "pt_BR": "Valor de Aluguel Estimado"
+      },
+      "isSortable": true,
+      "decimalSize": 2
+    },
+    "estimatedProfitability": {
+      "type": "percentage",
+      "name": "estimatedProfitability",
+      "label": {
+        "en": "Estimated Profitability",
+        "pt_BR": "Rentabilidade Estimada"
+      },
+      "isSortable": true,
+      "decimalSize": 2
+    },
+    "stage": {
+      "name": "stage",
+      "options": {
+        "Com Estudo": {
+          "pt_BR": "Com Estudo"
+        },
+        "Com Projeto Aprovado": {
+          "pt_BR": "Com Projeto Aprovado"
+        },
+        "Em Construção": {
+          "pt_BR": "Em Construção"
+        },
+        "Pronto": {
+          "pt_BR": "Pronto"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Stage",
+        "pt_BR": "Estágio do Imóvel"
+      },
+      "minSelected": 0,
+      "maxSelected": 1
+    },
+    "corporateType": {
+      "name": "corporateType",
+      "options": {
+        "Loja": {
+          "pt_BR": "Loja"
+        },
+        "Casa Comercial": {
+          "pt_BR": "Casa Comercial"
+        },
+        "Laje Corporativa": {
+          "pt_BR": "Laje Corporativa"
+        },
+        "Prédio Comercial": {
+          "pt_BR": "Prédio Comercial"
+        },
+        "Pavilhões": {
+          "pt_BR": "Pavilhões"
+        },
+        "Estacionamento": {
+          "pt_BR": "Estacionamento"
+        },
+        "Terrenos para Incorporação": {
+          "pt_BR": "Terrenos para Incorporação"
+        }
+      },
+      "optionsSorter": "asc",
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "label": {
+        "en": "Corporate Type",
+        "pt_BR": "Tipo de Imóvel Corporate"
+      },
+      "minSelected": 0,
+      "maxSelected": 1
+    },
+    "corporatePresentation": {
+      "wildcard": "",
+      "maxSize": 10240,
+      "type": "file",
+      "name": "corporatePresentation",
+      "label": {
+        "en": "Corporate and DM Presentation",
+        "pt_BR": "Apresentação Corporate e DM"
+      },
+      "isList": true,
+      "minItems": 0,
+      "maxItems": 3
+    },
+    "showOnCorporateWebsite": {
+      "type": "boolean",
+      "name": "showOnCorporateWebsite",
+      "label": {
+        "en": "Show on Coporate Website",
+        "pt_BR": "Exibir no site Corporate"
+      }
+    },
+    "score": {
+      "label": {
+        "en": "Relevance Index",
+        "pt_BR": "Índice de Relevância"
+      },
+      "decimalSize": 2,
+      "type": "number",
+      "name": "score",
+      "isSortable": true
+    },
+    "scoreAdjust": {
+      "label": {
+        "en": "Score Adjust",
+        "pt_BR": "Ajuste de Nota"
+      },
+      "decimalSize": 0,
+      "type": "number",
+      "name": "scoreAdjust",
+      "isSortable": true
+    },
+    "saleNotes": {
+      "label": {
+        "en": "Sale Notes",
+        "pt_BR": "Observações da Venda"
+      },
+      "type": "text",
+      "name": "saleNotes"
+    },
+    "checked": {
+      "maxSelected": 1,
+      "name": "checked",
+      "type": "picklist",
+      "isSortable": true,
+      "label": {
+        "en": "Checked",
+        "pt_BR": "Verificado"
+      },
+      "options": {
+        "Sim": {
+          "en": "Yes",
+          "pt_BR": "Sim"
+        },
+        "Não": {
+          "pt_BR": "Não",
+          "en": "No"
+        }
+      },
+      "renderAs": "without_scroll",
+      "isInherited": true
+    },
+    "checkedUser": {
+      "name": "checkedUser",
+      "label": {
+        "en": "Checked User",
+        "pt_BR": "Usuário da verificação"
+      },
+      "isSortable": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "active"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "type": "lookup"
+    },
+    "lastCheckedDate": {
+      "label": {
+        "en": "Las tChecked Date",
+        "pt_BR": "Última data de verificação"
+      },
+      "type": "date",
+      "name": "lastCheckedDate",
+      "isSortable": true
+    },
+    "statusBeforeChecked": {
+      "isSortable": true,
+      "label": {
+        "en": "Status Before Checked",
+        "pt_BR": "Estágio do imóvel pré-verificação"
+      },
+      "options": {
+        "Rejeitado": {
+          "en": "Rejeitado",
+          "pt_BR": "Rejeitado"
+        },
+        "Desistiu de Vender": {
+          "en": "Desistiu de Vender",
+          "pt_BR": "Desistiu de Vender"
+        },
+        "Vendido Foxter": {
+          "en": "Vendido Foxter",
+          "pt_BR": "Vendido Foxter"
+        },
+        "Vendido Concorrência": {
+          "en": "Vendido Concorrência",
+          "pt_BR": "Vendido Concorrência"
+        },
+        "Cadastrando": {
+          "pt_BR": "Cadastrando",
+          "en": "Cadastrando"
+        },
+        "Aguardando Aprovação": {
+          "en": "Aguardando Aprovação",
+          "pt_BR": "Aguardando Aprovação"
+        },
+        "Aprovado": {
+          "en": "Aprovado",
+          "pt_BR": "Aprovado"
+        },
+        "Suspender Temporariamente": {
+          "en": "Suspender Temporariamente",
+          "pt_BR": "Suspender Temporariamente"
+        },
+        "Excluir": {
+          "pt_BR": "Excluir",
+          "en": "Excluir"
+        },
+        "Desatualizado": {
+          "en": "Outdated",
+          "pt_BR": "Desatualizado"
+        }
+      },
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "statusBeforeChecked"
+    },
+    "statusAfterChecked": {
+      "isSortable": true,
+      "label": {
+        "en": "Status After Checked",
+        "pt_BR": "Estágio do imóvel pós-verificação"
+      },
+      "options": {
+        "Rejeitado": {
+          "en": "Rejeitado",
+          "pt_BR": "Rejeitado"
+        },
+        "Desistiu de Vender": {
+          "en": "Desistiu de Vender",
+          "pt_BR": "Desistiu de Vender"
+        },
+        "Vendido Foxter": {
+          "en": "Vendido Foxter",
+          "pt_BR": "Vendido Foxter"
+        },
+        "Vendido Concorrência": {
+          "en": "Vendido Concorrência",
+          "pt_BR": "Vendido Concorrência"
+        },
+        "Cadastrando": {
+          "pt_BR": "Cadastrando",
+          "en": "Cadastrando"
+        },
+        "Aguardando Aprovação": {
+          "en": "Aguardando Aprovação",
+          "pt_BR": "Aguardando Aprovação"
+        },
+        "Aprovado": {
+          "en": "Aprovado",
+          "pt_BR": "Aprovado"
+        },
+        "Suspender Temporariamente": {
+          "en": "Suspender Temporariamente",
+          "pt_BR": "Suspender Temporariamente"
+        },
+        "Excluir": {
+          "pt_BR": "Excluir",
+          "en": "Excluir"
+        },
+        "Desatualizado": {
+          "en": "Outdated",
+          "pt_BR": "Desatualizado"
+        }
+      },
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "statusAfterChecked"
+    },
+    "checkedNotes": {
+      "label": {
+        "en": "Checked Notes",
+        "pt_BR": "Observações da verificação"
+      },
+      "type": "text",
+      "name": "checkedNotes"
+    },
+    "contactAttempts": {
+      "label": {
+        "en": "Contact Attempts",
+        "pt_BR": "Tentativas de Contato"
+      },
+      "isSortable": true,
+      "minValue": 0,
+      "defaultValue": 0,
+      "type": "number",
+      "name": "contactAttempts"
+    },
+    "statusChecked": {
+      "defaultValues": [
+        {
+          "en": "Not contacted",
+          "pt_BR": "Não contatado"
+        }
+      ],
+      "maxSelected": 1,
+      "name": "statusChecked",
+      "type": "picklist",
+      "isSortable": true,
+      "label": {
+        "en": "Status Checked",
+        "pt_BR": "Status da verificação"
+      },
+      "options": {
+        "Tentando contato": {
+          "en": "Contact Attempt",
+          "pt_BR": "Tentando contato"
+        },
+        "Contatado": {
+          "pt_BR": "Contatado",
+          "en": "Contacted"
+        },
+        "Não contatado": {
+          "en": "Not contacted",
+          "pt_BR": "Não contatado"
+        },
+        "Contato inexistente": {
+          "en": "No contact",
+          "pt_BR": "Contato inexistente"
+        }
+      },
+      "renderAs": "without_scroll",
+      "isInherited": true
+    },
+    "soldPrice": {
+      "isSortable": true,
+      "minValue": 0,
+      "type": "money",
+      "name": "soldPrice",
+      "label": {
+        "en": "Sold Price",
+        "pt_BR": "Preço vendido"
+      },
+      "isInherited": true
+    },
+    "ga:bounces": {
+      "type": "number",
+      "name": "ga:bounces",
+      "label": {
+        "en": "Bounces",
+        "pt_BR": "Abandonos"
+      },
+      "isInherited": true
+    },
+    "ga:entrances": {
+      "type": "number",
+      "name": "ga:entrances",
+      "label": {
+        "en": "Entrances",
+        "pt_BR": "Entradas"
+      },
+      "isInherited": true
+    },
+    "ga:exits": {
+      "type": "number",
+      "name": "ga:exits",
+      "label": {
+        "en": "Exits",
+        "pt_BR": "Saídas"
+      },
+      "isInherited": true
+    },
+    "ga:pageValue": {
+      "type": "number",
+      "name": "ga:pageValue",
+      "label": {
+        "en": "Page Value",
+        "pt_BR": "Valor da página"
+      },
+      "isInherited": true
+    },
+    "ga:pageviews": {
+      "type": "number",
+      "name": "ga:pageviews",
+      "label": {
+        "en": "Page Views",
+        "pt_BR": "Visualizações"
+      },
+      "isInherited": true
+    },
+    "ga:timeOnPage": {
+      "type": "number",
+      "name": "ga:timeOnPage",
+      "label": {
+        "en": "Time on page",
+        "pt_BR": "Tempo na página (segundos)"
+      },
+      "isInherited": true
+    },
+    "ga:uniquePageviews": {
+      "type": "number",
+      "name": "ga:uniquePageviews",
+      "label": {
+        "en": "Unique Page Views",
+        "pt_BR": "Visualizações Únicas"
+      },
+      "isInherited": true
+    },
+    "lastAnalytics": {
+      "type": "date",
+      "name": "lastAnalytics",
+      "label": {
+        "en": "Last Analytics Update",
+        "pt_BR": "Atualização Analytics"
+      }
+    },
+    "conversionsLastUpdate": {
+      "type": "date",
+      "name": "conversionsLastUpdate",
+      "label": {
+        "en": "Last Conversions Update",
+        "pt_BR": "Atualização Conversões"
+      }
+    },
+    "conversionsSite": {
+      "type": "number",
+      "name": "conversionsSite",
+      "label": {
+        "en": "Site",
+        "pt_BR": "Site"
+      },
+      "isInherited": true
+    },
+    "conversionsPortals": {
+      "type": "number",
+      "name": "conversionsPortals",
+      "label": {
+        "en": "Portals",
+        "pt_BR": "Portais"
+      },
+      "isInherited": true
+    },
+    "conversionsAnothers": {
+      "type": "number",
+      "name": "conversionsAnothers",
+      "label": {
+        "en": "Anothers",
+        "pt_BR": "Outras"
+      },
+      "isInherited": true
+    },
+    "conversionsTotal": {
+      "type": "number",
+      "name": "conversionsTotal",
+      "label": {
+        "en": "Total",
+        "pt_BR": "Total"
+      },
+      "isInherited": true
+    },
+    "meansLastUpdate": {
+      "type": "date",
+      "name": "meansLastUpdate",
+      "label": {
+        "en": "Last Means Update",
+        "pt_BR": "Atualização Médias"
+      }
+    },
+    "meansCount": {
+      "type": "number",
+      "name": "meansCount",
+      "label": {
+        "en": "Count",
+        "pt_BR": "Quantidade"
+      },
+      "isInherited": true
+    },
+    "meansPrice": {
+      "type": "money",
+      "name": "meansPrice",
+      "label": {
+        "en": "Mean of price",
+        "pt_BR": "Média venda"
+      },
+      "isInherited": true
+    },
+    "meansPriceMin": {
+      "type": "money",
+      "name": "meansPriceMin",
+      "label": {
+        "en": "Minimum price",
+        "pt_BR": "Menor venda"
+      },
+      "isInherited": true
+    },
+    "meansPriceMax": {
+      "type": "money",
+      "name": "meansPriceMax",
+      "label": {
+        "en": "Maximum price",
+        "pt_BR": "Maior venda"
+      },
+      "isInherited": true
+    },
+    "meansAreaPrice": {
+      "type": "money",
+      "name": "meansAreaPrice",
+      "label": {
+        "en": "Mean of area price",
+        "pt_BR": "Média venda m2"
+      },
+      "isInherited": true
+    },
+    "meansAreaPriceMin": {
+      "type": "money",
+      "name": "meansAreaPriceMin",
+      "label": {
+        "en": "Minimum of area price",
+        "pt_BR": "Menor venda m2"
+      },
+      "isInherited": true
+    },
+    "meansAreaPriceMax": {
+      "type": "money",
+      "name": "meansAreaPriceMax",
+      "label": {
+        "en": "Maximum of area price",
+        "pt_BR": "Maior venda m2"
+      },
+      "isInherited": true
+    },
+    "siteTags": {
+      "type": "text",
+      "name": "siteTags",
+      "label": {
+        "en": "Site Tags",
+        "pt_BR": "Tags Site"
+      },
+      "isInherited": true,
+      "isList": true
+    },
+    "campaignTags": {
+      "type": "text",
+      "name": "campaignTags",
+      "label": {
+        "en": "Campaign Tags",
+        "pt_BR": "Tags Campanha"
+      },
+      "isInherited": true,
+      "isList": true
+    },
+    "webHighlightChavesNaMao": {
+      "label": {
+        "en": "Highlight Chaves na Mão",
+        "pt_BR": "Destaque Chaves na Mão"
+      },
+      "isSortable": true,
+      "type": "boolean",
+      "name": "webHighlightChavesNaMao"
+    },
+    "developmentLinkReels": {
+      "name": "developmentLinkReels",
+      "label": {
+        "en": "Link to Access  Reels Development",
+        "pt_BR": "Link para Acessar Reels Empreendimentos"
+      },
+      "type": "url",
+      "isList": true,
+      "minItems": 0
+    },
+    "developmentReelsDownload": {
+      "type": "url",
+      "name": "developmentReelsDownload",
+      "label": {
+        "en": "Reels Download Link Development",
+        "pt_BR": "Link para Download do Reels Empreendimento"
+      },
+      "isList": true,
+      "minItems": 0
+    },
+    "statusReelsProduct": {
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "statusReelsProduct",
+      "isSortable": true,
+      "label": {
+        "pt_BR": "Situação do Reels do Imóvel",
+        "en": "Status Reels"
+      },
+      "options": {
+        "Reels agendado": {
+          "pt_BR": "Reels agendado"
+        },
+        "Reels aguardando edição": {
+          "pt_BR": "Reels aguardando edição"
+        },
+        "Reels em processo de agendamento": {
+          "pt_BR": "Reels em processo de agendamento"
+        },
+        "Cliente não quer Reels": {
+          "pt_BR": "Cliente não quer Reels"
+        },
+        "Reels solicitado": {
+          "pt_BR": "Reels solicitado"
+        },
+        "Link Reels inserido no Cadastro": {
+          "pt_BR": "Link Reels inserido no Cadastro"
+        },
+        "Indicado para Reels": {
+          "pt_BR": "Indicado para Reels"
+        },
+        "Fora do padrão para Reels": {
+          "pt_BR": "Fora do padrão para Reels"
+        }
+      },
+      "renderAs": "with_scroll",
+      "type": "picklist"
+    },
+    "ReelsRequestDate": {
+      "label": {
+        "en": "Reels Request Date",
+        "pt_BR": "Data da Solicitação do Reels"
+      },
+      "type": "dateTime",
+      "name": "ReelsRequestDate",
+      "isSortable": true
+    },
+    "ReelsSession": {
+      "label": {
+        "en": "Reels Session",
+        "pt_BR": "Data da Sessão do Reels"
+      },
+      "type": "dateTime",
+      "name": "ReelsSession",
+      "isSortable": true
+    },
+    "ReelsNotes": {
+      "label": {
+        "en": "Reels Notes",
+        "pt_BR": "Observações do Agendamento do Reels"
+      },
+      "type": "richText",
+      "name": "ReelsNotes"
+    },
+    "ReelsPhotographer": {
+      "isSortable": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "type": "lookup",
+      "name": "ReelsPhotographer",
+      "label": {
+        "pt_BR": "Fotógrafo Reels",
+        "en": "Reels Photographer"
+      }
+    },
+    "LinkReels": {
+      "label": {
+        "en": "Link to Access Reels",
+        "pt_BR": "Link para Acessar Reels"
+      },
+      "isList": true,
+      "type": "url",
+      "name": "LinkReels",
+      "minItems": 0
+    },
+    "ReelsDownload": {
+      "type": "url",
+      "name": "ReelsDownload",
+      "label": {
+        "en": "Reels Download Link",
+        "pt_BR": "Link para Download do Reels"
+      },
+      "isList": true,
+      "minItems": 0
+    },
+    "requestedApprovalAt": {
+      "label": {
+        "en": "Requested for Approval in",
+        "pt_BR": "Solicitado para Aprovação em"
+      },
+      "type": "dateTime",
+      "name": "requestedApprovalAt",
+      "isSortable": true
+    },
+    "supplierActivationEmailSent": {
+      "label": {
+        "en": "Activation e-mail sent",
+        "pt_BR": "E-mail de Ativação enviado ao proprietário"
+      },
+      "type": "boolean",
+      "name": "supplierActivationEmailSent",
+      "defaultValue": false
+    },
+    "soldBy": {
+      "label": {
+        "en": "Sold By",
+        "pt_BR": "Vendido por"
+      },
+      "type": "picklist",
+      "name": "soldBy",
+      "options": {
+        "Auxiliadora Predial": {
+          "en": "Auxiliadora Predial",
+          "pt_BR": "Auxiliadora Predial"
+        },
+        "Crédito Real": {
+          "pt_BR": "Crédito Real",
+          "en": "Crédito Real"
+        },
+        "5º Andar": {
+          "en": "5º Andar",
+          "pt_BR": "5º Andar"
+        },
+        "Colnaghi": {
+          "en": "Colnaghi",
+          "pt_BR": "Colnaghi"
+        },
+        "Bridge": {
+          "en": "Bridge",
+          "pt_BR": "Bridge"
+        },
+        "Foxter": {
+          "en": "Foxter",
+          "pt_BR": "Foxter"
+        },
+        "Guarida": {
+          "en": "Guarida",
+          "pt_BR": "Guarida"
+        },
+        "One Imóveis de Luxo": {
+          "en": "One Imóveis de Luxo",
+          "pt_BR": "One Imóveis de Luxo"
+        },
+        "Private": {
+          "en": "Private",
+          "pt_BR": "Private"
+        },
+        "San Vicente": {
+          "en": "San Vicente",
+          "pt_BR": "San Vicente"
+        },
+        "Pier 36": {
+          "en": "Pier 36",
+          "pt_BR": "Pier 36"
+        },
+        "Terra Sul": {
+          "en": "Terra Sul",
+          "pt_BR": "Terra Sul"
+        },
+        "Vera Bernardes": {
+          "en": "Vera Bernardes",
+          "pt_BR": "Vera Bernardes"
+        },
+        "Noblesse": {
+          "en": "Noblesse",
+          "pt_BR": "Noblesse"
+        },
+        "Leindecker": {
+          "en": "Leindecker",
+          "pt_BR": "Leindecker"
+        },
+        "Iper Imóveis": {
+          "en": "Iper Imóveis",
+          "pt_BR": "Iper Imóveis"
+        },
+        "Melnick Even": {
+          "en": "Melnick Even",
+          "pt_BR": "Melnick Even"
+        },
+        "Multi Imob": {
+          "en": "Multi Imob",
+          "pt_BR": "Multi Imob"
+        },
+        "CIM": {
+          "en": "CIM",
+          "pt_BR": "CIM"
+        },
+        "Outros": {
+          "en": "Other",
+          "pt_BR": "Outros"
+        }
+      },
+      "renderAs": "without_scroll",
+      "isSortable": true,
+      "maxSelected": 1
+    },
+    "editorialStatus": {
+      "isSortable": true,
+      "label": {
+        "en": "Editorial Status",
+        "pt_BR": "Estágio do Agenciamento"
+      },
+      "options": {
+        "Rejeitado": {
+          "sort": 2,
+          "en": "Rejeitado",
+          "pt_BR": "Rejeitado"
+        },
+        "Desistiu de Vender": {
+          "sort": 5,
+          "en": "Desistiu de Vender",
+          "pt_BR": "Desistiu de Vender"
+        },
+        "Vendido Foxter": {
+          "sort": 7,
+          "en": "Vendido Foxter",
+          "pt_BR": "Vendido Foxter"
+        },
+        "Vendido Concorrência": {
+          "sort": 8,
+          "en": "Vendido Concorrência",
+          "pt_BR": "Vendido Concorrência"
+        },
+        "Cadastrando": {
+          "sort": 0,
+          "pt_BR": "Cadastrando",
+          "en": "Cadastrando"
+        },
+        "Aguardando Aprovação": {
+          "sort": 1,
+          "en": "Aguardando Aprovação",
+          "pt_BR": "Aguardando Aprovação"
+        },
+        "Aprovado": {
+          "sort": 3,
+          "en": "Aprovado",
+          "pt_BR": "Aprovado"
+        },
+        "Suspender Temporariamente": {
+          "sort": 6,
+          "en": "Suspender Temporariamente",
+          "pt_BR": "Suspender Temporariamente"
+        },
+        "Excluir": {
+          "sort": 10,
+          "pt_BR": "Excluir",
+          "en": "Excluir"
+        },
+        "Desatualizado": {
+          "sort": 4,
+          "en": "Outdated",
+          "pt_BR": "Desatualizado"
+        },
+        "Não Realizado": {
+          "sort": 9,
+          "en": "Not Done",
+          "pt_BR": "Não Realizado"
+        }
+      },
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "maxSelected": 1,
+      "minSelected": 0,
+      "optionsSorter": "sort",
+      "name": "editorialStatus"
+    },
+    "inactivationReason": {
+      "isSortable": true,
+      "label": {
+        "en": "Inactivation Reason",
+        "pt_BR": "Motivo para Não Ativação"
+      },
+      "options": {
+        "Não atualizado nos últimos 30 dias": {
+          "en": "Not updated in the last 30 days",
+          "pt_BR": "Não atualizado nos últimos 30 dias"
+        },
+        "Sem Contato": {
+          "en": "No Contact",
+          "pt_BR": "Sem Contato"
+        },
+        "Problema de Documentação": {
+          "en": "Documentation Problems",
+          "pt_BR": "Problema de Documentação"
+        },
+        "Fora da Atuação": {
+          "en": "Out of our Services",
+          "pt_BR": "Fora da Atuação"
+        },
+        "Proprietário Desistiu": {
+          "pt_BR": "Proprietário Desistiu",
+          "en": "Owner gave up"
+        },
+        "Proprietário pretende Alugar": {
+          "en": "Owner rented",
+          "pt_BR": "Proprietário pretende Alugar"
+        },
+        "Proprietário pretende Utilizar": {
+          "en": "Owner wants to use",
+          "pt_BR": "Proprietário pretende Utilizar"
+        },
+        "Entrou como Dação": {
+          "en": "Got traded",
+          "pt_BR": "Entrou como Dação"
+        },
+        "Venda Direta (terceiros)": {
+          "en": "Direct sell (third-party)",
+          "pt_BR": "Venda Direta (terceiros)"
+        },
+        "Outros": {
+          "en": "Other",
+          "pt_BR": "Outros"
+        },
+        "Vendido com a Foxter": {
+          "en": "Sold with Foxter",
+          "pt_BR": "Vendido com a Foxter"
+        }
+      },
+      "renderAs": "without_scroll",
+      "type": "picklist",
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "inactivationReason"
+    },
+    "approvationNotes": {
+      "label": {
+        "en": "Notes for the Approvers",
+        "pt_BR": "Observações para os aprovadores"
+      },
+      "type": "richText",
+      "name": "approvationNotes"
+    },
+    "saleReason": {
+      "maxSelected": 5,
+      "minSelected": 0,
+      "name": "saleReason",
+      "type": "picklist",
+      "isSortable": true,
+      "label": {
+        "en": "Sale Reason",
+        "pt_BR": "Motivo da Venda"
+      },
+      "options": {
+        "Upgrade": {
+          "en": "Upgrade",
+          "pt_BR": "Upgrade"
+        },
+        "Downgrade": {
+          "en": "Downgrade",
+          "pt_BR": "Downgrade"
+        },
+        "Mudança de Cidade": {
+          "en": "City change",
+          "pt_BR": "Mudança de Cidade"
+        },
+        "Divórcio ou fins Particulares": {
+          "en": "Divorce or private reasons",
+          "pt_BR": "Divórcio ou fins Particulares"
+        },
+        "Capitalização": {
+          "en": "Capitalization",
+          "pt_BR": "Capitalização"
+        },
+        "Reinvestimento em outro Imóvel": {
+          "en": "Reinvestment in another property",
+          "pt_BR": "Reinvestimento em outro Imóvel"
+        },
+        "Dívidas": {
+          "en": "Debts",
+          "pt_BR": "Dívidas"
+        },
+        "Herança / Espólio": {
+          "en": "Inheritance / Estate",
+          "pt_BR": "Herança / Espólio"
+        },
+        "Efetivação de Investimento": {
+          "en": "Investiment",
+          "pt_BR": "Efetivação de Investimento"
+        }
+      },
+      "renderAs": "without_scroll",
+      "isInherited": true
+    },
+    "saleDeadline": {
+      "label": {
+        "en": "Sale Deadline",
+        "pt_BR": "Prazo da Venda"
+      },
+      "type": "date",
+      "name": "saleDeadline",
+      "isSortable": true,
+      "isRequired": false
+    },
+    "professionalPicturesStatus": {
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "professionalPicturesStatus",
+      "isSortable": true,
+      "label": {
+        "pt_BR": "Situação das Fotos Profissionais",
+        "en": "Professional Pictures Status"
+      },
+      "options": {
+        "Aguardando Edição": {
+          "pt_BR": "Aguardando Edição"
+        },
+        "Inserido no Cadastro": {
+          "pt_BR": "Inserido no Cadastro"
+        },
+        "Solicitar Agendamento": {
+          "pt_BR": "Solicitar Agendamento"
+        },
+        "Agendado com o Cliente": {
+          "pt_BR": "Agendado com o Cliente"
+        },
+        "Cliente não quer fotos": {
+          "pt_BR": "Cliente não quer fotos"
+        },
+        "Fora do Padrão": {
+          "pt_BR": "Fora do Padrão"
+        },
+        "Em processo de agendamento": {
+          "pt_BR": "Em processo de agendamento"
+        },
+        "Cancelar agendamento": {
+          "pt_BR": "Cancelar agendamento"
+        },
+        "Não consegue contato": {
+          "pt_BR": "Não consegue contato"
+        }
+      },
+      "renderAs": "with_scroll",
+      "type": "picklist"
+    },
+    "picturesPriority": {
+      "label": {
+        "en": "Pictures Priority",
+        "pt_BR": "Prioridade de divulgação"
+      },
+      "renderAs": "without_scroll",
+      "minSelected": 0,
+      "maxSelected": 1,
+      "optionsSorter": "asc",
+      "type": "picklist",
+      "name": "picturesPriority",
+      "defaultValue": "Imóvel",
+      "options": {
+        "Imóvel": {
+          "pt_BR": "Imóvel"
+        },
+        "Empreendimento": {
+          "pt_BR": "Empreendimento"
+        }
+      }
+    },
+    "saleTarget": {
+      "isSortable": true,
+      "minValue": 0,
+      "type": "money",
+      "name": "saleTarget",
+      "label": {
+        "en": "Suggested Pricing Value",
+        "pt_BR": "Valor de Precificação Sugerido (Meta)"
+      },
+      "isInherited": true
+    },
+    "pricingStatus": {
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "pricingStatus",
+      "type": "picklist",
+      "isSortable": true,
+      "label": {
+        "en": "Pricing Status",
+        "pt_BR": "Situação da Precificação"
+      },
+      "options": {
+        "Aguardando Precificação": {
+          "en": "Awaiting Pricing",
+          "pt_BR": "Aguardando Precificação"
+        },
+        "Precificação Enviada": {
+          "en": "Pricing Sent",
+          "pt_BR": "Precificação Enviada"
+        },
+        "Aguardando Reprecificação": {
+          "en": "Awaiting Repricing",
+          "pt_BR": "Aguardando Reprecificação"
+        },
+        "Não Quer Precificação": {
+          "en": "Don't Wanna Pricing",
+          "pt_BR": "Não Quer Precificação"
+        }
+      },
+      "renderAs": "without_scroll",
+      "defaultValue": "Aguardando Precificação",
+      "isInherited": true
+    },
+    "saleTargetDifference": {
+      "isSortable": true,
+      "minValue": 0,
+      "type": "money",
+      "name": "saleTargetDifference",
+      "label": {
+        "en": "Suggested Pricing Value Difference",
+        "pt_BR": "Diferença do Valor de Precificação Sugerido"
+      },
+      "isInherited": true
+    },
+    "pricedAt": {
+      "name": "pricedAt",
+      "label": {
+        "en": "Priced at",
+        "pt_BR": "Precificado em"
+      },
+      "isSortable": true,
+      "type": "dateTime"
+    },
+    "realEstateAppraiser": {
+      "name": "realEstateAppraiser",
+      "label": {
+        "en": "Real Estate Appraiser",
+        "pt_BR": "Usuário Precificador"
+      },
+      "isSortable": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "active"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "type": "lookup"
+    },
+    "kuiLink": {
+      "type": "richText",
+      "name": "kuiLink",
+      "label": {
+        "en": "Advanced Edit",
+        "pt_BR": "Edição avançada"
+      }
+    },
+    "agencyOpportunity": {
+      "type": "lookup",
+      "name": "agencyOpportunity",
+      "label": {
+        "en": "Agency Opportunity",
+        "pt_BR": "Oportunidade de Agenciamento"
+      },
+      "isSortable": true,
+      "document": "AgencyOpportunity",
+      "descriptionFields": [
+        "code"
+      ]
+    },
+    "incompleteOnWebsite": {
+      "label": {
+        "en": "Incomplete on Website",
+        "pt_BR": "Cadastro incompleto no site"
+      },
+      "type": "boolean",
+      "name": "incompleteOnWebsite"
+    },
+    "relatedProducts": {
+      "type": "filter",
+      "name": "relatedProducts",
+      "label": {
+        "en": "Related Products",
+        "pt_BR": "Imóveis Relacionados"
+      },
+      "document": "Product",
+      "filterableFields": [
+        "active",
+        "address"
+      ]
+    },
+    "leadOverflow": {
+      "type": "boolean",
+      "name": "leadOverflow",
+      "label": {
+        "pt_BR": "Transbordo de Leads",
+        "en": "Leads Overflow"
+      }
+    },
+    "leadOverflowUser": {
+      "type": "lookup",
+      "name": "leadOverflowUser",
+      "label": {
+        "en": "Lead Overflow User",
+        "pt_BR": "Usuario transbordo"
+      },
+      "isSortable": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "director.nickname",
+        "active"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "conditionFields": [
+        {
+          "value": true,
+          "operator": "equals",
+          "term": "active"
+        },
+        {
+          "value": true,
+          "operator": "equals",
+          "term": "permitLeads"
+        },
+        {
+          "value": "50a28a36e4b00438f136ae4b",
+          "operator": "equals",
+          "term": "role._id"
+        }
+      ],
+      "isInherited": true
+    },
+    "source": {
+      "maxSelected": 1,
+      "minSelected": 1,
+      "name": "source",
+      "type": "picklist",
+      "isSortable": true,
+      "label": {
+        "en": "Source",
+        "pt_BR": "Origem da Captação"
+      },
+      "options": {
+        "Indicação outro cliente": {
+          "en": "Other Client Referral",
+          "pt_BR": "Indicação outro cliente",
+          "sort": 5
+        },
+        "Lead Foxter - Formulário - Site": {
+          "en": "Foxter Lead - Form - Site",
+          "pt_BR": "Lead Foxter - Formulário - Site",
+          "sort": 0
+        },
+        "Lead Foxter - Ligação": {
+          "en": "Foxter Lead - Call",
+          "pt_BR": "Lead Foxter - Ligação",
+          "sort": 1
+        },
+        "Lead Foxter - Outros": {
+          "en": "Foxter Lead - Other",
+          "pt_BR": "Lead Foxter - Outros",
+          "sort": 2
+        },
+        "Mídias digitais corretor": {
+          "en": "Broker Digital Media",
+          "pt_BR": "Mídias digitais corretor",
+          "sort": 8
+        },
+        "Outros": {
+          "en": "Other",
+          "pt_BR": "Outros",
+          "sort": 9
+        },
+        "Busca ativa na região": {
+          "en": "Active Search in Region",
+          "pt_BR": "Busca ativa na região",
+          "sort": 6
+        },
+        "Parcerias externas": {
+          "en": "External Partnerships",
+          "pt_BR": "Parcerias externas",
+          "sort": 7
+        },
+        "Reaproveitamento de agenciamento": {
+          "en": "Agency Reuse",
+          "pt_BR": "Reaproveitamento de agenciamento",
+          "sort": 4
+        },
+        "Relacionamento/Network Corretor": {
+          "en": "Relation/Network Broker",
+          "pt_BR": "Relacionamento/Network Corretor",
+          "sort": 3
+        },
+        "Guarida": {
+          "en": "Guarida",
+          "pt_BR": "Guarida",
+          "sort": 99
+        },
+        "App de Captação Loft": {
+          "en": "App de Captação Loft",
+          "pt_BR": "App de Captação Loft",
+          "sort": 8
+        }
+      },
+      "renderAs": "without_scroll",
+      "isInherited": true,
+      "optionsSorter": "sort",
+      "isRequired": true
+    },
+    "signFollowUp": {
+      "maxSelected": 1,
+      "minSelected": 0,
+      "name": "signFollowUp",
+      "isSortable": true,
+      "label": {
+        "pt_BR": "Prazo para follow up do status da placa",
+        "en": "Sign Follow Up"
+      },
+      "options": {
+        "90 dias": {
+          "pt_BR": "90 dias"
+        },
+        "120 dias": {
+          "pt_BR": "120 dias"
+        },
+        "150 dias": {
+          "pt_BR": "150 dias"
+        },
+        "180 dias": {
+          "pt_BR": "180 dias"
+        }
+      },
+      "renderAs": "with_scroll",
+      "type": "picklist"
+    },
+    "signNotes": {
+      "type": "richText",
+      "name": "signNotes",
+      "label": {
+        "en": "Sign Notes",
+        "pt_BR": "Observações da colocação da placa"
+      }
+    },
+    "signStatus": {
+      "name": "signStatus",
+      "isSortable": true,
+      "maxSelected": 1,
+      "minSelected": 0,
+      "label": {
+        "pt_BR": "Situação da Placa",
+        "en": "Sign Status"
+      },
+      "options": {
+        "Colocação de placa solicitada": {
+          "pt_BR": "Solicitar Colocação de placa"
+        },
+        "Colocação da placa em processo": {
+          "pt_BR": "Colocação da placa em processo"
+        },
+        "Colocação de placa agendada": {
+          "pt_BR": "Colocação de placa agendada"
+        },
+        "Placa instalada": {
+          "pt_BR": "Placa instalada"
+        },
+        "Placa reinstalada": {
+          "pt_BR": "Placa reinstalada"
+        },
+        "Cliente não quer placa": {
+          "pt_BR": "Cliente não quer placa"
+        },
+        "Placa não agendada instalada": {
+          "pt_BR": "Placa não agendada instalada"
+        }
+      },
+      "renderAs": "with_scroll",
+      "type": "picklist"
+    },
+    "signTarget": {
+      "name": "signTarget",
+      "type": "boolean",
+      "isSortable": true,
+      "label": {
+        "en": "Sign Target",
+        "pt_BR": "Alvo Placa"
+      },
+      "isInherited": true
+    },
+    "signUser": {
+      "type": "lookup",
+      "name": "signUser",
+      "label": {
+        "en": "Sign User",
+        "pt_BR": "Usuário da Instalação da Placa"
+      },
+      "isSortable": true,
+      "document": "User",
+      "descriptionFields": [
+        "name",
+        "group.name",
+        "director.nickname",
+        "active"
+      ],
+      "detailFields": [
+        "phone",
+        "emails"
+      ],
+      "conditionFields": [
+        {
+          "value": true,
+          "operator": "equals",
+          "term": "active"
+        }
+      ]
+    },
+    "isMarketplace": {
+      "type": "boolean",
+      "name": "isMarketplace",
+      "label": {
+        "en": "Marketplace?",
+        "pt_BR": "Marketplace?"
+      },
+      "isSortable": true
+    },
+    "marketplaceOrigin": {
+      "type": "text",
+      "name": "marketplaceOrigin",
+      "label": {
+        "en": "Marketplace origin",
+        "pt_BR": "Origem marketplace"
+      },
+      "isSortable": true
+    },
+    "marketplaceLastUpdate": {
+      "type": "date",
+      "name": "marketplaceLastUpdate",
+      "label": {
+        "en": "Marketplace last update",
+        "pt_BR": "Última atualizaçao no marketplace"
+      },
+      "isSortable": true
+    },
+    "marketplaceExternal": {
+      "type": "boolean",
+      "name": "marketplaceExternal",
+      "label": {
+        "en": "Marketplace external?",
+        "pt_BR": "Marketplace externo?"
+      },
+      "isSortable": true
+    },
+    "externalId": {
+      "type": "text",
+      "name": "externalId",
+      "label": {
+        "en": "External ID",
+        "pt_BR": "ID Externo"
+      }
+    },
+    "externalFiles": {
+      "compositeType": "reference",
+      "objectRefId": "ExternalFile",
+      "type": "composite",
+      "name": "externalFiles",
+      "label": {
+        "en": "External files",
+        "pt_BR": "Arquivos externos"
+      },
+      "isList": true
+    },
+    "loftLink": {
+      "label": {
+        "en": "Loft link",
+        "pt_BR": "Link na Loft"
+      },
+      "name": "loftLink",
+      "type": "url"
+    },
+    "loftListingId": {
+      "label": {
+        "en": "Loft Listing ID",
+        "pt_BR": "Loft Listing ID"
+      },
+      "name": "loftListingId",
+      "type": "text"
+    },
+    "loftMaxPrice": {
+      "label": {
+        "en": "Loft Max Price",
+        "pt_BR": "Preço Máximo Loft"
+      },
+      "name": "loftMaxPrice",
+      "type": "money"
+    },
+    "loftMaxPriceM2": {
+      "label": {
+        "en": "Loft Max Price/m²",
+        "pt_BR": "Preço/m² Máximo Loft"
+      },
+      "name": "loftMaxPriceM2",
+      "type": "money"
+    },
+    "loftMinPrice": {
+      "label": {
+        "en": "Loft Min Price",
+        "pt_BR": "Preço Mínimo Loft"
+      },
+      "name": "loftMinPrice",
+      "type": "money"
+    },
+    "loftMinPriceM2": {
+      "label": {
+        "en": "Loft min price/m²",
+        "pt_BR": "Preço/m² Mínimo Loft"
+      },
+      "name": "loftMinPriceM2",
+      "type": "money"
+    },
+    "loftPositioning": {
+      "label": {
+        "en": "Loft Positioning",
+        "pt_BR": "Posicionamento Loft"
+      },
+      "name": "loftPositioning",
+      "type": "text"
+    },
+    "loftSuggestedPrice": {
+      "label": {
+        "en": "Loft Suggested Price",
+        "pt_BR": "Preço Sugerido Loft"
+      },
+      "name": "loftSuggestedPrice",
+      "type": "money"
+    },
+    "loftSuggestedPriceM2": {
+      "label": {
+        "en": "Loft Suggested Price/m²",
+        "pt_BR": "Preço/m² Sugerido Loft"
+      },
+      "name": "loftSuggestedPriceM2",
+      "type": "money"
+    },
+    "loftPricingFeedback": {
+      "label": {
+        "en": "Loft Sugggested Price Feedback Form",
+        "pt_BR": "Formulário de Feedback Preço Sugerido Loft"
+      },
+      "name": "loftPricingFeedback",
+      "type": "richText"
+    },
+    "loftPricingLastUpdate": {
+      "label": {
+        "en": "Loft Pricing Last Update",
+        "pt_BR": "Data de Atualização Avaliação Loft"
+      },
+      "name": "loftPricingLastUpdate",
+      "type": "dateTime"
+    },
+    "premiumHighlightZap": {
+      "label": {
+        "en": "Super Highlight Zap",
+        "pt_BR": "Destaque Premium Zap"
+      },
+      "name": "premiumHighlightZap",
+      "type": "boolean"
+    },
+    "specialHighlightZap": {
+      "label": {
+        "en": "Special Highlight Zap",
+        "pt_BR": "Destaque Especial Zap"
+      },
+      "name": "specialHighlightZap",
+      "type": "boolean"
+    },
+    "pageViewsChart": {
+      "label": {
+        "en": "Page Views Chart",
+        "pt_BR": "Visualizações x Preço"
+      },
+      "name": "pageViewsChart",
+      "type": "richText"
+    },
+    "brokerDashboard": {
+      "label": {
+        "en": "Broker Dashboard",
+        "pt_BR": "Dashboard do corretor"
+      },
+      "name": "brokerDashboard",
+      "type": "richText"
+    },
+    "ownerDashboard": {
+      "label": {
+        "en": "Owner Dashboard",
+        "pt_BR": "Dashboard do proprietário"
+      },
+      "name": "ownerDashboard",
+      "type": "richText"
+    },
+    "loftPriceClassification": {
+      "label": {
+        "en": "Price classification",
+        "pt_BR": "Classificação do Valor de Venda"
+      },
+      "name": "loftPriceClassification",
+      "type": "text"
+    },
+    "loftSuggestedFinalPrice": {
+      "label": {
+        "en": "Loft Suggested Price no negotiation",
+        "pt_BR": "Preço Sugerido Loft sem margem de negociação"
+      },
+      "name": "loftSuggestedFinalPrice",
+      "type": "money"
+    }
+  },
+  "help": {
+    "pt_BR": "Produtos"
+  },
+  "icon": "building",
+  "label": {
+    "en": "Product or Service",
+    "pt_BR": "Imóvel"
+  },
+  "menuSorter": 6,
+  "name": "Product",
+  "namespace": [
+    "base",
+    "foxter"
+  ],
+  "plurals": {
+    "en": "Products & Services",
+    "pt_BR": "Imóveis"
+  },
+  "saveHistory": true,
+  "type": "document",
+  "indexes": {
+    "address_more_unique": {
+      "keys": {
+        "address:state": 1,
+        "address:city": 1,
+        "address:place": 1,
+        "address:number": 1,
+        "address:random": 1,
+        "address:country": 1,
+        "address:district": 1,
+        "address:complement": 1,
+        "address:postalCode": 1
+      },
+      "options": {
+        "unique": true,
+        "name": "address_more_unique"
+      }
+    }
+  },
+  "parent": "base:Product",
+  "validationData": {
+    "original": {
+      "fields": "_id, commission, commisionAuthorization, ownerApproached, keysPlace, visitationNotes, editorialStatus, address, professionalPicturesStatus, quotes, campaignProductStatus",
+      "document": "Product",
+      "filter": {
+        "match": "and",
+        "conditions": [
+          {
+            "editable": true,
+            "term": "_id",
+            "operator": "equals",
+            "value": "$this._id"
+          }
+        ]
+      }
+    },
+    "existingActiveProducts": {
+      "fields": "code,status",
+      "document": "Product",
+      "filter": {
+        "match": "and",
+        "conditions": [
+          {
+            "term": "address.state",
+            "operator": "equals",
+            "value": "$this.address.state"
+          },
+          {
+            "term": "address.city",
+            "operator": "equals",
+            "value": "$this.address.city"
+          },
+          {
+            "term": "address.place",
+            "operator": "equals",
+            "value": "$this.address.place"
+          },
+          {
+            "term": "address.number",
+            "operator": "equals",
+            "value": "$this.address.number"
+          },
+          {
+            "term": "address.complement",
+            "operator": "equals",
+            "value": "$this.address.complement"
+          }
+        ]
+      }
+    }
+  },
+  "validationScript": "try {/** @type Product */ var original =((extraData || {}).original || [])[0] || {};/** @type Product */ var record = data;var i, prop, requiredProps;var isMaster =[\"Supporter\",\"Cadastrador Master\",\"Cadastrador\",\"Sócio-Diretor\",\"Gerente Gestão de Imóveis\",\"System\",].indexOf(user.role.name) > -1;if ((\"Vendido Concorrência\" === data.editorialStatus ||\"Suspender Temporariamente\" === data.editorialStatus ||\"Excluir\" === data.editorialStatus ||\"Desistiu de Vender\" === data.editorialStatus) &&true === data.exclusive) {return {success: false,reason:\"Imóvel exclusivo: cliente precisa enviar solicitação de cancelamento para exclusividade@foxter.com.br, conforme cláusula 5ª do contrato.\",};}if (false === /^[0-9]{8}$/.test(data.address.postalCode) &&null != data.address.postalCode) {return {success: false,reason: \"CEP deve conter somente números com tamanho de 8 caracteres\",};}if (\"3 Aprovado\" === data.ownerApproached &&\"3 Aprovado\" !== original.ownerApproached &&!isMaster &&\"Diretor Comercial\" != user.role.name &&\"Diretor Suporte Incorporadoras\" != user.role.name) {return {success: false,reason:\"[Proprietário Abordado] Você não tem permissão para selecionar esse valor.\",};}if (data.source == null) {return {success: false,reason: 'O campo [Origem de Captação] é obrigatório\"',};}if (null != data.keysPlace && data.keysPlace.length > 0) {if ((data.keysPlace || []).join(\",\") !==(original.keysPlace || []).join(\",\") &&!isMaster) {if ((data.keysPlace || []).join(\",\").match(/Painel|Cadastradores ZS|Cadastradores ZN/) ||(original.keysPlace || []).join(\",\").match(/Painel|Cadastradores ZS|Cadastradores ZN/)) {return {success: false,reason:\"Usuário sem permissão para alterar campo [Local da Chave]. Dúvidas, entrar em contato com Gestão de Imóveis\",};}}}if (data.visitationNotes !== original.visitationNotes &&(data.keysPlace || []).includes(\"Painel\") &&!isMaster) {return {success: false,reason:\"[Observações da Visitação] Você não tem permissão para alterar esse valor\",};}if (!isMaster && null != data.address && null != original.address) {var props = [\"placeType\",\"place\",\"number\",\"district\",\"city\",\"state\",\"postalCode\",\"complement\",];if (\"Aprovado\" === data.editorialStatus &&\"Aprovado\" === original.editorialStatus) {for (i = 0; i < props.length; i++) {prop = props[i];if (data.address[prop] !== original.address[prop]) {return {success: false,reason:\"[Endereço] Você não tem permissão para alterar o endereço depois de aprovado.\",};}}}}if (\"Reels agendado\" === data.statusReelsProduct &&(null == data.ReelsSession || null == data.ReelsPhotographer)) {return {success: false,reason:\"Necessário preenchimento dos campos [Fotógrafo Reels] e [Data da Sessão do Reels] para salvar campo como [Reels Agendado].\",};}if (\"Link Reels inserido no Cadastro\" === data.statusReelsProduct &&(null == data.LinkReels || null == data.ReelsDownload)) {return {success: false,reason:\"Necessário preenchimento dos campos [Link para Download de reels] e [Link para acessar Reels] para salvar campo como [Link Reels Inserido no Cadastro].\",};}if (null != data.ReelsSession || null != data.ReelsPhotographer) {if (null == data.statusReelsProduct ||null == data.ReelsSession ||null == data.ReelsPhotographer) {return {success: false,reason:\"Necessário preenchimento dos campos [Fotógrafo Reels], [Data da Sessão do Reels] e [Situação do Reels do Imóvel] para salvar.\",};}}if (null != data.LinkReels || null != data.ReelsDownload) {if (null == data.statusReelsProduct ||null == data.LinkReels ||null == data.ReelsDownload) {return {success: false,reason:\"Necessário preenchimento dos campos [Link para Acessar Reels], [Link para Download do Reels] e [Situação do Reels do Imóvel] para salvar.\",};}}if (!isMaster &&\"Ativo\" === data.status &&\"Aprovado\" !== data.editorialStatus &&\"Aprovado\" === original.editorialStatus) {if (-1 ===[\"Excluir\",\"Vendido Concorrência\",\"Vendido Foxter\",\"Desistiu de Vender\",\"Suspender Temporariamente\",].indexOf(data.editorialStatus)) {return {success: false,reason:\"Sem premissão para atualizar o campo Estágio do Cadastro. Necessário escolher entre as opções: Desistiu de Vender, Excluir, Suspender Temporariamente, Vendido Concorrência e Vendido Foxter.\",};}}if (data.professionalPicturesStatus == null) {if (data.editorialStatus === \"Aguardando Aprovação\" &&original.editorialStatus !== \"Aguardando Aprovação\" &&[\"Rascunho\", \"Inativo\"].indexOf(data.status) !== -1) {return {success: false,reason:'O campo [Situação das Fotos Profissionais] é obrigatório para selecionar o campo [Estágio do Cadastro] como \"Aguardando Aprovação\". Se o cliente permite a realização das fotos, selecionar a opção \"Solicitar Agendamento\" e são não permitir, selecionar a opção \"Cliente não quer fotos\"',};}}if (\"Agendado com o Cliente\" === data.professionalPicturesStatus &&\"Agendado com o Cliente\" !== original.professionalPicturesStatus) {if (null == data.photographer || null == data.professionalPicturesSession) {return {success: false,reason:\"Campos [Fotógrafo] e [Data da Sessão de Fotos] são obrigatórios para selecionar a situação de fotos [Agendado com o Cliente]\",};}}if (\"Não consegue contato\" === data.professionalPicturesStatus &&\"Não consegue contato\" !== original.professionalPicturesStatus &&!isMaster) {return {success: false,reason:\"Você não tem permissão para selecionar a opção `Não consegue contato` na Situação das Fotos Profissionais.\",};}if (\"Aguardando Aprovação\" === data.editorialStatus &&user.group &&-1 === [\"SECRETARIA DE VENDAS\", \"MARKETING\"].indexOf(user.group.name) &&\"Diretor Suporte Incorporadoras\" !== user.role.name &&!isMaster &&data.quotes == original.quotes &&data.ownerApproached === original.ownerApproached) {requiredProps = [\"saleReason\",\"saleDeadline\",\"signStatus\",\"signProhibited\",\"signPlacedOn\",];var name = {saleReason: \"Motivo da Venda\",saleDeadline: \"Prazo da Venda\",signStatus: \"Situação da Placa\",signProhibited: \"Aceita Placa\",signPlacedOn: \"Tem Placa\",};for (i = 0; i < requiredProps.length; i++) {prop = data[requiredProps[i]];if (null == prop || (Array.isArray(prop) && 0 === prop.length)) {return {success: false,reason: \"O campo \" + name[requiredProps[i]] + \" é obrigatório.\",};}}}if (\"Ativo\" === data.status) {var existingActiveProducts = (extraData || {}).existingActiveProducts || [];if (Array.isArray(existingActiveProducts) &&existingActiveProducts.length > 0) {var activeProducts =existingActiveProducts.filter(function (p) {return p.code !== data.code && \"Ativo\" === p.status;}) || [];if (activeProducts.length > 0) {return {success: false,reason:\"Já existe um ou mais imóveis ativos com o mesmo endereço. Código(s): \" +activeProducts.map(function (p) {return p.code;}).join(\",\"),};}}}if (true === data.quotes && null == data.quotesBroker) {return {success: false,reason:\"Imóvel com proposta em andamento é obrigatório preencher o corretor da proposta.\",};}if (data.editorialStatus === \"Aguardando Aprovação\") {if (data.parkingSpaces == null || data.parkingSpaces === \"\") {return {success: false,reason:\"Necessário preenchimento do campo [Vagas Totais] para selecionar o campo [Estágio do Agenciamento] como Aguardando Aprovação. Se não houverz informar o valor ZERO\",};}if (data.parkingSpaces > 0 && (data.parkingType || \"\").length === 0) {return {success: false,reason:\"Necessário preencher o campo [Tipo de Vaga] para prencher o campo [Vagas Totais] com o Estágio do Agenciamento [\" +data.editorialStatus +\"].\",};}}return { success: true };} catch (e) {console.log(e);return {success: false,reason: \"Houve um erro inesperado: '\" + e.message + \"'\",};}",
+  "scriptBeforeValidation": "/** @type Product */ var ret = {};/** @type Product */ var original = extraData.original;var currentDate = new Date();/** @type Product */ var record = data;if (\"Inativo\" === data.status && \"Ativo\" === original.status) {ret.deactivatedAt = currentDate;}if (data.status &&data.editorialStatus &&\"Ativo\" === data.status &&\"Aprovado\" === data.editorialStatus &&(original.status !== data.status ||original.editorialStatus !== data.editorialStatus)) {ret.supplierUpdatedAt = currentDate;}if (\"Aprovado\" === data.editorialStatus &&original.editorialStatus !== data.editorialStatus &&null == original.approvedAt) {ret.approvedAt = currentDate;}if (\"Aguardando Aprovação\" === data.editorialStatus &&(!original || original.editorialStatus !== data.editorialStatus)) {ret.requestedApprovalAt = currentDate;}if (\"Rejeitado\" === data.editorialStatus &&(!original || original.editorialStatus !== data.editorialStatus)) {ret.rejectedAt = currentDate;}if (\"Aprovado\" == data.editorialStatus && null != ret.approvedAt) {if (\"Solicitar Agendamento\" == data.professionalPicturesStatus) {ret.professionalPicturesRequestDate = currentDate;}}if (\"Terreno\" === data.type) {if (null !== data.areaLand &&void 0 !== data.areaLand &&(void 0 === data.areaTotal ||null === data.areaTotal ||0 === data.areaTotal)) {ret.areaTotal = data.areaLand;data.areaTotal = data.areaLand;}if (null !== data.areaTotal &&void 0 !== data.areaTotal &&(void 0 === data.areaLand || null === data.areaLand || 0 === data.areaLand)) {ret.areaLand = data.areaTotal;data.areaLand = data.areaTotal;}if (null !== data.areaLand &&void 0 !== data.areaLand &&(void 0 === data.areaPrivate ||null === data.areaPrivate ||0 === data.areaPrivate)) {ret.areaPrivate = data.areaLand;data.areaPrivate = data.areaLand;}}if (data.sale && data.sale.value) {if (data.areaPrivate && data.areaPrivate > 0) {ret.areaPrice = {currency: \"BRL\",value: data.sale.value / data.areaPrivate,};} else {ret.areaPrice = null;}if (data.rent && data.rent.value) {ret.actualProfitability = parseFloat((data.rent.value / data.sale.value).toFixed(4));}if (data.estimatedRent && data.estimatedRent.value) {ret.estimatedProfitability = parseFloat((data.estimatedRent.value / data.sale.value).toFixed(4));}}if (data.address) {var zones = {\"Porto Alegre - Norte\": [\"Navegantes\",\"Sarandi\",\"Jardim Planalto\",\"Passo da Areia\",\"Cristo Redentor\",\"Jardim Itu Sabará\",\"Jardim Itu-Sabará\",\"Vila Jardim\",\"São Sebastião\",\"Vila Ipiranga\",\"São João\",\"Humaitá\",\"Arquipélago\",\"Protásio Alves\",\"Jardim Lindóia\",\"Alto Petrópolis\",\"Mário Quintana\",\"Ecoville\",\"Jardim Leopoldina\",\"Jardim São Pedro\",\"Rubem Berta\",\"São Geraldo\",\"Farrapos\",\"Jardim Floresta\",\"Jardim Ipiranga\",\"Santa Maria Goretti\",\"Anchieta\",\"Passo das Pedras\",\"Parque Santa Fé\",\"Costa e Silva\",\"Jardim Itu\",\"Jardim Sabará\",\"Santa Rosa de Lima\",],\"Porto Alegre - Leste\": [\"Morro Santana\",\"Lomba do Pinheiro\",\"Coronel Aparício Borges\",\"Jardim Botânico\",\"Jardim Carvalho\",\"Central Parque\",\"Jardim do Salso\",\"Agronomia\",\"Partenon\",\"Glória\",\"Santo Antônio\",\"Medianeira\",\"Bom Jesus\",\"Jardim Itália\",\"Vila São José\",\"Vila João Pessoa\",\"Pitinga\",],\"Porto Alegre - Sul\": [\"Chapéu do Sol\",\"Campo Novo\",\"Lami\",\"Ipanema\",\"Cristal\",\"Cavalhada\",\"Camaquã\",\"Belém Novo\",\"Vila Assunção\",\"Teresópolis\",\"Tristeza\",\"Aberta dos Morros\",\"Nonoai\",\"Itapuã\",\"Nova Ipanema\",\"Santa Teresa\",\"Santa Tereza\",\"Vila Nova\",\"Jardim Isabel\",\"Lageado\",\"Pedra Redonda\",\"Restinga\",\"Vila Conceição\",\"Cascata\",\"Hípica\",\"Espirito Santo\",\"Espírito Santo\",\"Guarujá\",\"Belém Velho\",\"Ilha da Pintada\",\"Serraria\",\"Ponta Grossa\",\"Boa Vista do Sul\",\"Extrema\",\"São Caetano\",\"Sétimo Céu\",],\"Porto Alegre - Centro\": [\"Menino Deus\",\"Santana\",\"Praia de Belas\",\"Azenha\",\"Bom Fim\",\"Cidade Baixa\",\"Floresta\",\"Independência\",\"Centro Histórico\",\"Farroupilha\",\"Praia da Barra\",],\"Porto Alegre - Moinhos / Nilo\": [\"Três Figueiras\",\"Bela Vista\",\"Petrópolis\",\"Mont Serrat\",\"Higienópolis\",\"Auxiliadora\",\"Chácara das Pedras\",\"Boa Vista\",\"Rio Branco\",\"Moinhos de Vento\",\"Jardim Europa\",\"Santa Cecília\",\"Verdes Campos\",],Litoral: [\"Arroio do Sal\",\"Rio Grande\",\"Balneário Pinhal\",\"Cidreira\",\"Balneário Camboriú\",\"Santa Catarina\",\"Xangri-lá\",\"Xangri-Lá\",\"Tramandaí\",\"Garopaba\",\"Florianópolis\",\"Capão da Canoa\",\"Atlântida\",\"Santo Antônio da Patrulha\",\"Imbé\",\"Curumim\",\"Torres\",\"Osório\",\"Imbituba\",\"Capão Novo\",],Serra: [\"Canela\",\"Gramado\",\"Nova Petrópolis\",\"Caxias do Sul\",\"São Francisco de Paula\",],\"Grande Porto Alegre\": [\"Nova Hartz\",\"Canoas\",\"Viamão\",\"Alvorada\",\"Gravataí\",\"Montenegro\",\"Novo Hamburgo\",\"Triunfo\",\"Eldorado do Sul\",\"Cachoeirinha\",\"Esteio\",\"Portão\",\"Guaíba\",\"Sapucaia do Sul\",\"São Leopoldo\",\"Taquara\",\"Itapuã\",\"Campo Bom\",\"Capela de Santana\",\"Dois Irmãos\",\"Glorinha\",\"Ivoti\",\"Nova Santa Rita\",\"Sapiranga\",\"São Sebastião do Caí\",],};for (var zone in zones) {if (\"Porto Alegre\" === data.address.city) {if (-1 !== zones[zone].indexOf(data.address.district)) {ret.zone = zone;break;}} else if (-1 !== zones[zone].indexOf(data.address.city)) {ret.zone = zone;break;}}}if (data.professionalPicturesNotes &&(!original ||original.professionalPicturesNotes !== data.professionalPicturesNotes)) {emails.push({toPath: \"_user.0.emails.0.address\",from: \"Atendimento <atendimento@foxter.com.br>\",server: \"smtp_foxter\",template: \"professional-pictures-notes-changed\",relations: { _user: 1 },});}if (\"Solicitar Agendamento\" === data.professionalPicturesStatus &&(!original ||original.professionalPicturesStatus !== data.professionalPicturesStatus)) {ret.professionalPicturesRequestDate = currentDate;}if (\"Corretor\" === user.role.name ||\"Gerente\" === user.role.name ||\"Diretor Comercial\" === user.role.name) {if (-1 ===[\"Cancelar agendamento\",\"Cliente não quer fotos\",\"Solicitar Agendamento\",].indexOf(data.professionalPicturesStatus)) {ret.professionalPicturesStatus = original.professionalPicturesStatus;}if (\"Aprovado\" === data.editorialStatus) {ret.editorialStatus = original.editorialStatus;ret.approvedAt = original.approvedAt;}}if (-1 ===[\"Sócio-Diretor\",\"Cadastrador\",\"Diretor Comercial\",\"Gestão de Imóveis\",].indexOf(user.role.name)) {if (!data._user[0].active && data._user[0] !== original._user[0]) {ret._user[0] = original._user[0];}}if (data.sale && data.sale.value) {ret.targetPercent = Number(Number.prototype.toFixed.apply(((data.saleTarget && data.saleTarget.value) || 0) /((data.sale && data.sale.value) || 0),[2]));}if (true === data.quotes && true !== original.quotes) {ret.quotesUser = user;ret.quotesDate = currentDate;}if (\"Ativo\" == data.status &&\"Ativo\" == data.campaignProductStatus &&\"Ativo\" !== original.campaignProductStatus &&\"Aprovado\" == data.editorialStatus) {ret.joinedCampaignOn = currentDate;}if (\"Reels solicitado\" === data.statusReelsProduct &&(!original || original.statusReelsProduct !== data.statusReelsProduct)) {ret.ReelsRequestDate = currentDate;}if (null != data.ReelsSession &&null != data.ReelsPhotographer &&(data.ReelsSession !== original.ReelsSession ||data.ReelsPhotographer !== original.ReelsPhotographer)) {ret.statusReelsProduct = \"Reels agendado\";}if (null != data.LinkReels &&null != data.ReelsDownload &&(data.LinkReels !== original.LinkReels ||data.ReelsDownload !== original.ReelsDownload)) {ret.statusReelsProduct = \"Link Reels inserido no Cadastro\";}if (null != data.supplier &&(null == original.supplier || original.supplier._id !== data.supplier._id)) {ret.supplierActivationEmailSent = false;}if (null != original && null != original.code) {const supplierFields = [\"soldAt\",\"soldBy\",\"status\",\"editorialStatus\",\"quotes\",\"supplierUpdatedAt\",\"saleDeadline\",\"saleReason\",\"saleTarget\",\"saleNotes\",\"address\",\"ReelsNotes\",\"professionalPicturesNotes\",\"furniture\",\"occupancy\",\"availableAt\",\"keysPlace\",\"keysLocker\",\"pricingStatus\",\"visitationNotes\",\"keysTakenBy\",\"keysTakenAt\",\"rent\",\"tax\",\"developmentDoc\",\"dontDisplay\",\"negotiable\",\"pricedAt\",\"acceptDation\",\"commisionAuthorization\",\"dationDescription\",\"exclusive\",\"stage\",\"description\",\"signPicture\",\"privateFile\",\"supplier\",\"suppliersReps\",\"_user\",\"lastCheckedDate\",];for (var i = 0; i < supplierFields.length; i++) {var field = supplierFields[i];if (data[field] !== original[field]) {ret.supplierUpdatedAt = currentDate;break;}}if (data.sale != null &&data.sale.value !== ((original.sale && original.sale.value) || 0)) {ret.supplierUpdatedAt = currentDate;}}if (null != data.saleTarget &&null != data.saleTarget.value &&null != data.sale &&null != data.sale.value) {ret.saleTargetDifference = {currency: \"BRL\",value: data.saleTarget.value - data.sale.value,};}if (null == data.picturesPriority) {ret.picturesPriority = \"Imóvel\";}if (extraData.request && extraData.request.supplierUpdatedAt) {ret.supplierUpdatedChanged = true;}if (null != data.address && null == original) {ret.relatedProducts = {match: \"and\",conditions: {\"code:not_equals\": {term: \"code\",operator: \"not_equals\",value: data.code,editable: true,disabled: false,sort: 0,},\"address:country:equals\": {term: \"address.country\",operator: \"equals\",value: \"BRA\",editable: true,disabled: false,sort: 0,},},};var props = [\"state\", \"city\", \"district\", \"place\", \"number\", \"complement\"];for (var i = 0; i < props.length; i++) {var prop = props[i];if (null != data.address[prop] && data.address[prop].length > 0) {ret.relatedProducts.conditions[\"address:\" + prop + \":equals\"] = {term: \"address.\" + prop,operator: \"equals\",value: data.address[prop],editable: true,disabled: false,sort: i + 2,};}}}if (record.loftPricingFeedback == null) {ret.loftPricingFeedback =\"<a href=https://bit.ly/feedback-avm-loft target=_blank>Abrir</a>\";}if (record.loftSuggestedPrice != null &&record.loftSuggestedPrice.value != null) {ret.loftSuggestedFinalPrice = {currency: \"BRL\",value: record.loftSuggestedPrice.value * 0.9,};/* 100 - (AVM suggested price * 100 / sale value) */ var priceDiff =(ret.loftSuggestedFinalPrice.value * 100) / record.sale.value;var diffPercent = 100 - priceDiff;switch (true) {case diffPercent < -30:ret.loftPriceClassification = \"Baixo índice de confiança\";break;case diffPercent < 0:ret.loftPriceClassification = \"Extremamente líquido\";break;case diffPercent < 5:ret.loftPriceClassification = \"Líquido\";break;case diffPercent < 10:ret.loftPriceClassification = \"Pouco acima do preço\";break;case diffPercent < 30:ret.loftPriceClassification = \"Muito acima do preço\";break;default:ret.loftPriceClassification = \"Baixo índice de confiança\";break;}}if (data.pageViewsChart == null && data.code != null) {ret.pageViewsChart = `<iframe src=\"https://foxter-broker.dev.konecty.com/iframes/page-views-chart?code=${data.code}\" width=\"100%\" height=\"100%\" frameborder=\"0\" style=\"min-height: 400px;\" allowfullscreen></iframe>`;}return ret;",
+  "scriptAfterSave": "var index, kuiLink;function ownerDashboard(code) {return ('<a target=\"_blank\" href=\"https://www.foxterciaimobiliaria.com.br/meu-imovel/' +code +'\">https://www.foxterciaimobiliaria.com.br/meu-imovel/' +code +'</a><button class=\"x-btn x-unselectable x-box-item x-btn-default-small x-icon x-btn-icon x-btn-default-small-icon\" style=\"margin: 0px; right: auto; left: 409px; top: 0px\" role=\"button\" hidefocus=\"on\" unselectable=\"on\" tabindex=\"0\" onclick=\"navigator.clipboard.writeText(this.previousElementSibling.innerText);Konecty.Notification.OK({title : \\'Copiado para área de transferência\\' });\"><span class=\"x-btn-wrap\" unselectable=\"on\"><span class=\"x-btn-button\"><span class=\"x-btn-inner x-btn-inner-center\" unselectable=\"on\">&nbsp;</span><span role=\"img\" class=\"x-btn-icon-el x-btn-glyph\" unselectable=\"on\" style=\"font-family: FontAwesome\">&#xf0c5;</span></span></span></button>');}function brokerDashboard(code) {return ('<a target=\"_blank\" href=\"https://corretor.foxterciaimobiliaria.com.br/meu-agenciamento?code=' +code +'\">https://corretor.foxterciaimobiliaria.com.br/meu-agenciamento?code=' +code +'</a><button class=\"x-btn x-unselectable x-box-item x-btn-default-small x-icon x-btn-icon x-btn-default-small-icon\" style=\"margin: 0px; right: auto; left: 409px; top: 0px\" role=\"button\" hidefocus=\"on\" unselectable=\"on\" tabindex=\"0\" onclick=\"navigator.clipboard.writeText(this.previousElementSibling.innerText);Konecty.Notification.OK({title : \\'Copiado para área de transferência\\' });\"><span class=\"x-btn-wrap\" unselectable=\"on\"><span class=\"x-btn-button\"><span class=\"x-btn-inner x-btn-inner-center\" unselectable=\"on\">&nbsp;</span><span role=\"img\" class=\"x-btn-icon-el x-btn-glyph\" unselectable=\"on\" style=\"font-family: FontAwesome\">&#xf0c5;</span></span></span></button>');}try {if (data && data.length > 0) {for (index in data) {if (extraData && extraData[\"original\"] && extraData[\"original\"][index]) {var original = extraData[\"original\"][index];}var record = data[index];var user = Models[\"User\"].findOne({_id: record._user && record._user[0] && record._user[0]._id,active: true,});var supplier;if (null != record.supplier && record.supplier.length > 0) {supplier = Models[\"Contact\"].findOne({ _id: record.supplier[0]._id });}if (null == original) {request.post({url: \"http://localhost:3000/rest/data/AgencyOpportunity\",body: {product: { _id: record._id, code: record.code },source: data.source,user: user,_user: [{_id: user._id,code: user.code,name: user.name,active: user.active,},],},json: true,headers: {Cookie:\"_authTokenId=DlAUP708Y2zjjDg8vV+AoSBjMVWBmQoMG3FXvubbTV8=;\",\"Content-type\": \"application/json\",},});var id = record._id;kuiLink =\"%3Ca%20href%3D%22%2Fkui%2Fproduct%2F\" +id +\"%3Fa%3Dedit%26v%3Dimagery%22%20target%3D%22product-\" +id +\"%22%3EEditar%3C%2Fa%3E\";Models[\"Product\"].update({ _id: id },{$set: {kuiLink: decodeURIComponent(kuiLink),ownerDashboard: ownerDashboard(record.code),brokerDashboard: brokerDashboard(record.code),},});} else {var changedFields = checkTwoWayBinding(record, original);if (changedFields.sale) {changedFields.previousSale = original.sale;}if (Object.keys(changedFields).length > 0) {var common = {_updatedAt: new Date(record._updatedAt),_updatedBy: record._updatedBy,};Object.assign(changedFields, common);Models[\"AgencyOpportunity\"].update({ \"product._id\": record._id },{ $set: changedFields });}if (null == data.agencyOpportunity) {var op = Models[\"AgencyOpportunity\"].findOne({\"product._id\": record._id,});if (null != op) {Models[\"Product\"].update({ _id: record._id },{ $set: { agencyOpportunity: op } });} else {request.post({url: \"http://localhost:3000/rest/data/AgencyOpportunity\",body: {product: { _id: record._id, code: record.code },source: data.source,user: user,_user: [{_id: user._id,code: user.code,name: user.name,active: user.active,},],},json: true,headers: {Cookie:\"_authTokenId=DlAUP708Y2zjjDg8vV+AoSBjMVWBmQoMG3FXvubbTV8=;\",\"Content-type\": \"application/json\",},});}}if (null == record.kuiLink) {kuiLink =\"%3Ca%20href%3D%22%2Fkui%2Fproduct%2F\" +record._id +\"%3Fa%3Dedit%26v%3Dimagery%22%20target%3D%22product-\" +record._id +\"%22%3EEditar%3C%2Fa%3E\";Models[\"Product\"].update({ _id: record._id },{ $set: { kuiLink: decodeURIComponent(kuiLink) } });}if (record.ownerDashboard == null) {Models[\"Product\"].update({ _id: record._id },{ $set: { ownerDashboard: ownerDashboard(record.code) } });}if (record.brokerDashboard == null) {Models[\"Product\"].update({ _id: record._id },{ $set: { brokerDashboard: brokerDashboard(record.code) } });}Models[\"KonectyEvents\"].insert({type: \"ProductChange\",payload: record,createdAt: new Date(),});Models[\"KonectyEvents\"].insert({type: \"CheckMessages\",payload: { product: record, originalProduct: original },createdAt: new Date(),});}var baseMessage = {server: \"smtp_foxter\",from: \"atendimento@foxter.com.br\",replyTo: \"relacionamento@foxter.com.br\",type: \"Email\",status: \"Rascunho\",_user: [{_id: user._id,name: user.name,group: user.group,active: user.active,},],_createdAt: new Date(),_createdBy: { _id: user._id, name: user.name, group: user.group },_updatedAt: new Date(),_updatedBy: { _id: user._id, name: user.name, group: user.group },};if (-1 != (record.keysPlace || []).indexOf(\"Painel\") &&-1 != [\"Ocupado\", \"Alugado\"].indexOf(record.occupancy)) {if (!original ||!original.occupancy ||-1 === [\"Ocupado\", \"Alugado\"].indexOf(original.occupancy)) {var message = Object.assign({}, baseMessage);message.to = \"cadastro.zn@foxter.com.br, cadastro.zs@foxter.com.br\";message.template = \"imovel-ocupado\";message.from = \"atendimento@foxter.com.br\";message.data = {productCode: record.code,productKeysPlace: record.keysLocker,productOcupation: record.occupancy,};Models[\"Message\"].insert(message);}}}}} catch (error) {console.error(\"Ocorreu um erro inesperado\");console.error(error);}function checkTwoWayBinding(_data, _original) {var changed = {};var twoWayFields = [\"status\",\"editorialStatus\",\"inactivationReason\",\"supplier\",\"suppliersReps\",\"supplierUpdatedAt\",\"saleDeadline\",\"saleReason\",\"saleNotes\",\"registerSupport\",\"foxterSupportNotes\",\"_user\",\"secondaryBroker\",\"sale\",\"saleTarget\",\"pricingStatus\",\"saleTargetDifference\",\"targetPercent\",\"realEstateAppraiser\",\"pricedAt\",\"nextPricingAt\",\"secondaryBroker\",];for (var i = 0; i < twoWayFields.length; i++) {var field = twoWayFields[i];var dataField = _data[field];if (null == _original) {changed[field] = dataField;continue;}var originalField = _original[field];if (typeof dataField !== typeof originalField) {changed[field] = dataField;continue;}if (-1 !== [\"string\", \"number\"].indexOf(typeof dataField) ||(null != dataField && dataField.getDate) ||(null != originalField && originalField.getDate)) {if ((dataField || \"\").toString() !== (originalField || \"\").toString()) {changed[field] = dataField;continue;}}if ((null != dataField && dataField.join) ||(null != originalField && originalField.join)) {if (dataField.length !== originalField.length) {changed[field] = dataField;continue;}for (var idx in dataField) {if (dataField[idx]._id || originalField[idx]._id) {if (dataField[idx]._id !== originalField[idx]._id) {changed[field] = dataField;continue;}} else if (dataField[idx] !== originalField[idx]) {changed[field] = dataField;continue;}}}if ((null != dataField && dataField.value) ||(null != originalField && originalField.value)) {if ((dataField || {}).value !== (originalField || {}).value) {changed[field] = dataField;}}if ((null != dataField && dataField._id) ||(null != originalField && originalField._id)) {if ((dataField || {})._id !== (originalField || {})._id) {changed[field] = dataField;}}}return changed;}"
+}
