@@ -1,3 +1,10 @@
+## [1.20.0](https://github.com/konecty/konecty-sdk/compare/1.19.0...1.20.0) (2023-11-27)
+
+
+### 🚀 Features
+
+* add meta api ([a49cbdf](https://github.com/konecty/konecty-sdk/commit/a49cbdfdd1eb559a09f36677f3481dd028af127e))
+
 ## [1.19.0](https://github.com/konecty/konecty-sdk/compare/1.18.0...1.19.0) (2023-11-16)
 
 
