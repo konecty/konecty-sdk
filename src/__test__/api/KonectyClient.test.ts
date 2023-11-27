@@ -188,6 +188,26 @@ describe('Konecty Client Tests', () => {
 		expect(product?.data?._id).to.be.equal('Product');
 	});
 
+	it('should return an array of metas related to a document', async () => {
+		// Arrange
+		const options: KonectyClientOptions = {
+			endpoint: 'http://localhost:3000',
+			accessKey: 'asdfasdfsadfsadf',
+		};
+		const client = new KonectyClient(options);
+		server.use(
+			rest.get('http://localhost:3000/api/metas/Product', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json([getDocumentProducts]));
+			}),
+		);
+
+		// Act
+		const product = await client.getMetasByDocument('Product');
+
+		// Assert
+		expect(product?.data?.[0]?._id).to.be.equal('Product');
+	});
+
 	it('should return the next on queue', async () => {
 		// Arrange
 		const options: KonectyClientOptions = {
