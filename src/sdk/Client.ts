@@ -402,6 +402,35 @@ export class KonectyClient {
 		}
 	}
 
+	async getMetasByDocument(document: string): Promise<KonectyGetMetaResult<any[]>> {
+		try {
+			const result = await fetch<List[]>(`${this.#options.endpoint}/api/metas/${document}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return {
+				success: true,
+				data: deserializeDates(body) as any[],
+			};
+		} catch (err) {
+			logger.error(err);
+
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
 	async info(token?: string): Promise<KonectyUserInfo> {
 		try {
 			const userToken = this.#getToken(token);
