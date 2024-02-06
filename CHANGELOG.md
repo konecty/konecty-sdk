@@ -1,3 +1,10 @@
+### [1.20.1](https://github.com/konecty/konecty-sdk/compare/1.20.0...1.20.1) (2024-02-06)
+
+
+### 🛠 Fixes
+
+* parse konecty errors ([dbb94b8](https://github.com/konecty/konecty-sdk/commit/dbb94b8560767aeef5ef84a7d6307db898d81631))
+
 ## [1.20.0](https://github.com/konecty/konecty-sdk/compare/1.19.0...1.20.0) (2023-11-27)
 
 
