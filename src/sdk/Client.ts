@@ -131,6 +131,7 @@ export class KonectyClient {
 			return deserializeDates(body) as KonectyFindResult;
 		} catch (err) {
 			logger.error(err);
+
 			return {
 				success: false,
 				errors: [(err as Error).message],
