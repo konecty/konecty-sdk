@@ -2,7 +2,7 @@ import { History, KonectyClient, KonectyClientOptions, KonectyFindResult } from 
 import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
 import 'reflect-metadata';
-import parseKonectyErrors from 'utils/parseErrors';
+import parseKonectyErrors from '../utils/parseErrors';
 import { FieldOperators } from './FieldOperators';
 import { ArrElement, Nullable, PickFromPath, UnionToIntersection } from './TypeUtils';
 import { User } from './User';
