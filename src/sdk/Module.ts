@@ -2,6 +2,7 @@ import { History, KonectyClient, KonectyClientOptions, KonectyFindResult } from 
 import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
 import 'reflect-metadata';
+import parseKonectyErrors from 'utils/parseErrors';
 import { FieldOperators } from './FieldOperators';
 import { ArrElement, Nullable, PickFromPath, UnionToIntersection } from './TypeUtils';
 import { User } from './User';
@@ -168,7 +169,7 @@ export class KonectyModule<
 			return null;
 		}
 
-		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
+		throw new Error(parseKonectyErrors(result.errors ?? ['Unknown error']));
 	}
 
 	async find(
@@ -194,7 +195,7 @@ export class KonectyModule<
 				count: result.total as number,
 			};
 		}
-		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
+		throw new Error(parseKonectyErrors(result.errors ?? ['Unknown error']));
 	}
 
 	async getHistory(_id: string): Promise<FindResult<History>> {
@@ -206,7 +207,7 @@ export class KonectyModule<
 				count: result.total as number,
 			};
 		}
-		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
+		throw new Error(parseKonectyErrors(result.errors ?? ['Unknown error']));
 	}
 
 	// #endregion
@@ -280,7 +281,7 @@ export class KonectyModule<
 				total: result.total as number,
 			};
 		}
-		throw new Error(result.errors?.join('\n') ?? 'Unknown error');
+		throw new Error(parseKonectyErrors(result.errors ?? ['Unknown error']));
 	}
 	// #endregion
 
