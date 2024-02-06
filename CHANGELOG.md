@@ -1,3 +1,15 @@
+### [1.20.2](https://github.com/konecty/konecty-sdk/compare/1.20.1...1.20.2) (2024-02-06)
+
+
+### 🛠 Fixes
+
+* fixing ([9e25acd](https://github.com/konecty/konecty-sdk/commit/9e25acd913d616d6426db86148fa73f39c1e78b2))
+
+
+### Other
+
+* update import ([1530773](https://github.com/konecty/konecty-sdk/commit/15307735d09dccd3607be8cab38a732e4f2f4b27))
+
 ### [1.20.1](https://github.com/konecty/konecty-sdk/compare/1.20.0...1.20.1) (2024-02-06)
 
 
