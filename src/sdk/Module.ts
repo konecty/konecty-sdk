@@ -109,6 +109,7 @@ export type ModuleFindAllOptions<T, F> = {
 	limit?: number;
 	sort?: ModuleSort<T>[];
 	fields?: Array<F>;
+	withDetailFields?: boolean;
 };
 
 export type FindResult<T> = {
@@ -148,7 +149,7 @@ export class KonectyModule<
 	// #region Retrieve
 	async findOne(
 		filter: ModuleFilter<ModuleFilterConditions>,
-		options?: Pick<ModuleFindAllOptions<ModuleSortFields, keyof Document>, 'sort' | 'fields'>,
+		options?: Pick<ModuleFindAllOptions<ModuleSortFields, keyof Document>, 'sort' | 'fields' | 'withDetailFields'>,
 	): Promise<Document | null> {
 		const result = await this.#client.find(
 			this.#config.name,

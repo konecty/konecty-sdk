@@ -245,4 +245,86 @@ describe('Konecty Retrive Documents', () => {
 		expect(fieldsParam).to.be.equals('code,name');
 		expect(user).to.not.be.null;
 	});
+
+	it('Should retrieve admin user from username with only _id, code and name', async () => {
+		// Arrange
+		const userModule = new UserModule();
+		let fieldsParam;
+		let withDetailFields;
+		server.use(
+			rest.get('http://localhost:3000/rest/data/User/find', (req, res, ctx) => {
+				fieldsParam = req.url.searchParams.get('fields');
+				withDetailFields = req.url.searchParams.get('withDetailFields');
+				return res.once(
+					ctx.status(200),
+					ctx.json({
+						success: true,
+						data: adminUserResponse.data.map(p => pick(p, ['_id', 'code', 'name'])),
+						total: 2,
+					}),
+				);
+			}),
+		);
+
+		// Act
+		const user: User | null = await userModule.findOne(
+			{
+				match: 'and',
+				conditions: [
+					{
+						term: 'username',
+						operator: 'equals',
+						value: 'admin',
+					},
+				],
+			},
+			{ fields: ['code', 'name'], withDetailFields: true },
+		);
+
+		// Assert
+		expect(fieldsParam).to.be.equals('code,name');
+		expect(withDetailFields).to.be.equals('true');
+		expect(user).to.not.be.null;
+	});
+
+	it('Should retrieve admin user from username with only _id, code and name', async () => {
+		// Arrange
+		const userModule = new UserModule();
+		let fieldsParam;
+		let withDetailFields;
+		server.use(
+			rest.get('http://localhost:3000/rest/data/User/find', (req, res, ctx) => {
+				fieldsParam = req.url.searchParams.get('fields');
+				withDetailFields = req.url.searchParams.get('withDetailFields');
+				return res.once(
+					ctx.status(200),
+					ctx.json({
+						success: true,
+						data: adminUserResponse.data.map(p => pick(p, ['_id', 'code', 'name'])),
+						total: 2,
+					}),
+				);
+			}),
+		);
+
+		// Act
+		const user = await userModule.find(
+			{
+				match: 'and',
+				conditions: [
+					{
+						term: 'username',
+						operator: 'equals',
+						value: 'admin',
+					},
+				],
+			},
+			{ fields: ['code', 'name'], withDetailFields: true },
+		);
+
+		// Assert
+		expect(fieldsParam).to.be.equals('code,name');
+		expect(withDetailFields).to.be.equals('true');
+		expect(user).to.not.be.null;
+	});
 });
