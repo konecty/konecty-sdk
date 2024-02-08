@@ -1,3 +1,10 @@
+## [1.21.0](https://github.com/konecty/konecty-sdk/compare/1.20.2...1.21.0) (2024-02-08)
+
+
+### 🚀 Features
+
+* with detail fields url query ([ff3865e](https://github.com/konecty/konecty-sdk/commit/ff3865ec5e33fe60f432a33d2741d26583af0dde))
+
 ### [1.20.2](https://github.com/konecty/konecty-sdk/compare/1.20.1...1.20.2) (2024-02-06)
 
 
