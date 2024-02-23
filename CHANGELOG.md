@@ -1,3 +1,10 @@
+### [1.22.1](https://github.com/konecty/konecty-sdk/compare/1.22.0...1.22.1) (2024-02-23)
+
+
+### 🛠 Fixes
+
+* fix global ([207f23a](https://github.com/konecty/konecty-sdk/commit/207f23a04ffd8fb275c74445ebdb48d7a4ac790b))
+
 ## [1.22.0](https://github.com/konecty/konecty-sdk/compare/1.21.0...1.22.0) (2024-02-23)
 
 
