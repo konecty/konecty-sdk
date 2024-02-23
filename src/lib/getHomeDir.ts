@@ -1,10 +1,11 @@
 import os from 'os';
+import { getEnvVariable } from './getEnv';
 
 export default function getHomeDir(): string | null {
 	const home =
-		process.env.HOME ||
-		process.env.USERPROFILE ||
-		(process.env.HOMEPATH ? (process.env.HOMEDRIVE || 'C:/') + process.env.HOMEPATH : null);
+		getEnvVariable('HOME') ||
+		getEnvVariable('USERPROFILE') ||
+		(getEnvVariable('HOMEPATH') ? (getEnvVariable('HOMEDRIVE') || 'C:/') + getEnvVariable('HOMEPATH') : null);
 
 	if (home != null) {
 		return home;

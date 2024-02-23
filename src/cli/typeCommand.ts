@@ -4,6 +4,7 @@ import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
 import { createTypeFromMetadata } from '../lib/createTypeFromMetadata';
+import { getEnvVariable } from '../lib/getEnv';
 
 export type CreateInterfaceOptions = {
 	input: string;
@@ -11,7 +12,7 @@ export type CreateInterfaceOptions = {
 };
 
 export default function ({ input, output }: CreateInterfaceOptions): void {
-	const __dirname = path.resolve(process.env.INIT_CWD ?? './');
+	const __dirname = path.resolve(getEnvVariable('INIT_CWD') ?? './');
 	const inputFile = path.resolve(__dirname, input);
 
 	try {

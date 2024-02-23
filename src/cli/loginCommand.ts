@@ -4,6 +4,7 @@ import ini from 'ini';
 import inquirer from 'inquirer';
 import mkdirp from 'mkdirp';
 import path from 'path';
+import { getEnvVariable } from '../lib/getEnv';
 import getHomeDir from '../lib/getHomeDir';
 import { KonectyClient } from '../sdk/Client';
 
@@ -63,7 +64,7 @@ export default async function loginCommand(options?: LoginCommandOptions): Promi
 	}
 
 	const __dirname =
-		localOptions?.output != null ? path.resolve(process.env.INIT_CWD ?? './') : path.resolve(getHomeDir() ?? '', '.konecty');
+		localOptions?.output != null ? path.resolve(getEnvVariable('INIT_CWD') ?? './') : path.resolve(getHomeDir() ?? '', '.konecty');
 
 	if (__dirname == null) {
 		console.error(chalk.red('Unable to get current or home directory'));
@@ -78,7 +79,7 @@ export default async function loginCommand(options?: LoginCommandOptions): Promi
 	try {
 		fs.statSync(outputFile);
 		originalFile = fs.readFileSync(outputFile, 'utf-8');
-	} catch (_) {}
+	} catch (_) { }
 
 	const outputIni = ini.parse(originalFile);
 

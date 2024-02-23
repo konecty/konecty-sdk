@@ -6,6 +6,7 @@ import get from 'lodash/get';
 import mkdirp from 'mkdirp';
 import path from 'path';
 import createClientFromCredentialFile from '../lib/createClientFromCredentialFile';
+import { getEnvVariable } from '../lib/getEnv';
 import { KonectyClient } from '../sdk/Client';
 
 export interface ExportCommandOptions {
@@ -17,7 +18,7 @@ export interface ExportCommandOptions {
 export default async function exportCommand(document?: string, options?: ExportCommandOptions): Promise<void> {
 	const localOptions = Object.assign({}, options ?? {});
 
-	const outputDir = path.resolve(process.env.INIT_CWD ?? './');
+	const outputDir = path.resolve(getEnvVariable('INIT_CWD') ?? './');
 
 	let client = await createClientFromCredentialFile({
 		credentialsFile: localOptions.credentialsFile,
