@@ -1,3 +1,10 @@
+## [1.22.0](https://github.com/konecty/konecty-sdk/compare/1.21.0...1.22.0) (2024-02-23)
+
+
+### 🚀 Features
+
+* verify environment for avoid browser error ([bf675bb](https://github.com/konecty/konecty-sdk/commit/bf675bbdbc49ec2fb3b4c4422a121e53eeb90381))
+
 ## [1.21.0](https://github.com/konecty/konecty-sdk/compare/1.20.2...1.21.0) (2024-02-08)
 
 
