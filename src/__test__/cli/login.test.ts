@@ -25,8 +25,6 @@ describe('Konecty command line tool login command', () => {
 
 		const packageJsonContent = `{ "version": "1.0.0" }`;
 
-		process.env.HOME = '/dev/null';
-
 		mockedFs.readFileSync.mockReturnValueOnce(packageJsonContent).mockReturnValueOnce(``).mockReturnValueOnce(``);
 
 		mockedFs.statSync.mockReturnValueOnce({ isFile: () => true } as Stats);

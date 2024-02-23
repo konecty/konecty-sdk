@@ -3,6 +3,7 @@ import fs from 'fs';
 import mkdirp from 'mkdirp';
 import path from 'path';
 import { createDocFromMetadata } from '../lib/createDocFromMetadata';
+import { getEnvVariable } from '../lib/getEnv';
 
 export type CreateDocOptions = {
 	input: string;
@@ -10,7 +11,7 @@ export type CreateDocOptions = {
 };
 
 export default function ({ input, output }: CreateDocOptions): void {
-	const __dirname = path.resolve(process.env.INIT_CWD ?? './');
+	const __dirname = path.resolve(getEnvVariable('INIT_CWD') ?? './');
 
 	const inputFile = path.resolve(__dirname, input);
 

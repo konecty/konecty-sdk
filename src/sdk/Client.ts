@@ -291,7 +291,7 @@ export class KonectyClient {
 
 	async getMenu(menu = 'main'): Promise<KonectyFindResult<Menu>> {
 		try {
-			const result = await fetch<Menu[]>(`${this.#options.endpoint}/api/menu/${menu}`, {
+			const result = await fetch(`${this.#options.endpoint}/api/menu/${menu}`, {
 				method: 'GET',
 				headers: {
 					Authorization: `${this.#options.accessKey}`,
@@ -318,7 +318,7 @@ export class KonectyClient {
 
 	async getListView(module: string, id = 'Default'): Promise<KonectyGetMetaResult<List>> {
 		try {
-			const result = await fetch<List>(`${this.#options.endpoint}/api/list-view/${module}/${id}`, {
+			const result = await fetch(`${this.#options.endpoint}/api/list-view/${module}/${id}`, {
 				method: 'GET',
 				headers: {
 					Authorization: `${this.#options.accessKey}`,
@@ -347,7 +347,7 @@ export class KonectyClient {
 
 	async getDocumentNew(name: string): Promise<KonectyGetMetaResult<DocumentTranslation>> {
 		try {
-			const result = await fetch<List[]>(`${this.#options.endpoint}/api/document/${name}`, {
+			const result = await fetch(`${this.#options.endpoint}/api/document/${name}`, {
 				method: 'GET',
 				headers: {
 					Authorization: `${this.#options.accessKey}`,
@@ -376,7 +376,7 @@ export class KonectyClient {
 
 	async getForm(module: string, id = 'Default'): Promise<KonectyGetMetaResult<any>> {
 		try {
-			const result = await fetch<List[]>(`${this.#options.endpoint}/api/form/${module}/${id}`, {
+			const result = await fetch(`${this.#options.endpoint}/api/form/${module}/${id}`, {
 				method: 'GET',
 				headers: {
 					Authorization: `${this.#options.accessKey}`,
@@ -405,7 +405,7 @@ export class KonectyClient {
 
 	async getMetasByDocument(document: string): Promise<KonectyGetMetaResult<any[]>> {
 		try {
-			const result = await fetch<List[]>(`${this.#options.endpoint}/api/metas/${document}`, {
+			const result = await fetch(`${this.#options.endpoint}/api/metas/${document}`, {
 				method: 'GET',
 				headers: {
 					Authorization: `${this.#options.accessKey}`,
@@ -645,7 +645,7 @@ function deserializeDates(obj: unknown): unknown {
 			if (new Date(obj).toISOString() == obj) {
 				return DateTime.fromISO(obj).toJSDate();
 			}
-		} catch (e) {}
+		} catch (e) { }
 	}
 
 	if (isArray(obj)) {

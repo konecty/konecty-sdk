@@ -4,11 +4,12 @@ import get from 'lodash/get';
 import path from 'path';
 
 import { KonectyClient, KonectyClientOptions } from '../sdk/Client';
+import { getEnvVariable } from './getEnv';
 import getHomeDir from './getHomeDir';
 
 function createClientFromCredentialFile(options?: KonectyClientOptions): KonectyClient {
 	try {
-		const __dirname = path.resolve(process.env.INIT_CWD ?? './');
+		const __dirname = path.resolve(getEnvVariable('INIT_CWD') ?? './');
 		const credentialsFile = options?.credentialsFile ?? path.resolve(getHomeDir() ?? '', '.konecty', 'credentials');
 
 		const resolvedFilePath = /^\~/.test(credentialsFile)
