@@ -1,3 +1,10 @@
+## [1.23.0](https://github.com/konecty/konecty-sdk/compare/1.22.1...1.23.0) (2024-05-27)
+
+
+### 🚀 Features
+
+* access operations ([8eb5445](https://github.com/konecty/konecty-sdk/commit/8eb5445085806f969b855dc9d8a49462a63d77e2))
+
 ### [1.22.1](https://github.com/konecty/konecty-sdk/compare/1.22.0...1.22.1) (2024-02-23)
 
 
