@@ -13,6 +13,7 @@ import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
 import { User } from './User';
 import { DocumentTranslation, List, Menu, ZipCodeEntry } from './types';
+import { MetaAccess, UpdateAccessPayload } from './types/access';
 
 export interface KonectyClientOptions {
 	credentialsFile?: string;
@@ -55,7 +56,7 @@ export type KonectyFindResult<T = object> = {
 export type KonectyGetMetaResult<T> = {
 	success: boolean;
 	data?: T;
-	errors?: string[];
+	errors?: string[] | { message: string }[];
 };
 
 export type KonectyLoginResult = {
@@ -618,6 +619,71 @@ export class KonectyClient {
 			};
 		}
 	}
+
+	async getAccesses(document: string): Promise<KonectyFindResult<MetaAccess>> {
+		try {
+			const result = await fetch(`${this.#options.endpoint}/rest/access/${document}`, {
+				method: 'GET',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+				},
+			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return deserializeDates(body) as KonectyFindResult<MetaAccess>;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
+
+	async getAccess(document: string, accessName: string): Promise<KonectyGetMetaResult<MetaAccess>> {
+		const allAccesses = await this.getAccesses(document);
+		if (allAccesses.success) {
+			const access = allAccesses.data?.find(a => a.name === accessName);
+
+			return { success: access != null, data: access, errors: access == null ? ['Access not found'] : undefined };
+		}
+
+		return allAccesses as KonectyGetMetaResult<MetaAccess>;
+	}
+
+	async updateAccess(
+		document: string,
+		accessName: string,
+		payload: UpdateAccessPayload,
+	): Promise<KonectyGetMetaResult<MetaAccess>> {
+		try {
+			const result = await fetch(`${this.#options.endpoint}/rest/access/${document}/${accessName}`, {
+				method: 'POST',
+				headers: {
+					Authorization: `${this.#options.accessKey}`,
+					'Content-Type': 'application/json',
+				},
+				body: JSON.stringify(serializeDates(payload)),
+			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = await result.json();
+
+			return deserializeDates(body) as KonectyGetMetaResult<MetaAccess>;
+		} catch (err) {
+			logger.error(err);
+			return {
+				success: false,
+				errors: [(err as Error).message],
+			};
+		}
+	}
 }
 
 function serializeDates(obj: unknown): unknown {
@@ -645,7 +711,7 @@ function deserializeDates(obj: unknown): unknown {
 			if (new Date(obj).toISOString() == obj) {
 				return DateTime.fromISO(obj).toJSDate();
 			}
-		} catch (e) { }
+		} catch (e) {}
 	}
 
 	if (isArray(obj)) {
