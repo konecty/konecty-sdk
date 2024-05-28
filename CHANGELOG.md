@@ -1,3 +1,10 @@
+### [1.23.1](https://github.com/konecty/konecty-sdk/compare/1.23.0...1.23.1) (2024-05-28)
+
+
+### 🛠 Fixes
+
+* meta access type ([be87bf4](https://github.com/konecty/konecty-sdk/commit/be87bf4ba02dcb1e5f14fe404566b50a090c4ddb))
+
 ## [1.23.0](https://github.com/konecty/konecty-sdk/compare/1.22.1...1.23.0) (2024-05-27)
 
 
