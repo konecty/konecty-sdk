@@ -13,7 +13,7 @@ export type MetaAccess = {
 	_id: string;
 	document: string;
 	name: string;
-	fields?: FieldAccess;
+	fields?: Record<string, FieldAccess>;
 
 	readFilter?: KonFilter;
 	updateFilter?: KonFilter;
