@@ -251,14 +251,25 @@ export class KonectyClient {
 		}
 	}
 
-	async login(user: string, password: string): Promise<KonectyLoginResult> {
+	async login(
+		user: string,
+		password: string,
+		extraData?: {
+			geolocation?: { longitude: number; latitude: number };
+			resolution?: { width: number; height: number };
+			source?: string;
+		},
+	): Promise<KonectyLoginResult> {
 		try {
-			const loginPayload = {
-				user,
+			const loginPayload = Object.assign(
+				{
+					user,
 
-				password: crypto.createHash('md5').update(password).digest('hex'),
-				password_SHA256: crypto.createHash('sha256').update(password).digest('hex'),
-			};
+					password: crypto.createHash('md5').update(password).digest('hex'),
+					password_SHA256: crypto.createHash('sha256').update(password).digest('hex'),
+				},
+				extraData ?? {},
+			);
 			const result = await fetch(`${this.#options.endpoint}/rest/auth/login`, {
 				method: 'POST',
 				headers: {

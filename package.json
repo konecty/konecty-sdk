@@ -48,6 +48,12 @@
 			],
 			"TypeUtils": [
 				"./dist/sdk/TypeUtils.d.ts"
+			],
+			"types/access": [
+				"./dist/sdk/types/access.d.ts"
+			],
+			"types/filter": [
+				"./dist/sdk/types/filter.d.ts"
 			]
 		}
 	},
