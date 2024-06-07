@@ -1,3 +1,10 @@
+## [1.24.0](https://github.com/konecty/konecty-sdk/compare/1.23.1...1.24.0) (2024-06-07)
+
+
+### 🚀 Features
+
+* add login extraData ([242579f](https://github.com/konecty/konecty-sdk/commit/242579fdeebb56af34637bfb6fd054c7db549f41))
+
 ### [1.23.1](https://github.com/konecty/konecty-sdk/compare/1.23.0...1.23.1) (2024-05-28)
 
 
