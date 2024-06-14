@@ -1,4 +1,4 @@
-import { Xor } from 'utils/TypesNestedPaths';
+import { Xor } from '../../utils/TypesNestedPaths';
 import { KonectyFindResult } from '../Client';
 import { Money } from '../types';
 

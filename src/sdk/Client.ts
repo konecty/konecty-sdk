@@ -673,7 +673,7 @@ export class KonectyClient {
 	): Promise<KonectyGetMetaResult<MetaAccess>> {
 		try {
 			const result = await fetch(`${this.#options.endpoint}/rest/access/${document}/${accessName}`, {
-				method: 'POST',
+				method: 'PUT',
 				headers: {
 					Authorization: `${this.#options.accessKey}`,
 					'Content-Type': 'application/json',

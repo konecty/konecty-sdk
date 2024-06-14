@@ -16,6 +16,8 @@
 		"./Role": "./dist/sdk/Role.js",
 		"./types": "./dist/sdk/types.js",
 		"./types/metadata": "./dist/sdk/types/metadata.js",
+		"./types/access": "./dist/sdk/types/access.js",
+		"./types/filter": "./dist/sdk/types/filter.js",
 		"./User": "./dist/sdk/User.js",
 		"./TypeUtils": "./dist/sdk/TypeUtils.js",
 		"./package.json": "./package.json"

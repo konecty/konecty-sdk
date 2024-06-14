@@ -15,8 +15,8 @@ export type MetaAccess = {
 	name: string;
 	fields?: Record<string, FieldAccess>;
 
-	readFilter?: KonFilter;
-	updateFilter?: KonFilter;
+	readFilter?: KonFilter & { allow?: boolean };
+	updateFilter?: KonFilter & { allow?: boolean };
 
 	fieldDefaults: {
 		isUpdatable?: boolean | undefined;
@@ -30,16 +30,19 @@ export type MetaAccess = {
 	isDeletable?: boolean | undefined;
 };
 
+type FieldsUpdate = {
+	fieldNames: string[];
+	allow: boolean;
+	operation: 'READ' | 'UPDATE' | 'CREATE' | 'DELETE';
+	condition?: KonCondition;
+}[];
+
 export type UpdateAccessPayload =
 	| {
-			fields: {
-				fieldNames: string[];
-				allow: boolean;
-				condition?: KonCondition;
-			};
+			fields: FieldsUpdate;
 
 			readFilter?: MetaAccess['readFilter'];
 			updateFilter?: MetaAccess['updateFilter'];
 	  }
-	| { readFilter: MetaAccess['readFilter']; updateFilter?: MetaAccess['updateFilter'] }
-	| { updateFilter: MetaAccess['updateFilter']; readFilter?: MetaAccess['readFilter'] };
+	| { readFilter: MetaAccess['readFilter']; updateFilter?: MetaAccess['updateFilter']; fields?: FieldsUpdate }
+	| { updateFilter: MetaAccess['updateFilter']; readFilter?: MetaAccess['readFilter']; fields?: FieldsUpdate };
