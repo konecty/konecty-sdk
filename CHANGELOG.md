@@ -1,3 +1,10 @@
+### [1.24.1](https://github.com/konecty/konecty-sdk/compare/1.24.0...1.24.1) (2024-06-14)
+
+
+### 🛠 Fixes
+
+* access types ([e4c80f0](https://github.com/konecty/konecty-sdk/commit/e4c80f0538d653927b88c60dc08c7c99c56b02f6))
+
 ## [1.24.0](https://github.com/konecty/konecty-sdk/compare/1.23.1...1.24.0) (2024-06-07)
 
 
