@@ -50,7 +50,7 @@ export type KonectyFindResult<T = object> = {
 	success: boolean;
 	total?: number;
 	data?: Array<T>;
-	errors?: string[];
+	errors?: { message: string }[];
 };
 
 export type KonectyGetMetaResult<T> = {
@@ -135,7 +135,7 @@ export class KonectyClient {
 
 			return {
 				success: false,
-				errors: [(err as Error).message],
+				errors: [{ message: (err as Error).message }],
 			};
 		}
 	}
@@ -161,7 +161,7 @@ export class KonectyClient {
 			logger.error(err);
 			return {
 				success: false,
-				errors: [(err as Error).message],
+				errors: [{ message: (err as Error).message }],
 			};
 		}
 	}
@@ -187,7 +187,7 @@ export class KonectyClient {
 			logger.error(err);
 			return {
 				success: false,
-				errors: [(err as Error).message],
+				errors: [{ message: (err as Error).message }],
 			};
 		}
 	}
@@ -213,7 +213,7 @@ export class KonectyClient {
 			logger.error(err);
 			return {
 				success: false,
-				errors: [(err as Error).message],
+				errors: [{ message: (err as Error).message }],
 			};
 		}
 	}
@@ -246,7 +246,7 @@ export class KonectyClient {
 			logger.error(err);
 			return {
 				success: false,
-				errors: [(err as Error).message],
+				errors: [{ message: (err as Error).message }],
 			};
 		}
 	}
@@ -323,7 +323,7 @@ export class KonectyClient {
 			logger.error(err);
 			return {
 				success: false,
-				errors: [(err as Error).message],
+				errors: [{ message: (err as Error).message }],
 			};
 		}
 	}
