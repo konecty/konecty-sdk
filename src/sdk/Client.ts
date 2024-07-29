@@ -11,6 +11,7 @@ import { UserGroupType } from './User';
 
 import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
+import { KonectyDocument } from './Module';
 import { User } from './User';
 import { DocumentTranslation, List, Menu, ZipCodeEntry } from './types';
 import { MetaAccess, UpdateAccessPayload } from './types/access';
@@ -107,7 +108,7 @@ export class KonectyClient {
 	}
 
 	// #region CRUD
-	async find(module: string, options: KonectyFindParams): Promise<KonectyFindResult> {
+	async find<T = KonectyDocument>(module: string, options: KonectyFindParams): Promise<KonectyFindResult<T & KonectyDocument>> {
 		try {
 			const params = new URLSearchParams();
 			Object.keys(options).forEach(key => {
@@ -129,7 +130,7 @@ export class KonectyClient {
 
 			const body = await result.json();
 
-			return deserializeDates(body) as KonectyFindResult;
+			return deserializeDates(body) as KonectyFindResult<T & KonectyDocument>;
 		} catch (err) {
 			logger.error(err);
 
@@ -140,7 +141,7 @@ export class KonectyClient {
 		}
 	}
 
-	async create(module: string, data: object): Promise<KonectyFindResult> {
+	async create<T = KonectyDocument>(module: string, data: object): Promise<KonectyFindResult<T & KonectyDocument>> {
 		try {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}`, {
 				method: 'POST',
@@ -156,7 +157,7 @@ export class KonectyClient {
 
 			const body = await result.json();
 
-			return deserializeDates(body) as KonectyFindResult;
+			return deserializeDates(body) as KonectyFindResult<T & KonectyDocument>;
 		} catch (err) {
 			logger.error(err);
 			return {
@@ -166,7 +167,11 @@ export class KonectyClient {
 		}
 	}
 
-	async update(module: string, data: object, ids: object[]): Promise<KonectyFindResult> {
+	async update<T = KonectyDocument>(
+		module: string,
+		data: object,
+		ids: object[],
+	): Promise<KonectyFindResult<T & KonectyDocument>> {
 		try {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}`, {
 				method: 'PUT',
@@ -182,7 +187,7 @@ export class KonectyClient {
 
 			const body = await result.json();
 
-			return deserializeDates(body) as KonectyFindResult;
+			return deserializeDates(body) as KonectyFindResult<T & KonectyDocument>;
 		} catch (err) {
 			logger.error(err);
 			return {

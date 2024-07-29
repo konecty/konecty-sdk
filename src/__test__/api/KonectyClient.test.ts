@@ -57,6 +57,37 @@ describe('Konecty Client Tests', () => {
 		expect(product.data?.[0]._updatedAt).to.be.instanceOf(Date);
 	});
 
+	it('should return typed data', async () => {
+		// Arrange
+		const options: KonectyClientOptions = {
+			endpoint: 'http://localhost:3000',
+			accessKey: 'asdfasdfsadfsadf',
+		};
+		const client = new KonectyClient(options);
+		server.use(
+			rest.get('http://localhost:3000/rest/data/Product/find', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(clientProductsResponse));
+			}),
+		);
+
+		// Act
+		const product = await client.find<{ status: string }>('product', {
+			filter: {
+				match: 'and',
+				conditions: [
+					{
+						term: '_id',
+						operator: 'equals',
+						value: '51547ab4e4b017ed0a26f109',
+					},
+				],
+			},
+		});
+
+		// Assert
+		expect(product.data?.[0].status).to.be.equals('Ativo');
+	});
+
 	it('should not serialize and deserialize numbers', async () => {
 		// Arrange
 		const options: KonectyClientOptions = {
