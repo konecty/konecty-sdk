@@ -1,3 +1,10 @@
+## [1.25.0](https://github.com/konecty/konecty-sdk/compare/1.24.1...1.25.0) (2024-07-29)
+
+
+### 🚀 Features
+
+* add return type to konecty client cruds ([3d29055](https://github.com/konecty/konecty-sdk/commit/3d29055b1b66f9608bad0dacb6c5981beee29c4e))
+
 ### [1.24.1](https://github.com/konecty/konecty-sdk/compare/1.24.0...1.24.1) (2024-06-14)
 
 
