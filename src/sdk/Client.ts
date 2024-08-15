@@ -20,7 +20,10 @@ export interface KonectyClientOptions {
 	credentialsFile?: string;
 	endpoint?: string;
 	accessKey?: string;
-	filesProviderUrl?: string;
+	fileManager?: {
+		providerUrl?: string;
+		origin?: string;
+	};
 }
 
 export type KonectyFindParams = {

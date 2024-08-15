@@ -7,9 +7,8 @@ export type KonectyResult<T = unknown> = KonectyResultSuccess<T> | KonectyResult
 
 export type KonectyResultSuccess<T = unknown> = {
 	success: true;
-	data: T;
 	total?: number;
-};
+} & (T extends 'no-data' ? {} : { data: T });
 
 export type KonectyResultError = {
 	success: false;
