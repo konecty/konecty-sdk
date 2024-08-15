@@ -55,7 +55,7 @@ export type KonectyFindResult<T = object> = {
 	success: boolean;
 	total?: number;
 	data?: Array<T>;
-	errors?: string[];
+	errors?: string[] | { message: string }[];
 };
 
 export type KonectyGetMetaResult<T> = {

@@ -11,8 +11,9 @@ export namespace KonFiles {
 
 	export type RecordData = {
 		metaObject: string;
-		recordId: string;
 		fieldName: string;
+		recordId: string;
+		_updatedAt?: string | Date;
 	};
 
 	export type UploadResponse = KonFiles.FileConfig & Partial<KonectyResultError> & { success: boolean };

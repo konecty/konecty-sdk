@@ -1,8 +1,8 @@
 import fetch from 'isomorphic-fetch';
 
-import { KonectyClientOptions } from '@konecty/sdk/Client';
+import { KonectyClient, KonectyClientOptions } from '@konecty/sdk/Client';
 import { KonFiles } from '@konecty/sdk/types/files';
-import { KonectyResult } from '@konecty/sdk/types/konectyReturn';
+import { KonectyResult, KonectyResultError } from '@konecty/sdk/types/konectyReturn';
 import NodeFormData from 'form-data';
 import verifyResponseStatus from 'utils/verifyResponseStatus';
 import logger from '../lib/logger';
@@ -81,6 +81,110 @@ export class FilesManager {
 			const error = e as Error;
 			return { success: false, errors: [{ message: error.message }] };
 		}
+	}
+
+	/**
+	 * Reorder a single file by the given position, then update the record on Konecty.
+	 * @param fileName - The file name to reorder.
+	 * @param newPosition - The new position of the file.
+	 * @param reorderMode - The reorder mode. Default is 'push'.
+	 * @returns The result of the update operation on Konecty.
+	 *
+	 * **Using push mode:**
+	 * @example
+	 * ```typescript
+	 * const files = [{ name: 'file1' }, { name: 'file2' }, { name: 'file3' }, { name: 'file4' }];
+	 * const filesManager = new FilesManager(konectyClientOpts, files, recordData);
+	 *
+	 * await filesManager.reorder('file2', 0, "push");
+	 * filesManager.toJson();
+	 * // [{ name: 'file2' }, { name: 'file1' }, { name: 'file3' }, { name: 'file4' }];
+	 * ```
+	 *
+	 * **Using swap mode:**
+	 * @example
+	 * ```typescript
+	 * const files = [{ name: 'file1' }, { name: 'file2' }, { name: 'file3' }, { name: 'file4' }];
+	 * const filesManager = new FilesManager(konectyClientOpts, files, recordData);
+	 *
+	 * await filesManager.reorder('file2', 0, "swap");
+	 * filesManager.toJson();
+	 * // [{ name: 'file2' }, { name: 'file3' }, { name: 'file1' }, { name: 'file4' }];
+	 * ```
+	 */
+	public reorder(fileName: string, newPosition: number, reorderMode?: 'swap' | 'push'): Promise<KonectyResult<'no-data'>>;
+
+	/**
+	 * Reorder multiple files using the given positions, then update the record on Konecty.
+	 * **If there is missing files in the positions array, they'll be appended at the end as is.**
+	 * @param positions - The new order of the files.
+	 * @returns The result of the update operation on Konecty.
+	 *
+	 * @example
+	 * ```typescript
+	 * const files = [{ name: 'file1' }, { name: 'file2' }, { name: 'file3' }, { name: 'file4' }];
+	 * const filesManager = new FilesManager(konectyClientOpts, files, recordData);
+	 *
+	 * await filesManager.reorder(['file4']);
+	 * filesManager.toJson();
+	 * // [{ name: 'file4' }, { name: 'file1' }, { name: 'file2' }, { name: 'file3' }];
+	 *
+	 * await filesManager.reorder(['file2', 'file1', 'file4', 'file3']);
+	 * filesManager.toJson();
+	 * // [{ name: 'file2' }, { name: 'file1' }, { name: 'file4' }, { name: 'file3' }];
+	 * ```
+	 */
+	public reorder(positions: string[]): Promise<KonectyResult<'no-data'>>;
+	public async reorder(
+		fileNameOrPositions: string | string[],
+		newPosition?: number,
+		reorderMode: 'swap' | 'push' = 'push',
+	): Promise<KonectyResult<'no-data'>> {
+		if (typeof fileNameOrPositions === 'string') {
+			const fileName = fileNameOrPositions;
+			const file = this.files.find(file => file.name === fileName);
+			if (!file) {
+				return { success: false, errors: [{ message: `File ${fileName} not found` }] };
+			}
+			if (newPosition == null || newPosition < 0 || newPosition >= this.files.length) {
+				return { success: false, errors: [{ message: `Invalid position ${newPosition}` }] };
+			}
+
+			const fileIndex = this.files.indexOf(file);
+			if (newPosition === fileIndex) {
+				return { success: false, errors: [{ message: `File is already at position` }] };
+			}
+
+			if (reorderMode === 'swap') {
+				const otherFile = this.files[newPosition];
+
+				this.files[fileIndex] = otherFile;
+				this.files[newPosition] = file;
+			} else {
+				this.files.splice(newPosition, 0, this.files.splice(fileIndex, 1)[0]);
+			}
+		} else {
+			const positions = fileNameOrPositions;
+			const files = positions.map(fileName => this.files.find(file => file.name === fileName)).filter(Boolean);
+
+			if (files.length !== this.files.length) {
+				const missingFiles = this.files.filter(file => !files.includes(file));
+				files.push(...missingFiles);
+			}
+
+			this.files = files as File[];
+		}
+
+		const konClient = new KonectyClient(this.konectyClientOpts);
+		const { metaObject, recordId, fieldName, _updatedAt } = this.recordData;
+
+		const result = await konClient.update(metaObject, { [fieldName]: this.toJson() }, [{ _id: recordId, _updatedAt }]);
+		if (!result.success) {
+			return result as KonectyResultError;
+		}
+
+		this.recordData._updatedAt = new Date(result.data?.[0]._updatedAt ?? new Date());
+		return { success: true };
 	}
 
 	public toJson(): KonFiles.FileConfig[] {
