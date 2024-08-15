@@ -176,9 +176,11 @@ export class FilesManager {
 		}
 
 		const konClient = new KonectyClient(this.konectyClientOpts);
-		const { metaObject, recordId, fieldName, _updatedAt } = this.recordData;
+		const { metaObject, recordId, fieldName, _updatedAt = '' } = this.recordData;
 
-		const result = await konClient.update(metaObject, { [fieldName]: this.toJson() }, [{ _id: recordId, _updatedAt }]);
+		const result = await konClient.update(metaObject, { [fieldName]: this.toJson() }, [
+			{ _id: recordId, _updatedAt: new Date(_updatedAt) },
+		]);
 		if (!result.success) {
 			return result as KonectyResultError;
 		}
