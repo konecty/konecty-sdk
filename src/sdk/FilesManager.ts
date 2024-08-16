@@ -4,8 +4,8 @@ import { KonectyClient, KonectyClientOptions } from '@konecty/sdk/Client';
 import { KonFiles } from '@konecty/sdk/types/files';
 import { KonectyResult, KonectyResultError } from '@konecty/sdk/types/konectyReturn';
 import NodeFormData from 'form-data';
-import verifyResponseStatus from 'utils/verifyResponseStatus';
 import logger from '../lib/logger';
+import verifyResponseStatus from '../utils/verifyResponseStatus';
 
 const endpoints = {
 	upload: ({ metaObject, recordId, fieldName }: KonFiles.RecordData) =>
