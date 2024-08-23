@@ -20,6 +20,10 @@ export interface KonectyClientOptions {
 	credentialsFile?: string;
 	endpoint?: string;
 	accessKey?: string;
+	fileManager?: {
+		providerUrl?: string;
+		origin?: string;
+	};
 }
 
 export type KonectyFindParams = {
@@ -51,7 +55,7 @@ export type KonectyFindResult<T = object> = {
 	success: boolean;
 	total?: number;
 	data?: Array<T>;
-	errors?: string[];
+	errors?: string[] | { message: string }[];
 };
 
 export type KonectyGetMetaResult<T> = {

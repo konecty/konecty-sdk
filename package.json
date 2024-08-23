@@ -18,8 +18,11 @@
 		"./types/metadata": "./dist/sdk/types/metadata.js",
 		"./types/access": "./dist/sdk/types/access.js",
 		"./types/filter": "./dist/sdk/types/filter.js",
+		"./types/files": "./dist/sdk/types/files.js",
+		"./types/konectyReturn": "./dist/sdk/types/konectyReturn.js",
 		"./User": "./dist/sdk/User.js",
 		"./TypeUtils": "./dist/sdk/TypeUtils.js",
+		"./FilesManager": "./dist/sdk/FilesManager.js",
 		"./package.json": "./package.json"
 	},
 	"typesVersions": {
@@ -51,11 +54,20 @@
 			"TypeUtils": [
 				"./dist/sdk/TypeUtils.d.ts"
 			],
+			"FilesManager": [
+				"./dist/sdk/FilesManager.d.ts"
+			],
 			"types/access": [
 				"./dist/sdk/types/access.d.ts"
 			],
 			"types/filter": [
 				"./dist/sdk/types/filter.d.ts"
+			],
+			"types/files": [
+				"./dist/sdk/types/files.d.ts"
+			],
+			"types/konectyReturn": [
+				"./dist/sdk/types/konectyReturn.d.ts"
 			]
 		}
 	},
@@ -134,6 +146,7 @@
 		"commander": "^9.2.0",
 		"fastify": "^3.28.0",
 		"fastify-plugin": "^3.0.1",
+		"form-data": "^4.0.0",
 		"ini": "^3.0.0",
 		"inquirer": "^8.2.4",
 		"isomorphic-fetch": "^3.0.0",

@@ -1,9 +1,11 @@
 import { History, KonectyClient, KonectyClientOptions, KonectyFindResult } from '@konecty/sdk/Client';
+import { FilesManager } from '@konecty/sdk/FilesManager';
 import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
 import 'reflect-metadata';
 import parseKonectyErrors from '../utils/parseErrors';
 import { FieldOperators } from './FieldOperators';
+import { KonFiles } from './types/files';
 import { ArrElement, Nullable, PickFromPath, UnionToIntersection } from './TypeUtils';
 import { User } from './User';
 
@@ -256,7 +258,7 @@ export class KonectyModule<
 
 	// #endregion
 
-	// #region lookups
+	// #region Lookups
 
 	async lookup<T>(field: string, search: string, filter?: ModuleFilter<ModuleFilterConditions>): Promise<KonectyFindResult<T>> {
 		const result = await this.#client.lookup<T>(
@@ -283,6 +285,10 @@ export class KonectyModule<
 			};
 		}
 		throw new Error(parseKonectyErrors(result.errors ?? ['Unknown error']));
+	}
+
+	filesManager(recordData: Omit<KonFiles.RecordData, 'metaObject'>, files?: KonFiles.FileConfig[]): FilesManager {
+		return new FilesManager(this.#client.options, files ?? [], { ...recordData, metaObject: this.#config.name });
 	}
 	// #endregion
 
