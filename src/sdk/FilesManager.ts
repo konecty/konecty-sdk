@@ -4,7 +4,6 @@ import { KonectyClient, KonectyClientOptions } from '@konecty/sdk/Client';
 import { KonFiles } from '@konecty/sdk/types/files';
 import { KonectyResult, KonectyResultError } from '@konecty/sdk/types/konectyReturn';
 import NodeFormData from 'form-data';
-import logger from '../lib/logger';
 import verifyResponseStatus from '../utils/verifyResponseStatus';
 
 const endpoints = {
@@ -27,7 +26,10 @@ export class FilesManager {
 		recordData: FilesManager['recordData'],
 	) {
 		if (konectyClientOpts.fileManager?.providerUrl == null) {
-			logger.warn('[FilesManager]: providerUrl is not defined');
+			konectyClientOpts.fileManager = {
+				...(konectyClientOpts.fileManager || {}),
+				providerUrl: konectyClientOpts.endpoint,
+			};
 		}
 
 		this.konectyClientOpts = konectyClientOpts;
