@@ -1,3 +1,30 @@
+## [1.26.0](https://github.com/konecty/konecty-sdk/compare/1.25.0...1.26.0) (2024-08-23)
+
+
+### 📔 Docs
+
+* files manager documentation ([f4c2f4a](https://github.com/konecty/konecty-sdk/commit/f4c2f4a286c8e817b50010f0e04e7aa06e4bbdfc))
+
+
+### 🧪 Tests
+
+* add filesManager test ([f44c4b7](https://github.com/konecty/konecty-sdk/commit/f44c4b728191a9c7d819db315604b668f31f11aa))
+* update filesManager test ([1e7a411](https://github.com/konecty/konecty-sdk/commit/1e7a4113553fc40085af9a2d389abcc2ddd9f1c0))
+
+
+### 🚀 Features
+
+* delete files ([23ad5a0](https://github.com/konecty/konecty-sdk/commit/23ad5a02ed7aca75300c08ebfb7f76a8e1320cb0))
+* files upload ([5496a14](https://github.com/konecty/konecty-sdk/commit/5496a14e904865acd23574d964a171bc219c02b4))
+* reorder files ([1b62eb5](https://github.com/konecty/konecty-sdk/commit/1b62eb51c833903b02e189d1c19c5799a93980d2))
+
+
+### 🛠 Fixes
+
+* import ([48cc721](https://github.com/konecty/konecty-sdk/commit/48cc721ec939c601ca6c9b917585e4e211acda7e))
+* import correction ([4322c21](https://github.com/konecty/konecty-sdk/commit/4322c212333e9b9334136aa730aa61af6092a3fe))
+* reorder _updatedAt ([7c8cc4e](https://github.com/konecty/konecty-sdk/commit/7c8cc4eef1d214ffa7ac63a3322f764e27cd0853))
+
 ## [1.25.0](https://github.com/konecty/konecty-sdk/compare/1.24.1...1.25.0) (2024-07-29)
 
 
