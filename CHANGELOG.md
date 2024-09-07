@@ -1,3 +1,10 @@
+## [1.27.0](https://github.com/konecty/konecty-sdk/compare/1.26.0...1.27.0) (2024-09-07)
+
+
+### 🚀 Features
+
+* disableSetCookie and logout function ([fe8df2b](https://github.com/konecty/konecty-sdk/commit/fe8df2be2dada4bcca45b34adbcf1b9facdc6e9f))
+
 ## [1.26.0](https://github.com/konecty/konecty-sdk/compare/1.25.0...1.26.0) (2024-08-23)
 
 
