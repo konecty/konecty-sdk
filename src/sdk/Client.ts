@@ -267,6 +267,7 @@ export class KonectyClient {
 			geolocation?: { longitude: number; latitude: number };
 			resolution?: { width: number; height: number };
 			source?: string;
+			disableSetCookie?: boolean;
 		},
 	): Promise<KonectyLoginResult> {
 		try {
@@ -295,7 +296,7 @@ export class KonectyClient {
 			if (body.success) {
 				this.#options.accessKey = body.authId;
 
-				if (isBrowser) {
+				if (isBrowser && extraData?.disableSetCookie !== true) {
 					Cookies.set('_authTokenId', body.authId as string);
 				}
 			}
@@ -307,6 +308,32 @@ export class KonectyClient {
 				success: false,
 				errors: [(err as Error).message],
 			};
+		}
+	}
+
+	async logout(): Promise<boolean> {
+		try {
+			const result = await fetch(`${this.#options.endpoint}/rest/auth/logout`, {
+				method: 'GET',
+				credentials: 'include',
+			});
+			if (result.status >= 400) {
+				throw new Error(`${result.status} - ${result.statusText}`);
+			}
+
+			const body = (await result.json()) as KonectyLoginResult;
+
+			if (body.success) {
+				if (isBrowser) {
+					Cookies.remove('_authTokenId');
+				}
+				return true;
+			}
+
+			return false;
+		} catch (err) {
+			logger.error(err);
+			return false;
 		}
 	}
 
