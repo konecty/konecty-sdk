@@ -480,7 +480,7 @@ export class KonectyClient {
 		}
 	}
 
-	async info(token?: string): Promise<KonectyUserInfo> {
+	async info(token?: string, disableSetCookie?: boolean): Promise<KonectyUserInfo> {
 		try {
 			const userToken = this.#getToken(token);
 
@@ -504,7 +504,7 @@ export class KonectyClient {
 			if (body.logged) {
 				this.#options.accessKey = userToken;
 
-				if (isBrowser) {
+				if (isBrowser && disableSetCookie !== true) {
 					Cookies.set('_authTokenId', userToken);
 				}
 			}
