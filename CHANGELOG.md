@@ -1,3 +1,10 @@
+### [1.27.1](https://github.com/konecty/konecty-sdk/compare/1.27.0...1.27.1) (2024-09-09)
+
+
+### 🛠 Fixes
+
+* info function disableSetCookie ([849c964](https://github.com/konecty/konecty-sdk/commit/849c964ab37aed87d37eb91b3a339bb31df6bfc6))
+
 ## [1.27.0](https://github.com/konecty/konecty-sdk/compare/1.26.0...1.27.0) (2024-09-07)
 
 
