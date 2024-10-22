@@ -1,3 +1,10 @@
+## [1.28.0](https://github.com/konecty/konecty-sdk/compare/1.27.1...1.28.0) (2024-10-22)
+
+
+### 🚀 Features
+
+* get geolocation on login ([db1c592](https://github.com/konecty/konecty-sdk/commit/db1c592d360de129666ca2ce85b60feab909b33a))
+
 ### [1.27.1](https://github.com/konecty/konecty-sdk/compare/1.27.0...1.27.1) (2024-09-09)
 
 
