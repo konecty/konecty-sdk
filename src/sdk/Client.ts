@@ -11,6 +11,7 @@ import { UserGroupType } from './User';
 
 import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
+import getGeolocation from '../utils/getGeolocation';
 import { KonectyDocument } from './Module';
 import { User } from './User';
 import { DocumentTranslation, List, Menu, ZipCodeEntry } from './types';
@@ -271,6 +272,11 @@ export class KonectyClient {
 		},
 	): Promise<KonectyLoginResult> {
 		try {
+			if (isBrowser && extraData?.geolocation == null) {
+				const geo = await getGeolocation();
+				extraData = Object.assign({}, extraData ?? {}, { geolocation: geo });
+			}
+
 			const loginPayload = Object.assign(
 				{
 					user,

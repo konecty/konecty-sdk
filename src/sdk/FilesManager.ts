@@ -50,7 +50,7 @@ export class FilesManager {
 	public async upload(formData: FormData | NodeFormData): Promise<KonectyResult<KonFiles.FileConfig>> {
 		try {
 			const response = await fetch(`${this.baseUrl}/${endpoints.upload(this.recordData)}`, {
-				body: formData,
+				body: formData as FormData,
 				method: 'POST',
 				headers: this._getHeaders(formData),
 			});
