@@ -1,3 +1,10 @@
+### [1.28.1](https://github.com/konecty/konecty-sdk/compare/1.28.0...1.28.1) (2024-11-12)
+
+
+### 🛠 Fixes
+
+* add errors field on get info ([88783e8](https://github.com/konecty/konecty-sdk/commit/88783e8182d57e77e378526ade2176779eedee81))
+
 ## [1.28.0](https://github.com/konecty/konecty-sdk/compare/1.27.1...1.28.0) (2024-10-22)
 
 
