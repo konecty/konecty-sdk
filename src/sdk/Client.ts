@@ -77,6 +77,7 @@ export type KonectyLoginResult = {
 export type KonectyUserInfo = {
 	logged: boolean;
 	user?: User;
+	errors?: string[];
 };
 
 export type KonectyNextOnQueueResult = {
@@ -520,6 +521,7 @@ export class KonectyClient {
 			logger.error(err);
 			return {
 				logged: false,
+				errors: [(err as Error).message],
 			};
 		}
 	}
