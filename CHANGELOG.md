@@ -1,3 +1,10 @@
+### [1.28.2](https://github.com/konecty/konecty-sdk/compare/1.28.1...1.28.2) (2024-11-18)
+
+
+### 🛠 Fixes
+
+* use record code on upload url ([9e89c7a](https://github.com/konecty/konecty-sdk/commit/9e89c7ab66691fb2b65b51ee327c23264130a72c))
+
 ### [1.28.1](https://github.com/konecty/konecty-sdk/compare/1.28.0...1.28.1) (2024-11-12)
 
 
