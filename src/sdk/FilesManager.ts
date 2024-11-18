@@ -7,10 +7,10 @@ import NodeFormData from 'form-data';
 import verifyResponseStatus from '../utils/verifyResponseStatus';
 
 const endpoints = {
-	upload: ({ metaObject, recordId, fieldName }: KonFiles.RecordData) =>
-		`rest/file/upload/ns/access/${metaObject}/${recordId}/${fieldName}`,
-	delete: ({ metaObject, recordId, fieldName }: KonFiles.RecordData, fileName: string) =>
-		`rest/file/delete/ns/access/${metaObject}/${recordId}/${fieldName}/${fileName}`,
+	upload: ({ metaObject, recordCode, fieldName }: KonFiles.RecordData) =>
+		`rest/file/upload/ns/access/${metaObject}/${recordCode}/${fieldName}`,
+	delete: ({ metaObject, recordCode, fieldName }: KonFiles.RecordData, fileName: string) =>
+		`rest/file/delete/ns/access/${metaObject}/${recordCode}/${fieldName}/${fileName}`,
 };
 
 export class FilesManager {

@@ -13,6 +13,7 @@ export namespace KonFiles {
 		metaObject: string;
 		fieldName: string;
 		recordId: string;
+		recordCode: string;
 		_updatedAt?: string | Date;
 	};
 
