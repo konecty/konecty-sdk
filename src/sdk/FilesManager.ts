@@ -20,11 +20,7 @@ export class FilesManager {
 
 	private readonly baseUrl: string;
 
-	constructor(
-		konectyClientOpts: FilesManager['konectyClientOpts'],
-		recordData: FilesManager['recordData'],
-		files?: KonFiles.FileConfig[], // to be deprecated, should be inside the recordData
-	) {
+	constructor(konectyClientOpts: FilesManager['konectyClientOpts'], recordData: FilesManager['recordData']) {
 		if (konectyClientOpts.fileManager?.providerUrl == null) {
 			konectyClientOpts.fileManager = {
 				...(konectyClientOpts.fileManager || {}),
@@ -36,7 +32,7 @@ export class FilesManager {
 		this.baseUrl = konectyClientOpts.fileManager?.providerUrl ?? '';
 		this.recordData = recordData;
 
-		this.files = (files ?? recordData.files ?? []).map(fileConfig => new File(fileConfig));
+		this.files = (recordData.files ?? []).map(fileConfig => new File(fileConfig));
 	}
 
 	/**
