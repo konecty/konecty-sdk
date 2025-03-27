@@ -12,8 +12,12 @@ The class can be instantiated via a Konecty Module instance.
 #### Parameters:
 
 -   `konectyClientOpts`: An object of type `KonectyClientOptions` containing options for the Konecty client, with added files stuff.
--   `files`: An array of file configurations (`KonFiles.FileConfig[]`) to manage. (The same stored in Konecty)
 -   `recordData`: An object of type `KonFiles.RecordData` containing metadata about the record associated with the files.
+    -   `metaObject`: The name of the module that contains the field.
+    -   `recordId`: The ID of the record.
+    -   `recordCode`: (Optional) The code of the record. If present, will be used to generate the key instead of the `recordId`.
+    -   `fieldName`: The name of the field in the record that contains the files.
+    -   `files`: An array of file configurations (`KonFiles.FileConfig[]`) to manage. (The same stored in Konecty)
 
 #### Example:
 
@@ -30,13 +34,11 @@ const konectyClientOpts = {
 const ProdModule = new ProductModule(konectyClientOpts);
 const myProduct = await fetchMyProduct();
 
-const picturesManager = ProdModule.filesManager(
-	{
-		recordId: myProduct._id,
-		fieldName: 'pictures',
-	},
-	myProduct.pictures,
-);
+const picturesManager = ProdModule.filesManager({
+	recordId: myProduct._id,
+	fieldName: 'pictures',
+	files: myProduct.pictures,
+});
 ```
 
 ## Methods
@@ -146,8 +148,14 @@ console.log(filesJson);
 ## Example Usage
 
 ```typescript
+const recordData = {
+	recordId: '123',
+	fieldName: 'pictures',
+	files: pictures,
+};
+
 // Initialize FilesManager
-const filesManager = new FilesManager(konectyClientOpts, files, recordData);
+const filesManager = new FilesManager(konectyClientOpts, recordData);
 
 // Upload a file
 const uploadResult = await filesManager.upload(formData);

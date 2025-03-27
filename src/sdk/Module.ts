@@ -288,7 +288,7 @@ export class KonectyModule<
 	}
 
 	filesManager(recordData: Omit<KonFiles.RecordData, 'metaObject'>, files?: KonFiles.FileConfig[]): FilesManager {
-		return new FilesManager(this.#client.options, files ?? [], { ...recordData, metaObject: this.#config.name });
+		return new FilesManager(this.#client.options, { ...recordData, metaObject: this.#config.name, files: files ?? [] });
 	}
 	// #endregion
 

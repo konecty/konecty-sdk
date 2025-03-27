@@ -14,6 +14,7 @@ export namespace KonFiles {
 		fieldName: string;
 		recordId: string;
 		recordCode: string;
+		files?: FileConfig[];
 		_updatedAt?: string | Date;
 	};
 
