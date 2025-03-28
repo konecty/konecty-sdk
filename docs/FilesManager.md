@@ -31,6 +31,12 @@ const konectyClientOpts = {
 	},
 };
 
+const recordData = {
+	recordId: myProduct._id,
+	fieldName: 'pictures',
+	// recordCode: myProduct.code
+};
+
 const ProdModule = new ProductModule(konectyClientOpts);
 const myProduct = await fetchMyProduct();
 
