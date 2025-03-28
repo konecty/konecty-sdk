@@ -20,11 +20,7 @@ export class FilesManager {
 
 	private readonly baseUrl: string;
 
-	constructor(
-		konectyClientOpts: FilesManager['konectyClientOpts'],
-		files: KonFiles.FileConfig[],
-		recordData: FilesManager['recordData'],
-	) {
+	constructor(konectyClientOpts: FilesManager['konectyClientOpts'], recordData: FilesManager['recordData']) {
 		if (konectyClientOpts.fileManager?.providerUrl == null) {
 			konectyClientOpts.fileManager = {
 				...(konectyClientOpts.fileManager || {}),
@@ -36,7 +32,7 @@ export class FilesManager {
 		this.baseUrl = konectyClientOpts.fileManager?.providerUrl ?? '';
 		this.recordData = recordData;
 
-		this.files = files.map(fileConfig => new File(fileConfig));
+		this.files = (recordData.files ?? []).map(fileConfig => new File(fileConfig));
 	}
 
 	/**
@@ -96,7 +92,7 @@ export class FilesManager {
 	 * @example
 	 * ```typescript
 	 * const files = [{ name: 'file1' }, { name: 'file2' }, { name: 'file3' }, { name: 'file4' }];
-	 * const filesManager = new FilesManager(konectyClientOpts, files, recordData);
+	 * const filesManager = new FilesManager(konectyClientOpts, recordData);
 	 *
 	 * await filesManager.reorder('file2', 0, "push");
 	 * filesManager.toJson();
@@ -107,7 +103,7 @@ export class FilesManager {
 	 * @example
 	 * ```typescript
 	 * const files = [{ name: 'file1' }, { name: 'file2' }, { name: 'file3' }, { name: 'file4' }];
-	 * const filesManager = new FilesManager(konectyClientOpts, files, recordData);
+	 * const filesManager = new FilesManager(konectyClientOpts, recordData);
 	 *
 	 * await filesManager.reorder('file2', 0, "swap");
 	 * filesManager.toJson();
@@ -125,7 +121,7 @@ export class FilesManager {
 	 * @example
 	 * ```typescript
 	 * const files = [{ name: 'file1' }, { name: 'file2' }, { name: 'file3' }, { name: 'file4' }];
-	 * const filesManager = new FilesManager(konectyClientOpts, files, recordData);
+	 * const filesManager = new FilesManager(konectyClientOpts, {...recordData, file: files});
 	 *
 	 * await filesManager.reorder(['file4']);
 	 * filesManager.toJson();
