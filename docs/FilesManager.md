@@ -13,7 +13,9 @@ The class can be instantiated via a Konecty Module instance.
 
 -   `konectyClientOpts`: An object of type `KonectyClientOptions` containing options for the Konecty client, with added files stuff.
 -   `files`: An array of file configurations (`KonFiles.FileConfig[]`) to manage. (The same stored in Konecty)
--   `recordData`: An object of type `KonFiles.RecordData` containing metadata about the record associated with the files.
+-   `recordData`: An object of type `KonFiles.RecordData` containing metadata about the record associated with the files. 
+
+* Some providers will link the files using the *Code* field, so `recordData` can optionally get the `recordCode` property - and will use this value to link the file.
 
 #### Example:
 
@@ -27,14 +29,17 @@ const konectyClientOpts = {
 	},
 };
 
+const recordData = {
+	recordId: myProduct._id,
+	fieldName: 'pictures',
+	// recordCode: myProduct.code
+}
+
 const ProdModule = new ProductModule(konectyClientOpts);
 const myProduct = await fetchMyProduct();
 
 const picturesManager = ProdModule.filesManager(
-	{
-		recordId: myProduct._id,
-		fieldName: 'pictures',
-	},
+	recordData,
 	myProduct.pictures,
 );
 ```
