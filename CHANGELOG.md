@@ -1,3 +1,15 @@
+## [1.29.0](https://github.com/konecty/konecty-sdk/compare/1.28.3...1.29.0) (2025-03-28)
+
+
+### 🚀 Features
+
+* change files parameter location to improve usability ([f017bcd](https://github.com/konecty/konecty-sdk/commit/f017bcda41a749bee03f22bc5a0b62ef0401387c))
+
+
+### 🛠 Fixes
+
+* move files to recordData ([a49de5c](https://github.com/konecty/konecty-sdk/commit/a49de5cde2d3d1e7a16ed2f056a85c168ba94c96))
+
 ### [1.28.3](https://github.com/konecty/konecty-sdk/compare/1.28.2...1.28.3) (2025-03-28)
 
 
