@@ -1,3 +1,15 @@
+### [1.28.3](https://github.com/konecty/konecty-sdk/compare/1.28.2...1.28.3) (2025-03-28)
+
+
+### 📔 Docs
+
+* update docs of FileManager ([f6ce47b](https://github.com/konecty/konecty-sdk/commit/f6ce47bfc19581ad1cf1c70181e57ab25a8a3860))
+
+
+### 🛠 Fixes
+
+* optional use of recordCode ([004f718](https://github.com/konecty/konecty-sdk/commit/004f718e2eeb4a7caa16c683f6437ef55b603612))
+
 ### [1.28.2](https://github.com/konecty/konecty-sdk/compare/1.28.1...1.28.2) (2024-11-18)
 
 
