@@ -1,3 +1,10 @@
+## [1.30.0](https://github.com/konecty/konecty-sdk/compare/1.29.0...1.30.0) (2026-03-13)
+
+
+### 🚀 Features
+
+* update sdk with latest konecty features ([5e86c51](https://github.com/konecty/konecty-sdk/commit/5e86c51b219f0dc6000ad332e690da912385de61))
+
 ## [1.29.0](https://github.com/konecty/konecty-sdk/compare/1.28.3...1.29.0) (2025-03-28)
 
 
