@@ -9,6 +9,10 @@
 
 ---
 
+Documentação completa: [docs/README.md](./docs/README.md) (índice), [api.md](./docs/api.md) (mapeamento SDK ↔ CRM), [integrations.md](./docs/integrations.md) (configuração e autenticação), [development.md](./docs/development.md) (build e testes).
+
+---
+
 #### Files manager
 
 You can read the [full documentation here.](./docs/FilesManager.md)

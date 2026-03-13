@@ -20,6 +20,11 @@
 		"./types/filter": "./dist/sdk/types/filter.js",
 		"./types/files": "./dist/sdk/types/files.js",
 		"./types/konectyReturn": "./dist/sdk/types/konectyReturn.js",
+		"./types/query": "./dist/sdk/types/query.js",
+		"./types/crossModuleQuery": "./dist/sdk/types/crossModuleQuery.js",
+		"./CrossModuleQueryBuilder": "./dist/sdk/CrossModuleQueryBuilder.js",
+		"./types/graph": "./dist/sdk/types/graph.js",
+		"./types/pivot": "./dist/sdk/types/pivot.js",
 		"./User": "./dist/sdk/User.js",
 		"./TypeUtils": "./dist/sdk/TypeUtils.js",
 		"./FilesManager": "./dist/sdk/FilesManager.js",
@@ -68,6 +73,21 @@
 			],
 			"types/konectyReturn": [
 				"./dist/sdk/types/konectyReturn.d.ts"
+			],
+			"types/query": [
+				"./dist/sdk/types/query.d.ts"
+			],
+			"types/crossModuleQuery": [
+				"./dist/sdk/types/crossModuleQuery.d.ts"
+			],
+			"CrossModuleQueryBuilder": [
+				"./dist/sdk/CrossModuleQueryBuilder.d.ts"
+			],
+			"types/graph": [
+				"./dist/sdk/types/graph.d.ts"
+			],
+			"types/pivot": [
+				"./dist/sdk/types/pivot.d.ts"
 			]
 		}
 	},

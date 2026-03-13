@@ -3,19 +3,30 @@ import crypto from 'crypto';
 import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
 import get from 'lodash/get';
-import isArray from 'lodash/isArray';
-import isObject from 'lodash/isObject';
-import { DateTime } from 'luxon';
 import qs from 'qs';
 import { UserGroupType } from './User';
 
 import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
+import { deserializeDates, serializeDates } from '../utils/dateSerialization';
 import getGeolocation from '../utils/getGeolocation';
+import * as changeUserDomain from './domains/changeUser';
+import * as commentsDomain from './domains/comments';
+import * as exportDomain from './domains/export';
+import * as fileDownloadDomain from './domains/fileDownload';
+import * as graphDomain from './domains/graph';
+import * as kpiDomain from './domains/kpi';
+import * as notificationsDomain from './domains/notifications';
+import * as pivotDomain from './domains/pivot';
+import * as queryDomain from './domains/query';
+import * as streamDomain from './domains/stream';
+import * as subscriptionsDomain from './domains/subscriptions';
 import { KonectyDocument } from './Module';
 import { User } from './User';
 import { DocumentTranslation, List, Menu, ZipCodeEntry } from './types';
 import { MetaAccess, UpdateAccessPayload } from './types/access';
+import type { CrossModuleQuery } from './types/crossModuleQuery';
+import type { KpiConfig, KpiResult } from './types/query';
 
 export interface KonectyClientOptions {
 	credentialsFile?: string;
@@ -230,6 +241,402 @@ export class KonectyClient {
 	}
 
 	// #endregion
+
+	async findStream<T = KonectyDocument>(
+		module: string,
+		options: KonectyFindParams,
+		includeTotal?: boolean,
+	): Promise<{ stream: AsyncGenerator<T & KonectyDocument>; total?: number }> {
+		return streamDomain.findStream(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			options as streamDomain.StreamFindParams,
+			includeTotal,
+		) as Promise<{ stream: AsyncGenerator<T & KonectyDocument>; total?: number }>;
+	}
+
+	async streamCount(
+		module: string,
+		params: Pick<KonectyFindParams, 'filter'> & {
+			displayName?: string;
+			displayType?: string;
+			sort?: Array<object>;
+			withDetailFields?: boolean;
+		},
+	): Promise<{ success: boolean; total: number }> {
+		return streamDomain.streamCount(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			params,
+		);
+	}
+
+	async downloadFile(
+		document: string,
+		recordCode: string,
+		fieldName: string,
+		fileName: string,
+	): Promise<ArrayBuffer> {
+		return fileDownloadDomain.downloadFile(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			document,
+			recordCode,
+			fieldName,
+			fileName,
+		);
+	}
+
+	async downloadImage(
+		document: string,
+		recordId: string,
+		fieldName: string,
+		fileName: string,
+		style?: 'full' | 'thumb' | 'wm',
+	): Promise<ArrayBuffer> {
+		return fileDownloadDomain.downloadImage(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			document,
+			recordId,
+			fieldName,
+			fileName,
+			style,
+		);
+	}
+
+	async getKpi(module: string, kpiConfig: KpiConfig, params?: Partial<KonectyFindParams>): Promise<KpiResult> {
+		return kpiDomain.getKpi(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			kpiConfig,
+			params as Partial<streamDomain.StreamFindParams>,
+		);
+	}
+
+	async exportList(
+		module: string,
+		listName: string,
+		format: 'csv' | 'xlsx' | 'json',
+		options?: KonectyFindParams,
+	): Promise<ArrayBuffer> {
+		return exportDomain.exportList(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			listName,
+			format,
+			options as Partial<streamDomain.StreamFindParams>,
+		);
+	}
+
+	async getComments<T = unknown>(document: string, dataId: string): Promise<T> {
+		return commentsDomain.getComments(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			document,
+			dataId,
+		);
+	}
+
+	async createComment<T = unknown>(
+		document: string,
+		dataId: string,
+		text: string,
+		parentId?: string,
+	): Promise<T> {
+		return commentsDomain.createComment(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			document,
+			dataId,
+			text,
+			parentId,
+		);
+	}
+
+	async updateComment<T = unknown>(
+		document: string,
+		dataId: string,
+		commentId: string,
+		text: string,
+	): Promise<T> {
+		return commentsDomain.updateComment(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			document,
+			dataId,
+			commentId,
+			text,
+		);
+	}
+
+	async deleteComment<T = unknown>(
+		document: string,
+		dataId: string,
+		commentId: string,
+	): Promise<T> {
+		return commentsDomain.deleteComment(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			document,
+			dataId,
+			commentId,
+		);
+	}
+
+	async searchCommentUsers<T = unknown>(
+		document: string,
+		dataId: string,
+		query: string,
+	): Promise<T> {
+		return commentsDomain.searchCommentUsers(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			document,
+			dataId,
+			query,
+		);
+	}
+
+	async searchComments<T = unknown>(
+		document: string,
+		dataId: string,
+		params?: commentsDomain.SearchCommentsParams,
+	): Promise<T> {
+		return commentsDomain.searchComments(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			document,
+			dataId,
+			params,
+		);
+	}
+
+	async getSubscriptionStatus<T = unknown>(module: string, dataId: string): Promise<T> {
+		return subscriptionsDomain.getSubscriptionStatus(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			dataId,
+		);
+	}
+
+	async subscribe<T = unknown>(module: string, dataId: string): Promise<T> {
+		return subscriptionsDomain.subscribe(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			dataId,
+		);
+	}
+
+	async unsubscribe<T = unknown>(module: string, dataId: string): Promise<T> {
+		return subscriptionsDomain.unsubscribe(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			dataId,
+		);
+	}
+
+	async listNotifications<T = unknown>(params?: {
+		read?: boolean;
+		page?: number;
+		limit?: number;
+	}): Promise<T> {
+		return notificationsDomain.listNotifications(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			params,
+		);
+	}
+
+	async getUnreadNotificationCount<T = unknown>(): Promise<T> {
+		return notificationsDomain.getUnreadNotificationCount({
+			endpoint: this.#options.endpoint!,
+			accessKey: this.#options.accessKey,
+		});
+	}
+
+	async markNotificationRead<T = unknown>(notificationId: string): Promise<T> {
+		return notificationsDomain.markNotificationRead(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			notificationId,
+		);
+	}
+
+	async markAllNotificationsRead<T = unknown>(): Promise<T> {
+		return notificationsDomain.markAllNotificationsRead({
+			endpoint: this.#options.endpoint!,
+			accessKey: this.#options.accessKey,
+		});
+	}
+
+	async changeUserAdd<T = unknown>(
+		module: string,
+		ids: unknown[],
+		data?: unknown,
+	): Promise<T> {
+		return changeUserDomain.changeUserAdd(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			ids,
+			data,
+		);
+	}
+
+	async changeUserRemove<T = unknown>(
+		module: string,
+		ids: unknown[],
+		data?: unknown,
+	): Promise<T> {
+		return changeUserDomain.changeUserRemove(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			ids,
+			data,
+		);
+	}
+
+	async changeUserDefine<T = unknown>(
+		module: string,
+		ids: unknown[],
+		data?: unknown,
+	): Promise<T> {
+		return changeUserDomain.changeUserDefine(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			ids,
+			data,
+		);
+	}
+
+	async changeUserReplace<T = unknown>(
+		module: string,
+		ids: unknown[],
+		data: { from?: string; to?: string },
+	): Promise<T> {
+		return changeUserDomain.changeUserReplace(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			ids,
+			data,
+		);
+	}
+
+	async changeUserCountInactive<T = unknown>(module: string, ids: unknown[]): Promise<T> {
+		return changeUserDomain.changeUserCountInactive(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			ids,
+		);
+	}
+
+	async changeUserRemoveInactive<T = unknown>(module: string, ids: unknown[]): Promise<T> {
+		return changeUserDomain.changeUserRemoveInactive(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			ids,
+		);
+	}
+
+	async changeUserSetQueue<T = unknown>(
+		module: string,
+		ids: unknown[],
+		data?: unknown,
+	): Promise<T> {
+		return changeUserDomain.changeUserSetQueue(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			ids,
+			data,
+		);
+	}
+
+	async executeQueryJson<T = object>(
+		body: CrossModuleQuery,
+	): Promise<{ stream: AsyncGenerator<T>; total?: number }> {
+		return queryDomain.executeQueryJson(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			body,
+		);
+	}
+
+	async executeQuerySql<T = object>(
+		sql: string,
+		options?: { includeTotal?: boolean; includeMeta?: boolean },
+	): Promise<{ stream: AsyncGenerator<T>; total?: number }> {
+		return queryDomain.executeQuerySql(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			sql,
+			options,
+		);
+	}
+
+	async listSavedQueries<T = unknown>(): Promise<T> {
+		return queryDomain.listSavedQueries({
+			endpoint: this.#options.endpoint!,
+			accessKey: this.#options.accessKey,
+		});
+	}
+
+	async getSavedQuery<T = unknown>(id: string): Promise<T> {
+		return queryDomain.getSavedQuery(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			id,
+		);
+	}
+
+	async createSavedQuery<T = unknown>(payload: {
+		name: string;
+		description?: string;
+		query: Record<string, unknown>;
+	}): Promise<T> {
+		return queryDomain.createSavedQuery(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			payload,
+		);
+	}
+
+	async updateSavedQuery<T = unknown>(
+		id: string,
+		payload: { name?: string; description?: string; query?: Record<string, unknown> },
+	): Promise<T> {
+		return queryDomain.updateSavedQuery(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			id,
+			payload,
+		);
+	}
+
+	async deleteSavedQuery<T = unknown>(id: string): Promise<T> {
+		return queryDomain.deleteSavedQuery(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			id,
+		);
+	}
+
+	async shareSavedQuery<T = unknown>(id: string, payload: Record<string, unknown>): Promise<T> {
+		return queryDomain.shareSavedQuery(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			id,
+			payload,
+		);
+	}
+
+	async getGraph(
+		module: string,
+		graphConfig: import('./types/graph').GraphConfig,
+		params?: Partial<KonectyFindParams>,
+	): Promise<string> {
+		return graphDomain.getGraph(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			graphConfig,
+			params as Partial<streamDomain.StreamFindParams>,
+		);
+	}
+
+	async getPivot<T = unknown>(
+		module: string,
+		pivotConfig: import('./types/pivot').PivotConfig,
+		params?: Partial<KonectyFindParams>,
+	): Promise<T> {
+		return pivotDomain.getPivot(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			module,
+			pivotConfig,
+			params as Partial<streamDomain.StreamFindParams>,
+		);
+	}
 
 	async getHistory(module: string, _id: string): Promise<KonectyFindResult<History>> {
 		try {
@@ -741,41 +1148,4 @@ export class KonectyClient {
 	}
 }
 
-function serializeDates(obj: unknown): unknown {
-	if (obj instanceof Date) {
-		return { $date: obj.toISOString() };
-	}
-
-	if (isArray(obj)) {
-		return obj.map(serializeDates);
-	}
-
-	if (isObject(obj)) {
-		return Object.keys(obj).reduce((acc, key) => Object.assign(acc, { [key]: serializeDates(get(obj, key)) }), {});
-	}
-
-	return obj;
-}
-
-function deserializeDates(obj: unknown): unknown {
-	if (get(obj, '$date') != null) {
-		return DateTime.fromISO(get(obj, '$date')).toJSDate();
-	}
-	if (typeof obj === 'string' && DateTime.fromISO(obj).isValid) {
-		try {
-			if (new Date(obj).toISOString() == obj) {
-				return DateTime.fromISO(obj).toJSDate();
-			}
-		} catch (e) {}
-	}
-
-	if (isArray(obj)) {
-		return obj.map(deserializeDates);
-	}
-
-	if (isObject(obj)) {
-		return Object.keys(obj).reduce((acc, key) => Object.assign(acc, { [key]: deserializeDates(get(obj, key)) }), {});
-	}
-
-	return obj;
-}
+export type { KpiConfig, KpiResult } from './types/query';

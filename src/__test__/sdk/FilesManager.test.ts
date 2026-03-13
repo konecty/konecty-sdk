@@ -35,7 +35,7 @@ describe('FilesManager', () => {
   let filesManager: FilesManager;
 
   beforeEach(() => {
-    filesManager = new FilesManager(konectyClientOpts, [fileConfig], recordData);
+    filesManager = new FilesManager(konectyClientOpts, { ...recordData, files: [fileConfig] });
   });
 
   afterEach(() => {
@@ -90,10 +90,13 @@ describe('FilesManager', () => {
 
         jest.spyOn(KonectyClient.prototype, 'update').mockResolvedValue(mockUpdateResult);
 
-        filesManager = new FilesManager(konectyClientOpts, [
-            { ...fileConfig, key: 'fileKey123' },
-            { ...fileConfig, key: 'fileKey456', name: 'anotherFile.txt' },
-        ], recordData);
+        filesManager = new FilesManager(konectyClientOpts, {
+            ...recordData,
+            files: [
+                { ...fileConfig, key: 'fileKey123' },
+                { ...fileConfig, key: 'fileKey456', name: 'anotherFile.txt' },
+            ],
+        });
 
         const result = await filesManager.reorder('anotherFile.txt', 0, 'push');
 
