@@ -1,3 +1,14 @@
+## [2.0.0](https://github.com/konecty/konecty-sdk/compare/1.30.0...2.0.0) (2026-03-13)
+
+
+### ⚠ BREAKING CHANGES
+
+* new features
+
+### 🚀 Features
+
+* new features ([132963f](https://github.com/konecty/konecty-sdk/commit/132963f356a990c9fc394b82f380a1e7f05c7743))
+
 ## [1.30.0](https://github.com/konecty/konecty-sdk/compare/1.29.0...1.30.0) (2026-03-13)
 
 
