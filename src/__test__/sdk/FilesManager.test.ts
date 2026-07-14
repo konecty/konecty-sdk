@@ -82,6 +82,40 @@ describe('FilesManager', () => {
       expect(result.success).toBe(true);
       expect(filesManager['files']).toHaveLength(0);
     });
+
+    it('should delete via /rest/file2 with the file name percent-encoded (legacy names with spaces/accents)', async () => {
+      (fetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        json: jest.fn().mockResolvedValue({ success: true }),
+      });
+
+      (verifyResponseStatus as jest.Mock).mockResolvedValue(undefined);
+
+      await filesManager.deleteFile('Fachada comercial moderna com edifício residencial ao fundo.jpg');
+
+      expect(fetch).toHaveBeenCalledWith(
+        'http://localhost:3000/rest/file2/testObject/testRecordId/testFieldName/Fachada%20comercial%20moderna%20com%20edif%C3%ADcio%20residencial%20ao%20fundo.jpg',
+        expect.objectContaining({ method: 'DELETE' }),
+      );
+    });
+
+    it('should prefer recordCode over recordId on the delete URL, matching legacy storage keys', async () => {
+      (fetch as jest.Mock).mockResolvedValue({
+        ok: true,
+        json: jest.fn().mockResolvedValue({ success: true }),
+      });
+
+      (verifyResponseStatus as jest.Mock).mockResolvedValue(undefined);
+
+      filesManager = new FilesManager(konectyClientOpts, { ...recordData, recordCode: '5592', files: [fileConfig] });
+
+      await filesManager.deleteFile('testFile.txt');
+
+      expect(fetch).toHaveBeenCalledWith(
+        'http://localhost:3000/rest/file2/testObject/5592/testFieldName/testFile.txt',
+        expect.objectContaining({ method: 'DELETE' }),
+      );
+    });
   });
 
   describe('reorder', () => {
