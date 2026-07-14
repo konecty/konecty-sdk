@@ -9,8 +9,11 @@ import verifyResponseStatus from '../utils/verifyResponseStatus';
 const endpoints = {
 	upload: ({ metaObject, recordId, recordCode, fieldName }: KonFiles.RecordData) =>
 		`rest/file/upload/ns/access/${metaObject}/${recordCode ?? recordId}/${fieldName}`,
+	// /rest/file2 instead of /rest/file/delete: the latter rejects decoded file names
+	// outside [a-zA-Z0-9_.-] (404 'Not found'), so legacy names with spaces/accents
+	// would never be deletable. file2 matches by decoded name and accepts _id or code.
 	delete: ({ metaObject, recordId, recordCode, fieldName }: KonFiles.RecordData, fileName: string) =>
-		`rest/file/delete/ns/access/${metaObject}/${recordCode ?? recordId}/${fieldName}/${fileName}`,
+		`rest/file2/${metaObject}/${recordCode ?? recordId}/${fieldName}/${encodeURIComponent(fileName)}`,
 };
 
 export class FilesManager {
