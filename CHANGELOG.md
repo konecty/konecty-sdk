@@ -1,3 +1,22 @@
+## [2.1.0](https://github.com/konecty/konecty-sdk/compare/2.0.0...2.1.0) (2026-07-30)
+
+
+### 🦊 CI/CD
+
+* release do SDK passa a ser disparado por botão, não por merge ([dedd787](https://github.com/konecty/konecty-sdk/commit/dedd78709ae51e1cb08eced7829c07fcf79a88a6))
+* valida o token do npm em verifyConditions ([544f533](https://github.com/konecty/konecty-sdk/commit/544f533842e78e321800d657718c8410b34a2e5e))
+
+
+### 🚀 Features
+
+* **auth:** fluxo de login Google no SDK ([c78199b](https://github.com/konecty/konecty-sdk/commit/c78199be133c917993b4ddd6638438ba6fc1e90a))
+
+
+### Other
+
+* **release:** 2.1.0 [skip ci] ([3907995](https://github.com/konecty/konecty-sdk/commit/390799500bd38770d2d398366d26071c52b712af))
+* **release:** desfaz o changelog da 2.1.0, que não chegou ao npm ([6ba85e8](https://github.com/konecty/konecty-sdk/commit/6ba85e8d68da6f2724264616d8cc983211188713))
+
 ## [2.0.0](https://github.com/konecty/konecty-sdk/compare/1.30.0...2.0.0) (2026-03-13)
 
 
