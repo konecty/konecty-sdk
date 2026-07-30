@@ -1,8 +1,11 @@
 name: Release
+
+# Disparo manual apenas (botão "Run workflow" na aba Actions). Um merge na main
+# não publica sozinho: o semantic-release decide a versão pelos commits, e
+# publicar passa a ser uma decisão explícita.
 on:
-    push:
-        branches:
-            - main
+    workflow_dispatch:
+
 jobs:
     release:
         name: Release
