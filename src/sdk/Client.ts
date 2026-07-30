@@ -10,6 +10,7 @@ import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
 import { deserializeDates, serializeDates } from '../utils/dateSerialization';
 import getGeolocation from '../utils/getGeolocation';
+import * as authDomain from './domains/auth';
 import * as changeUserDomain from './domains/changeUser';
 import * as commentsDomain from './domains/comments';
 import * as exportDomain from './domains/export';
@@ -725,6 +726,42 @@ export class KonectyClient {
 		}
 	}
 
+	/**
+	 * Builds the absolute URL of the Konecty-hosted Google login start endpoint.
+	 * Pure: no network request is made — send the browser to the returned URL.
+	 */
+	getGoogleLoginUrl(params: authDomain.GoogleLoginUrlParams): string {
+		return authDomain.getGoogleLoginUrl({ endpoint: this.#options.endpoint! }, params);
+	}
+
+	/**
+	 * Exchanges the single-use code from the app callback for a session and adopts
+	 * the returned `authId` on this client. On failure the authentication state is
+	 * left untouched and the error from the server is thrown.
+	 */
+	async exchangeGoogleCode(code: string, extraData?: authDomain.GoogleSessionExtraData): Promise<authDomain.GoogleSession> {
+		const session = await authDomain.exchangeGoogleCode(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			code,
+			extraData,
+		);
+
+		this.#options.accessKey = session.authId;
+
+		if (isBrowser) {
+			Cookies.set('_authTokenId', session.authId);
+		}
+
+		return session;
+	}
+
+	async getLoginOptions(): Promise<authDomain.LoginOptions> {
+		return authDomain.getLoginOptions({
+			endpoint: this.#options.endpoint!,
+			accessKey: this.#options.accessKey,
+		});
+	}
+
 	async logout(): Promise<boolean> {
 		try {
 			const result = await fetch(`${this.#options.endpoint}/rest/auth/logout`, {
@@ -1149,3 +1186,13 @@ export class KonectyClient {
 }
 
 export type { KpiConfig, KpiResult } from './types/query';
+export type {
+	GoogleCallbackErrorCode,
+	GoogleLoginUrlParams,
+	GoogleSession,
+	GoogleSessionErrorCode,
+	GoogleSessionExtraData,
+	GoogleSessionResponse,
+	GoogleSessionUser,
+	LoginOptions,
+} from './domains/auth';
