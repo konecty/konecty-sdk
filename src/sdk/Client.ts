@@ -1186,7 +1186,15 @@ export class KonectyClient {
 }
 
 export type { KpiConfig, KpiResult } from './types/query';
+/**
+ * Pure helpers of the Google flow, re-exported for callers that manage the
+ * session themselves: unlike `KonectyClient.exchangeGoogleCode`, they do not
+ * write the `_authTokenId` cookie — an app with its own cookie attributes
+ * (domain, expiry) would otherwise end up with two cookies of the same name.
+ */
+export { exchangeGoogleCode, getGoogleLoginUrl, getLoginOptions, KonectyGoogleSessionError } from './domains/auth';
 export type {
+	AuthClientOptions,
 	GoogleCallbackErrorCode,
 	GoogleLoginUrlParams,
 	GoogleSession,

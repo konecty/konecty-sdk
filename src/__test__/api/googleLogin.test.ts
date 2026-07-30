@@ -1,4 +1,4 @@
-import { KonectyClient } from '@konecty/sdk/Client';
+import { exchangeGoogleCode, KonectyClient, KonectyGoogleSessionError } from '@konecty/sdk/Client';
 import { expect } from 'chai';
 
 import { rest } from 'msw';
@@ -163,8 +163,57 @@ describe('Konecty Google Login', () => {
 			// Assert
 			expect(thrown).to.be.an('error');
 			expect(thrown?.message).to.equal('Código de autenticação expirado');
+			// O `code` vem junto do erro para o caller ramificar/traduzir sem
+			// parsear a mensagem — e é o do primeiro erro reconhecido, não o do
+			// segundo.
+			expect(thrown).to.be.instanceOf(KonectyGoogleSessionError);
+			expect((thrown as KonectyGoogleSessionError).code).to.equal('expired_code');
 			expect(konecty.options.accessKey).to.be.undefined;
 			expect(authorizationOnNextRequest).to.equal('undefined');
+		});
+
+		it('Should fall back to the `failed` code when the body carries no recognisable one', async () => {
+			// Arrange
+			const konecty = new KonectyClient({ endpoint: ENDPOINT });
+
+			server.use(
+				rest.post(`${ENDPOINT}/api/auth/google/session`, (req, res, ctx) => {
+					return res.once(ctx.status(500), ctx.json({ success: false, errors: [{ message: 'Boom', code: 'something_else' }] }));
+				}),
+			);
+
+			// Act
+			let thrown: Error | undefined;
+			try {
+				await konecty.exchangeGoogleCode('fake-code');
+			} catch (err) {
+				thrown = err as Error;
+			}
+
+			// Assert
+			expect(thrown).to.be.instanceOf(KonectyGoogleSessionError);
+			expect((thrown as KonectyGoogleSessionError).code).to.equal('failed');
+			expect(thrown?.message).to.equal('Boom');
+		});
+
+		it('Should not touch cookies when the pure exchange helper is used', async () => {
+			// Arrange — o helper puro existe para apps que gerenciam a sessão com
+			// atributos próprios de cookie; se ele escrevesse `_authTokenId`, o app
+			// ficaria com dois cookies de mesmo nome e escopos diferentes.
+			const before = typeof document === 'undefined' ? '' : document.cookie;
+
+			server.use(
+				rest.post(`${ENDPOINT}/api/auth/google/session`, (req, res, ctx) => {
+					return res.once(ctx.status(200), ctx.json(googleSessionResponse));
+				}),
+			);
+
+			// Act
+			const session = await exchangeGoogleCode({ endpoint: ENDPOINT }, 'fake-single-use-code');
+
+			// Assert
+			expect(session.authId).to.equal(googleSessionResponse.authId);
+			expect(typeof document === 'undefined' ? '' : document.cookie).to.equal(before);
 		});
 
 		it('Should not adopt an authId when a previous session is active and the exchange fails', async () => {
