@@ -12,6 +12,12 @@ preset: 'conventionalcommits'
 verifyConditions:
     - '@semantic-release/changelog'
     - '@semantic-release/git'
+    # Sem esta linha o token do npm só é exercido no passo `publish`, que roda
+    # DEPOIS do commit de changelog e da tag. Foi assim que a 2.1.0 ficou
+    # tagueada no git sem nunca ter chegado ao npm: token inválido derrubou o
+    # publish quando os efeitos colaterais já estavam empurrados. Aqui, um token
+    # ruim aborta antes de qualquer escrita.
+    - '@semantic-release/npm'
 
 # Responsible for determining the type of the next release (major, minor or patch).
 # If multiple plugins with a analyzeCommits step are defined, the release type will be
