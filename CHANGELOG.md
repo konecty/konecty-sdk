@@ -1,3 +1,10 @@
+## [2.1.0](https://github.com/konecty/konecty-sdk/compare/2.0.0...2.1.0) (2026-07-30)
+
+
+### 🚀 Features
+
+* **auth:** fluxo de login Google no SDK ([c78199b](https://github.com/konecty/konecty-sdk/commit/c78199be133c917993b4ddd6638438ba6fc1e90a))
+
 ## [2.0.0](https://github.com/konecty/konecty-sdk/compare/1.30.0...2.0.0) (2026-03-13)
 
 
