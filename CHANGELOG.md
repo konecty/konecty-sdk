@@ -1,3 +1,15 @@
+## [2.2.0](https://github.com/konecty/konecty-sdk/compare/2.1.0...2.2.0) (2026-07-30)
+
+
+### 📔 Docs
+
+* guia de agentes com a regra de paridade entre os dois SDKs ([3535ced](https://github.com/konecty/konecty-sdk/commit/3535ceda80f054b038b5875dca45d3e193e36365))
+
+
+### 🚀 Features
+
+* **auth:** erro do exchange carrega o code e expõe os helpers puros ([30885fe](https://github.com/konecty/konecty-sdk/commit/30885fe04a4fbfb01f2759e166974e9821339b80))
+
 ## [2.1.0](https://github.com/konecty/konecty-sdk/compare/2.0.0...2.1.0) (2026-07-30)
 
 
