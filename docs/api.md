@@ -84,6 +84,9 @@ Cada método do KonectyClient utiliza o endpoint do CRM indicado. A base URL é 
 | listSavedQueries, getSavedQuery, createSavedQuery, updateSavedQuery, deleteSavedQuery, shareSavedQuery | GET/POST/PUT/DELETE/PATCH | /rest/query/saved, /rest/query/saved/:id, .../share |
 | getGraph | GET | /rest/data/:document/graph |
 | getPivot | GET | /rest/data/:document/pivot |
+| createPat | POST | /rest/auth/pat |
+| listPats | GET | /rest/auth/pat |
+| revokePat | DELETE | /rest/auth/pat/:id |
 
 Parâmetros: find usa query string com filter, sort, limit, start, fields (serializados em JSON). findStream usa os mesmos parâmetros de find mais includeTotal (opcional); a resposta é NDJSON (uma linha JSON por registro); quando includeTotal é true, o total vem no header X-Total-Count. streamCount usa filter e opcionalmente displayName, displayType, sort, withDetailFields; retorna JSON com success e total. create envia o documento no body em JSON. update envia body com ids e data. delete envia body com ids. lookup usa query com search e opções de filtro/paginação. login envia user, password (hash MD5 e SHA256), geolocation e outros campos em application/x-www-form-urlencoded.
 
@@ -151,6 +154,16 @@ const client = new KonectyClient({ endpoint: '...', accessKey: '...' });
 const { stream, total } = await client.executeQueryJson(query);
 for await (const record of stream) { console.log(record); }
 ```
+
+## Personal Access Tokens e Service Accounts
+
+Nenhum destes métodos lança em 4xx/5xx: o corpo de resposta do CRM já é um `{ success: true, data }` ou `{ success: false, errors: [{ message }] }`, então o chamador rami­fica por `result.success` em vez de capturar exceção.
+
+**Self-service (própria conta, requer sessão/OAuth — nunca outro PAT):**
+
+- **createPat(name, expiresAt?)** — POST /rest/auth/pat. `expiresAt` é uma string ISO opcional e deve estar no futuro. Retorna `{ success: true, data: { _id, token } }`; o `token` em claro só existe nesta resposta (show-once) — não é recuperável depois. Erros possíveis: nome inválido, papel do usuário fora do allowlist `mcpRoleIds` do Namespace, `expiresAt` no passado.
+- **listPats()** — GET /rest/auth/pat. Retorna `{ success: true, data: PatEntry[] }`, cada entrada com `_id`, `name`, `createdAt`, `expiresAt`, `lastUsedAt` — nunca o `hashedToken`.
+- **revokePat(id)** — DELETE /rest/auth/pat/:id. Escopado ao próprio usuário no CRM: um `id` de outro usuário sempre responde 404 (nunca revela se o PAT existe em outra conta).
 
 ## FilesManager
 

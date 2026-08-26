@@ -18,6 +18,7 @@ import * as fileDownloadDomain from './domains/fileDownload';
 import * as graphDomain from './domains/graph';
 import * as kpiDomain from './domains/kpi';
 import * as notificationsDomain from './domains/notifications';
+import * as patDomain from './domains/pat';
 import * as pivotDomain from './domains/pivot';
 import * as queryDomain from './domains/query';
 import * as streamDomain from './domains/stream';
@@ -762,6 +763,33 @@ export class KonectyClient {
 		});
 	}
 
+	/**
+	 * POST /rest/auth/pat — creates a Personal Access Token for the caller's
+	 * own account (self-service, `auth.createPat` in `docs/features.json`).
+	 */
+	async createPat(name: string, expiresAt?: string): Promise<patDomain.CreatePatResult> {
+		return patDomain.createPat(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			{ name, expiresAt },
+		);
+	}
+
+	/**
+	 * GET /rest/auth/pat — lists the caller's own Personal Access Tokens
+	 * (self-service, `auth.listPats` in `docs/features.json`).
+	 */
+	async listPats(): Promise<patDomain.ListPatsResult> {
+		return patDomain.listPats({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey });
+	}
+
+	/**
+	 * DELETE /rest/auth/pat/:id — revokes one of the caller's own Personal
+	 * Access Tokens (self-service, `auth.revokePat` in `docs/features.json`).
+	 */
+	async revokePat(id: string): Promise<patDomain.RevokePatResult> {
+		return patDomain.revokePat({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, id);
+	}
+
 	async logout(): Promise<boolean> {
 		try {
 			const result = await fetch(`${this.#options.endpoint}/rest/auth/logout`, {
@@ -1204,3 +1232,4 @@ export type {
 	GoogleSessionUser,
 	LoginOptions,
 } from './domains/auth';
+export type { CreatePatBody, CreatePatData, CreatePatResult, ListPatsResult, PatEntry, PatError, RevokePatResult } from './domains/pat';
