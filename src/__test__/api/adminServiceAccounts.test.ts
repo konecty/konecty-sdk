@@ -244,6 +244,26 @@ describe('Konecty Admin Service Accounts', () => {
 			expect(result).to.deep.equal({ success: true, data: { _id: 'pat-9', token: 'kpat_service-account-token' } });
 		});
 
+		// Equivalent Python test: tests/test_admin.py::test_create_service_account_pat_sends_name_only_when_no_expiry
+		it('Should omit expiresAt from the body when not given', async () => {
+			// Arrange
+			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
+			let receivedBody: unknown = null;
+
+			server.use(
+				rest.post(`${ENDPOINT}/api/admin/service-accounts/service-account-1/pats`, async (req, res, ctx) => {
+					receivedBody = await req.json();
+					return res.once(ctx.status(201), ctx.json({ success: true, data: { _id: 'pat-10', token: 'kpat_no-expiry-service-token' } }));
+				}),
+			);
+
+			// Act
+			await konecty.createServiceAccountPat('service-account-1', 'prod key');
+
+			// Assert
+			expect(receivedBody).to.deep.equal({ name: 'prod key' });
+		});
+
 		// Equivalent Python test: tests/test_admin.py::test_create_service_account_pat_raises_for_non_service_account_target
 		it('Should return the 403 error verbatim when the target is not a service account (ADM-02)', async () => {
 			// Arrange
