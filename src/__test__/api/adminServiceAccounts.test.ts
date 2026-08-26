@@ -140,6 +140,30 @@ describe('Konecty Admin Service Accounts', () => {
 			expect(receivedMethod).to.equal('GET');
 			expect(result).to.deep.equal(listResponse);
 		});
+
+		// Equivalent Python test: tests/test_admin.py::test_list_service_accounts_raises_forbidden_for_non_admin
+		it('Should return the 403 error verbatim when the caller is not an admin', async () => {
+			// Arrange
+			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-non-admin-auth-id' });
+			let receivedUrl = '';
+			let receivedMethod = '';
+
+			server.use(
+				rest.get(`${ENDPOINT}/api/admin/service-accounts`, (req, res, ctx) => {
+					receivedUrl = req.url.toString();
+					receivedMethod = req.method;
+					return res.once(ctx.status(403), ctx.json({ success: false, errors: [{ message: 'Admin access required' }] }));
+				}),
+			);
+
+			// Act
+			const result = await konecty.listServiceAccounts();
+
+			// Assert — the SDK never throws here: the body already carries a machine-readable result
+			expect(receivedUrl).to.equal('http://localhost:3000/api/admin/service-accounts');
+			expect(receivedMethod).to.equal('GET');
+			expect(result).to.deep.equal({ success: false, errors: [{ message: 'Admin access required' }] });
+		});
 	});
 
 	describe('updateServiceAccountAccess', () => {

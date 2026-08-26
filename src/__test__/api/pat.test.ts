@@ -128,6 +128,30 @@ describe('Konecty Personal Access Tokens (self-service)', () => {
 				result.data.forEach(pat => expect(pat).to.not.have.property('hashedToken'));
 			}
 		});
+
+		// Equivalent Python test: tests/test_pat.py::test_list_pats_raises_on_unauthorized
+		it('Should return the 401 error verbatim when the caller is not authenticated', async () => {
+			// Arrange
+			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'expired-session-auth-id' });
+			let receivedUrl = '';
+			let receivedMethod = '';
+
+			server.use(
+				rest.get(`${ENDPOINT}/rest/auth/pat`, (req, res, ctx) => {
+					receivedUrl = req.url.toString();
+					receivedMethod = req.method;
+					return res.once(ctx.status(401), ctx.json({ success: false, errors: [{ message: 'Unauthorized' }] }));
+				}),
+			);
+
+			// Act
+			const result = await konecty.listPats();
+
+			// Assert — the SDK never throws here: the body already carries a machine-readable result
+			expect(receivedUrl).to.equal('http://localhost:3000/rest/auth/pat');
+			expect(receivedMethod).to.equal('GET');
+			expect(result).to.deep.equal({ success: false, errors: [{ message: 'Unauthorized' }] });
+		});
 	});
 
 	describe('revokePat', () => {

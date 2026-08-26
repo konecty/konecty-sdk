@@ -132,5 +132,29 @@ describe('Konecty Admin Credentials', () => {
 			expect(receivedMethod).to.equal('DELETE');
 			expect(result).to.deep.equal({ success: true, data: { success: true } });
 		});
+
+		// Equivalent Python test: tests/test_admin.py::test_revoke_legacy_token_raises_not_found
+		it('Should return the 404 not-found error verbatim when the fingerprint does not belong to the given userId', async () => {
+			// Arrange
+			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
+			let receivedUrl = '';
+			let receivedMethod = '';
+
+			server.use(
+				rest.delete(`${ENDPOINT}/api/admin/legacy-tokens/user-2/unknown-fingerprint`, (req, res, ctx) => {
+					receivedUrl = req.url.toString();
+					receivedMethod = req.method;
+					return res.once(ctx.status(404), ctx.json({ success: false, errors: [{ message: 'Legacy token not found' }] }));
+				}),
+			);
+
+			// Act
+			const result = await konecty.revokeLegacyToken('user-2', 'unknown-fingerprint');
+
+			// Assert — the SDK never throws here: the body already carries a machine-readable result
+			expect(receivedUrl).to.equal('http://localhost:3000/api/admin/legacy-tokens/user-2/unknown-fingerprint');
+			expect(receivedMethod).to.equal('DELETE');
+			expect(result).to.deep.equal({ success: false, errors: [{ message: 'Legacy token not found' }] });
+		});
 	});
 });
