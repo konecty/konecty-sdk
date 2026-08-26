@@ -803,7 +803,7 @@ export class KonectyClient {
 
 	/**
 	 * DELETE /api/admin/pats/:userId/:patId — revokes a Personal Access Token
-	 * belonging to any user (`admin.revokePat` in `docs/features.json`).
+	 * belonging to any user (`admin.revokeUserPat` in `docs/features.json`).
 	 * Named `revokeUserPat` here — not `revokePat` — because that flat name
 	 * is already taken by the self-service method above, and the two act on
 	 * different resources (`userId` + `patId` here vs. a caller-scoped `id`).
