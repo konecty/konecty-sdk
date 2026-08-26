@@ -10,6 +10,8 @@ import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
 import { deserializeDates, serializeDates } from '../utils/dateSerialization';
 import getGeolocation from '../utils/getGeolocation';
+import * as adminCredentialsDomain from './domains/adminCredentials';
+import * as adminServiceAccountsDomain from './domains/adminServiceAccounts';
 import * as authDomain from './domains/auth';
 import * as changeUserDomain from './domains/changeUser';
 import * as commentsDomain from './domains/comments';
@@ -790,6 +792,96 @@ export class KonectyClient {
 		return patDomain.revokePat({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, id);
 	}
 
+	/**
+	 * GET /api/admin/pats — lists every Personal Access Token and legacy
+	 * perpetual token across the namespace (`admin.listAllPats` in
+	 * `docs/features.json`). Requires an admin session.
+	 */
+	async listAllPats(): Promise<adminCredentialsDomain.ListAllPatsResult> {
+		return adminCredentialsDomain.listAllPats({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey });
+	}
+
+	/**
+	 * DELETE /api/admin/pats/:userId/:patId — revokes a Personal Access Token
+	 * belonging to any user (`admin.revokePat` in `docs/features.json`).
+	 * Named `adminRevokePat` here — not `revokePat` — because that flat name
+	 * is already taken by the self-service method above, and the two act on
+	 * different resources (`userId` + `patId` here vs. a caller-scoped `id`).
+	 * Requires an admin session.
+	 */
+	async adminRevokePat(userId: string, patId: string): Promise<adminCredentialsDomain.AdminRevokeResult> {
+		return adminCredentialsDomain.revokePat({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, userId, patId);
+	}
+
+	/**
+	 * DELETE /api/admin/legacy-tokens/:userId/:fingerprint — revokes a legacy
+	 * perpetual token by the fingerprint returned from `listAllPats`
+	 * (`admin.revokeLegacyToken` in `docs/features.json`). Requires an admin
+	 * session.
+	 */
+	async revokeLegacyToken(userId: string, fingerprint: string): Promise<adminCredentialsDomain.AdminRevokeResult> {
+		return adminCredentialsDomain.revokeLegacyToken({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, userId, fingerprint);
+	}
+
+	/**
+	 * POST /api/admin/service-accounts — creates a service account with a
+	 * sovereign access map (`admin.createServiceAccount` in
+	 * `docs/features.json`). Requires an admin session.
+	 */
+	async createServiceAccount(
+		name: string,
+		username: string,
+		accessMap?: Record<string, adminServiceAccountsDomain.AccessLevel>,
+	): Promise<adminServiceAccountsDomain.CreateServiceAccountResult> {
+		return adminServiceAccountsDomain.createServiceAccount(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			{ name, username, accessMap },
+		);
+	}
+
+	/**
+	 * GET /api/admin/service-accounts — lists every service account and its
+	 * Personal Access Tokens (`admin.listServiceAccounts` in
+	 * `docs/features.json`). Requires an admin session.
+	 */
+	async listServiceAccounts(): Promise<adminServiceAccountsDomain.ListServiceAccountsResult> {
+		return adminServiceAccountsDomain.listServiceAccounts({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey });
+	}
+
+	/**
+	 * PUT /api/admin/service-accounts/:id/access — replaces a service
+	 * account's whole access map (`admin.updateServiceAccountAccess` in
+	 * `docs/features.json`). Requires an admin session.
+	 */
+	async updateServiceAccountAccess(
+		id: string,
+		accessMap: Record<string, adminServiceAccountsDomain.AccessLevel>,
+	): Promise<adminServiceAccountsDomain.UpdateServiceAccountAccessResult> {
+		return adminServiceAccountsDomain.updateServiceAccountAccess(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			id,
+			{ accessMap },
+		);
+	}
+
+	/**
+	 * POST /api/admin/service-accounts/:id/pats — mints a Personal Access
+	 * Token for a service account on the admin's behalf
+	 * (`admin.createServiceAccountPat` in `docs/features.json`). Requires an
+	 * admin session.
+	 */
+	async createServiceAccountPat(
+		id: string,
+		name: string,
+		expiresAt?: string,
+	): Promise<adminServiceAccountsDomain.CreateServiceAccountPatResult> {
+		return adminServiceAccountsDomain.createServiceAccountPat(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			id,
+			{ name, expiresAt },
+		);
+	}
+
 	async logout(): Promise<boolean> {
 		try {
 			const result = await fetch(`${this.#options.endpoint}/rest/auth/logout`, {
@@ -1233,3 +1325,26 @@ export type {
 	LoginOptions,
 } from './domains/auth';
 export type { CreatePatBody, CreatePatData, CreatePatResult, ListPatsResult, PatEntry, PatError, RevokePatResult } from './domains/pat';
+export type {
+	AdminError,
+	AdminRevokeResult,
+	CredentialsOverview,
+	LegacyTokenSummary,
+	ListAllPatsResult,
+	PatSummary,
+} from './domains/adminCredentials';
+export type {
+	AccessLevel,
+	CreateServiceAccountBody,
+	CreateServiceAccountPatBody,
+	CreateServiceAccountPatData,
+	CreateServiceAccountPatResult,
+	CreateServiceAccountResult,
+	ListServiceAccountsResult,
+	ServiceAccountCreated,
+	ServiceAccountPatEntry,
+	ServiceAccountRoleRef,
+	ServiceAccountSummary,
+	UpdateServiceAccountAccessBody,
+	UpdateServiceAccountAccessResult,
+} from './domains/adminServiceAccounts';

@@ -87,6 +87,13 @@ Cada método do KonectyClient utiliza o endpoint do CRM indicado. A base URL é 
 | createPat | POST | /rest/auth/pat |
 | listPats | GET | /rest/auth/pat |
 | revokePat | DELETE | /rest/auth/pat/:id |
+| listAllPats | GET | /api/admin/pats |
+| adminRevokePat | DELETE | /api/admin/pats/:userId/:patId |
+| revokeLegacyToken | DELETE | /api/admin/legacy-tokens/:userId/:fingerprint |
+| createServiceAccount | POST | /api/admin/service-accounts |
+| listServiceAccounts | GET | /api/admin/service-accounts |
+| updateServiceAccountAccess | PUT | /api/admin/service-accounts/:id/access |
+| createServiceAccountPat | POST | /api/admin/service-accounts/:id/pats |
 
 Parâmetros: find usa query string com filter, sort, limit, start, fields (serializados em JSON). findStream usa os mesmos parâmetros de find mais includeTotal (opcional); a resposta é NDJSON (uma linha JSON por registro); quando includeTotal é true, o total vem no header X-Total-Count. streamCount usa filter e opcionalmente displayName, displayType, sort, withDetailFields; retorna JSON com success e total. create envia o documento no body em JSON. update envia body com ids e data. delete envia body com ids. lookup usa query com search e opções de filtro/paginação. login envia user, password (hash MD5 e SHA256), geolocation e outros campos em application/x-www-form-urlencoded.
 
@@ -164,6 +171,16 @@ Nenhum destes métodos lança em 4xx/5xx: o corpo de resposta do CRM já é um `
 - **createPat(name, expiresAt?)** — POST /rest/auth/pat. `expiresAt` é uma string ISO opcional e deve estar no futuro. Retorna `{ success: true, data: { _id, token } }`; o `token` em claro só existe nesta resposta (show-once) — não é recuperável depois. Erros possíveis: nome inválido, papel do usuário fora do allowlist `mcpRoleIds` do Namespace, `expiresAt` no passado.
 - **listPats()** — GET /rest/auth/pat. Retorna `{ success: true, data: PatEntry[] }`, cada entrada com `_id`, `name`, `createdAt`, `expiresAt`, `lastUsedAt` — nunca o `hashedToken`.
 - **revokePat(id)** — DELETE /rest/auth/pat/:id. Escopado ao próprio usuário no CRM: um `id` de outro usuário sempre responde 404 (nunca revela se o PAT existe em outra conta).
+
+**Admin (requer sessão de admin):**
+
+- **listAllPats()** — GET /api/admin/pats. Retorna `{ success: true, data: { pats: PatSummary[], legacyTokens: LegacyTokenSummary[] } }` — todos os PATs e tokens perpétuos legados (`services.resume.loginTokens` sem `when`) do namespace. `LegacyTokenSummary` carrega um `fingerprint` estável, nunca o token em claro.
+- **adminRevokePat(userId, patId)** — DELETE /api/admin/pats/:userId/:patId. Revoga o PAT de qualquer usuário. Chamado de `adminRevokePat` — não `revokePat` — porque esse nome já é o do método self-service acima, que opera sobre um recurso diferente (`id` escopado ao chamador, em vez de `userId` + `patId`).
+- **revokeLegacyToken(userId, fingerprint)** — DELETE /api/admin/legacy-tokens/:userId/:fingerprint. `fingerprint` vem de `listAllPats`.
+- **createServiceAccount(name, username, accessMap?)** — POST /api/admin/service-accounts. `accessMap` é `{ [document]: 'read' | 'readWrite' }`; documentos ausentes do mapa não têm acesso algum (o CRM aplica `{ defaults: false, ... }`). Retorna `{ success: true, data: { _id, username, role, access, mcpRoleHint? } }` — `mcpRoleHint` aparece quando o papel ainda não está no allowlist `mcpRoleIds` do Namespace (acesso REST não é afetado).
+- **listServiceAccounts()** — GET /api/admin/service-accounts. Retorna `{ success: true, data: ServiceAccountSummary[] }`, cada item com seus PATs (nunca `hashedToken`).
+- **updateServiceAccountAccess(id, accessMap)** — PUT /api/admin/service-accounts/:id/access. Substitui o `access` inteiro — um documento removido do novo `accessMap` deixa de ter acesso, não fica obsoleto.
+- **createServiceAccountPat(id, name, expiresAt?)** — POST /api/admin/service-accounts/:id/pats. Cunha um PAT para uma service account em nome do admin; o CRM recusa se `id` não for uma service account (admin nunca cunha PAT para um usuário humano). Retorna `{ success: true, data: { _id, token } }` (show-once).
 
 ## FilesManager
 
