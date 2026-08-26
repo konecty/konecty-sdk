@@ -48,6 +48,41 @@ describe('Konecty Admin Service Accounts', () => {
 			expect(result).to.deep.equal(createdResponse);
 		});
 
+		// Equivalent Python test: tests/test_admin.py::test_create_service_account_omits_access_map_when_none
+		// Decision: the TS SDK's canonical behavior is to omit `accessMap` from
+		// the wire body entirely when not passed (unlike the Python SDK, which
+		// defaults it to `{}`) — this asserts that omission explicitly.
+		it('Should omit accessMap from the body when not given', async () => {
+			// Arrange
+			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
+			let receivedBody: unknown = null;
+
+			server.use(
+				rest.post(`${ENDPOINT}/api/admin/service-accounts`, async (req, res, ctx) => {
+					receivedBody = await req.json();
+					return res.once(
+						ctx.status(201),
+						ctx.json({
+							success: true,
+							data: {
+								_id: 'service-account-2',
+								username: 'svc-no-access',
+								role: { _id: 'role-service-account', name: 'Service Account' },
+								access: { defaults: false },
+							},
+						}),
+					);
+				}),
+			);
+
+			// Act
+			await konecty.createServiceAccount('No Access Sync', 'svc-no-access');
+
+			// Assert — no accessMap key at all, not even accessMap: undefined
+			expect(receivedBody).to.deep.equal({ name: 'No Access Sync', username: 'svc-no-access' });
+			expect(receivedBody).to.not.have.property('accessMap');
+		});
+
 		// Equivalent Python test: tests/test_admin.py::test_create_service_account_raises_conflict_on_duplicate_username
 		it('Should return the mcpRoleHint when present, and the 409 conflict verbatim on a duplicate username', async () => {
 			// Arrange
