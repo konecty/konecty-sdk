@@ -76,10 +76,11 @@ export async function listAllPats(opts: AdminCredentialsClientOptions): Promise<
  * belonging to any user. Requires an admin session.
  *
  * Exported here as `revokePat`, exposed on {@link KonectyClient} as
- * `adminRevokePat` — the self-service equivalent (`pat.ts`) already owns the
+ * `revokeUserPat` — the self-service equivalent (`pat.ts`) already owns the
  * flat `revokePat` name (single `id`, scoped to the caller's own account),
  * and the two operate on different resources (this one takes `userId` +
- * `patId`), so they cannot share a method name on the client.
+ * `patId`), so they cannot share a method name on the client. `revokeUserPat`
+ * matches the Python SDK's `revoke_user_pat`.
  */
 export async function revokePat(opts: AdminCredentialsClientOptions, userId: string, patId: string): Promise<AdminRevokeResult> {
 	const { url, headers } = base(opts);

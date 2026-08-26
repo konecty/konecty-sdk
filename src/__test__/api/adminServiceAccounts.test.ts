@@ -8,7 +8,7 @@ const ENDPOINT = 'http://localhost:3000';
 
 describe('Konecty Admin Service Accounts', () => {
 	describe('createServiceAccount', () => {
-		// Equivalent Python test: tests/test_pat.py::test_admin_create_service_account_sends_access_map
+		// Equivalent Python test: tests/test_admin.py::test_admin_create_service_account_sends_name_username_and_access_map
 		it('Should POST /api/admin/service-accounts with name, username and accessMap', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
@@ -48,6 +48,7 @@ describe('Konecty Admin Service Accounts', () => {
 			expect(result).to.deep.equal(createdResponse);
 		});
 
+		// Equivalent Python test: tests/test_admin.py::test_admin_create_service_account_raises_conflict_on_duplicate_username
 		it('Should return the mcpRoleHint when present, and the 409 conflict verbatim on a duplicate username', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
@@ -67,7 +68,7 @@ describe('Konecty Admin Service Accounts', () => {
 	});
 
 	describe('listServiceAccounts', () => {
-		// Equivalent Python test: tests/test_pat.py::test_admin_list_service_accounts_never_includes_hashed_token
+		// Equivalent Python test: tests/test_admin.py::test_admin_list_service_accounts_returns_accounts_with_pats
 		it('Should GET /api/admin/service-accounts and return each account with its PATs', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
@@ -107,7 +108,7 @@ describe('Konecty Admin Service Accounts', () => {
 	});
 
 	describe('updateServiceAccountAccess', () => {
-		// Equivalent Python test: tests/test_pat.py::test_admin_update_service_account_access_replaces_whole_map
+		// Equivalent Python test: tests/test_admin.py::test_admin_update_service_account_access_interpolates_id_and_sends_access_map
 		it('Should PUT /api/admin/service-accounts/:id/access with accessMap', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
@@ -137,6 +138,7 @@ describe('Konecty Admin Service Accounts', () => {
 			expect(result).to.deep.equal({ success: true, data: { _id: 'service-account-1', access: { defaults: false, Contact: 'ServiceRead' } } });
 		});
 
+		// Equivalent Python test: tests/test_admin.py::test_admin_update_service_account_access_raises_not_found
 		it('Should return the 404 not-found error verbatim when the target does not exist', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
@@ -156,7 +158,7 @@ describe('Konecty Admin Service Accounts', () => {
 	});
 
 	describe('createServiceAccountPat', () => {
-		// Equivalent Python test: tests/test_pat.py::test_admin_create_service_account_pat_show_once_token
+		// Equivalent Python test: tests/test_admin.py::test_admin_create_service_account_pat_sends_expires_at_when_given
 		it('Should POST /api/admin/service-accounts/:id/pats with name and expiresAt, returning the show-once token', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
@@ -183,6 +185,7 @@ describe('Konecty Admin Service Accounts', () => {
 			expect(result).to.deep.equal({ success: true, data: { _id: 'pat-9', token: 'kpat_service-account-token' } });
 		});
 
+		// Equivalent Python test: tests/test_admin.py::test_admin_create_service_account_pat_raises_for_non_service_account_target
 		it('Should return the 403 error verbatim when the target is not a service account (ADM-02)', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });

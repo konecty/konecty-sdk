@@ -804,12 +804,12 @@ export class KonectyClient {
 	/**
 	 * DELETE /api/admin/pats/:userId/:patId — revokes a Personal Access Token
 	 * belonging to any user (`admin.revokePat` in `docs/features.json`).
-	 * Named `adminRevokePat` here — not `revokePat` — because that flat name
+	 * Named `revokeUserPat` here — not `revokePat` — because that flat name
 	 * is already taken by the self-service method above, and the two act on
 	 * different resources (`userId` + `patId` here vs. a caller-scoped `id`).
-	 * Requires an admin session.
+	 * Matches the Python SDK's `revoke_user_pat`. Requires an admin session.
 	 */
-	async adminRevokePat(userId: string, patId: string): Promise<adminCredentialsDomain.AdminRevokeResult> {
+	async revokeUserPat(userId: string, patId: string): Promise<adminCredentialsDomain.AdminRevokeResult> {
 		return adminCredentialsDomain.revokePat({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, userId, patId);
 	}
 

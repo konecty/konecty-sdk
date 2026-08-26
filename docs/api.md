@@ -88,7 +88,7 @@ Cada método do KonectyClient utiliza o endpoint do CRM indicado. A base URL é 
 | listPats | GET | /rest/auth/pat |
 | revokePat | DELETE | /rest/auth/pat/:id |
 | listAllPats | GET | /api/admin/pats |
-| adminRevokePat | DELETE | /api/admin/pats/:userId/:patId |
+| revokeUserPat | DELETE | /api/admin/pats/:userId/:patId |
 | revokeLegacyToken | DELETE | /api/admin/legacy-tokens/:userId/:fingerprint |
 | createServiceAccount | POST | /api/admin/service-accounts |
 | listServiceAccounts | GET | /api/admin/service-accounts |
@@ -175,7 +175,7 @@ Nenhum destes métodos lança em 4xx/5xx: o corpo de resposta do CRM já é um `
 **Admin (requer sessão de admin):**
 
 - **listAllPats()** — GET /api/admin/pats. Retorna `{ success: true, data: { pats: PatSummary[], legacyTokens: LegacyTokenSummary[] } }` — todos os PATs e tokens perpétuos legados (`services.resume.loginTokens` sem `when`) do namespace. `LegacyTokenSummary` carrega um `fingerprint` estável, nunca o token em claro.
-- **adminRevokePat(userId, patId)** — DELETE /api/admin/pats/:userId/:patId. Revoga o PAT de qualquer usuário. Chamado de `adminRevokePat` — não `revokePat` — porque esse nome já é o do método self-service acima, que opera sobre um recurso diferente (`id` escopado ao chamador, em vez de `userId` + `patId`).
+- **revokeUserPat(userId, patId)** — DELETE /api/admin/pats/:userId/:patId. Revoga o PAT de qualquer usuário. Chamado de `revokeUserPat` — não `revokePat` — porque esse nome já é o do método self-service acima, que opera sobre um recurso diferente (`id` escopado ao chamador, em vez de `userId` + `patId`). Nome alinhado ao `revoke_user_pat` do SDK Python.
 - **revokeLegacyToken(userId, fingerprint)** — DELETE /api/admin/legacy-tokens/:userId/:fingerprint. `fingerprint` vem de `listAllPats`.
 - **createServiceAccount(name, username, accessMap?)** — POST /api/admin/service-accounts. `accessMap` é `{ [document]: 'read' | 'readWrite' }`; documentos ausentes do mapa não têm acesso algum (o CRM aplica `{ defaults: false, ... }`). Retorna `{ success: true, data: { _id, username, role, access, mcpRoleHint? } }` — `mcpRoleHint` aparece quando o papel ainda não está no allowlist `mcpRoleIds` do Namespace (acesso REST não é afetado).
 - **listServiceAccounts()** — GET /api/admin/service-accounts. Retorna `{ success: true, data: ServiceAccountSummary[] }`, cada item com seus PATs (nunca `hashedToken`).

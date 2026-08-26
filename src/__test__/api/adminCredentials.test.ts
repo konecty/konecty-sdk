@@ -8,7 +8,7 @@ const ENDPOINT = 'http://localhost:3000';
 
 describe('Konecty Admin Credentials', () => {
 	describe('listAllPats', () => {
-		// Equivalent Python test: tests/test_pat.py::test_admin_list_all_pats
+		// Equivalent Python test: tests/test_admin.py::test_admin_list_all_pats_returns_pats_and_legacy_tokens
 		it('Should GET /api/admin/pats and return PATs plus legacy tokens across the namespace', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
@@ -45,6 +45,7 @@ describe('Konecty Admin Credentials', () => {
 			expect(result).to.deep.equal(overviewResponse);
 		});
 
+		// Equivalent Python test: tests/test_admin.py::test_admin_list_all_pats_raises_forbidden_for_non_admin
 		it('Should return the 403 error verbatim when the caller is not an admin', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-non-admin-auth-id' });
@@ -63,8 +64,11 @@ describe('Konecty Admin Credentials', () => {
 		});
 	});
 
-	describe('adminRevokePat', () => {
-		// Equivalent Python test: tests/test_pat.py::test_admin_revoke_pat_by_user_and_pat_id
+	describe('revokeUserPat', () => {
+		// Equivalent Python test: tests/test_admin.py::test_admin_revoke_pat_interpolates_user_and_pat_id
+		// (Python still names this admin_revoke_pat as of this commit, not yet
+		// renamed to revoke_user_pat — see the divergence flagged in the report
+		// for this task; rename it there to close the loop.)
 		it('Should DELETE /api/admin/pats/:userId/:patId, distinct from the self-service revokePat', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
@@ -80,7 +84,7 @@ describe('Konecty Admin Credentials', () => {
 			);
 
 			// Act
-			const result = await konecty.adminRevokePat('user-1', 'pat-1');
+			const result = await konecty.revokeUserPat('user-1', 'pat-1');
 
 			// Assert
 			expect(receivedUrl).to.equal('http://localhost:3000/api/admin/pats/user-1/pat-1');
@@ -88,6 +92,7 @@ describe('Konecty Admin Credentials', () => {
 			expect(result).to.deep.equal({ success: true, data: { success: true } });
 		});
 
+		// Equivalent Python test: tests/test_admin.py::test_admin_revoke_pat_raises_not_found
 		it('Should return the 404 not-found error verbatim', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
@@ -99,7 +104,7 @@ describe('Konecty Admin Credentials', () => {
 			);
 
 			// Act
-			const result = await konecty.adminRevokePat('user-1', 'missing-pat');
+			const result = await konecty.revokeUserPat('user-1', 'missing-pat');
 
 			// Assert
 			expect(result).to.deep.equal({ success: false, errors: [{ message: 'PAT not found' }] });
@@ -107,7 +112,7 @@ describe('Konecty Admin Credentials', () => {
 	});
 
 	describe('revokeLegacyToken', () => {
-		// Equivalent Python test: tests/test_pat.py::test_admin_revoke_legacy_token_by_fingerprint
+		// Equivalent Python test: tests/test_admin.py::test_admin_revoke_legacy_token_interpolates_user_id_and_fingerprint
 		it('Should DELETE /api/admin/legacy-tokens/:userId/:fingerprint', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });

@@ -8,9 +8,8 @@ const ENDPOINT = 'http://localhost:3000';
 
 describe('Konecty Personal Access Tokens (self-service)', () => {
 	describe('createPat', () => {
-		// Equivalent Python test: tests/test_pat.py::test_create_pat_sends_name_and_expires_at
-		// (konecty-sdk-python — not written yet as of this task; this is the first
-		// SDK to implement PAT support, see AGENTS.md paridade entre SDKs).
+		// Equivalent Python test: tests/test_pat.py::test_create_pat_sends_expires_at_when_given
+		// (konecty-sdk-python, branch feat/pat-service-accounts).
 		it('Should POST to /rest/auth/pat with name and expiresAt, and return the show-once token', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-session-auth-id' });
@@ -43,6 +42,7 @@ describe('Konecty Personal Access Tokens (self-service)', () => {
 			expect(result).to.deep.equal({ success: true, data: { _id: 'pat-id-1', token: 'kpat_fake-clear-text-token' } });
 		});
 
+		// Equivalent Python test: tests/test_pat.py::test_create_pat_sends_name_only_when_no_expiry
 		it('Should omit expiresAt from the body when not given', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-session-auth-id' });
@@ -62,6 +62,7 @@ describe('Konecty Personal Access Tokens (self-service)', () => {
 			expect(receivedBody).to.deep.equal({ name: 'No expiry key' });
 		});
 
+		// Equivalent Python test: tests/test_pat.py::test_create_pat_raises_on_forbidden_role
 		it('Should return the server errors verbatim on a 403 (role not allowed)', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-session-auth-id' });
@@ -90,7 +91,7 @@ describe('Konecty Personal Access Tokens (self-service)', () => {
 	});
 
 	describe('listPats', () => {
-		// Equivalent Python test: tests/test_pat.py::test_list_pats_never_includes_hashed_token
+		// Equivalent Python test: tests/test_pat.py::test_list_pats_returns_data_without_hashed_token
 		it('Should GET /rest/auth/pat and return the list without hashedToken', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-session-auth-id' });
@@ -130,7 +131,7 @@ describe('Konecty Personal Access Tokens (self-service)', () => {
 	});
 
 	describe('revokePat', () => {
-		// Equivalent Python test: tests/test_pat.py::test_revoke_pat_deletes_by_id
+		// Equivalent Python test: tests/test_pat.py::test_revoke_pat_builds_path_with_id
 		it('Should DELETE /rest/auth/pat/:id', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-session-auth-id' });
@@ -154,6 +155,7 @@ describe('Konecty Personal Access Tokens (self-service)', () => {
 			expect(result).to.deep.equal({ success: true });
 		});
 
+		// Equivalent Python test: tests/test_pat.py::test_revoke_pat_raises_not_found_for_unknown_id
 		it('Should return the 404 not-found error verbatim when the PAT does not belong to the caller', async () => {
 			// Arrange
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-session-auth-id' });
