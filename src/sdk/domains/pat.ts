@@ -1,13 +1,12 @@
-import fetch from 'isomorphic-fetch';
-
-import logger from '../../lib/logger';
+import type { SharedError } from './patShared';
+import { request } from './patShared';
 
 export type PatClientOptions = {
 	endpoint: string;
 	accessKey?: string;
 };
 
-export type PatError = { message: string; code?: string | number; details?: string };
+export type PatError = SharedError;
 
 export type CreatePatBody = {
 	name: string;
@@ -39,15 +38,6 @@ const base = (opts: PatClientOptions) => ({
 	url: opts.endpoint,
 });
 
-async function parseJsonBody(res: Response): Promise<unknown | null> {
-	try {
-		return await res.json();
-	} catch (err) {
-		logger.error(err);
-		return null;
-	}
-}
-
 /**
  * POST /rest/auth/pat — creates a Personal Access Token for the caller's own
  * account. Requires a session/OAuth-authenticated caller (a PAT cannot mint
@@ -57,22 +47,11 @@ async function parseJsonBody(res: Response): Promise<unknown | null> {
  */
 export async function createPat(opts: PatClientOptions, body: CreatePatBody): Promise<CreatePatResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/rest/auth/pat`;
-	try {
-		const res = await fetch(path, {
-			method: 'POST',
-			headers: { ...headers, 'Content-Type': 'application/json' },
-			body: JSON.stringify(body),
-		});
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as CreatePatResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<CreatePatResult>(`${url}/rest/auth/pat`, {
+		method: 'POST',
+		headers: { ...headers, 'Content-Type': 'application/json' },
+		body: JSON.stringify(body),
+	});
 }
 
 /**
@@ -81,18 +60,7 @@ export async function createPat(opts: PatClientOptions, body: CreatePatBody): Pr
  */
 export async function listPats(opts: PatClientOptions): Promise<ListPatsResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/rest/auth/pat`;
-	try {
-		const res = await fetch(path, { method: 'GET', headers });
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as ListPatsResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<ListPatsResult>(`${url}/rest/auth/pat`, { method: 'GET', headers });
 }
 
 /**
@@ -103,16 +71,5 @@ export async function listPats(opts: PatClientOptions): Promise<ListPatsResult> 
  */
 export async function revokePat(opts: PatClientOptions, id: string): Promise<RevokePatResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/rest/auth/pat/${id}`;
-	try {
-		const res = await fetch(path, { method: 'DELETE', headers });
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as RevokePatResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<RevokePatResult>(`${url}/rest/auth/pat/${id}`, { method: 'DELETE', headers });
 }

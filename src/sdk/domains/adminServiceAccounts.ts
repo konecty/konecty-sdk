@@ -1,13 +1,12 @@
-import fetch from 'isomorphic-fetch';
-
-import logger from '../../lib/logger';
+import type { SharedError } from './patShared';
+import { request } from './patShared';
 
 export type AdminServiceAccountsClientOptions = {
 	endpoint: string;
 	accessKey?: string;
 };
 
-export type AdminError = { message: string; code?: string | number; details?: string };
+export type AdminError = SharedError;
 
 export type AccessLevel = 'read' | 'readWrite';
 
@@ -70,15 +69,6 @@ const base = (opts: AdminServiceAccountsClientOptions) => ({
 	url: opts.endpoint,
 });
 
-async function parseJsonBody(res: Response): Promise<unknown | null> {
-	try {
-		return await res.json();
-	} catch (err) {
-		logger.error(err);
-		return null;
-	}
-}
-
 /**
  * POST /api/admin/service-accounts (SA-01) — creates a service-account User
  * with a sovereign `access` map (`{document -> 'read'|'readWrite'}`, applied
@@ -87,22 +77,11 @@ async function parseJsonBody(res: Response): Promise<unknown | null> {
  */
 export async function createServiceAccount(opts: AdminServiceAccountsClientOptions, body: CreateServiceAccountBody): Promise<CreateServiceAccountResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/api/admin/service-accounts`;
-	try {
-		const res = await fetch(path, {
-			method: 'POST',
-			headers: { ...headers, 'Content-Type': 'application/json' },
-			body: JSON.stringify(body),
-		});
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as CreateServiceAccountResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<CreateServiceAccountResult>(`${url}/api/admin/service-accounts`, {
+		method: 'POST',
+		headers: { ...headers, 'Content-Type': 'application/json' },
+		body: JSON.stringify(body),
+	});
 }
 
 /**
@@ -112,18 +91,7 @@ export async function createServiceAccount(opts: AdminServiceAccountsClientOptio
  */
 export async function listServiceAccounts(opts: AdminServiceAccountsClientOptions): Promise<ListServiceAccountsResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/api/admin/service-accounts`;
-	try {
-		const res = await fetch(path, { method: 'GET', headers });
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as ListServiceAccountsResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<ListServiceAccountsResult>(`${url}/api/admin/service-accounts`, { method: 'GET', headers });
 }
 
 /**
@@ -138,22 +106,11 @@ export async function updateServiceAccountAccess(
 	body: UpdateServiceAccountAccessBody,
 ): Promise<UpdateServiceAccountAccessResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/api/admin/service-accounts/${id}/access`;
-	try {
-		const res = await fetch(path, {
-			method: 'PUT',
-			headers: { ...headers, 'Content-Type': 'application/json' },
-			body: JSON.stringify(body),
-		});
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as UpdateServiceAccountAccessResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<UpdateServiceAccountAccessResult>(`${url}/api/admin/service-accounts/${id}/access`, {
+		method: 'PUT',
+		headers: { ...headers, 'Content-Type': 'application/json' },
+		body: JSON.stringify(body),
+	});
 }
 
 /**
@@ -168,20 +125,9 @@ export async function createServiceAccountPat(
 	body: CreateServiceAccountPatBody,
 ): Promise<CreateServiceAccountPatResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/api/admin/service-accounts/${id}/pats`;
-	try {
-		const res = await fetch(path, {
-			method: 'POST',
-			headers: { ...headers, 'Content-Type': 'application/json' },
-			body: JSON.stringify(body),
-		});
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as CreateServiceAccountPatResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<CreateServiceAccountPatResult>(`${url}/api/admin/service-accounts/${id}/pats`, {
+		method: 'POST',
+		headers: { ...headers, 'Content-Type': 'application/json' },
+		body: JSON.stringify(body),
+	});
 }

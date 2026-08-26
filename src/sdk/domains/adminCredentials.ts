@@ -1,13 +1,12 @@
-import fetch from 'isomorphic-fetch';
-
-import logger from '../../lib/logger';
+import type { SharedError } from './patShared';
+import { request } from './patShared';
 
 export type AdminCredentialsClientOptions = {
 	endpoint: string;
 	accessKey?: string;
 };
 
-export type AdminError = { message: string; code?: string | number; details?: string };
+export type AdminError = SharedError;
 
 export type PatSummary = {
 	userId: string;
@@ -39,15 +38,6 @@ const base = (opts: AdminCredentialsClientOptions) => ({
 	url: opts.endpoint,
 });
 
-async function parseJsonBody(res: Response): Promise<unknown | null> {
-	try {
-		return await res.json();
-	} catch (err) {
-		logger.error(err);
-		return null;
-	}
-}
-
 /**
  * GET /api/admin/pats (ADM-01) — lists every Personal Access Token and every
  * legacy perpetual token (a `services.resume.loginTokens` entry with no
@@ -57,18 +47,7 @@ async function parseJsonBody(res: Response): Promise<unknown | null> {
  */
 export async function listAllPats(opts: AdminCredentialsClientOptions): Promise<ListAllPatsResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/api/admin/pats`;
-	try {
-		const res = await fetch(path, { method: 'GET', headers });
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as ListAllPatsResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<ListAllPatsResult>(`${url}/api/admin/pats`, { method: 'GET', headers });
 }
 
 /**
@@ -84,18 +63,7 @@ export async function listAllPats(opts: AdminCredentialsClientOptions): Promise<
  */
 export async function revokePat(opts: AdminCredentialsClientOptions, userId: string, patId: string): Promise<AdminRevokeResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/api/admin/pats/${userId}/${patId}`;
-	try {
-		const res = await fetch(path, { method: 'DELETE', headers });
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as AdminRevokeResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<AdminRevokeResult>(`${url}/api/admin/pats/${userId}/${patId}`, { method: 'DELETE', headers });
 }
 
 /**
@@ -105,16 +73,5 @@ export async function revokePat(opts: AdminCredentialsClientOptions, userId: str
  */
 export async function revokeLegacyToken(opts: AdminCredentialsClientOptions, userId: string, fingerprint: string): Promise<AdminRevokeResult> {
 	const { url, headers } = base(opts);
-	const path = `${url}/api/admin/legacy-tokens/${userId}/${fingerprint}`;
-	try {
-		const res = await fetch(path, { method: 'DELETE', headers });
-		const parsed = await parseJsonBody(res);
-		if (res.status >= 400) {
-			logger.error(`${res.status} ${res.statusText}`, { url: path, body: parsed });
-		}
-		return (parsed as AdminRevokeResult) ?? { success: false, errors: [{ message: `${res.status} - ${res.statusText}` }] };
-	} catch (err) {
-		logger.error(err);
-		return { success: false, errors: [{ message: (err as Error).message }] };
-	}
+	return request<AdminRevokeResult>(`${url}/api/admin/legacy-tokens/${userId}/${fingerprint}`, { method: 'DELETE', headers });
 }
