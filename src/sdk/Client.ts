@@ -10,6 +10,8 @@ import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
 import logger from '../lib/logger';
 import { deserializeDates, serializeDates } from '../utils/dateSerialization';
 import getGeolocation from '../utils/getGeolocation';
+import * as adminCredentialsDomain from './domains/adminCredentials';
+import * as adminServiceAccountsDomain from './domains/adminServiceAccounts';
 import * as authDomain from './domains/auth';
 import * as changeUserDomain from './domains/changeUser';
 import * as commentsDomain from './domains/comments';
@@ -18,6 +20,7 @@ import * as fileDownloadDomain from './domains/fileDownload';
 import * as graphDomain from './domains/graph';
 import * as kpiDomain from './domains/kpi';
 import * as notificationsDomain from './domains/notifications';
+import * as patDomain from './domains/pat';
 import * as pivotDomain from './domains/pivot';
 import * as queryDomain from './domains/query';
 import * as streamDomain from './domains/stream';
@@ -762,6 +765,123 @@ export class KonectyClient {
 		});
 	}
 
+	/**
+	 * POST /rest/auth/pat — creates a Personal Access Token for the caller's
+	 * own account (self-service, `auth.createPat` in `docs/features.json`).
+	 */
+	async createPat(name: string, expiresAt?: string): Promise<patDomain.CreatePatResult> {
+		return patDomain.createPat(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			{ name, expiresAt },
+		);
+	}
+
+	/**
+	 * GET /rest/auth/pat — lists the caller's own Personal Access Tokens
+	 * (self-service, `auth.listPats` in `docs/features.json`).
+	 */
+	async listPats(): Promise<patDomain.ListPatsResult> {
+		return patDomain.listPats({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey });
+	}
+
+	/**
+	 * DELETE /rest/auth/pat/:id — revokes one of the caller's own Personal
+	 * Access Tokens (self-service, `auth.revokePat` in `docs/features.json`).
+	 */
+	async revokePat(id: string): Promise<patDomain.RevokePatResult> {
+		return patDomain.revokePat({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, id);
+	}
+
+	/**
+	 * GET /api/admin/pats — lists every Personal Access Token and legacy
+	 * perpetual token across the namespace (`admin.listAllPats` in
+	 * `docs/features.json`). Requires an admin session.
+	 */
+	async listAllPats(): Promise<adminCredentialsDomain.ListAllPatsResult> {
+		return adminCredentialsDomain.listAllPats({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey });
+	}
+
+	/**
+	 * DELETE /api/admin/pats/:userId/:patId — revokes a Personal Access Token
+	 * belonging to any user (`admin.revokeUserPat` in `docs/features.json`).
+	 * Named `revokeUserPat` here — not `revokePat` — because that flat name
+	 * is already taken by the self-service method above, and the two act on
+	 * different resources (`userId` + `patId` here vs. a caller-scoped `id`).
+	 * Matches the Python SDK's `revoke_user_pat`. Requires an admin session.
+	 */
+	async revokeUserPat(userId: string, patId: string): Promise<adminCredentialsDomain.AdminRevokeResult> {
+		return adminCredentialsDomain.revokePat({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, userId, patId);
+	}
+
+	/**
+	 * DELETE /api/admin/legacy-tokens/:userId/:fingerprint — revokes a legacy
+	 * perpetual token by the fingerprint returned from `listAllPats`
+	 * (`admin.revokeLegacyToken` in `docs/features.json`). Requires an admin
+	 * session.
+	 */
+	async revokeLegacyToken(userId: string, fingerprint: string): Promise<adminCredentialsDomain.AdminRevokeResult> {
+		return adminCredentialsDomain.revokeLegacyToken({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, userId, fingerprint);
+	}
+
+	/**
+	 * POST /api/admin/service-accounts — creates a service account with a
+	 * sovereign access map (`admin.createServiceAccount` in
+	 * `docs/features.json`). Requires an admin session.
+	 */
+	async createServiceAccount(
+		name: string,
+		username: string,
+		accessMap?: Record<string, adminServiceAccountsDomain.AccessLevel>,
+	): Promise<adminServiceAccountsDomain.CreateServiceAccountResult> {
+		return adminServiceAccountsDomain.createServiceAccount(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			{ name, username, accessMap },
+		);
+	}
+
+	/**
+	 * GET /api/admin/service-accounts — lists every service account and its
+	 * Personal Access Tokens (`admin.listServiceAccounts` in
+	 * `docs/features.json`). Requires an admin session.
+	 */
+	async listServiceAccounts(): Promise<adminServiceAccountsDomain.ListServiceAccountsResult> {
+		return adminServiceAccountsDomain.listServiceAccounts({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey });
+	}
+
+	/**
+	 * PUT /api/admin/service-accounts/:id/access — replaces a service
+	 * account's whole access map (`admin.updateServiceAccountAccess` in
+	 * `docs/features.json`). Requires an admin session.
+	 */
+	async updateServiceAccountAccess(
+		id: string,
+		accessMap: Record<string, adminServiceAccountsDomain.AccessLevel>,
+	): Promise<adminServiceAccountsDomain.UpdateServiceAccountAccessResult> {
+		return adminServiceAccountsDomain.updateServiceAccountAccess(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			id,
+			{ accessMap },
+		);
+	}
+
+	/**
+	 * POST /api/admin/service-accounts/:id/pats — mints a Personal Access
+	 * Token for a service account on the admin's behalf
+	 * (`admin.createServiceAccountPat` in `docs/features.json`). Requires an
+	 * admin session.
+	 */
+	async createServiceAccountPat(
+		id: string,
+		name: string,
+		expiresAt?: string,
+	): Promise<adminServiceAccountsDomain.CreateServiceAccountPatResult> {
+		return adminServiceAccountsDomain.createServiceAccountPat(
+			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
+			id,
+			{ name, expiresAt },
+		);
+	}
+
 	async logout(): Promise<boolean> {
 		try {
 			const result = await fetch(`${this.#options.endpoint}/rest/auth/logout`, {
@@ -1204,3 +1324,27 @@ export type {
 	GoogleSessionUser,
 	LoginOptions,
 } from './domains/auth';
+export type { CreatePatBody, CreatePatData, CreatePatResult, ListPatsResult, PatEntry, PatError, RevokePatResult } from './domains/pat';
+export type {
+	AdminError,
+	AdminRevokeResult,
+	CredentialsOverview,
+	LegacyTokenSummary,
+	ListAllPatsResult,
+	PatSummary,
+} from './domains/adminCredentials';
+export type {
+	AccessLevel,
+	CreateServiceAccountBody,
+	CreateServiceAccountPatBody,
+	CreateServiceAccountPatData,
+	CreateServiceAccountPatResult,
+	CreateServiceAccountResult,
+	ListServiceAccountsResult,
+	ServiceAccountCreated,
+	ServiceAccountPatEntry,
+	ServiceAccountRoleRef,
+	ServiceAccountSummary,
+	UpdateServiceAccountAccessBody,
+	UpdateServiceAccountAccessResult,
+} from './domains/adminServiceAccounts';
