@@ -15,7 +15,48 @@ const ENDPOINT = 'http://localhost:3000';
  * codificação de query string e código de erro presente num SDK e ausente no outro, e é exatamente
  * o que os testes de URL e de `409`/`403` abaixo fixam.
  */
+/**
+ * Vetor de codificação compartilhado com o SDK Python. As mesmas 8 entradas são asseveradas em
+ * `tests/test_admin.py::test_path_segment_encoding_matches_the_typescript_sdk`, com as mesmas
+ * saídas — é o que trava a paridade byte a byte da URL, que é onde a divergência entre os dois SDKs
+ * já aconteceu de verdade.
+ */
+const SEGMENT_ENCODING_CASES: Array<[string, string]> = [
+	['Contact:list:Default', 'Contact:list:Default'],
+	['My Doc', 'My%20Doc'],
+	// `/` SEMPRE codificado: cru, quebraria o path em dois segmentos.
+	['a/b', 'a%2Fb'],
+	// `+` SEMPRE codificado: cru num path, servidor leniente pode lê-lo como espaço.
+	['a+b', 'a%2Bb'],
+	['{"$ne":null}', '%7B%22$ne%22:null%7D'],
+	['a&b', 'a&b'],
+	['a@b', 'a@b'],
+	['ç', '%C3%A7'],
+];
+
 describe('Konecty Admin Meta', () => {
+	describe('path segment encoding', () => {
+		// Equivalent Python test: tests/test_admin.py::test_path_segment_encoding_matches_the_typescript_sdk
+		it('Should produce the same bytes the Python SDK puts on the wire', async () => {
+			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
+			const seen: string[] = [];
+
+			server.use(
+				rest.get(`${ENDPOINT}/api/admin/meta/:document`, (req, res, ctx) => {
+					seen.push(req.url.pathname.replace('/api/admin/meta/', ''));
+					return res(ctx.status(200), ctx.json({ success: true, data: {} }));
+				}),
+			);
+
+			for (const [input] of SEGMENT_ENCODING_CASES) {
+				await konecty.readMeta(input);
+			}
+
+			// `req.url.pathname` do msw devolve o caminho como veio na requisição.
+			expect(seen).to.deep.equal(SEGMENT_ENCODING_CASES.map(([, encoded]) => encoded));
+		});
+	});
+
 	describe('listMetaDocuments', () => {
 		// Equivalent Python test: tests/test_admin.py::test_list_meta_documents_gets_the_meta_collection
 		it('Should GET /api/admin/meta', async () => {
@@ -186,8 +227,11 @@ describe('Konecty Admin Meta', () => {
 
 			await konecty.listMetaHistory('Contact:list:Default', { limit: 10, offset: 20 });
 
-			// `_id` de meta carrega `:`, então o segmento é codificado — e a query fica fora dele.
-			expect(receivedUrl).to.equal(`${ENDPOINT}/api/admin/meta/Contact%3Alist%3ADefault/history?limit=10&offset=20`);
+			// `:` fica cru: o `yarl` do aiohttp normaliza `%3A` de volta para `:` no lado Python, e
+			// encodá-lo aqui faria os dois SDKs mandarem bytes diferentes para o mesmo `_id`.
+			// Espelhado em tests/test_admin.py::test_list_meta_history_sends_limit_and_offset, que
+			// assevera o `raw_path` recebido pelo stub.
+			expect(receivedUrl).to.equal(`${ENDPOINT}/api/admin/meta/Contact:list:Default/history?limit=10&offset=20`);
 		});
 
 		// Equivalent Python test: tests/test_admin.py::test_list_meta_history_omits_the_query_when_no_options

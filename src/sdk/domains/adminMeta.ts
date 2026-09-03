@@ -89,14 +89,31 @@ const base = (opts: AdminMetaClientOptions) => ({
 const jsonHeaders = (opts: AdminMetaClientOptions) => ({ ...base(opts).headers, 'Content-Type': 'application/json' });
 
 /**
- * `encodeURIComponent` em cada segmento, e não no caminho inteiro: um `_id` de meta carrega `:`
- * (`Product:list:Default`), e o path é montado por segmento. Codificar o caminho todo escaparia as
- * barras que o separam.
+ * Codifica UM segmento de path, deixando `:` cru.
  *
- * O SDK Python usa `quote(segment, safe='')` pela mesma razão — `quote_plus` geraria `+` para
- * espaço, e as duas URLs deixariam de bater byte a byte.
+ * Por segmento e não no caminho inteiro: um `_id` de meta carrega `:` (`Product:list:Default`), e
+ * codificar o path todo escaparia as barras que o separam.
+ *
+ * **Sub-delims e `:@` ficam crus de propósito.** `encodeURIComponent` os escaparia (`%3A`, `%24`,
+ * …), mas o `yarl` do aiohttp — sob o SDK Python — normaliza essas sequências de volta ao caractere
+ * ao montar a requisição, porque todas são `pchar` legal em segmento de path (RFC 3986). Escapá-las
+ * aqui faria os dois SDKs colocarem **bytes diferentes na rede** para o mesmo `_id`, que é
+ * exatamente a classe de divergência que o AGENTS.md manda travar por teste.
+ *
+ * Medido caractere a caractere contra o `yarl`, não suposto — e travado no teste de paridade, que
+ * compara esta saída com o `raw_path` que o stub do Python recebe.
+ *
+ * Todo o resto segue codificado: `/` vira `%2F` (senão o segmento quebraria o path) e espaço vira
+ * `%20` nos dois lados, nunca `+`.
  */
-const segment = (value: string): string => encodeURIComponent(value);
+const PATH_SAFE_ESCAPES = /%(3A|24|26|2C|3B|3D|40)/g;
+
+// `+` fica FORA da lista de propósito: o `yarl` mantém `%2B` codificado, e está certo — um `+` cru
+// num path pode ser lido como espaço por servidor leniente. Alinhado ao lado seguro, que também é o
+// que o Python faz. Medido: era a única divergência restante entre os dois após alinhar os demais.
+const PATH_SAFE_CHARS: Record<string, string> = { '3A': ':', '24': '$', '26': '&', '2C': ',', '3B': ';', '3D': '=', '40': '@' };
+
+const segment = (value: string): string => encodeURIComponent(value).replace(PATH_SAFE_ESCAPES, (_match, hex: string) => PATH_SAFE_CHARS[hex]);
 
 /** GET /api/admin/meta — os documentos de metadado do namespace. */
 export async function listMetaDocuments(opts: AdminMetaClientOptions): Promise<ListMetaDocumentsResult> {
