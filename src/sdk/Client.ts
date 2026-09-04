@@ -12,6 +12,7 @@ import { deserializeDates, serializeDates } from '../utils/dateSerialization';
 import getGeolocation from '../utils/getGeolocation';
 import * as adminCredentialsDomain from './domains/adminCredentials';
 import * as adminMcpAccessDomain from './domains/adminMcpAccess';
+import * as adminMetaDomain from './domains/adminMeta';
 import * as adminServiceAccountsDomain from './domains/adminServiceAccounts';
 import * as authDomain from './domains/auth';
 import * as changeUserDomain from './domains/changeUser';
@@ -856,6 +857,54 @@ export class KonectyClient {
 			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
 			{ name, username, accessMap },
 		);
+	}
+
+	/**
+	 * GET /api/admin/meta — os documentos de metadado do namespace
+	 * (`admin.listMetaDocuments` em `docs/features.json`). Exige sessão de admin.
+	 */
+	async listMetaDocuments(): Promise<adminMetaDomain.ListMetaDocumentsResult> {
+		return adminMetaDomain.listMetaDocuments({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey });
+	}
+
+	/**
+	 * GET /api/admin/meta/:document — o metadado de um documento
+	 * (`admin.readMeta` em `docs/features.json`). Exige sessão de admin.
+	 */
+	async readMeta(document: string): Promise<adminMetaDomain.ReadMetaResult> {
+		return adminMetaDomain.readMeta({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, document);
+	}
+
+	/**
+	 * PUT /api/admin/meta/:document/:type — grava o metadado singleton de um tipo
+	 * (`admin.upsertMeta` em `docs/features.json`). Escrita idêntica ao atual não versiona.
+	 */
+	async upsertMeta(document: string, type: string, body: Record<string, unknown>): Promise<adminMetaDomain.UpsertMetaCallResult> {
+		return adminMetaDomain.upsertMeta({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, document, type, body);
+	}
+
+	/**
+	 * DELETE /api/admin/meta/:document/:type — remove e versiona a remoção
+	 * (`admin.deleteMeta` em `docs/features.json`). O Namespace não é deletável.
+	 */
+	async deleteMeta(document: string, type: string): Promise<adminMetaDomain.DeleteMetaCallResult> {
+		return adminMetaDomain.deleteMeta({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, document, type);
+	}
+
+	/**
+	 * GET /api/admin/meta/:metaId/history — versões, mais recentes primeiro
+	 * (`admin.listMetaHistory` em `docs/features.json`). Meta sem histórico devolve lista vazia.
+	 */
+	async listMetaHistory(metaId: string, options?: adminMetaDomain.ListHistoryOptions): Promise<adminMetaDomain.ListMetaHistoryResult> {
+		return adminMetaDomain.listMetaHistory({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, metaId, options);
+	}
+
+	/**
+	 * POST /api/admin/meta/:metaId/rollback — restaura o conteúdo de uma versão anterior
+	 * (`admin.rollbackMeta` em `docs/features.json`). Forward-only: cria versão nova.
+	 */
+	async rollbackMeta(metaId: string, version: number): Promise<adminMetaDomain.RollbackMetaResult> {
+		return adminMetaDomain.rollbackMeta({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, metaId, version);
 	}
 
 	/**
