@@ -11,6 +11,7 @@ import logger from '../lib/logger';
 import { deserializeDates, serializeDates } from '../utils/dateSerialization';
 import getGeolocation from '../utils/getGeolocation';
 import * as adminCredentialsDomain from './domains/adminCredentials';
+import * as adminMcpAccessDomain from './domains/adminMcpAccess';
 import * as adminMetaDomain from './domains/adminMeta';
 import * as adminServiceAccountsDomain from './domains/adminServiceAccounts';
 import * as authDomain from './domains/auth';
@@ -825,6 +826,24 @@ export class KonectyClient {
 	}
 
 	/**
+	 * GET /api/admin/mcp-access — the roles allowed to reach the MCP, split
+	 * into read and write (`admin.getMcpAccess` in `docs/features.json`).
+	 * Requires an admin session. Matches the Python SDK's `get_mcp_access`.
+	 */
+	async getMcpAccess(): Promise<adminMcpAccessDomain.GetMcpAccessResult> {
+		return adminMcpAccessDomain.getMcpAccess({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey });
+	}
+
+	/**
+	 * PUT /api/admin/mcp-access — replaces both role lists
+	 * (`admin.updateMcpAccess` in `docs/features.json`). Requires an admin
+	 * session. Matches the Python SDK's `update_mcp_access`.
+	 */
+	async updateMcpAccess(body: adminMcpAccessDomain.UpdateMcpAccessBody): Promise<adminMcpAccessDomain.UpdateMcpAccessResult> {
+		return adminMcpAccessDomain.updateMcpAccess({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, body);
+	}
+
+	/**
 	 * POST /api/admin/service-accounts — creates a service account with a
 	 * sovereign access map (`admin.createServiceAccount` in
 	 * `docs/features.json`). Requires an admin session.
@@ -1382,6 +1401,7 @@ export type {
 	ListAllPatsResult,
 	PatSummary,
 } from './domains/adminCredentials';
+export type { GetMcpAccessResult, McpAccessConfig, McpAccessRole, UpdateMcpAccessBody, UpdateMcpAccessResult } from './domains/adminMcpAccess';
 export type {
 	AccessLevel,
 	CreateServiceAccountBody,
