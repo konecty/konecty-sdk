@@ -139,7 +139,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/find?${params.toString()}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 			if (result.status >= 400) {
@@ -164,7 +164,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}`, {
 				method: 'POST',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(serializeDates(data)),
@@ -194,7 +194,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}`, {
 				method: 'PUT',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(serializeDates({ ids, data })),
@@ -220,7 +220,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}`, {
 				method: 'DELETE',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(serializeDates({ ids })),
@@ -644,7 +644,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/${_id}/history`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 
@@ -793,7 +793,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/api/menu/${menu}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 			if (result.status >= 400) {
@@ -820,7 +820,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/api/list-view/${module}/${id}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 
@@ -849,7 +849,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/api/document/${name}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 
@@ -878,7 +878,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/api/form/${module}/${id}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 
@@ -907,7 +907,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/api/metas/${document}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 
@@ -935,14 +935,19 @@ export class KonectyClient {
 		try {
 			const userToken = this.#getToken(token);
 
-			if (userToken == null) {
+			// Sem token E fora do browser não há sessão possível: no Node o cookie
+			// não existe, então perguntar ao servidor é uma requisição garantidamente
+			// inútil. No browser é o oposto — o `_authTokenId` pode ser `HttpOnly`,
+			// invisível para o JS e ainda assim enviado pelo navegador em toda
+			// requisição de mesma origem. Quem sabe se há sessão é o servidor.
+			if (userToken == null && !isBrowser) {
 				return { logged: false };
 			}
 
 			const result = await fetch(`${this.#options.endpoint}/rest/auth/info`, {
 				method: 'GET',
 				headers: {
-					Authorization: userToken,
+					Authorization: userToken ?? '',
 				},
 			});
 
@@ -952,7 +957,10 @@ export class KonectyClient {
 
 			const body = (await result.json()) as KonectyUserInfo;
 
-			if (body.logged) {
+			// `userToken == null` é a sessão autenticada por cookie: não há token em
+			// mãos para adotar como `accessKey` nem para regravar no cookie — e não
+			// precisa haver, o navegador continua enviando o que já tem.
+			if (body.logged && userToken != null) {
 				this.#options.accessKey = userToken;
 
 				if (isBrowser && disableSetCookie !== true) {
@@ -987,7 +995,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/lookup/${field}?${params.toString()}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 			if (result.status >= 400) {
@@ -1006,6 +1014,12 @@ export class KonectyClient {
 		}
 	}
 
+	/**
+	 * Token explícito, senão o cookie legível por JS. Devolver `undefined` no
+	 * browser é resultado esperado, não erro: sob `HttpOnly` o cookie existe e é
+	 * enviado pelo navegador, apenas não é legível daqui. Quem chama trata a
+	 * ausência pedindo ao servidor — nunca desistindo da requisição.
+	 */
 	#getToken(token?: string): string | null | undefined {
 		if (token != null) {
 			return token;
@@ -1020,7 +1034,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/menu/documents`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 			if (result.status >= 400) {
@@ -1047,7 +1061,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/menu/documents/${name}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 			if (result.status >= 400) {
@@ -1074,7 +1088,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/data/Queue/queue/next/${queueId}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 			if (result.status >= 400) {
@@ -1097,7 +1111,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/dne/cep/${zipCode}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 			if (result.status >= 400) {
@@ -1124,7 +1138,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/access/${document}`, {
 				method: 'GET',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 				},
 			});
 			if (result.status >= 400) {
@@ -1163,7 +1177,7 @@ export class KonectyClient {
 			const result = await fetch(`${this.#options.endpoint}/rest/access/${document}/${accessName}`, {
 				method: 'PUT',
 				headers: {
-					Authorization: `${this.#options.accessKey}`,
+					Authorization: this.#options.accessKey ?? '',
 					'Content-Type': 'application/json',
 				},
 				body: JSON.stringify(serializeDates(payload)),
