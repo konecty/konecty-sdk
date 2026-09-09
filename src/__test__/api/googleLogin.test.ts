@@ -169,7 +169,13 @@ describe('Konecty Google Login', () => {
 			expect(thrown).to.be.instanceOf(KonectyGoogleSessionError);
 			expect((thrown as KonectyGoogleSessionError).code).to.equal('expired_code');
 			expect(konecty.options.accessKey).to.be.undefined;
-			expect(authorizationOnNextRequest).to.equal('undefined');
+			// Sem sessão adotada, a requisição seguinte não pode carregar credencial
+			// alguma. Esta asserção exigia a string `"undefined"` — o sintoma do
+			// defeito da Hub #4838, fixado como se fosse contrato: o Konecty a aceita
+			// como token válido (9 caracteres, não-vazia) e nunca chega ao fallback de
+			// cookie. O que o teste quer dizer continua valendo, agora sem o veneno.
+			expect(authorizationOnNextRequest).to.not.equal('undefined');
+			expect(authorizationOnNextRequest ?? '').to.equal('');
 		});
 
 		it('Should fall back to the `failed` code when the body carries no recognisable one', async () => {
