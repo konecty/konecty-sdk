@@ -1,3 +1,43 @@
+## [2.3.0](https://github.com/konecty/konecty-sdk/compare/2.2.0...2.3.0) (2026-09-09)
+
+
+### :scissors: Refactor
+
+* **admin:** renames adminRevokePat to revokeUserPat for cross-SDK parity ([329240c](https://github.com/konecty/konecty-sdk/commit/329240cb9d84b66738feafab8144885f29ea5c08))
+* **sdk:** extrai patShared.ts com tipo de erro e fetch helper compartilhados ([79b07b6](https://github.com/konecty/konecty-sdk/commit/79b07b639c892127f8cf31dfd5a109419a49b5db))
+
+
+### 📔 Docs
+
+* **sdk:** corrige chave de manifesto no JSDoc de revokeUserPat ([7919304](https://github.com/konecty/konecty-sdk/commit/791930401b84a7b812a954c6550e5e161331c40f))
+* **tests:** atualiza citações de paridade para os nomes finais do SDK Python ([8f14e04](https://github.com/konecty/konecty-sdk/commit/8f14e0443b1f05770e0e821ee6edf71e49c21dd4))
+
+
+### 🦊 CI/CD
+
+* **release:** husky nao roda no commit gerado pelo semantic-release ([2fa0a1d](https://github.com/konecty/konecty-sdk/commit/2fa0a1da8b08d3aa9e6a8db9c5ed8e5842eee41e))
+
+
+### 🧪 Tests
+
+* **sdk:** cobre caminho de erro de revokeLegacyToken, listServiceAccounts e listPats ([a4068d3](https://github.com/konecty/konecty-sdk/commit/a4068d39ee1f9809cce139add54e280dcadbe8b3))
+* **sdk:** trava a omissão de expiresAt em createServiceAccountPat ([852cf14](https://github.com/konecty/konecty-sdk/commit/852cf148b53295c64ab9677b72bad38a70050e0d))
+* **sdk:** trava explicitamente a omissão de accessMap em createServiceAccount ([b0d637e](https://github.com/konecty/konecty-sdk/commit/b0d637edae954d81494caaea2af9fc0e86ea2e96))
+
+
+### 🚀 Features
+
+* **admin:** adds admin credential and service-account methods ([b50e33a](https://github.com/konecty/konecty-sdk/commit/b50e33a84d17b3c363d57e4a5e7b2b16339140c5))
+* **admin:** metodos da Meta Admin API (fatia minima) ([84bc6c9](https://github.com/konecty/konecty-sdk/commit/84bc6c90ce06bb3a8faac3611a0cb9790dc41224))
+* **admin:** métodos de acesso ao MCP por papel ([58a5554](https://github.com/konecty/konecty-sdk/commit/58a5554775e08d7784c1341676ba2f067040441f))
+* **auth:** adds self-service Personal Access Token methods ([ce7dd52](https://github.com/konecty/konecty-sdk/commit/ce7dd525805852d8a2e0e357b200047f1b1be7fc))
+
+
+### 🛠 Fixes
+
+* **admin:** alinha a codificacao de segmento com o SDK Python ([3975ee5](https://github.com/konecty/konecty-sdk/commit/3975ee578a846a5ee4d43aff4f9dee434e3d3ea2))
+* **auth:** sessão por cookie HttpOnly deixa de ser bloqueada pelo cliente ([9433a0c](https://github.com/konecty/konecty-sdk/commit/9433a0cde096570a9beaae8e29b08e042b9b411d)), closes [#4824](https://github.com/konecty/konecty-sdk/issues/4824) [crm-imobiliario-interativo#501](https://github.com/konecty/crm-imobiliario-interativo/issues/501) [#4838](https://github.com/konecty/konecty-sdk/issues/4838)
+
 ## [2.2.0](https://github.com/konecty/konecty-sdk/compare/2.1.0...2.2.0) (2026-07-30)
 
 
