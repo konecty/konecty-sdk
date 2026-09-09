@@ -27,4 +27,12 @@ jobs:
               env:
                   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
                   NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+                  # Hooks de git sao ferramenta de desenvolvedor, nao portao de CI.
+                  # O @semantic-release/git cria o commit `chore(release): x.y.z` com
+                  # as release notes inteiras no corpo, e o commit-msg do husky roda
+                  # commitlint em cima dele: qualquer entrada de changelog com footer
+                  # acima de 100 chars (footer-max-line-length) derruba a release no
+                  # passo `prepare`, antes do publish. Foi o que aconteceu na 2.3.0.
+                  # `.husky/_/husky.sh` respeita HUSKY=0 (husky v7).
+                  HUSKY: 0
               run: npx semantic-release
