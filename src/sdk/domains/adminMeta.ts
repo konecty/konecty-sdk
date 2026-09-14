@@ -47,6 +47,9 @@ export type MetaHistoryEntry = {
 	via: string;
 };
 
+/** Os campos de hook de um metadado `document`/`composite`. */
+export type HookFieldName = 'scriptBeforeValidation' | 'validationScript' | 'scriptAfterSave' | 'validationData';
+
 export type UpsertMetaResult = {
 	matchedCount: number;
 	modifiedCount: number;
@@ -54,6 +57,19 @@ export type UpsertMetaResult = {
 	/** `false` quando o conteúdo era idêntico ao atual — nenhuma versão criada. */
 	versioned: boolean;
 	version: number;
+	/**
+	 * Campos de hook que o payload **omitiu** e vieram do metadado já gravado.
+	 *
+	 * Hook é campo do metadado, mas nos repositórios de metadados ele vive em
+	 * `MetaObjects/<Doc>/hook/<nome>.js|json` e nunca aparece no `document.json`. Por isso o core
+	 * preserva o hook cuja chave o payload não menciona, em vez de apagá-lo; para remover um, envie
+	 * `null` explícito naquele campo. Esta lista é a única pista de que a escrita **não** foi um
+	 * replace literal.
+	 *
+	 * Opcional porque um deployment anterior ao contrato não devolve o campo — trate `undefined`
+	 * como "este servidor não informa", e não como "nada foi preservado".
+	 */
+	preservedHooks?: HookFieldName[];
 };
 
 export type DeleteMetaResult = {
@@ -132,6 +148,13 @@ export async function readMeta(opts: AdminMetaClientOptions, document: string): 
  * (`document`, `composite`, `namespace`).
  *
  * Escrita idêntica ao estado atual **não** cria versão (`versioned: false`).
+ */
+/**
+ * PUT /api/admin/meta/:document/:type — grava o metadado singleton de um tipo.
+ *
+ * Campo de hook que o `body` **omite** é preservado do metadado já gravado, e volta nomeado em
+ * `data.preservedHooks`; para remover um hook, envie `null` naquele campo. Escrita idêntica ao
+ * estado atual não versiona (`versioned: false`).
  */
 export async function upsertMeta(opts: AdminMetaClientOptions, document: string, type: string, body: Record<string, unknown>): Promise<UpsertMetaCallResult> {
 	const { url } = base(opts);

@@ -159,6 +159,48 @@ describe('Konecty Admin Meta', () => {
 			expect(result.success === true && result.data.versioned).to.equal(false);
 		});
 
+		// Equivalent Python test: tests/test_admin.py::test_upsert_meta_reports_the_preserved_hooks
+		it('Should report the hook fields the core preserved from the stored meta', async () => {
+			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
+			let receivedBody: unknown = null;
+
+			server.use(
+				rest.put(`${ENDPOINT}/api/admin/meta/:document/:type`, async (req, res, ctx) => {
+					receivedBody = await req.json();
+					return res(
+						ctx.status(200),
+						ctx.json({
+							success: true,
+							data: { matchedCount: 1, modifiedCount: 1, upsertedCount: 0, versioned: true, version: 4, preservedHooks: ['scriptBeforeValidation', 'validationData'] },
+						}),
+					);
+				}),
+			);
+
+			// O corpo é a forma literal de um `document.json` de repositório de metadados: nenhuma
+			// chave de hook, porque lá elas vivem em `hook/*.js|json`.
+			const result = await konecty.upsertMeta('Contact', 'document', { icon: 'random', menuSorter: 1 });
+
+			expect(receivedBody).to.deep.equal({ icon: 'random', menuSorter: 1 });
+			expect(result.success === true && result.data.preservedHooks).to.deep.equal(['scriptBeforeValidation', 'validationData']);
+		});
+
+		// Equivalent Python test: tests/test_admin.py::test_upsert_meta_omits_preserved_hooks_on_an_older_deployment
+		it('Should leave preservedHooks undefined when the deployment predates the contract', async () => {
+			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
+
+			server.use(
+				rest.put(`${ENDPOINT}/api/admin/meta/:document/:type`, (req, res, ctx) =>
+					res(ctx.status(200), ctx.json({ success: true, data: { matchedCount: 1, modifiedCount: 1, upsertedCount: 0, versioned: true, version: 4 } })),
+				),
+			);
+
+			const result = await konecty.upsertMeta('Contact', 'document', { icon: 'random' });
+
+			// `undefined` significa "este servidor não informa", não "nada foi preservado".
+			expect(result.success === true && result.data.preservedHooks).to.equal(undefined);
+		});
+
 		// Equivalent Python test: tests/test_admin.py::test_upsert_meta_surfaces_the_read_only_config_code
 		it('Should surface the 409 read-only-config code from a METADATA_DIR deployment', async () => {
 			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });

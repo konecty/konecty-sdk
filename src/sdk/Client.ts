@@ -878,6 +878,9 @@ export class KonectyClient {
 	/**
 	 * PUT /api/admin/meta/:document/:type — grava o metadado singleton de um tipo
 	 * (`admin.upsertMeta` em `docs/features.json`). Escrita idêntica ao atual não versiona.
+	 *
+	 * Campo de hook que o `body` omite é **preservado** do metadado já gravado e volta nomeado em
+	 * `data.preservedHooks`; para remover um hook, envie `null` naquele campo.
 	 */
 	async upsertMeta(document: string, type: string, body: Record<string, unknown>): Promise<adminMetaDomain.UpsertMetaCallResult> {
 		return adminMetaDomain.upsertMeta({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, document, type, body);
