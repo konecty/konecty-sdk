@@ -4,6 +4,8 @@ import fetch from 'isomorphic-fetch';
 import Cookies from 'js-cookie';
 import get from 'lodash/get';
 import qs from 'qs';
+
+import { errorItemsFromResponseBody, KonectyErrorItem } from './errors';
 import { UserGroupType } from './User';
 
 import { PickFromPath, UnionToIntersection } from '@konecty/sdk/TypeUtils';
@@ -73,7 +75,9 @@ export type KonectyFindResult<T = object> = {
 	success: boolean;
 	total?: number;
 	data?: Array<T>;
-	errors?: string[] | { message: string }[];
+	// `code` é opcional e aditivo: carrega o código legível por máquina da API
+	// (ex.: SORT_ABOVE_MAX_PAGE_SIZE) até quem chama, sem quebrar quem lê só `message`.
+	errors?: string[] | KonectyErrorItem[];
 };
 
 export type KonectyGetMetaResult<T> = {
@@ -148,7 +152,10 @@ export class KonectyClient {
 				},
 			});
 			if (result.status >= 400) {
-				throw new Error(`${result.status} - ${result.statusText}`);
+				// O corpo traz `errors[0].code`; descartá-lo fazia um 400 por sort acima do
+				// teto chegar como "400 - Bad Request", sem código e sem a instrução de
+				// como corrigir a chamada. `Client` não lança — devolve o resultado de erro.
+				return { success: false, errors: errorItemsFromResponseBody(result.status, result.statusText, await result.text()) };
 			}
 
 			const body = await result.json();
@@ -1398,6 +1405,8 @@ export type { KpiConfig, KpiResult } from './types/query';
  * (domain, expiry) would otherwise end up with two cookies of the same name.
  */
 export { exchangeGoogleCode, getGoogleLoginUrl, getLoginOptions, KonectyGoogleSessionError } from './domains/auth';
+export { KonectySortLimitError, SORT_ABOVE_MAX_PAGE_SIZE, MAX_SORTED_PAGE_SIZE, konectyErrorFromErrors } from './errors';
+export type { KonectyErrorItem } from './errors';
 export type {
 	AuthClientOptions,
 	GoogleCallbackErrorCode,

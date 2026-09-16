@@ -103,6 +103,36 @@ A classe base KonectyModule (e as subclasses UserModule, RoleModule, GroupModule
 
 - **findOne**: find com limit 1 → GET /rest/data/:document/find.
 - **find**: find com opções → GET /rest/data/:document/find.
+
+### Ordenação acima de 1000 registros
+
+O Konecty recusa ordenação arbitrária quando `limit` passa de 1000 — e também no
+caso sem limite (`limit: -1`). A resposta é HTTP 400 com o código
+`SORT_ABOVE_MAX_PAGE_SIZE`. Antes de 2026-09 a API trocava o `sort` pedido por
+`{_id: 1}` em silêncio e devolvia 200 com os dados fora de ordem.
+
+O SDK levanta `KonectySortLimitError` (subclasse de `Error`, com `.code`), tanto
+em `find`/`findOne` quanto nos caminhos de stream, preservando a mensagem do
+servidor — que diz como corrigir a chamada:
+
+```ts
+import { KonectySortLimitError } from '@konecty/sdk/Client';
+
+try {
+    await module.find(filter, { sort: [{ property: 'name', direction: 'ASC' }], limit: 5000 });
+} catch (error) {
+    if (error instanceof KonectySortLimitError) {
+        // ordene por _id (asc ou desc) e pagine por faixa de _id,
+        // ou peça no máximo 1000 registros
+    }
+}
+```
+
+Ordenar por `_id` — ascendente **ou** descendente — é sempre aceito, em qualquer
+volume, e é o caminho recomendado para leitura em volume. `sort` vazio (`[]`)
+significa "sem ordenação" e não é recusado.
+
+Equivalente Python: `KonectySortLimitError` em `KonectySdkPython.lib.exceptions`.
 - **getHistory**: getHistory do client → GET /rest/data/:document/:dataId/history.
 - **validate**: apenas local (validação de campos obrigatórios), não chama o CRM.
 - **create**: create do client → POST /rest/data/:document.
