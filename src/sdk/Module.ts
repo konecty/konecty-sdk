@@ -3,7 +3,7 @@ import { FilesManager } from '@konecty/sdk/FilesManager';
 import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
 import 'reflect-metadata';
-import parseKonectyErrors from '../utils/parseErrors';
+import { konectyErrorFromErrors } from './errors';
 import { FieldOperators } from './FieldOperators';
 import { KonFiles } from './types/files';
 import { ArrElement, Nullable, PickFromPath, UnionToIntersection } from './TypeUtils';
@@ -172,7 +172,7 @@ export class KonectyModule<
 			return null;
 		}
 
-		throw new Error(parseKonectyErrors(result.errors ?? ['Unknown error']));
+		throw konectyErrorFromErrors(result.errors);
 	}
 
 	async find(
@@ -198,7 +198,7 @@ export class KonectyModule<
 				count: result.total as number,
 			};
 		}
-		throw new Error(parseKonectyErrors(result.errors ?? ['Unknown error']));
+		throw konectyErrorFromErrors(result.errors);
 	}
 
 	async getHistory(_id: string): Promise<FindResult<History>> {
@@ -210,7 +210,7 @@ export class KonectyModule<
 				count: result.total as number,
 			};
 		}
-		throw new Error(parseKonectyErrors(result.errors ?? ['Unknown error']));
+		throw konectyErrorFromErrors(result.errors);
 	}
 
 	// #endregion
@@ -284,7 +284,7 @@ export class KonectyModule<
 				total: result.total as number,
 			};
 		}
-		throw new Error(parseKonectyErrors(result.errors ?? ['Unknown error']));
+		throw konectyErrorFromErrors(result.errors);
 	}
 
 	filesManager(recordData: Omit<KonFiles.RecordData, 'metaObject'>, files?: KonFiles.FileConfig[]): FilesManager {

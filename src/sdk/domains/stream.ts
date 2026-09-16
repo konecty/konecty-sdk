@@ -4,6 +4,7 @@ import fetch from 'isomorphic-fetch';
 import { deserializeDates } from '../../utils/dateSerialization';
 import { readNdjsonStream } from '../../utils/ndjson';
 import logger from '../../lib/logger';
+import { errorItemsFromResponseBody, konectyErrorFromErrors } from '../errors';
 
 export type StreamClientOptions = {
 	endpoint: string;
@@ -77,7 +78,9 @@ export async function findStream<T = object>(
 	if (response.status >= 400) {
 		const errBody = await response.text();
 		logger.error(`${response.status} ${response.statusText}`, { url, body: errBody });
-		throw new Error(`${response.status} - ${response.statusText}`);
+		// O corpo já estava sendo lido para o log e descartado na exceção: um 400 por
+		// sort acima do teto chegava ao chamador como "400 - Bad Request".
+		throw konectyErrorFromErrors(errorItemsFromResponseBody(response.status, response.statusText, errBody));
 	}
 
 	const total =
@@ -120,7 +123,9 @@ export async function streamCount(
 	if (response.status >= 400) {
 		const errBody = await response.text();
 		logger.error(`${response.status} ${response.statusText}`, { url, body: errBody });
-		throw new Error(`${response.status} - ${response.statusText}`);
+		// O corpo já estava sendo lido para o log e descartado na exceção: um 400 por
+		// sort acima do teto chegava ao chamador como "400 - Bad Request".
+		throw konectyErrorFromErrors(errorItemsFromResponseBody(response.status, response.statusText, errBody));
 	}
 
 	const body = (await response.json()) as StreamCountResult;
