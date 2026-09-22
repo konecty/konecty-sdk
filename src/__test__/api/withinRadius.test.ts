@@ -73,6 +73,21 @@ describe('operador de filtro within_radius', () => {
 			expect(center[1]).to.equal(-30.0346);
 		});
 
+		it('não coage string numérica — deixa o servidor recusar', () => {
+			// Paridade com `test_numeric_strings_are_not_coerced` em
+			// `konecty-sdk-python/tests/test_within_radius.py`: mesma entrada, mesma
+			// saída. O tipo já barra isto em tempo de compilação, mas um chamador em
+			// JS puro passa direto — e o servidor recusa string numérica de propósito
+			// (GEO-02). Coagir aqui esconderia o erro do chamador em vez de reportá-lo.
+			const condition = withinRadiusCondition(TERM, {
+				center: ['-51.2177', '-30.0346'] as unknown as WithinRadiusCoordinatePair,
+				radius: RADIUS_METERS,
+			});
+			const center = (condition.value as { center: unknown }).center;
+
+			expect(center).to.deep.equal(['-51.2177', '-30.0346']);
+		});
+
 		it('aceita centro por referência a outro registro', () => {
 			const condition = withinRadiusCondition(TERM, { center: CENTER_REF, radius: RADIUS_METERS });
 
