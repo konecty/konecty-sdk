@@ -1,6 +1,7 @@
 export * from '../src/sdk/Client';
 export * from '../src/sdk/CrossModuleQueryBuilder';
 export * from '../src/sdk/FieldOperators';
+export * from '../src/sdk/filters/withinRadius';
 export * from '../src/sdk/FilesManager';
 export * from '../src/sdk/Group';
 export * from '../src/sdk/Module';

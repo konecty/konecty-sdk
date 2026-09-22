@@ -1,3 +1,10 @@
+import {
+	KonectyWithinRadiusCenterError,
+	KonectyWithinRadiusValueError,
+	WITHIN_RADIUS_CENTER_UNRESOLVED,
+	WITHIN_RADIUS_INVALID_VALUE,
+} from '@konecty/sdk/filters/withinRadius';
+
 /**
  * Código devolvido pelo Konecty quando a requisição pede ordenação arbitrária
  * acima do teto de página. Acima de `MAX_SORTED_PAGE_SIZE` registros — e no caso
@@ -68,6 +75,21 @@ export function errorItemsFromResponseBody(status: number, statusText: string, r
 }
 
 /**
+ * Códigos que o SDK promove a exceção própria. A tabela existe para que um
+ * código novo seja UMA linha aqui em vez de mais um `if` no meio do fluxo — e
+ * para que a lista de códigos suportados seja legível de uma vez, ao lado da
+ * lista equivalente no SDK Python (`_ERROR_BY_CODE` em `exceptions.py`).
+ *
+ * Todo código ausente daqui continua virando `Error` genérico, com a mensagem
+ * do servidor preservada.
+ */
+const ERROR_BY_CODE: Record<string, new (message?: string) => Error> = {
+	[SORT_ABOVE_MAX_PAGE_SIZE]: KonectySortLimitError,
+	[WITHIN_RADIUS_INVALID_VALUE]: KonectyWithinRadiusValueError,
+	[WITHIN_RADIUS_CENTER_UNRESOLVED]: KonectyWithinRadiusCenterError,
+};
+
+/**
  * Converte a lista de erros da API na exceção mais específica que der. É o que os
  * métodos de `Module` lançam, no lugar de um `Error` genérico.
  */
@@ -76,9 +98,10 @@ export function konectyErrorFromErrors(errors: string[] | KonectyErrorItem[] | u
 		typeof error === 'string' ? { message: error } : error,
 	);
 
-	const sortError = items.find(error => error?.code === SORT_ABOVE_MAX_PAGE_SIZE);
-	if (sortError != null) {
-		return new KonectySortLimitError(sortError.message);
+	const typed = items.find(error => error?.code != null && ERROR_BY_CODE[error.code] != null);
+	if (typed != null) {
+		const TypedError = ERROR_BY_CODE[typed.code as string];
+		return new TypedError(typed.message);
 	}
 
 	return new Error(items.map(error => error?.message).filter(Boolean).join('\n'));

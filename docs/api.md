@@ -133,6 +133,54 @@ volume, e é o caminho recomendado para leitura em volume. `sort` vazio (`[]`)
 significa "sem ordenação" e não é recusado.
 
 Equivalente Python: `KonectySortLimitError` em `KonectySdkPython.lib.exceptions`.
+
+### Filtro de busca por raio geográfico (`within_radius`)
+
+Filtra registros cujo campo `address` esteja dentro de um raio, em **metros**, a
+partir de um centro. O `term` é o campo `address` puro — o sufixo `.geolocation`
+é acrescentado pelo servidor, não pelo cliente.
+
+```ts
+import { withinRadiusCondition } from '@konecty/sdk/Client';
+
+// Porto Alegre, 5 km. O centro é [longitude, latitude] — longitude PRIMEIRO.
+const condition = withinRadiusCondition('address', { center: [-51.2177, -30.0346], radius: 5000 });
+// { term: 'address', operator: 'within_radius', value: { center: [-51.2177, -30.0346], radius: 5000 } }
+
+await module.find({ match: 'and', conditions: [condition] });
+```
+
+**A ordem é `[longitude, latitude]`**, a mesma do par já gravado em
+`address.geolocation`. Inverter as duas é o erro mais comum deste operador, e é
+por isso que `WithinRadiusCoordinatePair` é uma tupla nomeada em vez de
+`number[]`.
+
+O centro também pode vir de outro registro — "perto do empreendimento X" — sem
+uma ida e volta para descobrir as coordenadas antes:
+
+```ts
+withinRadiusCondition('address', {
+    center: { document: 'Development', _id: '<id>', field: 'address' },
+    radius: 2000,
+});
+```
+
+O servidor lê o registro-centro sob controle de acesso completo. `field` é
+obrigatório porque um documento pode ter mais de um campo `address`.
+
+Dois códigos de erro chegam tipados, com a mensagem do servidor preservada:
+
+| Código | Exceção | Quando |
+| --- | --- | --- |
+| `WITHIN_RADIUS_INVALID_VALUE` | `KonectyWithinRadiusValueError` | forma ou faixa do valor recusada (coordenada fora de faixa, string numérica, raio ≤ 0 ou acima do teto) |
+| `WITHIN_RADIUS_CENTER_UNRESOLVED` | `KonectyWithinRadiusCenterError` | o registro-centro não existe, não é legível, ou não tem geolocalização |
+
+O SDK **não** valida faixa nem teto de raio: quem decide é o servidor, e um
+limite copiado aqui passaria a mentir assim que o backend mudasse.
+
+Equivalente Python: `within_radius_condition` e `FilterOperator.WITHIN_RADIUS` em
+`KonectySdkPython.lib.filters`; `KonectyWithinRadiusValueError` e
+`KonectyWithinRadiusCenterError` em `KonectySdkPython.lib.exceptions`.
 - **getHistory**: getHistory do client → GET /rest/data/:document/:dataId/history.
 - **validate**: apenas local (validação de campos obrigatórios), não chama o CRM.
 - **create**: create do client → POST /rest/data/:document.

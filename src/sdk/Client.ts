@@ -1407,6 +1407,20 @@ export type { KpiConfig, KpiResult } from './types/query';
 export { exchangeGoogleCode, getGoogleLoginUrl, getLoginOptions, KonectyGoogleSessionError } from './domains/auth';
 export { KonectySortLimitError, SORT_ABOVE_MAX_PAGE_SIZE, MAX_SORTED_PAGE_SIZE, konectyErrorFromErrors } from './errors';
 export type { KonectyErrorItem } from './errors';
+/**
+ * Filtro de busca por raio geográfico. O `center` é `[longitude, latitude]` —
+ * longitude PRIMEIRO — e o `radius` é em metros. Espelhado no SDK Python
+ * (`KonectySdkPython.lib.filters` / `.exceptions`).
+ */
+export {
+	KonectyWithinRadiusCenterError,
+	KonectyWithinRadiusValueError,
+	WITHIN_RADIUS,
+	WITHIN_RADIUS_CENTER_UNRESOLVED,
+	WITHIN_RADIUS_INVALID_VALUE,
+	withinRadiusCondition,
+} from './filters/withinRadius';
+export type { WithinRadiusCenter, WithinRadiusCenterRef, WithinRadiusCoordinatePair, WithinRadiusValue } from './filters/withinRadius';
 export type {
 	AuthClientOptions,
 	GoogleCallbackErrorCode,
