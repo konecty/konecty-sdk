@@ -12,6 +12,7 @@ import type { WithinRadiusCenterRef, WithinRadiusCoordinatePair } from '@konecty
 import { expect } from 'chai';
 
 import { rest } from 'msw';
+import { ProductModule } from '../../__test__/fixtures/types/Product';
 import { server } from '../../__test__/setup-test';
 
 /**
@@ -27,6 +28,21 @@ import { server } from '../../__test__/setup-test';
  * O SDK **não** duplica a validação de faixa nem o teto de raio — quem decide é
  * o servidor, e um teto copiado aqui passaria a mentir assim que o backend
  * mudasse. Mesma postura do `SORT_ABOVE_MAX_PAGE_SIZE`.
+ *
+ * ## Assimetrias com o SDK Python que são ESCOLHA, não defeito
+ *
+ * 1. **Aridade.** Aqui é `withinRadiusCondition(term, { center, radius })`; no
+ *    Python é `within_radius_condition(term, center, radius)`. Mantidas assim de
+ *    propósito: cada linguagem segue a convenção do próprio SDK — o TS passa
+ *    objeto de opções em todo lugar (`client.find(module, { filter, sort })`), o
+ *    Python passa parâmetros nomeados. O que a paridade exige é mesma ENTRADA →
+ *    mesma SAÍDA, e isso é o que os literais deste arquivo travam; uniformizar a
+ *    forma de chamar tornaria um dos dois estranho na própria linguagem.
+ * 2. **Builder.** O Python tem `KonectyFilter.add_within_radius` porque tem uma
+ *    classe `KonectyFilter` construída por encadeamento; o TS monta filtro como
+ *    objeto literal e **não tem builder nenhum** — inventar um só para este
+ *    operador seria superfície pública nova sem caso de uso (YAGNI), e um builder
+ *    parcial, que cobre um operador de catorze, é pior que nenhum.
  */
 
 /** O termo é o campo `address` puro: o sufixo `.geolocation` é do servidor, não do cliente. */
@@ -47,7 +63,38 @@ const EXPECTED_CENTER_REF_CONDITION_JSON =
 const INVALID_VALUE_MESSAGE =
 	'Invalid value for operator within_radius on term "address": center must be an array of exactly 2 numbers, in the order [longitude, latitude]';
 
-const CENTER_UNRESOLVED_MESSAGE = 'Could not resolve the center record for operator within_radius on term "address".';
+/**
+ * Id de correlação de exemplo, no formato que o servidor emite: doze caracteres
+ * hexadecimais (`randomUUID()` sem hífens, truncado) quando não há tracing
+ * ativo, ou o `traceId` de 32 caracteres do span quando há.
+ *
+ * Ele é o caminho de SUPORTE inteiro do `WITHIN_RADIUS_CENTER_UNRESOLVED`: as
+ * causas da falha (registro inexistente, ilegível, ou sem geolocalização) são
+ * deliberadamente indistinguíveis na resposta — separá-las daria a quem não pode
+ * ler o registro um oráculo de existência e de localização. A causa real fica
+ * só no log do servidor, indexada por este id. Um SDK que truncasse a mensagem
+ * jogaria fora a única chave que liga o relato do usuário à linha de log.
+ */
+const CORRELATION_ID = '7b3f2a9c41d8';
+
+/**
+ * Mensagem REAL do servidor quando a hidratação do centro por referência falha,
+ * copiada de `src/imports/data/filters/hydrateFilterCenters.ts` (função
+ * `unresolvedReturn`) no repo Konecty. Termina com o id de correlação.
+ */
+const CENTER_UNRESOLVED_MESSAGE = `Could not resolve the center record for operator within_radius on term "address". Correlation id: ${CORRELATION_ID}`;
+
+/**
+ * A OUTRA mensagem com o mesmo código, do guard de "centro não hidratado" em
+ * `src/imports/data/filters/withinRadius.ts` (`compileWithinRadius`): um centro
+ * por referência que chega por um caminho que não hidrata (`update`,
+ * `findById`) é recusado aqui, com texto próprio sobre caminhos de leitura e
+ * **sem** id de correlação. São duas mensagens diferentes sob um código só, e o
+ * SDK não pode assumir a forma de nenhuma das duas.
+ */
+const CENTER_UNRESOLVED_WRITE_PATH_MESSAGE =
+	'Could not resolve the center record for operator within_radius on term "address". ' +
+	'A center by record reference is resolved only on read paths (find, stream/export and lookup) and is not supported here.';
 
 const ENDPOINT = 'http://localhost:3000';
 
@@ -120,6 +167,32 @@ describe('operador de filtro within_radius', () => {
 			expect(rawSearch).to.not.contain('"');
 			expect(rawSearch).to.not.contain(' ');
 		});
+
+		it('põe também o centro POR REFERÊNCIA na query string, sem caractere solto', async () => {
+			// O centro por referência é um objeto aninhado dentro do valor da condição —
+			// mais chaves, mais aspas e um `_id` para escapar que o par literal não tem.
+			// Até aqui só o literal passava por uma requisição de verdade, nos dois SDKs.
+			let filterParam: string | null = null;
+			let rawSearch = '';
+
+			server.use(
+				rest.get(`${ENDPOINT}/rest/data/Product/find`, (req, res, ctx) => {
+					filterParam = req.url.searchParams.get('filter');
+					rawSearch = req.url.search;
+					return res(ctx.status(200), ctx.json({ success: true, data: [], total: 0 }));
+				}),
+			);
+
+			await client.find('Product', {
+				filter: { match: 'and', conditions: [withinRadiusCondition(TERM, { center: CENTER_REF, radius: RADIUS_METERS })] },
+			});
+
+			expect(filterParam).to.equal(`{"match":"and","conditions":[${EXPECTED_CENTER_REF_CONDITION_JSON}]}`);
+			expect(rawSearch).to.contain('filter=');
+			expect(rawSearch).to.not.contain('{');
+			expect(rawSearch).to.not.contain('"');
+			expect(rawSearch).to.not.contain(' ');
+		});
 	});
 
 	describe('códigos de erro do servidor', () => {
@@ -132,12 +205,25 @@ describe('operador de filtro within_radius', () => {
 			expect(error.message).to.equal(INVALID_VALUE_MESSAGE);
 		});
 
-		it('WITHIN_RADIUS_CENTER_UNRESOLVED vira KonectyWithinRadiusCenterError', () => {
+		it('WITHIN_RADIUS_CENTER_UNRESOLVED vira KonectyWithinRadiusCenterError, com o id de correlação intacto', () => {
 			const error = konectyErrorFromErrors([{ message: CENTER_UNRESOLVED_MESSAGE, code: WITHIN_RADIUS_CENTER_UNRESOLVED }]);
 
 			expect(error).to.be.instanceOf(KonectyWithinRadiusCenterError);
 			expect((error as KonectyWithinRadiusCenterError).code).to.equal('WITHIN_RADIUS_CENTER_UNRESOLVED');
+			// A mensagem INTEIRA, id incluído. O id é a única chave que liga o relato do
+			// usuário à linha de log com a causa real — truncar a mensagem (ou reescrevê-la
+			// com um texto "amigável") apagaria o caminho de suporte deste código de erro.
 			expect(error.message).to.equal(CENTER_UNRESOLVED_MESSAGE);
+			expect(error.message).to.contain(`Correlation id: ${CORRELATION_ID}`);
+		});
+
+		it('preserva também a OUTRA mensagem do mesmo código — a do guard de caminho de escrita', () => {
+			// Duas mensagens, um código só. O SDK não conhece a forma de nenhuma das
+			// duas: repassa o que veio.
+			const error = konectyErrorFromErrors([{ message: CENTER_UNRESOLVED_WRITE_PATH_MESSAGE, code: WITHIN_RADIUS_CENTER_UNRESOLVED }]);
+
+			expect(error).to.be.instanceOf(KonectyWithinRadiusCenterError);
+			expect(error.message).to.equal(CENTER_UNRESOLVED_WRITE_PATH_MESSAGE);
 		});
 
 		it('as duas continuam sendo Error — quem só lê .message não quebra', () => {
@@ -187,6 +273,53 @@ describe('operador de filtro within_radius', () => {
 			const first = (result.errors ?? [])[0] as { message: string; code?: string };
 			expect(first.code).to.equal(WITHIN_RADIUS_CENTER_UNRESOLVED);
 			expect(first.message).to.equal(CENTER_UNRESOLVED_MESSAGE);
+			expect(first.message).to.contain(`Correlation id: ${CORRELATION_ID}`);
+		});
+	});
+
+	describe('Module.find (o caminho do produto — lança a exceção tipada)', () => {
+		// `Client.find` devolve o resultado; quem LANÇA é `Module`. Sem este bloco,
+		// nada aqui provava que um 400 de `within_radius` chega ao chamador como
+		// exceção tipada — só que o mapeador, chamado à mão, produz a classe certa.
+		// O SDK Python já testava pelo `client.find`, que lança; esta é a rota
+		// equivalente no TS.
+		const module = new ProductModule({ endpoint: ENDPOINT, accessKey: 'fake-key' });
+		const filterWith = (value: Parameters<typeof withinRadiusCondition>[1]) =>
+			({ match: 'and', conditions: [withinRadiusCondition(TERM, value)] }) as never;
+
+		it('400 de valor inválido chega como KonectyWithinRadiusValueError', async () => {
+			server.use(
+				rest.get(`${ENDPOINT}/rest/data/Product/find`, (_req, res, ctx) =>
+					res(ctx.status(400), ctx.json({ success: false, errors: [{ message: INVALID_VALUE_MESSAGE, code: WITHIN_RADIUS_INVALID_VALUE }] })),
+				),
+			);
+
+			const error = await module.find(filterWith({ center: CENTER, radius: -1 })).then(
+				() => null,
+				(rejection: unknown) => rejection,
+			);
+
+			expect(error).to.be.instanceOf(KonectyWithinRadiusValueError);
+			expect((error as KonectyWithinRadiusValueError).code).to.equal(WITHIN_RADIUS_INVALID_VALUE);
+			expect((error as Error).message).to.equal(INVALID_VALUE_MESSAGE);
+		});
+
+		it('400 de centro não resolvido chega como KonectyWithinRadiusCenterError, id de correlação incluído', async () => {
+			server.use(
+				rest.get(`${ENDPOINT}/rest/data/Product/find`, (_req, res, ctx) =>
+					res(ctx.status(400), ctx.json({ success: false, errors: [{ message: CENTER_UNRESOLVED_MESSAGE, code: WITHIN_RADIUS_CENTER_UNRESOLVED }] })),
+				),
+			);
+
+			const error = await module.find(filterWith({ center: CENTER_REF, radius: RADIUS_METERS })).then(
+				() => null,
+				(rejection: unknown) => rejection,
+			);
+
+			expect(error).to.be.instanceOf(KonectyWithinRadiusCenterError);
+			expect((error as KonectyWithinRadiusCenterError).code).to.equal(WITHIN_RADIUS_CENTER_UNRESOLVED);
+			expect((error as Error).message).to.equal(CENTER_UNRESOLVED_MESSAGE);
+			expect((error as Error).message).to.contain(`Correlation id: ${CORRELATION_ID}`);
 		});
 	});
 });
