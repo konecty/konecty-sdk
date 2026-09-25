@@ -1413,11 +1413,15 @@ export type { KonectyErrorItem } from './errors';
  * (`KonectySdkPython.lib.filters` / `.exceptions`).
  */
 export {
+	KonectyWithinRadiusCenterDepthError,
 	KonectyWithinRadiusCenterError,
+	KonectyWithinRadiusTooManyCentersError,
 	KonectyWithinRadiusValueError,
 	WITHIN_RADIUS,
+	WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED,
 	WITHIN_RADIUS_CENTER_UNRESOLVED,
 	WITHIN_RADIUS_INVALID_VALUE,
+	WITHIN_RADIUS_TOO_MANY_CENTERS,
 	withinRadiusCondition,
 } from './filters/withinRadius';
 export type { WithinRadiusCenter, WithinRadiusCenterRef, WithinRadiusCoordinatePair, WithinRadiusValue } from './filters/withinRadius';

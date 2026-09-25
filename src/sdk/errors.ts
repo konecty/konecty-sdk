@@ -1,8 +1,12 @@
 import {
+	KonectyWithinRadiusCenterDepthError,
 	KonectyWithinRadiusCenterError,
+	KonectyWithinRadiusTooManyCentersError,
 	KonectyWithinRadiusValueError,
+	WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED,
 	WITHIN_RADIUS_CENTER_UNRESOLVED,
 	WITHIN_RADIUS_INVALID_VALUE,
+	WITHIN_RADIUS_TOO_MANY_CENTERS,
 } from '@konecty/sdk/filters/withinRadius';
 
 /**
@@ -87,6 +91,8 @@ const ERROR_BY_CODE: Record<string, new (message?: string) => Error> = {
 	[SORT_ABOVE_MAX_PAGE_SIZE]: KonectySortLimitError,
 	[WITHIN_RADIUS_INVALID_VALUE]: KonectyWithinRadiusValueError,
 	[WITHIN_RADIUS_CENTER_UNRESOLVED]: KonectyWithinRadiusCenterError,
+	[WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED]: KonectyWithinRadiusCenterDepthError,
+	[WITHIN_RADIUS_TOO_MANY_CENTERS]: KonectyWithinRadiusTooManyCentersError,
 };
 
 /**

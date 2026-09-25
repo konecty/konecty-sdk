@@ -1,10 +1,14 @@
 import {
 	KonectyClient,
+	KonectyWithinRadiusCenterDepthError,
 	KonectyWithinRadiusCenterError,
+	KonectyWithinRadiusTooManyCentersError,
 	KonectyWithinRadiusValueError,
 	konectyErrorFromErrors,
 	WITHIN_RADIUS,
+	WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED,
 	WITHIN_RADIUS_CENTER_UNRESOLVED,
+	WITHIN_RADIUS_TOO_MANY_CENTERS,
 	WITHIN_RADIUS_INVALID_VALUE,
 	withinRadiusCondition,
 } from '@konecty/sdk/Client';
@@ -321,5 +325,51 @@ describe('operador de filtro within_radius', () => {
 			expect((error as Error).message).to.equal(CENTER_UNRESOLVED_MESSAGE);
 			expect((error as Error).message).to.contain(`Correlation id: ${CORRELATION_ID}`);
 		});
+	});
+});
+
+/**
+ * Códigos acrescentados depois, quando o servidor ganhou teto de profundidade e
+ * cota de centros por requisição. Mesma entrada e mesma saída no SDK Python:
+ * `tests/test_within_radius.py`, `TestDepthAndQuotaCodes`.
+ *
+ * As mensagens saem de `src/imports/data/filters/hydrateFilterCenters.ts` no repo
+ * Konecty. Note que já são TRÊS textos diferentes sob o guarda-chuva de "centro
+ * não resolvido" — por isso o SDK ramifica pelo `.code`, nunca pelo texto.
+ */
+describe('within_radius: profundidade e cota de centros', () => {
+	const DEPTH_MESSAGE =
+		'Could not resolve the center record for operator within_radius on term "address": center hydration exceeded the maximum depth of 3.';
+	const QUOTA_MESSAGE = 'Operator within_radius resolves at most 20 center records per request; this request asked for 34.';
+
+	it('mapeia WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED preservando a mensagem inteira', () => {
+		const error = konectyErrorFromErrors([{ message: DEPTH_MESSAGE, code: WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED }]);
+
+		expect(error).to.be.instanceOf(KonectyWithinRadiusCenterDepthError);
+		expect((error as KonectyWithinRadiusCenterDepthError).code).to.equal(WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED);
+		expect(error.message).to.equal(DEPTH_MESSAGE);
+	});
+
+	it('depth é PEGÁVEL como KonectyWithinRadiusCenterError — quem tratava centro antes segue tratando', () => {
+		// A hierarquia é a promessa: o codigo novo nao quebra `catch` que ja existia.
+		const error = konectyErrorFromErrors([{ message: DEPTH_MESSAGE, code: WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED }]);
+
+		expect(error).to.be.instanceOf(KonectyWithinRadiusCenterError);
+	});
+
+	it('mapeia WITHIN_RADIUS_TOO_MANY_CENTERS preservando a mensagem inteira', () => {
+		const error = konectyErrorFromErrors([{ message: QUOTA_MESSAGE, code: WITHIN_RADIUS_TOO_MANY_CENTERS }]);
+
+		expect(error).to.be.instanceOf(KonectyWithinRadiusTooManyCentersError);
+		expect((error as KonectyWithinRadiusTooManyCentersError).code).to.equal(WITHIN_RADIUS_TOO_MANY_CENTERS);
+		expect(error.message).to.equal(QUOTA_MESSAGE);
+	});
+
+	it('cota NÃO é falha de centro — nenhum registro especifico falhou', () => {
+		// Se cota herdasse de CenterError, o chamador procuraria um registro culpado
+		// que nao existe: a requisicao foi recusada antes de qualquer leitura.
+		const error = konectyErrorFromErrors([{ message: QUOTA_MESSAGE, code: WITHIN_RADIUS_TOO_MANY_CENTERS }]);
+
+		expect(error).to.not.be.instanceOf(KonectyWithinRadiusCenterError);
 	});
 });
