@@ -103,6 +103,15 @@ A classe base KonectyModule (e as subclasses UserModule, RoleModule, GroupModule
 
 - **findOne**: find com limit 1 → GET /rest/data/:document/find.
 - **find**: find com opções → GET /rest/data/:document/find.
+- **getHistory**: getHistory do client → GET /rest/data/:document/:dataId/history.
+- **validate**: apenas local (validação de campos obrigatórios), não chama o CRM.
+- **create**: create do client → POST /rest/data/:document.
+- **update**: update do client → PUT /rest/data/:document.
+- **delete**: delete do client → DELETE /rest/data/:document.
+- **lookup**: lookup do client → GET /rest/data/:document/lookup/:field.
+- **filesManager**: retorna uma instância de FilesManager configurada para o módulo; não faz chamada direta.
+
+O nome do documento usado nas rotas é o `name` do ModuleConfig (ex.: User, Role, Group).
 
 ### Ordenação acima de 1000 registros
 
@@ -134,7 +143,7 @@ significa "sem ordenação" e não é recusado.
 
 Equivalente Python: `KonectySortLimitError` em `KonectySdkPython.lib.exceptions`.
 
-### Filtro de busca por raio geográfico (`within_radius`)
+## Filtro de busca por raio geográfico (`within_radius`)
 
 Filtra registros cujo campo `address` esteja dentro de um raio, em **metros**, a
 partir de um centro. O `term` é o campo `address` puro — o sufixo `.geolocation`
@@ -178,18 +187,42 @@ Dois códigos de erro chegam tipados, com a mensagem do servidor preservada:
 O SDK **não** valida faixa nem teto de raio: quem decide é o servidor, e um
 limite copiado aqui passaria a mentir assim que o backend mudasse.
 
+#### `WITHIN_RADIUS_CENTER_UNRESOLVED`: o id de correlação é o caminho de suporte
+
+Três causas produzem esse código — o registro-centro **não existe**, existe mas
+**não é legível** para o usuário da requisição, ou é legível mas **não tem
+geolocalização** gravada. A resposta não diz qual: distinguí-las transformaria o
+filtro num oráculo, e quem não pode ler o registro descobriria se ele existe e
+onde fica variando o raio até a resposta mudar.
+
+A causa real fica no **log do servidor**, e a mensagem devolvida termina com o id
+que aponta para a linha correspondente:
+
+```
+Could not resolve the center record for operator within_radius on term "address". Correlation id: 7b3f2a9c41d8
+```
+
+O id tem doze caracteres hexadecimais, ou 32 quando há tracing ativo (aí ele **é**
+o `traceId` do span, e serve direto como chave de busca no log). O SDK entrega a
+mensagem **inteira** em `error.message` — não a trunca nem a reescreve. Ao
+reportar o problema, **mande o id**: sem ele não há como achar a linha, e o
+suporte terá de pedir data, hora aproximada e namespace.
+
+Nem toda mensagem com esse código traz um id. O mesmo código recusa também um
+centro por referência que chega por um caminho que **não hidrata** — `update` e
+`findById`, contra `find`, stream/export e lookup, que hidratam — e essa recusa
+tem texto próprio, sem id:
+
+```
+Could not resolve the center record for operator within_radius on term "address". A center by record reference is resolved only on read paths (find, stream/export and lookup) and is not supported here.
+```
+
+Ou seja: ramifique pelo `.code`, e **mostre a mensagem** ao usuário em vez de
+casar com o texto dela.
+
 Equivalente Python: `within_radius_condition` e `FilterOperator.WITHIN_RADIUS` em
 `KonectySdkPython.lib.filters`; `KonectyWithinRadiusValueError` e
 `KonectyWithinRadiusCenterError` em `KonectySdkPython.lib.exceptions`.
-- **getHistory**: getHistory do client → GET /rest/data/:document/:dataId/history.
-- **validate**: apenas local (validação de campos obrigatórios), não chama o CRM.
-- **create**: create do client → POST /rest/data/:document.
-- **update**: update do client → PUT /rest/data/:document.
-- **delete**: delete do client → DELETE /rest/data/:document.
-- **lookup**: lookup do client → GET /rest/data/:document/lookup/:field.
-- **filesManager**: retorna uma instância de FilesManager configurada para o módulo; não faz chamada direta.
-
-O nome do documento usado nas rotas é o `name` do ModuleConfig (ex.: User, Role, Group).
 
 ## Stream (findStream e streamCount)
 
