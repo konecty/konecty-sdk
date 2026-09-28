@@ -152,37 +152,65 @@ partir de um centro. O `term` é o campo `address` puro — o sufixo `.geolocati
 ```ts
 import { withinRadiusCondition } from '@konecty/sdk/Client';
 
-// Porto Alegre, 5 km. O centro é [longitude, latitude] — longitude PRIMEIRO.
-const condition = withinRadiusCondition('address', { center: [-51.2177, -30.0346], radius: 5000 });
-// { term: 'address', operator: 'within_radius', value: { center: [-51.2177, -30.0346], radius: 5000 } }
+// Porto Alegre, 5 km. As coordenadas vão NOMEADAS: não há ordem a errar.
+const condition = withinRadiusCondition('address', { lat: -30.0346, lng: -51.2177, radius: 5000 });
+// { term: 'address', operator: 'within_radius', value: { lat: -30.0346, lng: -51.2177, radius: 5000 } }
 
 await module.find({ match: 'and', conditions: [condition] });
 ```
 
-**A ordem é `[longitude, latitude]`**, a mesma do par já gravado em
-`address.geolocation`. Inverter as duas é o erro mais comum deste operador, e é
-por isso que `WithinRadiusCoordinatePair` é uma tupla nomeada em vez de
-`number[]`.
+`lat` vai de -90 a 90 e `lng` de -180 a 180, ambos números finitos. A forma
+antiga `{ center: [lng, lat], radius }` **deixou de existir**: o tipo não a
+aceita, e o servidor recusa a chave `center` com `WITHIN_RADIUS_INVALID_VALUE`.
 
 O centro também pode vir de outro registro — "perto do empreendimento X" — sem
 uma ida e volta para descobrir as coordenadas antes:
 
 ```ts
 withinRadiusCondition('address', {
-    center: { document: 'Development', _id: '<id>', field: 'address' },
+    record: { document: 'Development', _id: '<id>', field: 'address' },
     radius: 2000,
 });
 ```
 
 O servidor lê o registro-centro sob controle de acesso completo. `field` é
-obrigatório porque um documento pode ter mais de um campo `address`.
+obrigatório porque um documento pode ter mais de um campo `address`. As duas
+formas — `lat`/`lng` e `record` — são mutuamente exclusivas.
 
-Dois códigos de erro chegam tipados, com a mensagem do servidor preservada:
+### Distância (`_distance`) e ordenação por distância
+
+Quando o filtro tem **exatamente um** `within_radius` habilitado no caminho AND
+(fora de qualquer nó `or`), cada registro devolvido por `find` traz
+`_distance`: a distância até o centro em **metros**, inteira. Com zero ou duas+
+condições nessa posição, ou quando o usuário não pode ler o campo `address`, o
+campo simplesmente não vem — não é erro. `_distance` é calculado, nunca gravado:
+não o devolva num `update`.
+
+```ts
+import { DISTANCE_FIELD } from '@konecty/sdk/Client';
+
+const { data } = await module.find(
+    { match: 'and', conditions: [condition] },
+    { sort: [{ property: DISTANCE_FIELD, direction: 'ASC' }] }, // mais perto primeiro
+);
+data[0]._distance; // 850
+```
+
+`DISTANCE_FIELD` é `'_distance'`, e o `sort` aceita esse `property` em qualquer
+módulo. O `sort` vai ao servidor sem transformação; o empate é resolvido pelo
+servidor por `_id`. Ordenar por distância segue o teto de página de qualquer
+ordenação arbitrária (`SORT_ABOVE_MAX_PAGE_SIZE`).
+
+### Códigos de erro
+
+Chegam tipados, com a mensagem do servidor preservada — em HTTP 400 e também em
+200 com `success: false` (servidores anteriores à mudança para 400):
 
 | Código | Exceção | Quando |
 | --- | --- | --- |
-| `WITHIN_RADIUS_INVALID_VALUE` | `KonectyWithinRadiusValueError` | forma ou faixa do valor recusada (coordenada fora de faixa, string numérica, raio ≤ 0 ou acima do teto) |
+| `WITHIN_RADIUS_INVALID_VALUE` | `KonectyWithinRadiusValueError` | forma ou faixa do valor recusada (chave ausente ou desconhecida, `lat`/`lng` e `record` juntos, coordenada fora de faixa, string numérica, raio ≤ 0 ou acima do teto) |
 | `WITHIN_RADIUS_CENTER_UNRESOLVED` | `KonectyWithinRadiusCenterError` | o registro-centro não existe, não é legível, ou não tem geolocalização |
+| `DISTANCE_SORT_UNAVAILABLE` | `KonectyDistanceSortUnavailableError` | `sort` por `_distance` sem exatamente um `within_radius` no caminho AND, ou sem leitura (plena) do campo `address` |
 
 O SDK **não** valida faixa nem teto de raio: quem decide é o servidor, e um
 limite copiado aqui passaria a mentir assim que o backend mudasse.
@@ -220,9 +248,10 @@ Could not resolve the center record for operator within_radius on term "address"
 Ou seja: ramifique pelo `.code`, e **mostre a mensagem** ao usuário em vez de
 casar com o texto dela.
 
-Equivalente Python: `within_radius_condition` e `FilterOperator.WITHIN_RADIUS` em
-`KonectySdkPython.lib.filters`; `KonectyWithinRadiusValueError` e
-`KonectyWithinRadiusCenterError` em `KonectySdkPython.lib.exceptions`.
+Equivalente Python: `within_radius_condition`, `DISTANCE_FIELD` e
+`FilterOperator.WITHIN_RADIUS` em `KonectySdkPython.lib.filters`;
+`KonectyWithinRadiusValueError`, `KonectyWithinRadiusCenterError` e
+`KonectyDistanceSortUnavailableError` em `KonectySdkPython.lib.exceptions`.
 
 ## Stream (findStream e streamCount)
 

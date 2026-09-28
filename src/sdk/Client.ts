@@ -1408,11 +1408,15 @@ export { exchangeGoogleCode, getGoogleLoginUrl, getLoginOptions, KonectyGoogleSe
 export { KonectySortLimitError, SORT_ABOVE_MAX_PAGE_SIZE, MAX_SORTED_PAGE_SIZE, konectyErrorFromErrors } from './errors';
 export type { KonectyErrorItem } from './errors';
 /**
- * Filtro de busca por raio geográfico. O `center` é `[longitude, latitude]` —
- * longitude PRIMEIRO — e o `radius` é em metros. Espelhado no SDK Python
- * (`KonectySdkPython.lib.filters` / `.exceptions`).
+ * Filtro de busca por raio geográfico: `{ lat, lng, radius }` ou
+ * `{ record, radius }`, raio em metros; `_distance` (metros) em cada registro e
+ * ordenação por ele. Espelhado no SDK Python (`KonectySdkPython.lib.filters` /
+ * `.exceptions`).
  */
 export {
+	DISTANCE_FIELD,
+	DISTANCE_SORT_UNAVAILABLE,
+	KonectyDistanceSortUnavailableError,
 	KonectyWithinRadiusCenterDepthError,
 	KonectyWithinRadiusCenterError,
 	KonectyWithinRadiusTooManyCentersError,
@@ -1424,7 +1428,7 @@ export {
 	WITHIN_RADIUS_TOO_MANY_CENTERS,
 	withinRadiusCondition,
 } from './filters/withinRadius';
-export type { WithinRadiusCenter, WithinRadiusCenterRef, WithinRadiusCoordinatePair, WithinRadiusValue } from './filters/withinRadius';
+export type { WithinRadiusCenterRef, WithinRadiusLiteralValue, WithinRadiusRecordValue, WithinRadiusValue } from './filters/withinRadius';
 export type {
 	AuthClientOptions,
 	GoogleCallbackErrorCode,

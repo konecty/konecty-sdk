@@ -1,4 +1,6 @@
 import {
+	DISTANCE_SORT_UNAVAILABLE,
+	KonectyDistanceSortUnavailableError,
 	KonectyWithinRadiusCenterDepthError,
 	KonectyWithinRadiusCenterError,
 	KonectyWithinRadiusTooManyCentersError,
@@ -93,6 +95,7 @@ const ERROR_BY_CODE: Record<string, new (message?: string) => Error> = {
 	[WITHIN_RADIUS_CENTER_UNRESOLVED]: KonectyWithinRadiusCenterError,
 	[WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED]: KonectyWithinRadiusCenterDepthError,
 	[WITHIN_RADIUS_TOO_MANY_CENTERS]: KonectyWithinRadiusTooManyCentersError,
+	[DISTANCE_SORT_UNAVAILABLE]: KonectyDistanceSortUnavailableError,
 };
 
 /**

@@ -11,9 +11,10 @@ import type { KonCondition } from '@konecty/sdk/types/filter';
 export const WITHIN_RADIUS = 'within_radius';
 
 /**
- * Recusa de forma ou de faixa do valor do operador: `center` ou `radius`
- * ausente, coordenada fora da faixa, string numérica no lugar de número, raio
- * não positivo ou acima do teto do servidor.
+ * Recusa de forma ou de faixa do valor do operador: `lat`/`lng` (ou `record`)
+ * ou `radius` ausente, as duas formas juntas, chave desconhecida, coordenada
+ * fora da faixa, string numérica no lugar de número, raio não positivo ou acima
+ * do teto do servidor.
  *
  * Espelha `WITHIN_RADIUS_INVALID_VALUE` no SDK Python — manter os dois em sincronia.
  */
@@ -57,21 +58,37 @@ export const WITHIN_RADIUS_CENTER_DEPTH_EXCEEDED = 'WITHIN_RADIUS_CENTER_DEPTH_E
 export const WITHIN_RADIUS_TOO_MANY_CENTERS = 'WITHIN_RADIUS_TOO_MANY_CENTERS';
 
 /**
- * Par de coordenadas do centro, na ordem **`[longitude, latitude]`**.
+ * Campo calculado que o servidor acrescenta a cada registro devolvido por `find`
+ * quando o filtro tem **um** centro de distância: a única condição
+ * `within_radius` habilitada no caminho AND do filtro da requisição. Valor em
+ * **metros**, inteiro. Com zero ou duas+ condições nessa posição, ou quando o
+ * usuário não pode ler o campo `address` do centro, o campo simplesmente não
+ * vem — não é erro.
  *
- * Longitude PRIMEIRO. É a ordem do par já gravado em `address.geolocation` e a
- * que o Mongo consome, e é o erro nº 1 que se comete aqui — por isso o tipo é
- * uma tupla nomeada, e não `number[]`: inverter os dois passa a ser visível no
- * editor, não só em produção.
+ * É também o `property` de ordenação por distância:
+ * `sort: [{ property: DISTANCE_FIELD, direction: 'ASC' }]`.
  *
- * Porto Alegre, por exemplo, é `[-51.2177, -30.0346]` — longitude ~ -51, latitude ~ -30.
+ * Nunca é gravado: devolver o registro inteiro num `update` com `_distance`
+ * dentro é recusado pelo servidor como campo inexistente.
+ *
+ * Espelha `DISTANCE_FIELD` em `KonectySdkPython.lib.filters` — manter os dois em sincronia.
  */
-export type WithinRadiusCoordinatePair = [longitude: number, latitude: number];
+export const DISTANCE_FIELD = '_distance';
 
 /**
- * Centro tomado de outro registro, em vez de um par literal: "perto do
+ * Recusa de ordenação por `_distance`: o filtro não tem exatamente um
+ * `within_radius` no caminho AND, ou o usuário não pode ler (ou só lê sob
+ * condição) o campo `address` do centro. O servidor responde HTTP 400; a
+ * mensagem diz qual dos dois casos é.
+ *
+ * Espelha `DISTANCE_SORT_UNAVAILABLE` no SDK Python — manter os dois em sincronia.
+ */
+export const DISTANCE_SORT_UNAVAILABLE = 'DISTANCE_SORT_UNAVAILABLE';
+
+/**
+ * Centro tomado de outro registro, em vez de coordenadas literais: "perto do
  * empreendimento X". O servidor lê o registro sob controle de acesso completo e
- * substitui pelo par antes de compilar a query.
+ * substitui pelas coordenadas antes de compilar a query.
  *
  * `field` é obrigatório porque um documento pode ter mais de um campo `address`
  * e adivinhar seria escolher em silêncio.
@@ -85,22 +102,42 @@ export type WithinRadiusCenterRef = {
 	field: string;
 };
 
-export type WithinRadiusCenter = WithinRadiusCoordinatePair | WithinRadiusCenterRef;
+/**
+ * Centro literal, com as coordenadas **nomeadas**. Porto Alegre, por exemplo, é
+ * `{ lat: -30.0346, lng: -51.2177 }`. O nome das chaves existe para acabar com o
+ * erro de inverter a ordem de um par: a tradução para `[lng, lat]` é do servidor.
+ */
+export type WithinRadiusLiteralValue = {
+	/** Latitude, em `[-90, 90]`. */
+	lat: number;
+	/** Longitude, em `[-180, 180]`. */
+	lng: number;
+	/** Raio em **metros**. */
+	radius: number;
+	record?: never;
+};
+
+/** Centro por referência a outro registro. */
+export type WithinRadiusRecordValue = {
+	record: WithinRadiusCenterRef;
+	/** Raio em **metros**. */
+	radius: number;
+	lat?: never;
+	lng?: never;
+};
 
 /**
- * Valor da condição `within_radius`.
+ * Valor da condição `within_radius`: `{ lat, lng, radius }` **ou**
+ * `{ record, radius }` — exatamente uma das duas formas. O servidor recusa as
+ * duas juntas e qualquer chave desconhecida (inclusive a forma antiga
+ * `center`) com `WITHIN_RADIUS_INVALID_VALUE`, nomeando a chave.
  *
  * O SDK **não** valida faixa nem teto: quem decide é o servidor, e um teto
  * copiado aqui passa a mentir assim que o backend mudar. O contrato vigente é
- * raio em **metros**, número finito positivo, com teto de meia circunferência
- * da Terra; passar disso volta como `WITHIN_RADIUS_INVALID_VALUE`.
+ * `lat` em `[-90, 90]`, `lng` em `[-180, 180]`, números finitos, e raio em
+ * **metros**, positivo, com teto de meia circunferência da Terra.
  */
-export type WithinRadiusValue = {
-	/** `[longitude, latitude]` — nesta ordem — ou a referência a outro registro. */
-	center: WithinRadiusCenter;
-	/** Raio em **metros**. */
-	radius: number;
-};
+export type WithinRadiusValue = WithinRadiusLiteralValue | WithinRadiusRecordValue;
 
 /**
  * Lançado quando o servidor recusa a forma ou a faixa do valor de um
@@ -175,16 +212,36 @@ export class KonectyWithinRadiusTooManyCentersError extends Error {
 }
 
 /**
+ * Lançado quando o servidor recusa uma ordenação por `_distance`.
+ *
+ * **NÃO** herda de `KonectySortLimitError`: não é teto de página, e a saída não
+ * é ordenar por `_id` — é acertar o filtro (um `within_radius` só, no caminho
+ * AND) ou a permissão de leitura do campo `address`.
+ *
+ * Espelha `KonectyDistanceSortUnavailableError` no SDK Python — manter os dois em sincronia.
+ */
+export class KonectyDistanceSortUnavailableError extends Error {
+	code: typeof DISTANCE_SORT_UNAVAILABLE;
+
+	constructor(message?: string) {
+		super(message ?? `Sorting by ${DISTANCE_FIELD} is not available for this query`);
+		this.name = 'KonectyDistanceSortUnavailableError';
+		this.code = DISTANCE_SORT_UNAVAILABLE;
+	}
+}
+
+/**
  * Monta a condição de filtro do operador.
  *
- * Existe para que a ordem `[longitude, latitude]` e o raio em metros apareçam
- * uma vez, tipados, em vez de serem redigitados como objeto literal em cada
- * chamada — que é onde a inversão das coordenadas entra.
- *
  * ```ts
- * withinRadiusCondition('address', { center: [-51.2177, -30.0346], radius: 5000 });
- * // { term: 'address', operator: 'within_radius', value: { center: [-51.2177, -30.0346], radius: 5000 } }
+ * withinRadiusCondition('address', { lat: -30.0346, lng: -51.2177, radius: 5000 });
+ * // { term: 'address', operator: 'within_radius', value: { lat: -30.0346, lng: -51.2177, radius: 5000 } }
  * ```
+ *
+ * O valor vai como o chamador o escreveu, sem remontar: uma chave a mais (a
+ * forma antiga `center`, as duas formas juntas, vindas de JS sem tipo) chega ao
+ * servidor, que a recusa NOMEANDO a chave. Descartá-la aqui trocaria essa
+ * mensagem por um "falta `lat`" que o chamador não entenderia.
  *
  * Espelha `within_radius_condition` no SDK Python — a mesma entrada produz a
  * mesma saída (travado por teste: `src/__test__/api/withinRadius.test.ts` e
@@ -194,6 +251,6 @@ export function withinRadiusCondition(term: string, value: WithinRadiusValue): K
 	return {
 		term,
 		operator: WITHIN_RADIUS,
-		value: { center: value.center, radius: value.radius },
+		value: { ...value },
 	};
 }

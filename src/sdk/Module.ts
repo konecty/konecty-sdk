@@ -4,6 +4,7 @@ import { MetadataField, MetadataLabel } from '@konecty/sdk/types/metadata';
 import get from 'lodash/get';
 import 'reflect-metadata';
 import { konectyErrorFromErrors } from './errors';
+import { DISTANCE_FIELD } from './filters/withinRadius';
 import { FieldOperators } from './FieldOperators';
 import { KonFiles } from './types/files';
 import { ArrElement, Nullable, PickFromPath, UnionToIntersection } from './TypeUtils';
@@ -30,6 +31,12 @@ export interface KonectyDocument<UserType = unknown | never, CreatedByType = unk
 	_createdBy?: CreatedByType extends [never] ? ModuleCreatedByType : CreatedByType;
 	_updatedAt?: Date;
 	_updatedBy?: UpdatedByType extends [never] ? ModuleUpdatedByType : CreatedByType;
+	/**
+	 * Distância em metros (inteiro) até o centro do `within_radius`, calculada pelo
+	 * servidor em `find`. Só vem quando o filtro tem exatamente um `within_radius` no
+	 * caminho AND e o campo `address` é legível. Nunca é gravado. Ver `DISTANCE_FIELD`.
+	 */
+	_distance?: number;
 }
 
 export type DocumentUser = UnionToIntersection<PickFromPath<User, '_id' | 'name' | 'group.name' | 'active'>>;
@@ -109,7 +116,8 @@ export type ModuleSort<T> = {
 export type ModuleFindAllOptions<T, F> = {
 	start?: number;
 	limit?: number;
-	sort?: ModuleSort<T>[];
+	/** Além dos campos do módulo, aceita `_distance` (`DISTANCE_FIELD`) para ordenar por distância. */
+	sort?: ModuleSort<T | typeof DISTANCE_FIELD>[];
 	fields?: Array<F>;
 	withDetailFields?: boolean;
 };

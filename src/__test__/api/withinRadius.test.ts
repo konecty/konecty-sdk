@@ -1,5 +1,9 @@
 import {
+	DISTANCE_FIELD,
+	DISTANCE_SORT_UNAVAILABLE,
 	KonectyClient,
+	KonectyDistanceSortUnavailableError,
+	KonectySortLimitError,
 	KonectyWithinRadiusCenterDepthError,
 	KonectyWithinRadiusCenterError,
 	KonectyWithinRadiusTooManyCentersError,
@@ -12,7 +16,7 @@ import {
 	WITHIN_RADIUS_INVALID_VALUE,
 	withinRadiusCondition,
 } from '@konecty/sdk/Client';
-import type { WithinRadiusCenterRef, WithinRadiusCoordinatePair } from '@konecty/sdk/Client';
+import type { WithinRadiusCenterRef, WithinRadiusValue } from '@konecty/sdk/Client';
 import { expect } from 'chai';
 
 import { rest } from 'msw';
@@ -28,15 +32,19 @@ import { server } from '../../__test__/setup-test';
  * quebra a paridade que esta feature existe para garantir.
  *
  * O contrato é do servidor (`src/imports/data/filters/withinRadius.ts` no repo
- * Konecty): `value: { center: [longitude, latitude] | { document, _id, field }, radius: <metros> }`.
+ * Konecty, Revisão 2 da spec `geo-radius-filter`):
+ * `value: { lat, lng, radius } | { record: { document, _id, field }, radius }`, raio em metros.
+ * A forma antiga `{ center: [lng, lat] | {…}, radius }` deixou de existir. Cada
+ * registro de `find` pode trazer `_distance` (metros, inteiro), e
+ * `sort: [{ property: '_distance', direction }]` ordena por ele.
  * O SDK **não** duplica a validação de faixa nem o teto de raio — quem decide é
  * o servidor, e um teto copiado aqui passaria a mentir assim que o backend
  * mudasse. Mesma postura do `SORT_ABOVE_MAX_PAGE_SIZE`.
  *
  * ## Assimetrias com o SDK Python que são ESCOLHA, não defeito
  *
- * 1. **Aridade.** Aqui é `withinRadiusCondition(term, { center, radius })`; no
- *    Python é `within_radius_condition(term, center, radius)`. Mantidas assim de
+ * 1. **Aridade.** Aqui é `withinRadiusCondition(term, { lat, lng, radius })`; no
+ *    Python é `within_radius_condition(term, lat=…, lng=…, radius=…)`. Mantidas assim de
  *    propósito: cada linguagem segue a convenção do próprio SDK — o TS passa
  *    objeto de opções em todo lugar (`client.find(module, { filter, sort })`), o
  *    Python passa parâmetros nomeados. O que a paridade exige é mesma ENTRADA →
@@ -52,20 +60,40 @@ import { server } from '../../__test__/setup-test';
 /** O termo é o campo `address` puro: o sufixo `.geolocation` é do servidor, não do cliente. */
 const TERM = 'address';
 
-/** Porto Alegre, em `[longitude, latitude]` — longitude ~ -51, latitude ~ -30. */
-const CENTER: WithinRadiusCoordinatePair = [-51.2177, -30.0346];
+/** Porto Alegre — latitude ~ -30, longitude ~ -51: sinais e magnitudes distinguíveis. */
+const LAT = -30.0346;
+const LNG = -51.2177;
 const RADIUS_METERS = 5000;
 
-const CENTER_REF: WithinRadiusCenterRef = { document: 'Development', _id: 'dev-1', field: 'address' };
+const LITERAL: WithinRadiusValue = { lat: LAT, lng: LNG, radius: RADIUS_METERS };
 
-/** Serialização exata da condição. O SDK Python asseverou a MESMA string. */
-const EXPECTED_CONDITION_JSON = '{"term":"address","operator":"within_radius","value":{"center":[-51.2177,-30.0346],"radius":5000}}';
+const CENTER_REF: WithinRadiusCenterRef = { document: 'Development', _id: 'dev-1', field: 'address' };
+const BY_RECORD: WithinRadiusValue = { record: CENTER_REF, radius: RADIUS_METERS };
+
+/** Serialização exata da condição. O SDK Python assevera a MESMA string. */
+const EXPECTED_CONDITION_JSON = '{"term":"address","operator":"within_radius","value":{"lat":-30.0346,"lng":-51.2177,"radius":5000}}';
 
 const EXPECTED_CENTER_REF_CONDITION_JSON =
-	'{"term":"address","operator":"within_radius","value":{"center":{"document":"Development","_id":"dev-1","field":"address"},"radius":5000}}';
+	'{"term":"address","operator":"within_radius","value":{"record":{"document":"Development","_id":"dev-1","field":"address"},"radius":5000}}';
 
-const INVALID_VALUE_MESSAGE =
-	'Invalid value for operator within_radius on term "address": center must be an array of exactly 2 numbers, in the order [longitude, latitude]';
+/** Ordenação por distância, serializada. O SDK Python assevera o MESMO JSON. */
+const EXPECTED_DISTANCE_SORT_JSON = '[{"property":"_distance","direction":"ASC"}]';
+
+/**
+ * Mensagem de recusa de faixa no formato da Revisão 2 (nomeia a chave e a
+ * faixa, GEO-12.5). O servidor é alterado em paralelo; o SDK repassa o texto
+ * sem interpretá-lo, então o literal serve de amostra — o que este arquivo
+ * trava é o `code` e a mensagem chegar INTEIRA.
+ */
+const INVALID_VALUE_MESSAGE = 'Invalid value for operator within_radius on term "address": lat must be a finite number between -90 and 90';
+
+/**
+ * As duas recusas de `DISTANCE_SORT_UNAVAILABLE` (GEO-14.3 e GEO-15.3): mesmo
+ * código, mensagens distintas. Mesmos literais no SDK Python.
+ */
+const DISTANCE_SORT_NO_CENTER_MESSAGE =
+	'Sorting by _distance requires exactly one within_radius condition on the AND path of the filter';
+const DISTANCE_SORT_NO_ACCESS_MESSAGE = 'Sorting by _distance requires read access to field address';
 
 /**
  * Id de correlação de exemplo, no formato que o servidor emite: doze caracteres
@@ -106,22 +134,20 @@ describe('operador de filtro within_radius', () => {
 	const client = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-key' });
 
 	describe('withinRadiusCondition (montagem da condição)', () => {
-		it('monta term/operator/value com o centro literal em [longitude, latitude]', () => {
-			const condition = withinRadiusCondition(TERM, { center: CENTER, radius: RADIUS_METERS });
+		it('monta term/operator/value com o centro literal { lat, lng, radius }', () => {
+			const condition = withinRadiusCondition(TERM, LITERAL);
 
 			expect(condition.operator).to.equal(WITHIN_RADIUS);
 			expect(condition.operator).to.equal('within_radius');
 			expect(JSON.stringify(condition)).to.equal(EXPECTED_CONDITION_JSON);
 		});
 
-		it('preserva a ORDEM das coordenadas — longitude primeiro, latitude depois', () => {
-			// O erro nº 1 deste operador é inverter as duas. O teste fixa a ordem com
-			// valores de sinais e magnitudes distinguíveis (-51 lng, -30 lat).
-			const condition = withinRadiusCondition(TERM, { center: CENTER, radius: RADIUS_METERS });
-			const center = (condition.value as { center: WithinRadiusCoordinatePair }).center;
+		it('não troca lat por lng — cada coordenada fica na chave que a nomeia', () => {
+			const condition = withinRadiusCondition(TERM, LITERAL);
+			const value = condition.value as { lat: number; lng: number };
 
-			expect(center[0]).to.equal(-51.2177);
-			expect(center[1]).to.equal(-30.0346);
+			expect(value.lat).to.equal(-30.0346);
+			expect(value.lng).to.equal(-51.2177);
 		});
 
 		it('não coage string numérica — deixa o servidor recusar', () => {
@@ -131,18 +157,47 @@ describe('operador de filtro within_radius', () => {
 			// JS puro passa direto — e o servidor recusa string numérica de propósito
 			// (GEO-02). Coagir aqui esconderia o erro do chamador em vez de reportá-lo.
 			const condition = withinRadiusCondition(TERM, {
-				center: ['-51.2177', '-30.0346'] as unknown as WithinRadiusCoordinatePair,
+				lat: '-30.0346',
+				lng: '-51.2177',
 				radius: RADIUS_METERS,
-			});
-			const center = (condition.value as { center: unknown }).center;
+			} as unknown as WithinRadiusValue);
 
-			expect(center).to.deep.equal(['-51.2177', '-30.0346']);
+			expect(condition.value).to.deep.equal({ lat: '-30.0346', lng: '-51.2177', radius: RADIUS_METERS });
 		});
 
-		it('aceita centro por referência a outro registro', () => {
-			const condition = withinRadiusCondition(TERM, { center: CENTER_REF, radius: RADIUS_METERS });
+		it('aceita centro por referência a outro registro, em { record, radius }', () => {
+			const condition = withinRadiusCondition(TERM, BY_RECORD);
 
 			expect(JSON.stringify(condition)).to.equal(EXPECTED_CENTER_REF_CONDITION_JSON);
+		});
+
+		it('a forma antiga { center, radius } não é aceita pelo tipo', () => {
+			// Trava de compilação (ts-jest roda com diagnostics): se o tipo voltar a
+			// aceitar `center`, o `@ts-expect-error` fica sem erro e o arquivo não compila.
+			// @ts-expect-error — `center` não existe mais no valor do operador
+			const legacy: WithinRadiusValue = { center: [-51.2177, -30.0346], radius: RADIUS_METERS };
+			// @ts-expect-error — as duas formas juntas também não são um WithinRadiusValue
+			const mixed: WithinRadiusValue = { lat: LAT, lng: LNG, record: CENTER_REF, radius: RADIUS_METERS };
+
+			expect([legacy, mixed]).to.have.length(2);
+		});
+
+		it('repassa ao servidor, sem remontar, o valor que o tipo recusaria — para ele nomear a chave', () => {
+			// Paridade com `test_mixed_shape_is_forwarded_for_the_server_to_refuse` em
+			// `konecty-sdk-python/tests/test_within_radius.py`. Um chamador em JS puro
+			// passa as duas formas juntas; o servidor recusa com "mutually exclusive"
+			// (GEO-12.3). Descartar uma delas aqui trocaria essa mensagem por outra
+			// que não diz o que o chamador fez de errado.
+			const condition = withinRadiusCondition(TERM, {
+				lat: LAT,
+				lng: LNG,
+				record: CENTER_REF,
+				radius: RADIUS_METERS,
+			} as unknown as WithinRadiusValue);
+
+			expect(JSON.stringify(condition.value)).to.equal(
+				'{"lat":-30.0346,"lng":-51.2177,"record":{"document":"Development","_id":"dev-1","field":"address"},"radius":5000}',
+			);
 		});
 	});
 
@@ -160,7 +215,7 @@ describe('operador de filtro within_radius', () => {
 			);
 
 			await client.find('Product', {
-				filter: { match: 'and', conditions: [withinRadiusCondition(TERM, { center: CENTER, radius: RADIUS_METERS })] },
+				filter: { match: 'and', conditions: [withinRadiusCondition(TERM, LITERAL)] },
 			});
 
 			// Decodificado: a condição chega byte a byte como o SDK Python a envia.
@@ -188,7 +243,7 @@ describe('operador de filtro within_radius', () => {
 			);
 
 			await client.find('Product', {
-				filter: { match: 'and', conditions: [withinRadiusCondition(TERM, { center: CENTER_REF, radius: RADIUS_METERS })] },
+				filter: { match: 'and', conditions: [withinRadiusCondition(TERM, BY_RECORD)] },
 			});
 
 			expect(filterParam).to.equal(`{"match":"and","conditions":[${EXPECTED_CENTER_REF_CONDITION_JSON}]}`);
@@ -253,7 +308,7 @@ describe('operador de filtro within_radius', () => {
 			);
 
 			const result = await client.find('Product', {
-				filter: { match: 'and', conditions: [withinRadiusCondition(TERM, { center: CENTER, radius: -1 })] },
+				filter: { match: 'and', conditions: [withinRadiusCondition(TERM, { lat: LAT, lng: LNG, radius: -1 })] },
 			});
 
 			expect(result.success).to.equal(false);
@@ -270,7 +325,7 @@ describe('operador de filtro within_radius', () => {
 			);
 
 			const result = await client.find('Product', {
-				filter: { match: 'and', conditions: [withinRadiusCondition(TERM, { center: CENTER_REF, radius: RADIUS_METERS })] },
+				filter: { match: 'and', conditions: [withinRadiusCondition(TERM, BY_RECORD)] },
 			});
 
 			expect(result.success).to.equal(false);
@@ -298,7 +353,7 @@ describe('operador de filtro within_radius', () => {
 				),
 			);
 
-			const error = await module.find(filterWith({ center: CENTER, radius: -1 })).then(
+			const error = await module.find(filterWith({ lat: LAT, lng: LNG, radius: -1 })).then(
 				() => null,
 				(rejection: unknown) => rejection,
 			);
@@ -315,7 +370,7 @@ describe('operador de filtro within_radius', () => {
 				),
 			);
 
-			const error = await module.find(filterWith({ center: CENTER_REF, radius: RADIUS_METERS })).then(
+			const error = await module.find(filterWith(BY_RECORD)).then(
 				() => null,
 				(rejection: unknown) => rejection,
 			);
@@ -371,5 +426,187 @@ describe('within_radius: profundidade e cota de centros', () => {
 		const error = konectyErrorFromErrors([{ message: QUOTA_MESSAGE, code: WITHIN_RADIUS_TOO_MANY_CENTERS }]);
 
 		expect(error).to.not.be.instanceOf(KonectyWithinRadiusCenterError);
+	});
+});
+
+/**
+ * Distância e ordenação por distância (Revisão 2: GEO-13, GEO-14, GEO-15, GEO-17).
+ *
+ * Paridade com `konecty-sdk-python/tests/test_within_radius.py`, classe
+ * `TestDistanceAndSort` — MESMA entrada, MESMA saída.
+ */
+describe('within_radius: _distance e ordenação por distância', () => {
+	const client = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-key' });
+	const module = new ProductModule({ endpoint: ENDPOINT, accessKey: 'fake-key' });
+	const geoFilter = { match: 'and' as const, conditions: [withinRadiusCondition(TERM, LITERAL)] };
+	const distanceSort = [{ property: DISTANCE_FIELD, direction: 'ASC' as const }];
+
+	it('DISTANCE_FIELD é o nome do campo que o servidor devolve e ordena', () => {
+		expect(DISTANCE_FIELD).to.equal('_distance');
+		expect(DISTANCE_SORT_UNAVAILABLE).to.equal('DISTANCE_SORT_UNAVAILABLE');
+	});
+
+	it('find com filtro geográfico e sort por _distance: filter e sort chegam byte a byte', async () => {
+		let filterParam: string | null = null;
+		let sortParam: string | null = null;
+		let rawSearch = '';
+
+		server.use(
+			rest.get(`${ENDPOINT}/rest/data/Product/find`, (req, res, ctx) => {
+				filterParam = req.url.searchParams.get('filter');
+				sortParam = req.url.searchParams.get('sort');
+				rawSearch = req.url.search;
+				return res(ctx.status(200), ctx.json({ success: true, data: [], total: 0 }));
+			}),
+		);
+
+		await client.find('Product', { filter: geoFilter, sort: distanceSort });
+
+		expect(filterParam).to.equal(`{"match":"and","conditions":[${EXPECTED_CONDITION_JSON}]}`);
+		expect(sortParam).to.equal(EXPECTED_DISTANCE_SORT_JSON);
+		// A query string crua, inteira: o `sort` passa sem transformação e codificado
+		// como o `filter` (form-urlencoded do URLSearchParams).
+		expect(rawSearch).to.equal(
+			'?filter=%7B%22match%22%3A%22and%22%2C%22conditions%22%3A%5B%7B%22term%22%3A%22address%22%2C%22operator%22%3A%22within_radius%22%2C%22value%22%3A%7B%22lat%22%3A-30.0346%2C%22lng%22%3A-51.2177%2C%22radius%22%3A5000%7D%7D%5D%7D' +
+				'&sort=%5B%7B%22property%22%3A%22_distance%22%2C%22direction%22%3A%22ASC%22%7D%5D',
+		);
+	});
+
+	it('Module.find aceita sort por _distance mesmo fora dos campos ordenáveis do módulo', async () => {
+		// `ProductSortFields` não lista `_distance`; o tipo de `sort` o aceita em
+		// qualquer módulo, e o valor vai sem transformação.
+		let sortParam: string | null = null;
+
+		server.use(
+			rest.get(`${ENDPOINT}/rest/data/Product/find`, (req, res, ctx) => {
+				sortParam = req.url.searchParams.get('sort');
+				return res(ctx.status(200), ctx.json({ success: true, data: [], total: 0 }));
+			}),
+		);
+
+		await module.find(geoFilter as never, { sort: [{ property: DISTANCE_FIELD, direction: 'DESC' }] });
+
+		expect(sortParam).to.equal('[{"property":"_distance","direction":"DESC"}]');
+	});
+
+	it('_distance de cada registro chega ao chamador como número, tipado', async () => {
+		server.use(
+			rest.get(`${ENDPOINT}/rest/data/Product/find`, (_req, res, ctx) =>
+				res(
+					ctx.status(200),
+					ctx.json({
+						success: true,
+						data: [
+							{ _id: 'p-1', _distance: 850 },
+							{ _id: 'p-2', _distance: 4999 },
+						],
+						total: 2,
+					}),
+				),
+			),
+		);
+
+		const result = await client.find('Product', { filter: geoFilter, sort: distanceSort });
+
+		const distances: Array<number | undefined> = (result.data ?? []).map(record => record._distance);
+		expect(distances).to.deep.equal([850, 4999]);
+	});
+
+	describe('DISTANCE_SORT_UNAVAILABLE', () => {
+		it('vira KonectyDistanceSortUnavailableError com code e mensagem intactos — sem centro único', () => {
+			const error = konectyErrorFromErrors([{ message: DISTANCE_SORT_NO_CENTER_MESSAGE, code: DISTANCE_SORT_UNAVAILABLE }]);
+
+			expect(error).to.be.instanceOf(KonectyDistanceSortUnavailableError);
+			expect((error as KonectyDistanceSortUnavailableError).code).to.equal('DISTANCE_SORT_UNAVAILABLE');
+			expect(error.message).to.equal(DISTANCE_SORT_NO_CENTER_MESSAGE);
+		});
+
+		it('a outra mensagem do mesmo código (campo sem leitura) chega igualmente intacta', () => {
+			const error = konectyErrorFromErrors([{ message: DISTANCE_SORT_NO_ACCESS_MESSAGE, code: DISTANCE_SORT_UNAVAILABLE }]);
+
+			expect(error).to.be.instanceOf(KonectyDistanceSortUnavailableError);
+			expect(error.message).to.equal(DISTANCE_SORT_NO_ACCESS_MESSAGE);
+		});
+
+		it('sem message, cai no mesmo default do SDK Python', () => {
+			const error = konectyErrorFromErrors([{ code: DISTANCE_SORT_UNAVAILABLE } as never]);
+
+			expect(error).to.be.instanceOf(KonectyDistanceSortUnavailableError);
+			expect(error.message).to.equal('Sorting by _distance is not available for this query');
+		});
+
+		it('não é recusa de filtro nem de teto de página', () => {
+			const error = konectyErrorFromErrors([{ message: DISTANCE_SORT_NO_CENTER_MESSAGE, code: DISTANCE_SORT_UNAVAILABLE }]);
+
+			expect(error).to.not.be.instanceOf(KonectyWithinRadiusValueError);
+			expect(error).to.not.be.instanceOf(KonectySortLimitError);
+			expect(error).to.be.instanceOf(Error);
+		});
+
+		it('HTTP 400 em Module.find chega como KonectyDistanceSortUnavailableError', async () => {
+			server.use(
+				rest.get(`${ENDPOINT}/rest/data/Product/find`, (_req, res, ctx) =>
+					res(ctx.status(400), ctx.json({ success: false, errors: [{ message: DISTANCE_SORT_NO_CENTER_MESSAGE, code: DISTANCE_SORT_UNAVAILABLE }] })),
+				),
+			);
+
+			const error = await module.find({ match: 'and' } as never, { sort: [{ property: DISTANCE_FIELD, direction: 'ASC' }] }).then(
+				() => null,
+				(rejection: unknown) => rejection,
+			);
+
+			expect(error).to.be.instanceOf(KonectyDistanceSortUnavailableError);
+			expect((error as KonectyDistanceSortUnavailableError).code).to.equal(DISTANCE_SORT_UNAVAILABLE);
+			expect((error as Error).message).to.equal(DISTANCE_SORT_NO_CENTER_MESSAGE);
+		});
+
+		it('o mesmo corpo em HTTP 200 (servidor anterior ao GEO-17) chega igual', async () => {
+			server.use(
+				rest.get(`${ENDPOINT}/rest/data/Product/find`, (_req, res, ctx) =>
+					res(ctx.status(200), ctx.json({ success: false, errors: [{ message: DISTANCE_SORT_NO_CENTER_MESSAGE, code: DISTANCE_SORT_UNAVAILABLE }] })),
+				),
+			);
+
+			const error = await module.find({ match: 'and' } as never, { sort: [{ property: DISTANCE_FIELD, direction: 'ASC' }] }).then(
+				() => null,
+				(rejection: unknown) => rejection,
+			);
+
+			expect(error).to.be.instanceOf(KonectyDistanceSortUnavailableError);
+			expect((error as Error).message).to.equal(DISTANCE_SORT_NO_CENTER_MESSAGE);
+		});
+
+		it('Client.find devolve (não lança) o code e a mensagem do 400', async () => {
+			server.use(
+				rest.get(`${ENDPOINT}/rest/data/Product/find`, (_req, res, ctx) =>
+					res(ctx.status(400), ctx.json({ success: false, errors: [{ message: DISTANCE_SORT_NO_ACCESS_MESSAGE, code: DISTANCE_SORT_UNAVAILABLE }] })),
+				),
+			);
+
+			const result = await client.find('Product', { filter: geoFilter, sort: distanceSort });
+
+			expect(result.success).to.equal(false);
+			const first = (result.errors ?? [])[0] as { message: string; code?: string };
+			expect(first.code).to.equal(DISTANCE_SORT_UNAVAILABLE);
+			expect(first.message).to.equal(DISTANCE_SORT_NO_ACCESS_MESSAGE);
+		});
+	});
+
+	it('WITHIN_RADIUS_INVALID_VALUE também chega tipado quando vem em HTTP 200 success:false', async () => {
+		// Até o GEO-17 o servidor respondia estas recusas com 200; depois, com 400.
+		// O SDK reconhece o código pelo corpo nos dois casos (o 400 está coberto acima).
+		server.use(
+			rest.get(`${ENDPOINT}/rest/data/Product/find`, (_req, res, ctx) =>
+				res(ctx.status(200), ctx.json({ success: false, errors: [{ message: INVALID_VALUE_MESSAGE, code: WITHIN_RADIUS_INVALID_VALUE }] })),
+			),
+		);
+
+		const error = await module.find(geoFilter as never).then(
+			() => null,
+			(rejection: unknown) => rejection,
+		);
+
+		expect(error).to.be.instanceOf(KonectyWithinRadiusValueError);
+		expect((error as Error).message).to.equal(INVALID_VALUE_MESSAGE);
 	});
 });
