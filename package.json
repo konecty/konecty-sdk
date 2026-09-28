@@ -28,7 +28,8 @@
 		"./User": "./dist/sdk/User.js",
 		"./TypeUtils": "./dist/sdk/TypeUtils.js",
 		"./FilesManager": "./dist/sdk/FilesManager.js",
-		"./package.json": "./package.json"
+		"./package.json": "./package.json",
+		"./filters/withinRadius": "./dist/sdk/filters/withinRadius.js"
 	},
 	"typesVersions": {
 		"*": {
@@ -88,6 +89,9 @@
 			],
 			"types/pivot": [
 				"./dist/sdk/types/pivot.d.ts"
+			],
+			"filters/withinRadius": [
+				"./dist/sdk/filters/withinRadius.d.ts"
 			]
 		}
 	},
