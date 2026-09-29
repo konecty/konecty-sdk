@@ -52,6 +52,12 @@ export type KonectyFindParams = {
 	limit?: number;
 	sort?: Array<object>;
 	fields?: Array<string | number | symbol>;
+	/**
+	 * `false` pede ao servidor para não contar o total (a resposta vem sem `total`),
+	 * o que acelera listagens grandes quando o total não é necessário. `true` ou
+	 * ausente mantém o comportamento padrão e não envia nada na query.
+	 */
+	getTotal?: boolean;
 };
 
 export type History = {
@@ -139,12 +145,20 @@ export class KonectyClient {
 		try {
 			const params = new URLSearchParams();
 			Object.keys(options).forEach(key => {
+				if (key === 'getTotal') {
+					return;
+				}
 				if (key === 'fields') {
 					params.set(key, (options.fields ?? []).map(String).join(','));
 				} else {
 					params.set(key, JSON.stringify(serializeDates(get(options, key))));
 				}
 			});
+			// Só o desligamento explícito vai para a rede: quem não usa a opção (ou passa
+			// `true`) continua montando a mesma URL de antes, byte a byte.
+			if (options.getTotal === false) {
+				params.set('getTotal', 'false');
+			}
 			const result = await fetch(`${this.#options.endpoint}/rest/data/${module}/find?${params.toString()}`, {
 				method: 'GET',
 				headers: {
