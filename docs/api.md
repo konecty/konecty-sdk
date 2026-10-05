@@ -103,6 +103,15 @@ A classe base KonectyModule (e as subclasses UserModule, RoleModule, GroupModule
 
 - **findOne**: find com limit 1 → GET /rest/data/:document/find.
 - **find**: find com opções → GET /rest/data/:document/find.
+- **getHistory**: getHistory do client → GET /rest/data/:document/:dataId/history.
+- **validate**: apenas local (validação de campos obrigatórios), não chama o CRM.
+- **create**: create do client → POST /rest/data/:document.
+- **update**: update do client → PUT /rest/data/:document.
+- **delete**: delete do client → DELETE /rest/data/:document.
+- **lookup**: lookup do client → GET /rest/data/:document/lookup/:field.
+- **filesManager**: retorna uma instância de FilesManager configurada para o módulo; não faz chamada direta.
+
+O nome do documento usado nas rotas é o `name` do ModuleConfig (ex.: User, Role, Group).
 
 ### Ordenação acima de 1000 registros
 
@@ -156,15 +165,116 @@ mesma de antes. Vale para `KonectyClient.find` e `KonectyModule.find`
 (`findOne` não devolve total e segue inalterado).
 
 Equivalente Python: `find(..., get_total=False)` / `find_sync(..., get_total=False)`.
-- **getHistory**: getHistory do client → GET /rest/data/:document/:dataId/history.
-- **validate**: apenas local (validação de campos obrigatórios), não chama o CRM.
-- **create**: create do client → POST /rest/data/:document.
-- **update**: update do client → PUT /rest/data/:document.
-- **delete**: delete do client → DELETE /rest/data/:document.
-- **lookup**: lookup do client → GET /rest/data/:document/lookup/:field.
-- **filesManager**: retorna uma instância de FilesManager configurada para o módulo; não faz chamada direta.
 
-O nome do documento usado nas rotas é o `name` do ModuleConfig (ex.: User, Role, Group).
+## Filtro de busca por raio geográfico (`within_radius`)
+
+Filtra registros cujo campo `address` esteja dentro de um raio, em **metros**, a
+partir de um centro. O `term` é o campo `address` puro — o sufixo `.geolocation`
+é acrescentado pelo servidor, não pelo cliente.
+
+```ts
+import { withinRadiusCondition } from '@konecty/sdk/Client';
+
+// Porto Alegre, 5 km. As coordenadas vão NOMEADAS: não há ordem a errar.
+const condition = withinRadiusCondition('address', { lat: -30.0346, lng: -51.2177, radius: 5000 });
+// { term: 'address', operator: 'within_radius', value: { lat: -30.0346, lng: -51.2177, radius: 5000 } }
+
+await module.find({ match: 'and', conditions: [condition] });
+```
+
+`lat` vai de -90 a 90 e `lng` de -180 a 180, ambos números finitos. A forma
+antiga `{ center: [lng, lat], radius }` **deixou de existir**: o tipo não a
+aceita, e o servidor recusa a chave `center` com `WITHIN_RADIUS_INVALID_VALUE`.
+
+O centro também pode vir de outro registro — "perto do empreendimento X" — sem
+uma ida e volta para descobrir as coordenadas antes:
+
+```ts
+withinRadiusCondition('address', {
+    record: { document: 'Development', _id: '<id>', field: 'address' },
+    radius: 2000,
+});
+```
+
+O servidor lê o registro-centro sob controle de acesso completo. `field` é
+obrigatório porque um documento pode ter mais de um campo `address`. As duas
+formas — `lat`/`lng` e `record` — são mutuamente exclusivas.
+
+### Distância (`_distance`) e ordenação por distância
+
+Quando o filtro tem **exatamente um** `within_radius` habilitado no caminho AND
+(fora de qualquer nó `or`), cada registro devolvido por `find` traz
+`_distance`: a distância até o centro em **metros**, inteira. Com zero ou duas+
+condições nessa posição, ou quando o usuário não pode ler o campo `address`, o
+campo simplesmente não vem — não é erro. `_distance` é calculado, nunca gravado:
+não o devolva num `update`.
+
+```ts
+import { DISTANCE_FIELD } from '@konecty/sdk/Client';
+
+const { data } = await module.find(
+    { match: 'and', conditions: [condition] },
+    { sort: [{ property: DISTANCE_FIELD, direction: 'ASC' }] }, // mais perto primeiro
+);
+data[0]._distance; // 850
+```
+
+`DISTANCE_FIELD` é `'_distance'`, e o `sort` aceita esse `property` em qualquer
+módulo. O `sort` vai ao servidor sem transformação; o empate é resolvido pelo
+servidor por `_id`. Ordenar por distância segue o teto de página de qualquer
+ordenação arbitrária (`SORT_ABOVE_MAX_PAGE_SIZE`).
+
+### Códigos de erro
+
+Chegam tipados, com a mensagem do servidor preservada — em HTTP 400 e também em
+200 com `success: false` (servidores anteriores à mudança para 400):
+
+| Código | Exceção | Quando |
+| --- | --- | --- |
+| `WITHIN_RADIUS_INVALID_VALUE` | `KonectyWithinRadiusValueError` | forma ou faixa do valor recusada (chave ausente ou desconhecida, `lat`/`lng` e `record` juntos, coordenada fora de faixa, string numérica, raio ≤ 0 ou acima do teto) |
+| `WITHIN_RADIUS_CENTER_UNRESOLVED` | `KonectyWithinRadiusCenterError` | o registro-centro não existe, não é legível, ou não tem geolocalização |
+| `DISTANCE_SORT_UNAVAILABLE` | `KonectyDistanceSortUnavailableError` | `sort` por `_distance` sem exatamente um `within_radius` no caminho AND, ou sem leitura (plena) do campo `address` |
+
+O SDK **não** valida faixa nem teto de raio: quem decide é o servidor, e um
+limite copiado aqui passaria a mentir assim que o backend mudasse.
+
+#### `WITHIN_RADIUS_CENTER_UNRESOLVED`: o id de correlação é o caminho de suporte
+
+Três causas produzem esse código — o registro-centro **não existe**, existe mas
+**não é legível** para o usuário da requisição, ou é legível mas **não tem
+geolocalização** gravada. A resposta não diz qual: distinguí-las transformaria o
+filtro num oráculo, e quem não pode ler o registro descobriria se ele existe e
+onde fica variando o raio até a resposta mudar.
+
+A causa real fica no **log do servidor**, e a mensagem devolvida termina com o id
+que aponta para a linha correspondente:
+
+```
+Could not resolve the center record for operator within_radius on term "address". Correlation id: 7b3f2a9c41d8
+```
+
+O id tem doze caracteres hexadecimais, ou 32 quando há tracing ativo (aí ele **é**
+o `traceId` do span, e serve direto como chave de busca no log). O SDK entrega a
+mensagem **inteira** em `error.message` — não a trunca nem a reescreve. Ao
+reportar o problema, **mande o id**: sem ele não há como achar a linha, e o
+suporte terá de pedir data, hora aproximada e namespace.
+
+Nem toda mensagem com esse código traz um id. O mesmo código recusa também um
+centro por referência que chega por um caminho que **não hidrata** — `update` e
+`findById`, contra `find`, stream/export e lookup, que hidratam — e essa recusa
+tem texto próprio, sem id:
+
+```
+Could not resolve the center record for operator within_radius on term "address". A center by record reference is resolved only on read paths (find, stream/export and lookup) and is not supported here.
+```
+
+Ou seja: ramifique pelo `.code`, e **mostre a mensagem** ao usuário em vez de
+casar com o texto dela.
+
+Equivalente Python: `within_radius_condition`, `DISTANCE_FIELD` e
+`FilterOperator.WITHIN_RADIUS` em `KonectySdkPython.lib.filters`;
+`KonectyWithinRadiusValueError`, `KonectyWithinRadiusCenterError` e
+`KonectyDistanceSortUnavailableError` em `KonectySdkPython.lib.exceptions`.
 
 ## Stream (findStream e streamCount)
 
