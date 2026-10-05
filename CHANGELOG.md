@@ -1,3 +1,29 @@
+## [2.5.0](https://github.com/konecty/konecty-sdk/compare/2.4.0...2.5.0) (2026-10-05)
+
+
+### 📔 Docs
+
+* **api:** id de correlação do within_radius e encadeamento da lista de Module ([bbf41cb](https://github.com/konecty/konecty-sdk/commit/bbf41cbcc82ed2f297c26597ef2f09dfa5a94854))
+
+
+### 🧪 Tests
+
+* **filter:** fecha a assimetria de string numérica com o SDK Python ([52a0fdd](https://github.com/konecty/konecty-sdk/commit/52a0fdd4b1d849b49863228a26855d15c22bf205))
+* **filter:** usa as mensagens reais do servidor no within_radius ([d719eef](https://github.com/konecty/konecty-sdk/commit/d719eef4f6b47afbedbb627efa8db2f62e0cfec5))
+* **filter:** within_radius contra as mensagens reais do servidor ([24914d4](https://github.com/konecty/konecty-sdk/commit/24914d4742aa1bfdba5f82960f28742cb17d21bc))
+
+
+### 🚀 Features
+
+* **filter:** codigos de profundidade e cota de centro do within_radius ([d91640a](https://github.com/konecty/konecty-sdk/commit/d91640ac5f3231048e51c428a6d07ca97c4c49ea))
+* **filter:** operador within_radius tipado ([cd3c144](https://github.com/konecty/konecty-sdk/commit/cd3c1448c6ad4a65361f2ed69c392a0aaa7eb812))
+* **filter:** within_radius com lat/lng e ordenacao por distancia ([ff27dbb](https://github.com/konecty/konecty-sdk/commit/ff27dbb7582518d3e448881cf014ee4e8071c261))
+
+
+### Other
+
+* **merge:** traz a main para feat/within-radius-filter ([5fa4ea6](https://github.com/konecty/konecty-sdk/commit/5fa4ea63e490bea19ac0a7c92d51e0f2c6d096b0))
+
 ## [2.4.0](https://github.com/konecty/konecty-sdk/compare/2.3.0...2.4.0) (2026-09-29)
 
 
