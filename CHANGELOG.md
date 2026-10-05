@@ -1,3 +1,12 @@
+## [2.4.0](https://github.com/konecty/konecty-sdk/compare/2.3.0...2.4.0) (2026-09-29)
+
+
+### 🚀 Features
+
+* **admin:** expõe preservedHooks no resultado de upsertMeta ([8072c4c](https://github.com/konecty/konecty-sdk/commit/8072c4cd52fad27e272bc667bcf813abf1e6df13)), closes [konecty/Konecty#582](https://github.com/konecty/Konecty/issues/582)
+* **errors:** SORT_ABOVE_MAX_PAGE_SIZE chega ao chamador com código próprio ([d49d3d5](https://github.com/konecty/konecty-sdk/commit/d49d3d5091574951f85c31462f4a065f0810b309))
+* **find:** opcao para desligar a contagem total ([83e54bb](https://github.com/konecty/konecty-sdk/commit/83e54bbfeb3ff16713b8650522b70ef38d45ab4b))
+
 ## [2.3.0](https://github.com/konecty/konecty-sdk/compare/2.2.0...2.3.0) (2026-09-09)
 
 

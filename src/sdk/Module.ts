@@ -120,11 +120,19 @@ export type ModuleFindAllOptions<T, F> = {
 	sort?: ModuleSort<T | typeof DISTANCE_FIELD>[];
 	fields?: Array<F>;
 	withDetailFields?: boolean;
+	/** `false` desliga a contagem total no servidor; o resultado vem sem `count`. */
+	getTotal?: boolean;
 };
 
 export type FindResult<T> = {
 	data: T[];
 	count: number;
+};
+
+/** Resultado de `find` com `getTotal: false`: o servidor não conta, então não há `count`. */
+export type FindResultWithoutCount<T> = {
+	data: T[];
+	count?: undefined;
 };
 
 export type ValidateResult = {
@@ -185,8 +193,20 @@ export class KonectyModule<
 
 	async find(
 		filter: ModuleFilter<ModuleFilterConditions>,
+		options: ModuleFindAllOptions<ModuleSortFields, keyof Document> & { getTotal: false },
+	): Promise<FindResultWithoutCount<Document>>;
+	async find(
+		filter: ModuleFilter<ModuleFilterConditions>,
+		options?: ModuleFindAllOptions<ModuleSortFields, keyof Document> & { getTotal?: true },
+	): Promise<FindResult<Document>>;
+	async find(
+		filter: ModuleFilter<ModuleFilterConditions>,
 		options?: ModuleFindAllOptions<ModuleSortFields, keyof Document>,
-	): Promise<FindResult<Document>> {
+	): Promise<FindResult<Document> | FindResultWithoutCount<Document>>;
+	async find(
+		filter: ModuleFilter<ModuleFilterConditions>,
+		options?: ModuleFindAllOptions<ModuleSortFields, keyof Document>,
+	): Promise<FindResult<Document> | FindResultWithoutCount<Document>> {
 		const result = await this.#client.find(
 			this.#config.name,
 			Object.assign(
@@ -201,9 +221,12 @@ export class KonectyModule<
 		);
 
 		if (result?.success === true) {
+			if (result.total == null) {
+				return { data: result.data as Document[] };
+			}
 			return {
 				data: result.data as Document[],
-				count: result.total as number,
+				count: result.total,
 			};
 		}
 		throw konectyErrorFromErrors(result.errors);

@@ -95,7 +95,7 @@ Cada método do KonectyClient utiliza o endpoint do CRM indicado. A base URL é 
 | updateServiceAccountAccess | PUT | /api/admin/service-accounts/:id/access |
 | createServiceAccountPat | POST | /api/admin/service-accounts/:id/pats |
 
-Parâmetros: find usa query string com filter, sort, limit, start, fields (serializados em JSON). findStream usa os mesmos parâmetros de find mais includeTotal (opcional); a resposta é NDJSON (uma linha JSON por registro); quando includeTotal é true, o total vem no header X-Total-Count. streamCount usa filter e opcionalmente displayName, displayType, sort, withDetailFields; retorna JSON com success e total. create envia o documento no body em JSON. update envia body com ids e data. delete envia body com ids. lookup usa query com search e opções de filtro/paginação. login envia user, password (hash MD5 e SHA256), geolocation e outros campos em application/x-www-form-urlencoded.
+Parâmetros: find usa query string com filter, sort, limit, start, fields (serializados em JSON) e, opcionalmente, getTotal=false (ver "Busca sem contagem total" abaixo). findStream usa os mesmos parâmetros de find mais includeTotal (opcional); a resposta é NDJSON (uma linha JSON por registro); quando includeTotal é true, o total vem no header X-Total-Count. streamCount usa filter e opcionalmente displayName, displayType, sort, withDetailFields; retorna JSON com success e total. create envia o documento no body em JSON. update envia body com ids e data. delete envia body com ids. lookup usa query com search e opções de filtro/paginação. login envia user, password (hash MD5 e SHA256), geolocation e outros campos em application/x-www-form-urlencoded.
 
 ## KonectyModule
 
@@ -142,6 +142,29 @@ volume, e é o caminho recomendado para leitura em volume. `sort` vazio (`[]`)
 significa "sem ordenação" e não é recusado.
 
 Equivalente Python: `KonectySortLimitError` em `KonectySdkPython.lib.exceptions`.
+
+### Busca sem contagem total (`getTotal: false`)
+
+Por padrão o Konecty conta quantos registros batem com o filtro e devolve o
+número em `total` (em `KonectyModule.find`, `count`). Em coleções grandes essa
+contagem é a parte cara da busca. Quando o total não é necessário — paginação
+"carregar mais", rolagem infinita, "pegue os próximos N" — passe
+`getTotal: false`: o servidor não conta e a resposta vem sem `total`.
+
+```ts
+// KonectyClient: `total` fica undefined
+const page = await client.find('Contact', { filter, limit: 50, start: 100, getTotal: false });
+
+// KonectyModule: o resultado não tem `count` (tipo FindResultWithoutCount)
+const { data } = await contacts.find(filter, { limit: 50, start: 100, getTotal: false });
+```
+
+Só o desligamento vai para a rede: com `getTotal: false` o SDK acrescenta
+`getTotal=false` à query; com `true` ou sem a opção nada é enviado e a URL é a
+mesma de antes. Vale para `KonectyClient.find` e `KonectyModule.find`
+(`findOne` não devolve total e segue inalterado).
+
+Equivalente Python: `find(..., get_total=False)` / `find_sync(..., get_total=False)`.
 
 ## Filtro de busca por raio geográfico (`within_radius`)
 
