@@ -1,3 +1,15 @@
+## [2.6.0](https://github.com/konecty/konecty-sdk/compare/2.5.0...2.6.0) (2026-10-13)
+
+
+### 🧪 Tests
+
+* **info:** reproduz redirectURL ausente do tipo de KonectyUserInfo ([fe67409](https://github.com/konecty/konecty-sdk/commit/fe674098017fbb18fd6825a3724ac2db4fd60be9))
+
+
+### 🚀 Features
+
+* **info:** tipa user.redirectURL no retorno de info ([c86b4ae](https://github.com/konecty/konecty-sdk/commit/c86b4ae64c2fbb9b6bb8eb3bb411feac01a43e9f)), closes [konecty/Konecty#426](https://github.com/konecty/Konecty/issues/426) [konecty/Konecty#759](https://github.com/konecty/Konecty/issues/759)
+
 ## [2.5.0](https://github.com/konecty/konecty-sdk/compare/2.4.0...2.5.0) (2026-10-05)
 
 
