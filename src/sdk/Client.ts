@@ -103,7 +103,9 @@ export type KonectyLoginResult = {
 
 export type KonectyUserInfo = {
 	logged: boolean;
-	user?: User;
+	// `redirectURL` é a página para onde levar o usuário ao abrir a interface; `null`
+	// quando a ficha não define uma (konecty/Konecty, `src/imports/auth/info/index.ts`).
+	user?: User & { redirectURL?: string | null };
 	errors?: string[];
 };
 
