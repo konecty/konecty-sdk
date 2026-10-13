@@ -169,3 +169,40 @@ describe('Konecty User Infos — sessão por cookie HttpOnly', () => {
 		expect(konecty.options.accessKey).to.equal('token-explicito');
 	});
 });
+
+/**
+ * `user.redirectURL` (string ou null) entra no payload de `GET /rest/auth/info`
+ * desde konecty/Konecty#426 (`src/imports/auth/info/index.ts`). A UI nova leva o
+ * usuário até ele ao abrir a interface (konecty/Konecty#759).
+ *
+ * Paridade: `tests/test_user_info.py` no `konecty/konecty-sdk-python` usa a mesma
+ * entrada e espera a mesma saída.
+ */
+describe('Konecty User Infos — redirectURL', () => {
+	it.each([
+		['/ui/Contact/view/abc123', '/ui/Contact/view/abc123'],
+		[null, null],
+	])('Should expose user.redirectURL = %p from the server payload', async (wire, expected) => {
+		// Arrange
+		mockIsBrowserGetter.mockReturnValue(false);
+
+		const konecty = new KonectyClient({ endpoint: 'http://localhost:3000' });
+
+		let authorization: string | null = null;
+		server.use(
+			rest.get('http://localhost:3000/rest/auth/info', (req, res, ctx) => {
+				authorization = req.headers.get('authorization');
+				return res.once(ctx.status(200), ctx.json({ logged: true, user: { _id: 'user-1', name: 'Ana', redirectURL: wire } }));
+			}),
+		);
+
+		// Act
+		const { logged, user } = await konecty.info('fake-auth-id-not-a-real-token', true);
+
+		// Assert — lido pelo tipo, não por `any`: sem o campo declarado o ts-jest reprova
+		const redirectURL: string | null | undefined = user?.redirectURL;
+		expect(logged).to.be.true;
+		expect(authorization).to.equal('fake-auth-id-not-a-real-token');
+		expect(redirectURL).to.equal(expected);
+	});
+});
