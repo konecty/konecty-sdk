@@ -34,6 +34,7 @@ import { User } from './User';
 import { DocumentTranslation, List, Menu, ZipCodeEntry } from './types';
 import { MetaAccess, UpdateAccessPayload } from './types/access';
 import type { CrossModuleQuery } from './types/crossModuleQuery';
+import type { Computed } from './types/derived';
 import type { KpiConfig, KpiResult } from './types/query';
 
 export interface KonectyClientOptions {
@@ -58,6 +59,12 @@ export type KonectyFindParams = {
 	 * ausente mantém o comportamento padrão e não envia nada na query.
 	 */
 	getTotal?: boolean;
+	/**
+	 * Campos derivados (ADR-0025): `{ alias: { op, args } }`, calculados no servidor e
+	 * devolvidos em todo registro; o alias vale em `filter` e `sort`. Vai na query
+	 * string como JSON, igual a `filter`/`sort`. Ver `types/derived.ts`.
+	 */
+	computed?: Computed;
 };
 
 export type History = {

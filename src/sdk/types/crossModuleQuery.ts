@@ -1,4 +1,5 @@
 import type { KonFilter } from './filter';
+import type { Computed } from './derived';
 
 /** Aggregator names supported by Konecty POST /rest/query/json (cross-module query). */
 export const AGGREGATOR_NAMES = [
@@ -59,6 +60,8 @@ export interface CrossModuleQuery {
 	relations?: CrossModuleRelation[];
 	groupBy?: string[];
 	aggregators?: Record<string, CrossModuleAggregator>;
+	/** Campos derivados do documento primário (ADR-0025); o alias vale em filter, sort, groupBy e aggregators[*].field. */
+	computed?: Computed;
 	includeTotal?: boolean;
 	includeMeta?: boolean;
 }
