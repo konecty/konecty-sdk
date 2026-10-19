@@ -159,6 +159,17 @@ describe('campo derivado (computed)', () => {
 	});
 
 	describe('tipos exportados', () => {
+		it('types/derived é subpath público do pacote (exports + typesVersions), como graph e pivot', () => {
+			// O import `@konecty/sdk/types/derived` deste arquivo só resolve porque o Jest
+			// remapeia para `src`. No pacote publicado o `exports` não tem entrada raiz `"."`,
+			// então todo tipo é consumido por subpath — e sem estas duas entradas o
+			// consumidor não consegue nomear `Computed`/`DerivedExpression`.
+			// eslint-disable-next-line @typescript-eslint/no-var-requires
+			const pkg = require('../../../package.json');
+			expect(pkg.exports['./types/derived']).to.equal('./dist/sdk/types/derived.js');
+			expect(pkg.typesVersions['*']['types/derived']).to.deep.equal(['./dist/sdk/types/derived.d.ts']);
+		});
+
 		it('DerivedExpression/Computed são o contrato do servidor — op fora da lista não compila', () => {
 			// Trava de compilação (ts-jest roda com diagnostics): se o tipo passar a aceitar
 			// `divide` (fora do escopo do ADR-0025), o `@ts-expect-error` fica sem erro e o
