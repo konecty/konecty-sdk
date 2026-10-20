@@ -159,6 +159,29 @@ describe('Konecty Client Tests', () => {
 		expect(product?.data?.[0].name).to.be.equal('Activity');
 	});
 
+	it('should return menu label and plurals when the response has them', async () => {
+		// Arrange
+		const options: KonectyClientOptions = {
+			endpoint: 'http://localhost:3000',
+			accessKey: 'asdfasdfsadfsadf',
+		};
+		const client = new KonectyClient(options);
+		server.use(
+			rest.get('http://localhost:3000/api/menu/main', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json(getMenuMainResponse));
+			}),
+		);
+
+		// Act
+		const menu = await client.getMenu();
+
+		// Assert
+		const contact = menu?.data?.find(item => item.name === 'Contact');
+		expect(contact?.label).to.deep.equal({ en: 'Contact', pt_BR: 'Contato' });
+		expect(contact?.plurals).to.deep.equal({ en: 'Contacts', pt_BR: 'Contatos' });
+		expect(menu?.data?.[0].label).to.be.undefined;
+	});
+
 	it('should return list view', async () => {
 		// Arrange
 		const options: KonectyClientOptions = {
