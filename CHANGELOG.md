@@ -1,3 +1,10 @@
+## [2.7.0](https://github.com/konecty/konecty-sdk/compare/2.6.0...2.7.0) (2026-10-20)
+
+
+### 🚀 Features
+
+* **menu:** expose label and plurals on Menu items ([03f680c](https://github.com/konecty/konecty-sdk/commit/03f680c156f842b2c434417827aeca0bac4e857d)), closes [konecty/Konecty#796](https://github.com/konecty/Konecty/issues/796)
+
 ## [2.6.0](https://github.com/konecty/konecty-sdk/compare/2.5.0...2.6.0) (2026-10-13)
 
 
