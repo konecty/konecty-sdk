@@ -82,6 +82,8 @@ export interface Menu {
 	document?: string;
 	menuSorter?: number;
 	icon: string;
+	label?: Record<string, string>;
+	plurals?: Record<string, string>;
 	lists?: List[];
 	pivots?: Pivot[];
 	children?: Menu[];

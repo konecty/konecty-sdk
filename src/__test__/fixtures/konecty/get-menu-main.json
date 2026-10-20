@@ -41,6 +41,14 @@
 		"document": "Contact",
 		"menuSorter": 3,
 		"icon": "book",
+		"label": {
+			"en": "Contact",
+			"pt_BR": "Contato"
+		},
+		"plurals": {
+			"en": "Contacts",
+			"pt_BR": "Contatos"
+		},
 		"lists": [
 			{
 				"name": "CustomerJourney",
