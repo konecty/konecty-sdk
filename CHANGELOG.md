@@ -1,3 +1,10 @@
+## [2.8.0](https://github.com/konecty/konecty-sdk/compare/2.7.0...2.8.0) (2026-10-23)
+
+
+### 🚀 Features
+
+* **auth:** impersonate emite sessão de suporte para outro usuário ([026a797](https://github.com/konecty/konecty-sdk/commit/026a7974c0a67b0a5026442df6afea774f69e3dc))
+
 ## [2.7.0](https://github.com/konecty/konecty-sdk/compare/2.6.0...2.7.0) (2026-10-20)
 
 
