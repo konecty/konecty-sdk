@@ -22,6 +22,7 @@
 		"./types/konectyReturn": "./dist/sdk/types/konectyReturn.js",
 		"./types/query": "./dist/sdk/types/query.js",
 		"./types/crossModuleQuery": "./dist/sdk/types/crossModuleQuery.js",
+		"./types/derived": "./dist/sdk/types/derived.js",
 		"./CrossModuleQueryBuilder": "./dist/sdk/CrossModuleQueryBuilder.js",
 		"./types/graph": "./dist/sdk/types/graph.js",
 		"./types/pivot": "./dist/sdk/types/pivot.js",
@@ -80,6 +81,9 @@
 			],
 			"types/crossModuleQuery": [
 				"./dist/sdk/types/crossModuleQuery.d.ts"
+			],
+			"types/derived": [
+				"./dist/sdk/types/derived.d.ts"
 			],
 			"CrossModuleQueryBuilder": [
 				"./dist/sdk/CrossModuleQueryBuilder.d.ts"
