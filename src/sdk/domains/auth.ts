@@ -145,6 +145,117 @@ export async function exchangeGoogleCode(
 	return { authId: body.authId, user: body.user };
 }
 
+/**
+ * Target of a support session: exactly one of `userId` (the user's `_id`) or
+ * `code` (the user's numeric code).
+ */
+export type ImpersonateTarget = { userId: string; code?: never } | { code: number; userId?: never };
+
+/**
+ * Error codes returned by `POST /api/auth/impersonate`, plus `IMPERSONATE_INVALID_TARGET`
+ * raised locally (no request sent) when the target does not have exactly one key.
+ */
+export type ImpersonateErrorCode =
+	| 'IMPERSONATE_FORBIDDEN'
+	| 'IMPERSONATE_INVALID_TARGET'
+	| 'IMPERSONATE_TARGET_NOT_FOUND'
+	| 'IMPERSONATE_TARGET_NOT_ALLOWED'
+	| 'IMPERSONATED_SESSION_FORBIDDEN'
+	| 'admin-credential-routes-require-session';
+
+export type ImpersonateUser = {
+	_id: string;
+	name?: string;
+	username?: string;
+};
+
+export type ImpersonateSession = {
+	authId: string;
+	/** ISO 8601 instant at which the support session stops being valid. */
+	expiresAt: string;
+	user: ImpersonateUser;
+};
+
+export type ImpersonateResponse = {
+	success: boolean;
+	data?: ImpersonateSession;
+	errors?: Array<{ message: string; code?: ImpersonateErrorCode | string }>;
+};
+
+/**
+ * Thrown by {@link impersonate}. `code` is the machine-readable `errors[0].code`
+ * from the server (`failed` for transport errors, unreadable bodies and answers
+ * without a recognised code, e.g. a plain 401).
+ */
+export class KonectyImpersonateError extends Error {
+	code: ImpersonateErrorCode | 'failed';
+
+	constructor(code: ImpersonateErrorCode | 'failed', message?: string) {
+		super(message ?? code);
+		this.name = 'KonectyImpersonateError';
+		this.code = code;
+	}
+}
+
+const IMPERSONATE_ERROR_CODES: readonly ImpersonateErrorCode[] = [
+	'IMPERSONATE_FORBIDDEN',
+	'IMPERSONATE_INVALID_TARGET',
+	'IMPERSONATE_TARGET_NOT_FOUND',
+	'IMPERSONATE_TARGET_NOT_ALLOWED',
+	'IMPERSONATED_SESSION_FORBIDDEN',
+	'admin-credential-routes-require-session',
+];
+
+function toImpersonateErrorCode(body: ImpersonateResponse | null): ImpersonateErrorCode | 'failed' {
+	const code = body?.errors?.find(error => IMPERSONATE_ERROR_CODES.includes(error?.code as ImpersonateErrorCode))?.code;
+	return (code as ImpersonateErrorCode) ?? 'failed';
+}
+
+function hasExactlyOneTarget(target: ImpersonateTarget): boolean {
+	const { userId, code } = target as { userId?: unknown; code?: unknown };
+	return (userId != null) !== (code != null);
+}
+
+/**
+ * Issues a support session (1 h) for another user. The caller must be an admin
+ * authenticated with a first-party session (`opts.accessKey`). The returned
+ * `authId` is the support session's token — it is NOT adopted by any client.
+ *
+ * Throws {@link KonectyImpersonateError} on any failure.
+ */
+export async function impersonate(opts: AuthClientOptions, target: ImpersonateTarget): Promise<ImpersonateSession> {
+	if (!hasExactlyOneTarget(target)) {
+		throw new KonectyImpersonateError('IMPERSONATE_INVALID_TARGET', 'Pass exactly one of userId or code');
+	}
+
+	const url = `${opts.endpoint}/api/auth/impersonate`;
+	const payload = target.userId != null ? { userId: target.userId } : { code: target.code };
+
+	let res: Response;
+	try {
+		res = await fetch(url, {
+			method: 'POST',
+			headers: { Authorization: opts.accessKey ?? '', 'Content-Type': 'application/json' },
+			body: JSON.stringify(payload),
+		});
+	} catch (error) {
+		const message = error instanceof Error ? error.message : String(error);
+		logger.error(message, { url });
+		throw new KonectyImpersonateError('failed', message);
+	}
+
+	const body = (await parseJsonBody(res)) as ImpersonateResponse | null;
+
+	if (res.status >= 400 || body?.success !== true || body?.data?.authId == null) {
+		const message = body?.errors?.[0]?.message ?? `${res.status} - ${res.statusText}`;
+		logger.error(`${res.status} ${res.statusText}`, { url, message });
+		throw new KonectyImpersonateError(toImpersonateErrorCode(body), message);
+	}
+
+	const { authId, expiresAt, user } = body.data;
+	return { authId, expiresAt, user };
+}
+
 export async function getLoginOptions(opts: AuthClientOptions): Promise<LoginOptions> {
 	const url = `${opts.endpoint}/api/auth/login-options`;
 

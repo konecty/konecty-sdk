@@ -206,3 +206,37 @@ describe('Konecty User Infos — redirectURL', () => {
 		expect(redirectURL).to.equal(expected);
 	});
 });
+
+/**
+ * Sessão de suporte (`POST /api/auth/impersonate`): `user.impersonatedBy` e
+ * `user.impersonationExpiresAt` entram no payload de `GET /rest/auth/info` e o SDK os repassa
+ * sem alterar. Equivalente Python: tests/test_auth_impersonate.py::test_info_exposes_impersonation_fields
+ */
+describe('Konecty info (support session fields)', () => {
+	it('Should return impersonatedBy and impersonationExpiresAt untouched', async () => {
+		// Arrange
+		const konecty = new KonectyClient({ endpoint: 'http://localhost:3000' });
+		server.use(
+			rest.get('http://localhost:3000/rest/auth/info', (req, res, ctx) =>
+				res.once(
+					ctx.status(200),
+					ctx.json({
+						logged: true,
+						user: {
+							_id: 'fake-target-id',
+							impersonatedBy: { _id: 'fake-admin-id', name: 'Admin Fake' },
+							impersonationExpiresAt: '2099-01-01T01:00:00.000Z',
+						},
+					}),
+				),
+			),
+		);
+
+		// Act
+		const info = await konecty.info('fake-support-auth-id');
+
+		// Assert
+		expect(info.user?.impersonatedBy).to.deep.equal({ _id: 'fake-admin-id', name: 'Admin Fake' });
+		expect(info.user?.impersonationExpiresAt).to.equal('2099-01-01T01:00:00.000Z');
+	});
+});

@@ -105,7 +105,13 @@ export type KonectyUserInfo = {
 	logged: boolean;
 	// `redirectURL` é a página para onde levar o usuário ao abrir a interface; `null`
 	// quando a ficha não define uma (konecty/Konecty, `src/imports/auth/info/index.ts`).
-	user?: User & { redirectURL?: string | null };
+	user?: User & {
+		redirectURL?: string | null;
+		// Só em sessão de suporte (`POST /api/auth/impersonate`): o admin que a emitiu e o
+		// instante (ISO 8601) em que ela vence (konecty/Konecty, `src/imports/auth/info/index.ts`).
+		impersonatedBy?: { _id: string; name?: string };
+		impersonationExpiresAt?: string;
+	};
 	errors?: string[];
 };
 
@@ -791,6 +797,16 @@ export class KonectyClient {
 	}
 
 	/**
+	 * POST /api/auth/impersonate — issues a support session (1 h) for another user,
+	 * by `{ userId }` or `{ code }`. The calling client must hold an admin first-party
+	 * session. The returned `authId` is NOT adopted by this client: the admin session
+	 * stays intact. Throws `KonectyImpersonateError` (with `code`) on any failure.
+	 */
+	async impersonate(target: authDomain.ImpersonateTarget): Promise<authDomain.ImpersonateSession> {
+		return authDomain.impersonate({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, target);
+	}
+
+	/**
 	 * POST /rest/auth/pat — creates a Personal Access Token for the caller's
 	 * own account (self-service, `auth.createPat` in `docs/features.json`).
 	 */
@@ -1420,7 +1436,7 @@ export type { KpiConfig, KpiResult } from './types/query';
  * write the `_authTokenId` cookie — an app with its own cookie attributes
  * (domain, expiry) would otherwise end up with two cookies of the same name.
  */
-export { exchangeGoogleCode, getGoogleLoginUrl, getLoginOptions, KonectyGoogleSessionError } from './domains/auth';
+export { exchangeGoogleCode, getGoogleLoginUrl, getLoginOptions, impersonate, KonectyGoogleSessionError, KonectyImpersonateError } from './domains/auth';
 export { KonectySortLimitError, SORT_ABOVE_MAX_PAGE_SIZE, MAX_SORTED_PAGE_SIZE, konectyErrorFromErrors } from './errors';
 export type { KonectyErrorItem } from './errors';
 /**
@@ -1454,6 +1470,11 @@ export type {
 	GoogleSessionExtraData,
 	GoogleSessionResponse,
 	GoogleSessionUser,
+	ImpersonateErrorCode,
+	ImpersonateResponse,
+	ImpersonateSession,
+	ImpersonateTarget,
+	ImpersonateUser,
 	LoginOptions,
 } from './domains/auth';
 export type { CreatePatBody, CreatePatData, CreatePatResult, ListPatsResult, PatEntry, PatError, RevokePatResult } from './domains/pat';
