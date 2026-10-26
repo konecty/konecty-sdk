@@ -8,4 +8,5 @@ export * from '../src/sdk/Module';
 export * from '../src/sdk/Role';
 export * from '../src/sdk/types';
 export * from '../src/sdk/types/crossModuleQuery';
+export * from '../src/sdk/types/derived';
 export * from '../src/sdk/User';
