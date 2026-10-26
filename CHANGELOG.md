@@ -1,3 +1,15 @@
+## [2.9.0](https://github.com/konecty/konecty-sdk/compare/2.8.0...2.9.0) (2026-10-26)
+
+
+### 🚀 Features
+
+* **find:** parâmetro computed e tipos de campo derivado ([5ccb5a2](https://github.com/konecty/konecty-sdk/commit/5ccb5a258ddaa7e6f30f4485847815947c8c1b5e))
+
+
+### 🛠 Fixes
+
+* **pkg:** expõe types/derived como subpath do pacote ([b00a0e5](https://github.com/konecty/konecty-sdk/commit/b00a0e57aa8f2c58686844eb86971a4e3f746297))
+
 ## [2.8.0](https://github.com/konecty/konecty-sdk/compare/2.7.0...2.8.0) (2026-10-23)
 
 
