@@ -24,6 +24,7 @@ import * as fileDownloadDomain from './domains/fileDownload';
 import * as graphDomain from './domains/graph';
 import * as kpiDomain from './domains/kpi';
 import * as notificationsDomain from './domains/notifications';
+import * as mcpStatusDomain from './domains/mcpStatus';
 import * as patDomain from './domains/pat';
 import * as pivotDomain from './domains/pivot';
 import * as queryDomain from './domains/query';
@@ -838,6 +839,22 @@ export class KonectyClient {
 	 */
 	async revokePat(id: string): Promise<patDomain.RevokePatResult> {
 		return patDomain.revokePat({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, id);
+	}
+
+	/**
+	 * GET /rest/auth/mcp/status — the caller's MCP access level and the agents
+	 * connected through OAuth (self-service, `auth.getMcpStatus` in `docs/features.json`).
+	 */
+	async getMcpStatus(): Promise<mcpStatusDomain.GetMcpStatusResult> {
+		return mcpStatusDomain.getMcpStatus({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey });
+	}
+
+	/**
+	 * DELETE /rest/auth/mcp/connections/:id — disconnects one of the caller's
+	 * agents (self-service, `auth.revokeMcpConnection` in `docs/features.json`).
+	 */
+	async revokeMcpConnection(id: string): Promise<mcpStatusDomain.RevokeMcpConnectionResult> {
+		return mcpStatusDomain.revokeMcpConnection({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, id);
 	}
 
 	/**
