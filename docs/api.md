@@ -84,6 +84,12 @@ Cada método do KonectyClient utiliza o endpoint do CRM indicado. A base URL é 
 | listSavedQueries, getSavedQuery, createSavedQuery, updateSavedQuery, deleteSavedQuery, shareSavedQuery | GET/POST/PUT/DELETE/PATCH | /rest/query/saved, /rest/query/saved/:id, .../share |
 | getGraph | GET | /rest/data/:document/graph |
 | getPivot | GET | /rest/data/:document/pivot |
+| createPivotJob | POST | /rest/pivot/jobs |
+| getPivotJob | GET | /rest/pivot/jobs/:id |
+| listPivotJobs | GET | /rest/pivot/jobs |
+| getPivotJobResult | GET | /rest/pivot/jobs/:id/result |
+| cancelPivotJob | DELETE | /rest/pivot/jobs/:id |
+| runPivotJob | polling | POST /rest/pivot/jobs, GET /rest/pivot/jobs/:id, GET /rest/pivot/jobs/:id/result |
 | impersonate | POST | /api/auth/impersonate |
 | createPat | POST | /rest/auth/pat |
 | listPats | GET | /rest/auth/pat |

@@ -27,6 +27,7 @@ import * as notificationsDomain from './domains/notifications';
 import * as mcpStatusDomain from './domains/mcpStatus';
 import * as patDomain from './domains/pat';
 import * as pivotDomain from './domains/pivot';
+import * as pivotJobsDomain from './domains/pivotJobs';
 import * as queryDomain from './domains/query';
 import * as streamDomain from './domains/stream';
 import * as subscriptionsDomain from './domains/subscriptions';
@@ -679,6 +680,37 @@ export class KonectyClient {
 			pivotConfig,
 			params as Partial<streamDomain.StreamFindParams>,
 		);
+	}
+
+	#pivotJobsOpts() {
+		return { endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey };
+	}
+
+	async createPivotJob(params: import('./types/pivot').CreatePivotJobParams): Promise<import('./types/pivot').PivotJob> {
+		return pivotJobsDomain.createPivotJob(this.#pivotJobsOpts(), params);
+	}
+
+	async getPivotJob(id: string): Promise<import('./types/pivot').PivotJob> {
+		return pivotJobsDomain.getPivotJob(this.#pivotJobsOpts(), id);
+	}
+
+	async listPivotJobs(): Promise<Array<import('./types/pivot').PivotJob>> {
+		return pivotJobsDomain.listPivotJobs(this.#pivotJobsOpts());
+	}
+
+	async getPivotJobResult<T = unknown>(id: string): Promise<import('./types/pivot').PivotJobResult<T>> {
+		return pivotJobsDomain.getPivotJobResult<T>(this.#pivotJobsOpts(), id);
+	}
+
+	async cancelPivotJob(id: string): Promise<import('./types/pivot').PivotJob> {
+		return pivotJobsDomain.cancelPivotJob(this.#pivotJobsOpts(), id);
+	}
+
+	async runPivotJob<T = unknown>(
+		params: import('./types/pivot').CreatePivotJobParams,
+		options?: import('./types/pivot').RunPivotJobOptions,
+	): Promise<{ job: import('./types/pivot').PivotJob; result: import('./types/pivot').PivotJobResult<T> }> {
+		return pivotJobsDomain.runPivotJob<T>(this.#pivotJobsOpts(), params, options);
 	}
 
 	async getHistory(module: string, _id: string): Promise<KonectyFindResult<History>> {
@@ -1526,3 +1558,14 @@ export type {
 	UpdateServiceAccountAccessBody,
 	UpdateServiceAccountAccessResult,
 } from './domains/adminServiceAccounts';
+export { PivotJobError } from './domains/pivotJobs';
+export type {
+	CreatePivotJobParams,
+	PivotJob,
+	PivotJobErrorCode,
+	PivotJobRequest,
+	PivotJobResult,
+	PivotJobStage,
+	PivotJobStatus,
+	RunPivotJobOptions,
+} from './types/pivot';
