@@ -1542,7 +1542,7 @@ export type {
 	ListAllPatsResult,
 	PatSummary,
 } from './domains/adminCredentials';
-export type { GetMcpAccessResult, McpAccessConfig, McpAccessRole, UpdateMcpAccessBody, UpdateMcpAccessResult } from './domains/adminMcpAccess';
+export type { GetMcpAccessResult, McpAccessActiveUsersByRoleSet, McpAccessConfig, McpAccessRole, UpdateMcpAccessBody, UpdateMcpAccessResult } from './domains/adminMcpAccess';
 export type {
 	AccessLevel,
 	CreateServiceAccountBody,
