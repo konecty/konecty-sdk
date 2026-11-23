@@ -1,4 +1,5 @@
 import { KonectyClient } from '@konecty/sdk/Client';
+import type { McpAccessConfig } from '@konecty/sdk/domains/adminMcpAccess';
 import { expect } from 'chai';
 
 import { rest } from 'msw';
@@ -46,6 +47,44 @@ describe('Konecty Admin MCP Access', () => {
 			expect(receivedMethod).to.equal('GET');
 			expect(receivedAuthorization).to.equal('fake-admin-auth-id');
 			expect(result).to.deep.equal(configResponse);
+		});
+
+		// Equivalent Python test: tests/test_admin.py::test_get_mcp_access_returns_unregistered_roles_and_active_user_counts
+		it('Should return roles outside the Role registry and the active-user counts verbatim', async () => {
+			// Arrange
+			const konecty = new KonectyClient({ endpoint: ENDPOINT, accessKey: 'fake-admin-auth-id' });
+
+			const data: McpAccessConfig = {
+				roles: [
+					{ _id: 'role-admin', name: 'Admin', admin: true, registered: true },
+					{ _id: 'role-legacy', name: 'Sócio-Diretor', registered: false },
+					{ _id: 'role-listed-only', registered: false },
+				],
+				readRoleIds: ['role-admin', 'role-legacy', 'role-listed-only'],
+				writeRoleIds: ['role-admin'],
+				activeUsersByRoleSet: [
+					{ roleIds: ['role-admin'], count: 2 },
+					{ roleIds: ['role-legacy'], count: 7 },
+					{ roleIds: ['role-admin', 'role-legacy'], count: 1 },
+				],
+				readOnlyConfig: false,
+			};
+			const configResponse = { success: true, data };
+
+			server.use(
+				rest.get(`${ENDPOINT}/api/admin/mcp-access`, (_req, res, ctx) => {
+					return res.once(ctx.status(200), ctx.json(configResponse));
+				}),
+			);
+
+			// Act
+			const result = await konecty.getMcpAccess();
+
+			// Assert
+			expect(result).to.deep.equal(configResponse);
+			if (!result.success) throw new Error('expected success');
+			expect(result.data.roles.filter(role => role.registered === false).map(role => role._id)).to.deep.equal(['role-legacy', 'role-listed-only']);
+			expect(result.data.activeUsersByRoleSet?.reduce((total, set) => total + set.count, 0)).to.equal(10);
 		});
 
 		// Equivalent Python test: tests/test_admin.py::test_get_mcp_access_returns_forbidden_for_non_admin

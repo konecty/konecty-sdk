@@ -12,15 +12,42 @@ export type McpAccessRole = {
 	_id: string;
 	name?: string;
 	admin?: boolean;
+	/**
+	 * `true` for a role registered in `Role`. `false` for a role that is not
+	 * there but is carried by an active user (`user.role` / `user.roles[]`) or
+	 * already sits in one of the lists — it takes its `name` from the users that
+	 * carry it, and has no `name` when only the lists reference it. Absent on
+	 * servers older than this field.
+	 */
+	registered?: boolean;
+};
+
+export type McpAccessActiveUsersByRoleSet = {
+	/** One distinct combination of roles carried by active users. */
+	roleIds: string[];
+	/** How many active users carry exactly that combination — a count, never who they are. */
+	count: number;
 };
 
 export type McpAccessConfig = {
-	/** Every role in the namespace, so a caller can render the full picture. */
+	/**
+	 * Every role a picker needs from one call: the roles registered in `Role`
+	 * (`registered: true`), plus the roles active users carry and the ids already
+	 * in the lists, even when they are not registered (`registered: false`).
+	 * Roles carried only by inactive users are left out.
+	 */
 	roles: McpAccessRole[];
 	/** Roles allowed to reach the MCP. A role in `writeRoleIds` also reads, whether or not it is listed here. */
 	readRoleIds: string[];
 	/** Roles allowed to use write/destructive MCP tools. */
 	writeRoleIds: string[];
+	/**
+	 * Active users per distinct combination of roles, so a caller can tell before
+	 * saving how many active users would lose MCP access (or only write access)
+	 * without counting twice a user with two roles. Absent on servers older than
+	 * this field.
+	 */
+	activeUsersByRoleSet?: McpAccessActiveUsersByRoleSet[];
 	/** True when the deployment loads its namespace config from a metadata directory — the update call refuses with 409. */
 	readOnlyConfig: boolean;
 };
@@ -51,9 +78,11 @@ export async function getMcpAccess(opts: AdminMcpAccessClientOptions): Promise<G
  * PUT /api/admin/mcp-access — replaces both role lists. Requires an admin
  * session (never a PAT).
  *
- * Both lists are replaced wholesale: whatever is omitted loses access. An
- * unknown role id is rejected with 400 and nothing is written; a deployment
- * whose config comes from a metadata directory answers 409
+ * Both lists are replaced wholesale: whatever is omitted loses access. Any id
+ * `getMcpAccess` lists in `roles` is accepted — registered, carried by an
+ * active user, or already in the lists. Only an id none of those sources know
+ * is rejected, with 400 `Unknown role: <id>`, and nothing is written; a
+ * deployment whose config comes from a metadata directory answers 409
  * (`mcp-access-config-read-only`).
  */
 export async function updateMcpAccess(opts: AdminMcpAccessClientOptions, body: UpdateMcpAccessBody): Promise<UpdateMcpAccessResult> {
