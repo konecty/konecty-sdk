@@ -723,12 +723,19 @@ export class KonectyClient {
 			});
 
 			if (result.status >= 400) {
-				throw new Error(`${result.status} - ${result.statusText}`);
+				// Mesmo tratamento de `find`: o `code` do corpo (FORBIDDEN, NOT_FOUND) chega a quem chama.
+				return { success: false, errors: errorItemsFromResponseBody(result.status, result.statusText, await result.text()) };
 			}
 
 			const body = await result.json();
 
 			const deserializedDates = deserializeDates(body) as KonectyFindResult<History>;
+
+			// O backend nega o histórico com HTTP 200 e `success: false` (FORBIDDEN; NOT_FOUND com
+			// o registro fora do readFilter). Montar o sucesso sem olhar `success` virava lista vazia.
+			if (deserializedDates.success === false) {
+				return { success: false, errors: deserializedDates.errors };
+			}
 
 			return {
 				success: true,
