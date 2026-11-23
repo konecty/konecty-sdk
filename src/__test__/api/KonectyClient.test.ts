@@ -139,6 +139,44 @@ describe('Konecty Client Tests', () => {
 		expect(product?.data?.[0].dataId).to.be.equal('productId');
 	});
 
+	// Mesma entrada e saída de `tests/test_history.py` no SDK Python (konecty-sdk-python).
+	// O backend responde `{ success: false, errors }` com HTTP 200 quando nega o histórico:
+	// FORBIDDEN sem permissão de leitura, NOT_FOUND com o registro fora do `readFilter`
+	// (konecty/Konecty#892, #893). O erro tem que chegar a quem chama, não virar lista vazia.
+	it('should propagate success:false from history', async () => {
+		// Arrange
+		const client = new KonectyClient({ endpoint: 'http://localhost:3000', accessKey: 'asdfasdfsadfsadf' });
+		const errors = [{ message: '[Product] Record not found', code: 'NOT_FOUND' }];
+		server.use(
+			rest.get('http://localhost:3000/rest/data/Product/productId/history', (req, res, ctx) => {
+				return res.once(ctx.status(200), ctx.json({ success: false, errors }));
+			}),
+		);
+
+		// Act
+		const result = await client.getHistory('Product', 'productId');
+
+		// Assert
+		expect(result).to.be.deep.equal({ success: false, errors });
+	});
+
+	it('should keep the error code from a history 4xx body', async () => {
+		// Arrange
+		const client = new KonectyClient({ endpoint: 'http://localhost:3000', accessKey: 'asdfasdfsadfsadf' });
+		const errors = [{ message: "[Product] You don't have permission to read records", code: 'FORBIDDEN' }];
+		server.use(
+			rest.get('http://localhost:3000/rest/data/Product/productId/history', (req, res, ctx) => {
+				return res.once(ctx.status(403), ctx.json({ success: false, errors }));
+			}),
+		);
+
+		// Act
+		const result = await client.getHistory('Product', 'productId');
+
+		// Assert
+		expect(result).to.be.deep.equal({ success: false, errors });
+	});
+
 	it('should return menu main', async () => {
 		// Arrange
 		const options: KonectyClientOptions = {
