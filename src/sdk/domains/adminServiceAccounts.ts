@@ -10,10 +10,15 @@ export type AdminError = SharedError;
 
 export type AccessLevel = 'read' | 'readWrite';
 
+/** O que uma service account pode fazer além do `accessMap`. Hoje o servidor só conhece `metaApply`. */
+export type ServiceAccountCapability = 'metaApply';
+
 export type CreateServiceAccountBody = {
 	name: string;
 	username: string;
 	accessMap?: Record<string, AccessLevel>;
+	/** `['metaApply']` deixa a conta chamar `applyMetaBulk` sem acesso a dados. Fora do corpo quando ausente. */
+	capabilities?: ServiceAccountCapability[];
 };
 
 export type ServiceAccountRoleRef = { _id: string; name: string };

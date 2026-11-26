@@ -15,6 +15,7 @@ import getGeolocation from '../utils/getGeolocation';
 import * as adminCredentialsDomain from './domains/adminCredentials';
 import * as adminMcpAccessDomain from './domains/adminMcpAccess';
 import * as adminMetaDomain from './domains/adminMeta';
+import * as adminMetaBulkDomain from './domains/adminMetaBulk';
 import * as adminServiceAccountsDomain from './domains/adminServiceAccounts';
 import * as authDomain from './domains/auth';
 import * as changeUserDomain from './domains/changeUser';
@@ -954,11 +955,25 @@ export class KonectyClient {
 		name: string,
 		username: string,
 		accessMap?: Record<string, adminServiceAccountsDomain.AccessLevel>,
+		options: { capabilities?: adminServiceAccountsDomain.ServiceAccountCapability[] } = {},
 	): Promise<adminServiceAccountsDomain.CreateServiceAccountResult> {
 		return adminServiceAccountsDomain.createServiceAccount(
 			{ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey },
-			{ name, username, accessMap },
+			{ name, username, accessMap, capabilities: options.capabilities },
 		);
+	}
+
+	/**
+	 * POST /api/document — aplica um lote de metadados numa transação
+	 * (`admin.applyMetaBulk` em `docs/features.json`). Admin, ou service account criada com
+	 * `capabilities: ['metaApply']`. `dryRun: true` devolve `data.plan` sem gravar. Nunca lança:
+	 * erro volta como `{success: false, status, errors}`. Par do `apply_meta_bulk` no SDK Python.
+	 */
+	async applyMetaBulk(
+		items: Record<string, unknown>[],
+		options?: adminMetaBulkDomain.ApplyMetaBulkOptions,
+	): Promise<adminMetaBulkDomain.ApplyMetaBulkResult> {
+		return adminMetaBulkDomain.applyMetaBulk({ endpoint: this.#options.endpoint!, accessKey: this.#options.accessKey }, items, options);
 	}
 
 	/**
