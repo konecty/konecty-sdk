@@ -41,6 +41,12 @@ export type ApplyMetaBulkPlan = {
 	unchanged: number;
 	/** Por `_id`, os hooks gravados que o lote removeria. Só entradas não vazias. */
 	hooksRemoved: Record<string, HookFieldName[]>;
+	/**
+	 * Só quando o `dryRun` recebe `namespacePatch`: as chaves do patch cujo valor difere do Namespace
+	 * gravado, em ordem. `[]` quer dizer que o patch não muda nada. Um PAT não lê o Namespace; é assim
+	 * que ele sabe se a escrita do Namespace é necessária.
+	 */
+	namespace?: { keys: string[] };
 };
 
 export type ApplyMetaBulkData = {
