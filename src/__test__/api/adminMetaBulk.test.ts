@@ -23,10 +23,12 @@ describe('Konecty Admin Meta Bulk', () => {
 			const plan = { created: ['Product'], updated: [], unchanged: 0, hooksRemoved: {} };
 			const routeBody = { applied: 0, created: 0, updated: 0, deleted: 0, warnings: [], preservedHooks: {}, plan };
 			let receivedUrl = '';
+			let receivedAuthorization: string | null = null;
 			let receivedBody: unknown = null;
 			server.use(
 				rest.post(`${ENDPOINT}/api/document`, async (req, res, ctx) => {
 					receivedUrl = req.url.toString();
+					receivedAuthorization = req.headers.get('Authorization');
 					receivedBody = await req.json();
 					return res.once(ctx.status(200), ctx.json(routeBody));
 				}),
@@ -36,6 +38,7 @@ describe('Konecty Admin Meta Bulk', () => {
 
 			expect(receivedUrl).to.equal('http://localhost:3000/api/document');
 			expect(receivedBody).to.deep.equal({ items: [ITEM], dryRun: true });
+			expect(receivedAuthorization).to.equal('fake-admin-auth-id');
 			expect(result).to.deep.equal({ success: true, data: routeBody });
 		});
 
@@ -62,7 +65,7 @@ describe('Konecty Admin Meta Bulk', () => {
 
 		// Python: tests/test_meta_bulk.py::test_400_errors_list_is_kept
 		it('CASE 400-errors: keeps the errors list as is', async () => {
-			const errors = [{ message: 'Required', _id: 'Bad', path: 'name' }];
+			const errors = [{ index: 0, path: 'name', message: 'Required' }];
 			server.use(rest.post(`${ENDPOINT}/api/document`, (_req, res, ctx) => res.once(ctx.status(400), ctx.json({ errors }))));
 
 			const result = await client().applyMetaBulk([ITEM]);
@@ -80,8 +83,8 @@ describe('Konecty Admin Meta Bulk', () => {
 		});
 
 		// Python: tests/test_meta_bulk.py::test_403_plain_text
-		it('CASE 403-text: plain-text Forbidden becomes [{message}]', async () => {
-			server.use(rest.post(`${ENDPOINT}/api/document`, (_req, res, ctx) => res.once(ctx.status(403), ctx.text('Forbidden'))));
+		it('CASE 403-text: plain-text Forbidden, with surrounding whitespace, becomes [{message}]', async () => {
+			server.use(rest.post(`${ENDPOINT}/api/document`, (_req, res, ctx) => res.once(ctx.status(403), ctx.text('  Forbidden\n'))));
 
 			const result = await client().applyMetaBulk([ITEM]);
 
@@ -124,6 +127,30 @@ describe('Konecty Admin Meta Bulk', () => {
 			const result = await client().applyMetaBulk([ITEM]);
 
 			expect(result).to.deep.equal({ success: false, status: 502, errors: [{ message: '502' }] });
+		});
+	});
+
+	describe('applyMetaBulk without a usable answer', () => {
+		// Python: tests/test_meta_bulk.py::test_401_plain_text
+		it('CASE 401-text: plain-text Unauthorized becomes [{message}]', async () => {
+			server.use(rest.post(`${ENDPOINT}/api/document`, (_req, res, ctx) => res.once(ctx.status(401), ctx.text('Unauthorized'))));
+
+			const result = await client().applyMetaBulk([ITEM]);
+
+			expect(result).to.deep.equal({ success: false, status: 401, errors: [{ message: 'Unauthorized' }] });
+		});
+
+		// Python: tests/test_meta_bulk.py::test_network_error_has_status_zero
+		it('CASE network: no answer at all gives status 0 and a message', async () => {
+			server.use(rest.post(`${ENDPOINT}/api/document`, (_req, res) => res.networkError('connection refused')));
+
+			const result = await client().applyMetaBulk([ITEM]);
+
+			expect(result.success).to.equal(false);
+			if (!result.success) {
+				expect(result.status).to.equal(0);
+				expect(result.errors[0].message).to.not.equal('');
+			}
 		});
 	});
 
