@@ -42,6 +42,28 @@ describe('Konecty Admin Meta Bulk', () => {
 			expect(result).to.deep.equal({ success: true, data: routeBody });
 		});
 
+		// Python: tests/test_meta_bulk.py::test_dry_run_with_namespace_patch_returns_namespace_keys
+		it('CASE dry-run-namespace: namespacePatch goes with dryRun and plan.namespace comes back', async () => {
+			const patch = { metadataVersion: { cliente: 'auxiliadora', versaoCliente: 'v1.2.0' } };
+			const plan = { created: [], updated: [], unchanged: 1, hooksRemoved: {}, namespace: { keys: ['metadataVersion'] } };
+			let receivedBody: unknown = null;
+			server.use(
+				rest.post(`${ENDPOINT}/api/document`, async (req, res, ctx) => {
+					receivedBody = await req.json();
+					return res.once(ctx.status(200), ctx.json({ applied: 0, created: 0, updated: 0, deleted: 0, warnings: [], preservedHooks: {}, plan }));
+				}),
+			);
+
+			const result = await client().applyMetaBulk([ITEM], { dryRun: true, namespacePatch: patch });
+
+			expect(receivedBody).to.deep.equal({ items: [ITEM], dryRun: true, namespacePatch: patch });
+			expect(result.success).to.equal(true);
+			if (result.success) {
+				const keys: string[] | undefined = result.data.plan?.namespace?.keys;
+				expect(keys).to.deep.equal(['metadataVersion']);
+			}
+		});
+
 		// Python: tests/test_meta_bulk.py::test_options_map_to_camel_case_body
 		it('CASE options: deleteRemoved, hookMode and namespacePatch go in the body', async () => {
 			const patch = { metadataVersion: { cliente: 'auxiliadora', versaoCliente: 'v1.2.0' } };
